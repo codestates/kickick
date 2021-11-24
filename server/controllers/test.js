@@ -1,22 +1,51 @@
-const { User } = require("./../models");
+const {
+  users,
+  posts,
+  kicks,
+  comments,
+  likes,
+  favorites,
+  users_kicks,
+  posts_tags,
+  tags,
+  notifications,
+  logs,
+} = require("./../models");
 
 module.exports = async (req, res) => {
   // TODO
   let data;
   try {
-    data = await User.update(
-      {
-        password: 4567,
+    data = await users.findOne({
+      where: {
+        id: 1,
       },
-      {
-        where: {
-          id: 1,
+      // raw: true,
+      include: [
+        {
+          model: users_kicks,
+          include: kicks,
         },
-      }
-    );
+        {
+          model: comments,
+          include: {
+            model: posts,
+            include: {
+              model: posts_tags,
+              include: tags,
+            },
+          },
+        },
+        likes,
+        favorites,
+        notifications,
+        logs,
+      ],
+    });
   } catch (err) {
     console.log(err);
   }
-  return res.status(500).json({ data: data, message: "아직 구현 안함" });
+  console.log(data);
+  return res.status(200).json({ data, message: "ok" });
   return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
 };

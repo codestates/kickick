@@ -1,15 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import MainTamplate from "./Template"
-
 export default function Main() {
-
-  return (
-    <Container>
-      <MainTamplate/>
-    </Container>
-  );
+  return <Container>hello world!</Container>;
 }
 
 const Container = styled.div`
