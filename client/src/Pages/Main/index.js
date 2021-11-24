@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 import MainTamplate from "./Template"
 
-export default function Main () {
+export default function Main() {
+
   return (
     <Container>
       <MainTamplate/>
