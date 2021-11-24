@@ -9,6 +9,13 @@ module.exports = {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     dialect: "mysql",
+    define: {
+      timestamps: true,
+      underscored: true,
+      underscoredAll: true,
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   },
   test: {
     username: process.env.DATABASE_USERNAME,
@@ -17,6 +24,13 @@ module.exports = {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     dialect: "mysql",
+    define: {
+      timestamps: true,
+      underscored: true,
+      underscoredAll: true,
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   },
   production: {
     username: process.env.RDS_USERNAME,
@@ -25,5 +39,12 @@ module.exports = {
     host: process.env.RDS_HOST,
     port: process.env.RDS_PORT,
     dialect: "mysql",
+    define: {
+      timestamps: true,
+      underscored: true,
+      underscoredAll: true,
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
   },
 };
