@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("posts", {
+    await queryInterface.createTable("likes", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,22 +16,16 @@ module.exports = {
           key: "id",
         },
       },
-      category: {
-        type: Sequelize.STRING,
-      },
-      post_name: {
-        type: Sequelize.STRING,
-      },
-      content: {
-        type: Sequelize.STRING,
-      },
-      cost: {
+      post_id: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        onDelete: "CASCADE",
+        references: {
+          model: "posts",
+          key: "id",
+        },
       },
-      view_count: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
+      agreement: {
+        type: Sequelize.BOOLEAN,
       },
       created_at: {
         allowNull: false,
@@ -44,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("posts");
+    await queryInterface.dropTable("likes");
   },
 };
