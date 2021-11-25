@@ -1,9 +1,4 @@
 node_modules
-.env
-<<<<<<< HEAD
-.dockerignore
-Dockerfile
-=======
+.env*
 Dockerfile
 .dockerignore
->>>>>>> 42977cee09ff2e150af46ac0c4eec63e48add3fa
