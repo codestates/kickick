@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       users.hasMany(models.likes);
       users.hasMany(models.favorites);
       users.hasMany(models.users_kicks);
-      users.hasMany(models.notifications);
+      users.hasMany(models.alarms);
       users.hasMany(models.logs);
-      users.hasMany(models.admin_posts);
+      users.hasMany(models.notices);
     }
   }
   users.init(

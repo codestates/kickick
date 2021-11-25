@@ -8,9 +8,9 @@ const {
   users_kicks,
   posts_tags,
   tags,
-  notifications,
+  alarms,
   logs,
-  admin_posts,
+  notices,
 } = require("./../models");
 
 module.exports = async (req, res) => {
@@ -39,9 +39,9 @@ module.exports = async (req, res) => {
         },
         likes,
         favorites,
-        notifications,
+        alarms,
         logs,
-        admin_posts,
+        notices,
       ],
     });
   } catch (err) {

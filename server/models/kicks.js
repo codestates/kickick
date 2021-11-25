@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   kicks.init(
     {
       post_id: DataTypes.INTEGER,
+      thumbnail: DataTypes.STRING,
       content: DataTypes.STRING,
     },
     {
