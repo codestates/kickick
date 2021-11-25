@@ -15,6 +15,9 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
       },
+      post_name: {
+        type: Sequelize.STRING,
+      },
       thumbnail: {
         type: Sequelize.STRING,
       },
