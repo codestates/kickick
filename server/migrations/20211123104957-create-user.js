@@ -10,6 +10,7 @@ module.exports = {
       },
       type: {
         type: Sequelize.STRING,
+        defaultValue: "general",
       },
       username: {
         type: Sequelize.STRING,
@@ -23,8 +24,12 @@ module.exports = {
       profile: {
         type: Sequelize.STRING,
       },
+      birthday: {
+        type: Sequelize.STRING,
+      },
       kick_money: {
         type: Sequelize.INTEGER,
+        defaultValue: 1000,
       },
       created_at: {
         allowNull: false,

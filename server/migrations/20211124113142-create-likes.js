@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       user_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
         references: {
@@ -17,6 +18,7 @@ module.exports = {
         },
       },
       post_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
         references: {
@@ -25,6 +27,7 @@ module.exports = {
         },
       },
       agreement: {
+        allowNull: false,
         type: Sequelize.BOOLEAN,
       },
       created_at: {

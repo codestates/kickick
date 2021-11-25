@@ -10,6 +10,7 @@ const {
   tags,
   notifications,
   logs,
+  admin_posts,
 } = require("./../models");
 
 module.exports = async (req, res) => {
@@ -40,12 +41,14 @@ module.exports = async (req, res) => {
         favorites,
         notifications,
         logs,
+        admin_posts,
       ],
     });
   } catch (err) {
     console.log(err);
   }
   console.log(data);
+
   return res.status(200).json({ data, message: "ok" });
   return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
 };

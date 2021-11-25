@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       post_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
         references: {

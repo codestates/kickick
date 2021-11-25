@@ -17,9 +17,11 @@ module.exports = {
         },
       },
       category: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       post_name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       content: {

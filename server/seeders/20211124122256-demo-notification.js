@@ -5,7 +5,9 @@ module.exports = {
     return await queryInterface.bulkInsert("notifications", [
       {
         user_id: 1,
-        content: "내가 내 게시글에 좋아요를 눌렀습니다.",
+        type: "alarm",
+        reference: '{"table":"post","id":1}',
+        content: "내가 내 게시글에 댓글을 남겼습니다.",
         created_at: new Date(),
         updated_at: new Date(),
       },
