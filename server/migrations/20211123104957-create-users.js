@@ -1,37 +1,35 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("posts", {
+    await queryInterface.createTable("users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-          model: "users",
-          key: "id",
-        },
+      type: {
+        type: Sequelize.STRING,
+        defaultValue: "email auth required",
       },
-      category: {
+      username: {
         type: Sequelize.STRING,
       },
-      post_name: {
+      email: {
         type: Sequelize.STRING,
       },
-      content: {
+      password: {
         type: Sequelize.STRING,
       },
-      cost: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
+      profile: {
+        type: Sequelize.STRING,
       },
-      view_count: {
+      birthday: {
+        type: Sequelize.STRING,
+      },
+      kick_money: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 1500,
       },
       created_at: {
         allowNull: false,
@@ -44,6 +42,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("posts");
+    await queryInterface.dropTable("users");
   },
 };

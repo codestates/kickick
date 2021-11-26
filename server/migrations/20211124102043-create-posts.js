@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("notifications", {
+    await queryInterface.createTable("posts", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,11 +16,24 @@ module.exports = {
           key: "id",
         },
       },
+      category: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      post_name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       content: {
         type: Sequelize.STRING,
       },
-      is_checked: {
-        type: Sequelize.BOOLEAN,
+      cost: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      view_count: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       created_at: {
         allowNull: false,
@@ -33,6 +46,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("notifications");
+    await queryInterface.dropTable("posts");
   },
 };
