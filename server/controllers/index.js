@@ -8,4 +8,5 @@ module.exports = {
   // auth
   duplication_check: require("./auth/duplication_check"),
   signin: require("./auth/signin"),
+  signout: require("./auth/signout"),
 };

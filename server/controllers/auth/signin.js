@@ -43,8 +43,29 @@ module.exports = async (req, res) => {
       console.log(err);
       return res.status(500).json({ data: err, message: "데이터베이스 에러" });
     }
+    // 토큰 발급
+    const access_token = jwt.sign(
+      {
+        type: data.type,
+        username: data.username,
+      },
+      process.env.ACCESS_SECRET,
+      {
+        expiresIn: "3d",
+      }
+    );
+    delete data.id;
 
-    return res.status(200).json({ data: data, message: "ok" });
+    return res
+      .status(200)
+      .cookie(
+        "token",
+        { access_token },
+        {
+          httpOnly: true,
+        }
+      )
+      .json({ data: data, message: "ok" });
   }
   // req.body.username / req.body.password 로 db 검색 후 일치하는 값 있으면 jwt 토큰 생성해서 쿠키에 넣어주고 로그인
   if (!(req.body.username && req.body.password)) {
