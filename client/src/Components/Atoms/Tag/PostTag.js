@@ -8,9 +8,9 @@ export default function PostTag({
   tagType = "hashtag",
   detail = "검색어가 없습니다",
 }) {
-  let scale = 1;
-  if (size === "sm") scale = 0.75;
-  else if (size === "lg") scale = 1.5;
+  let scale = 0.5;
+  if (size === "sm") scale = 0.4;
+  else if (size === "lg") scale = 0.75;
 
   let tag = "#";
   if (tagType === "title") tag = "제목 : ";
@@ -26,11 +26,19 @@ export default function PostTag({
 }
 
 const Container = styled.div`
-  display: flex;
+  display: inline-flex;
+  align-items: center;
 
-  width: ${(props) => props.scale * 5}rem;
-  height: ${(props) => props.scale * 2}rem;
+  height: ${(props) => props.scale * 2.2}rem;
+  padding: 0 ${(props) => props.scale}rem;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
 
   font-size: ${(props) => props.scale}rem;
   font-weight: bold;
+
+  svg {
+    margin: auto 0;
+    margin-left: 0.2rem;
+  }
 `;
