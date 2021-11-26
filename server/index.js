@@ -5,6 +5,9 @@ const express = require("express");
 const app = express();
 
 const test_router = require("./routers/test_router");
+const users_router = require("./routers/users_router");
+const auth_router = require("./routers/auth_router");
+const posts_router = require("./routers/posts_router");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,6 +21,9 @@ app.use(
 app.use(cookieParser());
 // 라우팅
 app.use("/test", test_router);
+app.use("/users", users_router);
+app.use("/auth", auth_router);
+app.use("/posts", posts_router);
 
 app.get("/", (req, res) => {
   res.status(201).send("Hello World");
