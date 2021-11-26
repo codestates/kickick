@@ -10,7 +10,7 @@ module.exports = {
       },
       type: {
         type: Sequelize.STRING,
-        defaultValue: "general",
+        defaultValue: "email auth required",
       },
       username: {
         type: Sequelize.STRING,
@@ -29,7 +29,7 @@ module.exports = {
       },
       kick_money: {
         type: Sequelize.INTEGER,
-        defaultValue: 1000,
+        defaultValue: 1500,
       },
       created_at: {
         allowNull: false,

@@ -6,7 +6,7 @@ module.exports = {
       {
         type: "admin",
         username: "demouser",
-        email: "demouser@kickick.com",
+        email: "demouser@kickick.net",
         password: "1234",
         profile: "picture.jpg",
         birthday: "",
