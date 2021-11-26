@@ -14,8 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       users.hasMany(models.likes);
       users.hasMany(models.favorites);
       users.hasMany(models.users_kicks);
-      users.hasMany(models.notifications);
+      users.hasMany(models.alarms);
       users.hasMany(models.logs);
+      users.hasMany(models.notices);
     }
   }
   users.init(
@@ -25,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       profile: DataTypes.STRING,
+      birthday: DataTypes.STRING,
       kick_money: DataTypes.INTEGER,
     },
     {

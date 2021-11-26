@@ -8,8 +8,9 @@ const {
   users_kicks,
   posts_tags,
   tags,
-  notifications,
+  alarms,
   logs,
+  notices,
 } = require("./../models");
 
 module.exports = async (req, res) => {
@@ -38,14 +39,16 @@ module.exports = async (req, res) => {
         },
         likes,
         favorites,
-        notifications,
+        alarms,
         logs,
+        notices,
       ],
     });
   } catch (err) {
     console.log(err);
   }
   console.log(data);
+
   return res.status(200).json({ data, message: "ok" });
   return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
 };
