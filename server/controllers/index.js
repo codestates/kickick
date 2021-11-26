@@ -6,5 +6,6 @@ module.exports = {
   put_users_info: require("./users/put_users.info"),
   delete_users_info: require("./users/delete_users_info"),
   // auth
+  duplication_check: require("./auth/duplication_check"),
   signin: require("./auth/signin"),
 };

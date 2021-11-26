@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { users } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
@@ -20,7 +7,7 @@ module.exports = async (req, res) => {
   // 토큰이 없으면 실패
   // 토큰으로 type, username 뽑아냄
   if (!req.cookies.token) {
-    return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+    return res.status(401).json({ data: null, message: "권한이 없습니다." });
   }
 
   const token = req.cookies.token.access_token;
@@ -30,7 +17,7 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res
-      .status(400)
+      .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
   // 토큰은 유효, 토큰으로 유저정보 수정
@@ -52,5 +39,5 @@ module.exports = async (req, res) => {
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: null, message: "ok" });
+  return res.status(201).json({ data: null, message: "ok" });
 };

@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res
-      .status(400)
+      .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
   const { username } = decoded;
