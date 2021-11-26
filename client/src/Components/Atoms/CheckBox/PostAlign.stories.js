@@ -2,7 +2,7 @@ import React from "react";
 import PostAlign from "./PostAlign";
 
 export default {
-  title: "PostAlign Button",
+  title: "Atoms/CheckBox/PostAlign",
   component: PostAlign,
   argTypes: {
     alignType: {
