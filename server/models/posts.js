@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         onDelete: "CASCADE",
       });
-      posts.hasMany(models.kicks);
+      posts.hasOne(models.kicks);
       posts.hasMany(models.comments);
       posts.hasMany(models.likes);
       posts.hasMany(models.favorites);
