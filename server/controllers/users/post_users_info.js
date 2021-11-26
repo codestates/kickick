@@ -5,7 +5,12 @@ module.exports = async (req, res) => {
   // username email password 필수
   // email 인증요청 구현
   if (!(req.body.username && req.body.email && req.body.password)) {
-    return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+    return res
+      .status(400)
+      .json({
+        data: null,
+        message: "username, email, password 중 누락된 항목이 있습니다.",
+      });
   }
   let data;
   try {

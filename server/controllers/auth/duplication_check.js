@@ -3,7 +3,9 @@ const { users } = require("../../models");
 module.exports = async (req, res) => {
   // TODO email 또는 username 중복체크
   if (!(req.body.email || req.body.username)) {
-    return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+    return res
+      .status(400)
+      .json({ data: null, message: "email과 username이 누락되었습니다." });
   }
   // email 중복체크
   if (req.body.email) {

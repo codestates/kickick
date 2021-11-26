@@ -7,7 +7,9 @@ module.exports = async (req, res) => {
   // 토큰이 없으면 실패
   // 토큰으로 type, username 뽑아냄
   if (!req.cookies.token) {
-    return res.status(401).json({ data: null, message: "권한이 없습니다." });
+    return res
+      .status(400)
+      .json({ data: null, message: "토큰이 존재하지 않습니다." });
   }
 
   const token = req.cookies.token.access_token;

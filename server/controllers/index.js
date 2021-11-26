@@ -9,4 +9,6 @@ module.exports = {
   duplication_check: require("./auth/duplication_check"),
   signin: require("./auth/signin"),
   signout: require("./auth/signout"),
+  // posts
+  get_posts_info: require("./posts/get_posts_info"),
 };
