@@ -29,7 +29,7 @@ module.exports = {
       },
       cost: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 100,
       },
       view_count: {
         type: Sequelize.INTEGER,
