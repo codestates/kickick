@@ -1,1 +1,1 @@
-export { default as Button } from './atoms/Button';
+export { default as PostAlign } from "./atoms/Button/PostAlign";
