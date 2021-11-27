@@ -1,16 +1,22 @@
 const { users } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
   // TODO 유저정보 조회
   // query 있으면 query로 검색 (email / username)
   // 없으면 token 내용으로
 
+  // page_num과 limit 기본값 설정
+  const page_num = req.query.page_num || 1;
+  const limit = req.query.limit || 10;
+
   // email로 검색요청
   if (req.query.email) {
     let data;
     try {
-      data = await users.findOne({
+      data = await users.findAll({
         attributes: [
           "type",
           "username",
@@ -20,8 +26,12 @@ module.exports = async (req, res) => {
           "kick_money",
         ],
         where: {
-          email: req.query.email,
+          email: {
+            [Op.like]: `%${req.query.email}%`,
+          },
         },
+        offset: limit * (page_num - 1),
+        limit: limit,
       });
     } catch (err) {
       console.log(err);
@@ -34,7 +44,7 @@ module.exports = async (req, res) => {
   if (req.query.username) {
     let data;
     try {
-      data = await users.findOne({
+      data = await users.findAll({
         attributes: [
           "type",
           "username",
@@ -44,8 +54,12 @@ module.exports = async (req, res) => {
           "kick_money",
         ],
         where: {
-          username: req.query.username,
+          username: {
+            [Op.like]: `%${req.query.username}%`,
+          },
         },
+        offset: limit * (page_num - 1),
+        limit: limit,
       });
     } catch (err) {
       console.log(err);
