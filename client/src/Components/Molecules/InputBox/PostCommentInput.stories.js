@@ -1,9 +1,9 @@
 import React from "react";
-import PostComment from "./PostComment";
+import PostCommentInput from "./PostCommentInput";
 
 export default {
-  title: "Molecules/Comment/PostComment",
-  component: PostComment,
+  title: "Molecules/InputBox/PostCommentInput",
+  component: PostCommentInput,
   argTypes: {
     size: {
       description: "인풋 크기",
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-const Template = (args) => <PostComment {...args} />;
+const Template = (args) => <PostCommentInput {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {

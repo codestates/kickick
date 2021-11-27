@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Profile from "../../Atoms/Img/Profile";
 
-export default function PostComment({ size = "lg" }) {
+export default function PostCommentItem({ size = "lg" }) {
   let scale = 1;
   if (size === "sm") scale = 0.75;
   else if (size === "lg") scale = 1.5;
@@ -24,6 +24,7 @@ const Container = styled.div`
   flex-direction: column;
 
   width: ${(props) => props.scale * 27}rem;
+  margin-bottom: ${(props) => props.scale * 0.5}rem;
   border-bottom: 1px solid #eeeeee;
 
   font-size: ${(props) => props.scale * 0.5}rem;
