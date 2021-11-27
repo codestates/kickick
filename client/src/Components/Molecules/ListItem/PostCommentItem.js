@@ -15,7 +15,7 @@ export default function PostCommentItem({ size = "lg" }) {
         <div className="username">어쩔</div>
         <div className="datetime">46분전</div>
       </UserInfoContainer>
-      <div className="comment">안녕하세요~~~~~~</div>
+      <div className="comment">삭제되었습니다.... 진짜로</div>
     </Container>
   );
 }
@@ -32,6 +32,9 @@ const Container = styled.div`
   .comment {
     width: ${(props) => props.scale * 27}rem;
     margin: ${(props) => props.scale * 0.5}rem 0;
+    font-style: italic;
+    color: gray;
+    font-weight: bold;
   }
 `;
 

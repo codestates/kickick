@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import sampleImg from "../../../Assets/Images/whale.jpg";
+import sampleImg from "../../../Assets/Images/KickBoardPostThumbnail.png";
 
 export default function Profile({ size = "lg", thumbnailType = "post" }) {
   let scale = 1.5;
@@ -9,13 +9,13 @@ export default function Profile({ size = "lg", thumbnailType = "post" }) {
 
   let multiple = 1;
   if (thumbnailType === "notice") multiple = 2;
-  else if (thumbnailType === "confirm") multiple = 0.8;
+  else if (thumbnailType === "confirm") multiple = 1.2;
 
   const imgSize = scale * multiple;
   return <Container imgSize={imgSize} src={sampleImg} alt="" />;
 }
 
 const Container = styled.img`
-  width: ${(props) => props.imgSize * 5}rem;
-  height: ${(props) => props.imgSize}rem;
+  width: ${(props) => props.imgSize * 10}rem;
+  height: ${(props) => props.imgSize * 4}rem;
 `;
