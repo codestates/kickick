@@ -10,13 +10,13 @@ export default function useAxios(api) {
     if (!api) return;
 
     api
-      .then(({ data, message }) => {
+      .then(({ data: { data, message } }) => {
         setData(data);
         setMsg(message);
       })
       .then(() => setLoading(false))
-      .catch((err) => setError(err));
-  }, [api]);
+      .catch((err) => setError(err.response.status));
+  }, []);
 
   return { data, msg, error, loading };
 }
