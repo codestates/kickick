@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import sampleImg from "../../../Assets/Images/whale.jpg";
+import sampleImg from "../../../assets/images/whale.jpg";
 
 export default function Profile({ size = "lg", profileType = "comment" }) {
   let scale = 1.5;
