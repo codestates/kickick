@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { users, notices } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
