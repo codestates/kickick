@@ -1,7 +1,7 @@
 import React from "react";
 
-import { KickBoardPost } from "../../components";
+import { KickBoardPostList } from "../../components";
 
 export default function KickBoard() {
-  return <KickBoardPost />;
+  return <KickBoardPostList />;
 }

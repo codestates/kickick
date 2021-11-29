@@ -2,6 +2,7 @@ const calcRem = (size) => `${size / 16}rem`;
 
 const common = {
   fontSizes: {
+    xs: calcRem(12),
     small: calcRem(14),
     base: calcRem(16),
     lg: calcRem(18),
