@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import NavBtn from "../../Atoms/Button/NavBtn";
-import BtnChamber from "../../Molecules/BtnChamber/BtnChamber"
+import NavBtn from "../../atoms/Button/NavBtn";
+import BtnChamber from "../../molecules/BtnChamber/BtnChamber"
 
-export default function Nav() {
-
+export default function Nav({ toggleTheme }) {
   return (
     <Container>
       <Separation>
         <NavBtn
           context="KICK"
-          size="2rem"
+          size="3rem"
           fontFamily={`'Luckiest Guy', cursive`}
         />
         <BtnChamber />
@@ -32,9 +31,13 @@ const VerticalAlign = styled.div`
 const Container = styled(VerticalAlign)`
   position: fixed;
   top: 0;
+  z-index: 999;
   justify-content: space-between;
   width: 100vw;
-  background-color: yellow;
+  height: 4rem;
+  background-color: rgb(255, 255, 255, 0.7);
 `;
 
-const Separation = styled(VerticalAlign)``;
+const Separation = styled(VerticalAlign)`
+  margin: 0 1rem;
+`;

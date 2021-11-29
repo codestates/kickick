@@ -3,16 +3,16 @@ import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import useAxios from "./hooks/useAxios";
-import { getPostsInfo } from "./api/posts";
-import { light, dark } from "./commons/Styles/Theme";
+import { getPostsInfo } from "./apis/posts";
+import { light, dark } from "./commons/styles/theme";
 
-import Main from "./pages/main";
-import Nav from './Components/Organisms/Nav/Nav'
+import Main from "./pages/Main";
+import Nav from './components/organisms/Nav/Nav'
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
-  const { loading, data, msg, error } = useAxios(getPostsInfo(1));
-  console.log(loading, data, msg, error);
+  // const { loading, data, msg, error } = useAxios(getPostsInfo(1));
+  // console.log(loading, data, msg, error);
 
   // NOTICE 아래는 아직 없는 컴포넌트 이지만 로딩중일때 로딩화면이 뜨는 컴포넌트를 사용하는 예시
   // if (loading) return <LoadingSpinner />
@@ -31,7 +31,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Container>
-          <Nav />
+          <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
           </Routes>
@@ -45,5 +45,5 @@ const Container = styled.div`
   position:relative;
   width:100vw;
   min-height:100vh;
-  margin-top:5rem;
+  margin-top:4rem;
 `

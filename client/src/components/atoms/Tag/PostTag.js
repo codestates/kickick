@@ -1,6 +1,6 @@
-import React from "react";
-import { FaTimes } from "react-icons/fa";
-import styled from "styled-components";
+import React from "./node_modules/react";
+import { FaTimes } from "./node_modules/react-icons/fa";
+import styled from "./node_modules/styled-components";
 
 export default function PostTag({
   size = "lg",

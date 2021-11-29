@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import NavBtn from '../../Atoms/Button/NavBtn'
+import NavBtn from '../../atoms/Button/NavBtn'
 
 export default function BtnChamber() {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼들의 모음집
@@ -13,7 +13,13 @@ export default function BtnChamber() {
   ];
   return (
     <Container>
-      {list.map((el) => <NavBtn pathname={el.pathname} context={el.context} />)}
+      {list.map((el) => (
+        <NavBtn
+          context={el.context}
+          pathname={el.pathname}
+          size="1.4rem"
+        />
+      ))}
     </Container>
   );
 }
