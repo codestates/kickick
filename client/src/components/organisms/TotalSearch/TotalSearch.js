@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import PostAlign from "../../Atoms/CheckBox/PostAlign";
-import Options from "../../Atoms/Select/Options";
-import SearchInput from "../../Atoms/Input/SearchInput";
-import PostTag from "../../Atoms/Tag/PostTag";
+import PostAlign from "../../atoms/CheckBox/PostAlign";
+import Options from "../../atoms/Select/Options";
+import SearchInput from "../../atoms/Input/SearchInput";
+import PostTag from "../../atoms/Tag/PostTag";
 
 import { FaAlignJustify } from "react-icons/fa";
 
