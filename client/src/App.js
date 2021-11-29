@@ -3,6 +3,10 @@ import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Main from "./pages/Main";
+<<<<<<< HEAD
+=======
+import KickBoard from "./pages/KickBoard";
+>>>>>>> 07caf6003df56570f899728f47fd42fa72597191
 import useAxios from "./hooks/useAxios";
 import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
@@ -31,6 +35,7 @@ export default function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/kickboard" element={<KickBoard />} />
           </Routes>
         </Container>
       </Router>
@@ -41,5 +46,6 @@ export default function App() {
 const Container = styled.div`
   position: relative;
   width: 100vw;
+  max-width: 100%;
   min-height: 100vh;
 `;
