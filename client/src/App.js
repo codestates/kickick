@@ -6,8 +6,9 @@ import useAxios from "./hooks/useAxios";
 import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
 
-import Main from "./pages/Main";
 import Nav from './components/organisms/Nav/Nav'
+import Main from "./pages/Main";
+import Login from "./pages/Login"
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -34,6 +35,9 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
+          </Routes>
+          <Routes>
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Container>
       </Router>

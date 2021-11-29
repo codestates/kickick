@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import sampleImg from "../../../Assets/Images/KickBoardPostThumbnail.png";
+import sampleImg from "../../../assets/images/KickBoardPostThumbnail.png";
 
 export default function Profile({ size = "lg", thumbnailType = "post" }) {
   let scale = 1.5;

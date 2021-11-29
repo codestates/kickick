@@ -1,9 +1,9 @@
 import React from "react";
-import ModeChanger from "./ModeChanger";
+import LoginInput from "./LoginInput";
 
 export default {
-  title: "Atoms/CheckBox/ModeChanger",
-  component: ModeChanger,
+  title: "atoms/Input/LoginInput",
+  component: LoginInput,
   // argTypes: {
   //   size: {
   //     description: "인풋 크기",
@@ -12,9 +12,9 @@ export default {
   // },
 };
 
-const Template = (args) => <ModeChanger {...args} />;
+const Template = (args) => <LoginInput {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {
-  label: "ModeChanger",
+  label: "LoginInput",
 };

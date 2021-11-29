@@ -1,7 +1,7 @@
-import React from "./node_modules/react";
-import styled from "./node_modules/styled-components";
+import React from "react";
+import styled from "styled-components";
 
-import Profile from "../../Atoms/Img/Profile";
+import Profile from "../../atoms/Img/Profile";
 
 export default function PostCommentItem({ size = "lg" }) {
   let scale = 1;

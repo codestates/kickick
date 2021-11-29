@@ -2,7 +2,7 @@ import React from "react";
 import BtnChamber from "./BtnChamber";
 
 export default {
-  title: "Molecules/BtnChamber/BtnChamber",
+  title: "molecules/BtnChamber/BtnChamber",
   component: BtnChamber,
   // argTypes: {
   //   size: {

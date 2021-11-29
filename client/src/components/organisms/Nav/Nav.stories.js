@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "./Nav"
 
 export default {
-  title: "Organisms/Nav/Nav",
+  title: "organisms/Nav/Nav",
   component: Nav,
   // argTypes: {
   //   size: {
