@@ -33,4 +33,5 @@ module.exports = {
   delete_tags_info: require("./tags/delete_tags_info"),
   // comments
   get_comments_info: require("./comments/get_comments_info"),
+  post_comments_info: require("./comments/post_comments_info"),
 };
