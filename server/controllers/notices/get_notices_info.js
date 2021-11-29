@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { notices } = require("../../models");
 
 module.exports = async (req, res) => {
   // TODO 공지 정보 (단독) 요청 구현

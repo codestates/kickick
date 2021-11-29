@@ -10,6 +10,11 @@ module.exports = async (req, res) => {
       message: "category, post_name, content 중 누락된 항목이 있습니다.",
     });
   }
+  if (!req.cookies.token) {
+    return res
+      .status(400)
+      .json({ data: null, message: "토큰이 존재하지 않습니다." });
+  }
   // 작성자 정보 토큰에서 꺼내옴
   const token = req.cookies.token.access_token;
   let decoded;

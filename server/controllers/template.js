@@ -20,6 +20,12 @@ module.exports = async (req, res) => {
     return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
   }
 
+  // if (!req.cookies.token) {
+  //   return res
+  //     .status(400)
+  //     .json({ data: null, message: "토큰이 존재하지 않습니다." });
+  // }
+
   // const token = req.cookies.token.access_token;
   // let decoded;
   // try {

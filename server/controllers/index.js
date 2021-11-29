@@ -18,4 +18,6 @@ module.exports = {
   // notices
   get_notices_info: require("./notices/get_notices_info"),
   post_notices_info: require("./notices/post_notices_info"),
+  put_notices_info: require("./notices/put_notices_info"),
+  delete_notices_info: require("./notices/delete_notices_info"),
 };
