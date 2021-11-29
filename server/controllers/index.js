@@ -31,4 +31,6 @@ module.exports = {
   get_tags_info: require("./tags/get_tags_info"),
   post_tags_info: require("./tags/post_tags_info"),
   delete_tags_info: require("./tags/delete_tags_info"),
+  // comments
+  get_comments_info: require("./comments/get_comments_info"),
 };
