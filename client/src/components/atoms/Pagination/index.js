@@ -9,7 +9,7 @@ import {
 
 export default function Pagination() {
   const [totalPage, setTotalPage] = useState(12);
-  const limitPage = 5;
+  const limitPage = 6;
   const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
