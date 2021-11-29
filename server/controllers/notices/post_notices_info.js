@@ -53,10 +53,11 @@ module.exports = async (req, res) => {
       ...req.body,
     });
     data = data.get({ plain: true });
+    delete data.userId;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(201).json({ data: data, message: "ok" });
 };
