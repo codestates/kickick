@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import sampleImg from "../../../Assets/Images/KickBoardPostThumbnail.png";
+import sampleImg from "../../../assets/images/KickBoardPostThumbnail.png";
 
 export default function Profile({ size = "lg", thumbnailType = "post" }) {
   let scale = 1.5;
@@ -16,6 +16,5 @@ export default function Profile({ size = "lg", thumbnailType = "post" }) {
 }
 
 const Container = styled.img`
-  width: ${(props) => props.imgSize * 10}rem;
-  height: ${(props) => props.imgSize * 4}rem;
+  min-width: ${(props) => props.imgSize * 10}rem;
 `;

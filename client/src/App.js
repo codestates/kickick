@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Main from "./pages/main";
+import Main from "./pages/Main";
+import KickBoard from "./pages/KickBoard";
 import useAxios from "./hooks/useAxios";
-import { getPostsInfo } from "./api/posts";
-import { light, dark } from "./commons/Styles/Theme";
+import { getPostsInfo } from "./apis/posts";
+import { light, dark } from "./commons/styles/theme";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -31,6 +32,7 @@ export default function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/kickboard" element={<KickBoard />} />
           </Routes>
         </Container>
       </Router>
@@ -41,5 +43,6 @@ export default function App() {
 const Container = styled.div`
   position: relative;
   width: 100vw;
+  max-width: 100%;
   min-height: 100vh;
 `;

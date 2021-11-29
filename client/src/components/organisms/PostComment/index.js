@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import PostCommentInput from "../../Molecules/InputBox/PostCommentInput";
-import PostCommentItem from "../../Molecules/ListItem/PostCommentItem";
+import PostCommentInput from "../../molecules/InputBox/PostCommentInput";
+import PostCommentItem from "../../molecules/ListItem/PostCommentItem";
 
 export default function PostComment({ size = "lg" }) {
   const arr = Array(52).fill(0);
