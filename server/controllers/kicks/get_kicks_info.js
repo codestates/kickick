@@ -68,7 +68,6 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  // console.log(data);
 
   return res.status(200).json({ data: data, message: "ok" });
 };
