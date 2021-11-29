@@ -27,4 +27,8 @@ module.exports = {
   put_kicks_info: require("./kicks/put_kicks_info"),
   delete_kicks_info: require("./kicks/delete_kicks_info"),
   get_kicks_list: require("./kicks/get_kicks_list"),
+  //tags
+  get_tags_info: require("./tags/get_tags_info"),
+  post_tags_info: require("./tags/post_tags_info"),
+  delete_tags_info: require("./tags/delete_tags_info"),
 };

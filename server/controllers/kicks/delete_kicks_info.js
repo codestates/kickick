@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
     kick_info = kick_info.get({ plain: true });
     // user_id 와 킥과 연결된 게시글 user_id 가 다르면 권한 x
     if (user_id !== kick_info.post.user_id) {
-      return res.status(401).json({ data: err, message: "권한이 없습니다." });
+      return res.status(401).json({ data: null, message: "권한이 없습니다." });
     }
     // kick 삭제
     await kicks.destroy({
@@ -68,7 +68,6 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  // console.log(data);
 
   return res.status(201).json({ data: null, message: "ok" });
 };
