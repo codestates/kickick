@@ -21,4 +21,9 @@ module.exports = {
   put_notices_info: require("./notices/put_notices_info"),
   delete_notices_info: require("./notices/delete_notices_info"),
   get_notices_list: require("./notices/get_notices_list"),
+  // kicks
+  get_kicks_info: require("./kicks/get_kicks_info"),
+  post_kicks_info: require("./kicks/post_kicks_info"),
+  put_kicks_info: require("./kicks/put_kicks_info"),
+  delete_kicks_info: require("./kicks/delete_kicks_info"),
 };

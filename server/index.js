@@ -9,6 +9,7 @@ const users_router = require("./routers/users_router");
 const auth_router = require("./routers/auth_router");
 const posts_router = require("./routers/posts_router");
 const notices_router = require("./routers/notices_router");
+const kicks_router = require("./routers/kicks_router");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +27,7 @@ app.use("/users", users_router);
 app.use("/auth", auth_router);
 app.use("/posts", posts_router);
 app.use("/notices", notices_router);
+app.use("/kicks", kicks_router);
 
 app.get("/", (req, res) => {
   res.status(201).send("Hello World");
