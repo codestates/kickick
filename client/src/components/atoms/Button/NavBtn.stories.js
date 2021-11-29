@@ -2,7 +2,7 @@ import React from "react";
 import NavBtn from "./NavBtn";
 
 export default {
-  title: "Atoms/Button/NavBtn",
+  title: "atoms/Button/NavBtn",
   component: NavBtn,
   // argTypes: {
   //   size: {

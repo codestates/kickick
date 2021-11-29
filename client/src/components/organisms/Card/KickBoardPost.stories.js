@@ -2,7 +2,7 @@ import React from "react";
 import KickBoardPost from "./KickBoardPost";
 
 export default {
-  title: "Organisms/KickBoardPost",
+  title: "organisms/KickBoardPost",
   component: KickBoardPost,
   argTypes: {},
 };
