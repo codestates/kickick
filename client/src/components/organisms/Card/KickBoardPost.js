@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Thumbnail from "../../Atoms/Img/Thumbnail";
+import Thumbnail from "../../atoms/Img/Thumbnail";
 
 export default function KickBoardPost() {
   return (
