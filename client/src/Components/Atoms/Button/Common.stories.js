@@ -15,6 +15,9 @@ export default {
       options: ["sm", "md", "lg"],
       control: { type: "radio" },
     },
+    label: {
+      type: "string",
+    },
   },
 };
 
