@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Main from "./pages/main";
+import Main from "./pages/Main";
 import useAxios from "./hooks/useAxios";
-import { getPostsInfo } from "./api/posts";
-import { light, dark } from "./commons/Styles/Theme";
+import { getPostsInfo } from "./apis/posts";
+import { light, dark } from "./commons/styles/theme";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
