@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Main from "./pages/main";
+import Main from "./pages/Main";
+import KickBoard from "./pages/KickBoard";
 import useAxios from "./hooks/useAxios";
 import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
@@ -31,6 +32,7 @@ export default function App() {
         <Container>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/kickboard" element={<KickBoard />} />
           </Routes>
         </Container>
       </Router>
