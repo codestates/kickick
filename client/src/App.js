@@ -7,6 +7,7 @@ import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
 
 import Main from "./pages/Main";
+import KickBoard from "./pages/KickBoard";
 import Nav from './components/organisms/Nav/Nav'
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/kickboard" element={<KickBoard />} />
           </Routes>
         </Container>
       </Router>
@@ -44,6 +46,7 @@ export default function App() {
 const Container = styled.div`
   position:relative;
   width:100vw;
+  max-width: 100%;
   min-height:100vh;
   margin-top:4rem;
 `
