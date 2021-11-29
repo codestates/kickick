@@ -34,7 +34,7 @@ const Container = styled.div`
   height: ${({ height }) => `${height}rem`};
   border: 1px solid black;
   padding: ${({ height }) => `${height * 0.08}rem`};
-  background-color:
+  /* background-color: */
   overflow: hidden;
 `;
 

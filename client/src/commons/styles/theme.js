@@ -2,6 +2,7 @@ const calcRem = (size) => `${size / 16}rem`;
 
 const common = {
   fontSizes: {
+    xs: calcRem(12),
     small: calcRem(14),
     base: calcRem(16),
     lg: calcRem(18),
@@ -26,13 +27,15 @@ const common = {
     xxl: calcRem(16),
     xxxl: calcRem(18),
   },
-  //   deviceSizes: {
-  //     mobileS: "320px",
-  //     mobileM: "375px",
-  //     mobileL: "450px",
-  //     tablet: "768px",
-  //     tabletL: "1024px",
-  //   },
+  deviceSizes: {
+    mobileS: "320px",
+    mobileM: "375px",
+    mobileL: "450px",
+    tablet: "768px",
+    notebookS: "1024px",
+    notebookL: "1440px",
+    desktop: "1920px",
+  },
   device: {
     mobileS: `only screen and (max-width: 320px)`,
     mobileM: `only screen and (max-width: 375px)`,
@@ -40,6 +43,7 @@ const common = {
     tablet: `only screen and (max-width: 768px)`,
     notebookS: `only screen and (max-width: 1024px)`,
     notebookL: `only screen and (max-width: 1440px)`,
+    desktop: `only screen and (max-width: 1920px)`,
   },
 };
 

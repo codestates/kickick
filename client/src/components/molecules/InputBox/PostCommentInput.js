@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+<<<<<<< HEAD
 import Common from "../../atoms/Button/Common";
 import Comment from "../../atoms/Textarea/Comment";
+=======
+import { Common, Comment } from "../../";
+>>>>>>> 573868412f69581dc7a880fd4bd26ba88f1eb4ba
 
 export default function PostCommentInput({ size = "lg" }) {
   let scale = 1;

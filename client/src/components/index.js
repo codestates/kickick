@@ -1,10 +1,15 @@
+//atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
-export { default as PostAlign } from "./atoms/CheckBox/Post";
+export { default as PostAlign } from "./atoms/CheckBox/PostAlign";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as PostTag } from "./atoms/Tag/PostTag";
 export { default as Comment } from "./atoms/Textarea/Comment";
 
-export { default as BtnChamber} from './molecules/BtnChamber/BtnChamber'
+// molecules
+export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
+export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
 
-export { default as Nav} from './organisms/nav/nav'
+// organisms
+export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
+export { default as Nav } from "./organisms/Nav/Nav"
