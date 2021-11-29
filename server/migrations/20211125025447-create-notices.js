@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("notifications", {
+    await queryInterface.createTable("notices", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,18 +9,23 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       user_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-          model: "users",
-          key: "id",
-        },
+      },
+      type: {
+        type: Sequelize.STRING,
+      },
+      notice_name: {
+        type: Sequelize.STRING,
+      },
+      thumbnail: {
+        type: Sequelize.STRING,
+      },
+      summary: {
+        type: Sequelize.STRING,
       },
       content: {
         type: Sequelize.STRING,
-      },
-      is_checked: {
-        type: Sequelize.BOOLEAN,
       },
       created_at: {
         allowNull: false,
@@ -33,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("notifications");
+    await queryInterface.dropTable("notices");
   },
 };
