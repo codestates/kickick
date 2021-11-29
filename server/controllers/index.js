@@ -34,4 +34,6 @@ module.exports = {
   // comments
   get_comments_info: require("./comments/get_comments_info"),
   post_comments_info: require("./comments/post_comments_info"),
+  put_comments_info: require("./comments/put_comments_info"),
+  delete_comments_info: require("./comments/delete_comments_info"),
 };
