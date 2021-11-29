@@ -4,13 +4,8 @@ const {
   kicks,
   comments,
   likes,
-  favorites,
-  users_kicks,
   posts_tags,
   tags,
-  alarms,
-  logs,
-  notices,
 } = require("../../models");
 const jwt = require("jsonwebtoken");
 
@@ -22,8 +17,8 @@ module.exports = async (req, res) => {
   }
 
   // page_num과 limit 기본값 설정
-  const page_num = req.query.page_num || 1;
-  const limit = req.query.limit || 10;
+  const page_num = Number(req.query.page_num) || 1;
+  const limit = Number(req.query.limit) || 10;
 
   // TODO 쿼리가 존재하면 쿼리로 검색
   if (req.query) {
@@ -38,7 +33,7 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res
-      .status(400)
+      .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 
