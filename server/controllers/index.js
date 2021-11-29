@@ -26,4 +26,5 @@ module.exports = {
   post_kicks_info: require("./kicks/post_kicks_info"),
   put_kicks_info: require("./kicks/put_kicks_info"),
   delete_kicks_info: require("./kicks/delete_kicks_info"),
+  get_kicks_list: require("./kicks/get_kicks_list"),
 };
