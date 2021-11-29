@@ -4,13 +4,8 @@ const {
   kicks,
   comments,
   likes,
-  favorites,
-  users_kicks,
   posts_tags,
   tags,
-  alarms,
-  logs,
-  notices,
 } = require("../../models");
 const jwt = require("jsonwebtoken");
 
@@ -38,7 +33,7 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res
-      .status(400)
+      .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 

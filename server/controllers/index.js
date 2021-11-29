@@ -12,4 +12,5 @@ module.exports = {
   // posts
   get_posts_info: require("./posts/get_posts_info"),
   get_posts_list: require("./posts/get_posts_list"),
+  post_posts_info: require("./posts/post_posts_info"),
 };
