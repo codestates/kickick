@@ -3,16 +3,23 @@ import styled from "styled-components";
 
 import { FaSearch } from "react-icons/fa";
 
-export default function SearchInput() {
+export default function SearchInput({ handleSearch, handleInput }) {
   return (
     <Container>
-      <Search type="text" placeholder="검색어를 입력하세요." />
-      <FaSearch style={{ cursor: "pointer" }} />
+      <Search
+        type="text"
+        placeholder="검색어를 입력하세요."
+        onChange={handleInput}
+      />
+      <FaSearch style={{ cursor: "pointer" }} onClick={handleSearch} />
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const Search = styled.input`
   border: none;

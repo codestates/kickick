@@ -8,18 +8,13 @@ import {
   FaAngleDown,
 } from "react-icons/fa";
 
-export default function Select({ size = "md" }) {
-  const [isSelect, setIsSelect] = useState(false);
-  const [icon, setIcon] = useState({
-    icon: <FaAlignJustify />,
-    name: "제목",
-  });
-
-  const handleIcon = ({ icon, name }) => {
-    setIcon({ icon, name });
-    setIsSelect(!isSelect);
-  };
-
+export default function Select({
+  size = "md",
+  handleIcon,
+  icon,
+  isSelect,
+  setIsSelect,
+}) {
   let scale = 1;
   if (size === "sm") scale = 0.75;
   if (size === "lg") scale = 1.5;
