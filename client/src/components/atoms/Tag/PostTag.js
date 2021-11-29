@@ -13,14 +13,14 @@ export default function PostTag({
   else if (size === "lg") scale = 0.75;
 
   let tag = "#";
-  if (tagType === "title") tag = "제목 : ";
-  else if (tagType === "author") tag = "글쓴이 : ";
+  if (tagType === "제목") tag = "제목 : ";
+  else if (tagType === "글쓴이") tag = "글쓴이 : ";
 
   return (
     <Container onClick={handleClick} scale={scale}>
       {tag}
       {detail}
-      <FaTimes />
+      <FaTimes style={{ cursor: "pointer" }} />
     </Container>
   );
 }
@@ -31,6 +31,7 @@ const Container = styled.div`
 
   height: ${(props) => props.scale * 2.2}rem;
   padding: 0 ${(props) => props.scale}rem;
+  margin-left: 1rem;
   border: 2px solid rgba(0, 0, 0, 0.5);
   border-radius: 20px;
 
