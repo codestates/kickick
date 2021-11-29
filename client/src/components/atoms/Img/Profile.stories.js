@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 
 export default {
-  title: "Atoms/Img/Profile",
+  title: "atoms/Img/Profile",
   component: Profile,
   argTypes: {
     profileType: {
