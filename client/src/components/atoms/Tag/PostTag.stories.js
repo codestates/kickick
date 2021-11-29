@@ -2,7 +2,7 @@ import React from "react";
 import PostTag from "./PostTag";
 
 export default {
-  title: "Atoms/Tag/PostTag",
+  title: "atoms/Tag/PostTag",
   component: PostTag,
   argTypes: {
     tagType: {

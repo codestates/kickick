@@ -2,7 +2,7 @@ import React from "react";
 import PostCommentItem from "./PostCommentItem";
 
 export default {
-  title: "Molecules/Comment/PostCommentItem",
+  title: "molecules/Comment/PostCommentItem",
   component: PostCommentItem,
   argTypes: {
     size: {
