@@ -11,4 +11,5 @@ module.exports = {
   signout: require("./auth/signout"),
   // posts
   get_posts_info: require("./posts/get_posts_info"),
+  get_posts_list: require("./posts/get_posts_list"),
 };

@@ -2,6 +2,7 @@ const {
   users,
   posts,
   kicks,
+  comments,
   likes,
   posts_tags,
   tags,
@@ -49,6 +50,16 @@ module.exports = async (req, res) => {
           attributes: ["id", "thumbnail"],
         },
         {
+          model: comments,
+          attributes: ["id", "content", "created_at"],
+          include: [
+            {
+              model: users,
+              attributes: ["username", "profile"],
+            },
+          ],
+        },
+        {
           model: posts_tags,
           attributes: ["tag_id"],
           include: [
@@ -60,6 +71,7 @@ module.exports = async (req, res) => {
         },
       ],
     });
+    data = data.get({ plain: true });
     // 조회수 증가
     await posts.update(
       {
@@ -67,7 +79,7 @@ module.exports = async (req, res) => {
       },
       {
         where: {
-          id: data.dataValues.id,
+          id: data.id,
         },
       }
     );
@@ -75,14 +87,14 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  data = data.get({ plain: true });
+
   // likes 가공
   let likes_obj = {
     true: 0,
     false: 0,
   };
-  data.likes.forEach((el) => {
-    if (el.agreement) {
+  data.likes.forEach((like) => {
+    if (like.agreement) {
       likes_obj.true += 1;
     } else {
       likes_obj.false += 1;
@@ -90,7 +102,7 @@ module.exports = async (req, res) => {
   });
   data.likes = likes_obj;
   // tags 가공
-  data.tags = data.posts_tags.map((el) => el.tag.content);
+  data.tags = data.posts_tags.map((tag) => tag.tag.content);
   delete data.user_id;
   delete data.posts_tags;
 
