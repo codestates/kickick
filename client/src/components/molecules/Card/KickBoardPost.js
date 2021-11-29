@@ -37,18 +37,25 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  margin: ${({ theme }) => theme.margins.base};
+  width: 20rem;
+  margin: ${({ theme }) => theme.margins.xxl};
 
   border-radius: 0.5rem;
   box-shadow: 1px 1px 10px #dddddd;
 
   overflow: hidden;
   cursor: pointer;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: calc(50% - 2rem);
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    width: calc(80% - 2rem);
+  }
 `;
 
 const PostDescription = styled.div`
-  margin: ${({ theme }) => theme.margins.xxl} 1rem;
+  margin: ${({ theme }) => theme.margins.xxl};
 `;
 
 const PostSummary = styled.div`
