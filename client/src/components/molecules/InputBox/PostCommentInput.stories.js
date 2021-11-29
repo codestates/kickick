@@ -2,7 +2,7 @@ import React from "react";
 import PostCommentInput from "./PostCommentInput";
 
 export default {
-  title: "Molecules/InputBox/PostCommentInput",
+  title: "molecules/InputBox/PostCommentInput",
   component: PostCommentInput,
   argTypes: {
     size: {

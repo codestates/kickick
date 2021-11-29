@@ -2,7 +2,7 @@ import React from "react";
 import Thumbnail from "./Thumbnail";
 
 export default {
-  title: "Atoms/Img/Thumbnail",
+  title: "atoms/Img/Thumbnail",
   component: Thumbnail,
   argTypes: {
     thumbnailType: {

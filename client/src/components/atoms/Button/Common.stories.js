@@ -2,7 +2,7 @@ import React from "react";
 import Common from "./Common";
 
 export default {
-  title: "Atoms/Button/Common",
+  title: "atoms/Button/Common",
   component: Common,
   argTypes: {
     btnType: {

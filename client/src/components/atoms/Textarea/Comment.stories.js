@@ -2,7 +2,7 @@ import React from "react";
 import Comment from "./Comment";
 
 export default {
-  title: "Atoms/Textarea/Comment",
+  title: "atoms/Textarea/Comment",
   component: Comment,
   argTypes: {
     size: {

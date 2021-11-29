@@ -2,7 +2,7 @@ import React from "react";
 import PostComment from "./";
 
 export default {
-  title: "Organisms/PostComment",
+  title: "organisms/PostComment",
   component: PostComment,
   argTypes: {
     size: {
