@@ -3,10 +3,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Main from "./pages/Main";
-<<<<<<< HEAD
-=======
 import KickBoard from "./pages/KickBoard";
->>>>>>> 07caf6003df56570f899728f47fd42fa72597191
 import useAxios from "./hooks/useAxios";
 import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
