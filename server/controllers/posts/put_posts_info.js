@@ -9,6 +9,12 @@ module.exports = async (req, res) => {
       .json({ data: null, message: "post_id가 누락되었습니다." });
   }
 
+  if (!req.cookies.token) {
+    return res
+      .status(400)
+      .json({ data: null, message: "토큰이 존재하지 않습니다." });
+  }
+
   const token = req.cookies.token.access_token;
   let decoded;
   try {
@@ -57,5 +63,5 @@ module.exports = async (req, res) => {
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: null, message: "ok" });
+  return res.status(201).json({ data: null, message: "ok" });
 };

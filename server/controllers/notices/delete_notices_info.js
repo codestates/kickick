@@ -1,10 +1,12 @@
-const { users, posts } = require("../../models");
+const { users, notices } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
-  // TODO 게시글 삭제 구현
-  if (!req.params.post_id) {
-    return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+  // TODO 공지 삭제 구현
+  if (!req.params.notice_id) {
+    return res
+      .status(400)
+      .json({ data: null, message: "notice_id가 누락되었습니다." });
   }
 
   if (!req.cookies.token) {
@@ -24,35 +26,36 @@ module.exports = async (req, res) => {
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 
+  const notice_id = req.params.notice_id;
   const { username } = decoded;
-  const post_id = req.params.post_id;
+  let data;
 
   try {
-    // 토큰정보로 user_id 구함
+    // 토큰정보로 user_id 가져옴
     let user_info = await users.findOne({
+      attributes: ["id"],
       where: {
         username: username,
       },
     });
+
     user_info = user_info.get({ plain: true });
     const user_id = user_info.id;
-    // post_id로 게시글에 저장된 user_id 구함
-    let post_info = await posts.findOne({
+    // notice_id로 notice_info 가져옴
+    let notice_info = await notices.findOne({
       where: {
-        id: post_id,
+        id: notice_id,
       },
     });
-    post_info.get({ plain: true });
-    // user_id 가 일치하지 않으면 권한x
-    if (post_info.user_id !== user_id) {
-      return res
-        .status(401)
-        .json({ data: err, message: "게시글을 삭제할 권한이 없습니다." });
+    notice_info = notice_info.get({ plain: true });
+    // user_id가 일치하지 않으면 권한 x
+    if (user_id !== notice_info.user_id) {
+      return res.status(401).json({ data: err, message: "권한이 없습니다." });
     }
-    // 게시글 삭제
-    await posts.destroy({
+    // 공지 삭제
+    await notices.destroy({
       where: {
-        id: post_id,
+        id: notice_id,
       },
     });
   } catch (err) {

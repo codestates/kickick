@@ -17,8 +17,8 @@ module.exports = async (req, res) => {
   }
 
   // page_num과 limit 기본값 설정
-  const page_num = req.query.page_num || 1;
-  const limit = req.query.limit || 10;
+  const page_num = Number(req.query.page_num) || 1;
+  const limit = Number(req.query.limit) || 10;
 
   // TODO 쿼리가 존재하면 쿼리로 검색
   if (req.query) {
