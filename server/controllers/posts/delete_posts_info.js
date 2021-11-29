@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
         .json({ data: err, message: "게시글을 삭제할 권한이 없습니다." });
     }
     // 게시글 삭제
-    await delete posts.destroy({
+    await posts.destroy({
       where: {
         id: post_id,
       },
