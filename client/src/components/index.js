@@ -10,7 +10,7 @@ export { default as Comment } from "./atoms/Textarea/Comment";
 // molecules
 export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
-// export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputChamber"
+export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputChamber"
 
 // organisms
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";

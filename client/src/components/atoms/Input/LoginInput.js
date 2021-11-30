@@ -4,7 +4,8 @@ import styled from "styled-components";
 export default function LoginInput({
   type = "text",
   part = "email",
-  // inputHandler,
+  inputHandler,
+  validHandler,
   width = 20,
   height = 3,
 }) {
@@ -12,8 +13,12 @@ export default function LoginInput({
   const [isChange, setIsChange] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-
-  const warning = [part, "값을 입력해주세요", "양식이 잘못되었습니다.", "완료되었습니다"];
+  const warning = [
+    part,
+    `${part}을(를) 입력해주세요`,
+    "양식이 잘못되었습니다.",
+    "완료되었습니다",
+  ];
   let num = inputValue.search(/[0-9]/g);
   let eng = inputValue.search(/[a-z]/gi);
   let spe = inputValue.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
@@ -46,12 +51,16 @@ export default function LoginInput({
           //영문,숫자,특문을 혼합
         )
       : inputValue.length < 4 || inputValue.length > 10;
-  
-  
-  const hanler = (e) => {
+
+  const contextHandler = (e) => {
     setIsChange(true);
     setInputValue(e.target.value);
+    inputHandler(part, e.target.value);
   };
+
+  const validContoller = () => {
+    validHandler(part, validation);
+  }
 
   console.log(part, "=>  inputValue:", inputValue, ", validation:", validation);
   return (
@@ -76,7 +85,13 @@ export default function LoginInput({
           ? warning[2]
           : warning[3]}
       </WarningBox>
-      <Input type={type} height={height} value={inputValue} onChange={hanler} />
+      <Input
+        type={type}
+        height={height}
+        value={inputValue}
+        onChange={contextHandler}
+        onKeyUp={validContoller}
+      />
     </Container>
   );
 }
@@ -88,7 +103,9 @@ const Container = styled.div`
   justify-content: flex-end;
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
-  border: 0.2rem solid;
+  margin: 0.5rem 0;
+  padding: ${({ height }) => `${height * 0.08}rem`};
+  border: 0.1rem solid;
   border-color: ${({ isChange, validation }) =>
     isChange === true && validation
       ? //한번이라도 입력했는데 벨리데이션을 통과 못함.
@@ -97,7 +114,7 @@ const Container = styled.div`
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
         "#048EF1"
       : "#000000"};
-  padding: ${({ height }) => `${height * 0.08}rem`};
+  border-radius: ${({ height }) => `${height * 0.08}rem`};
   background-color: #ffffff;
   overflow: hidden;
 `;
