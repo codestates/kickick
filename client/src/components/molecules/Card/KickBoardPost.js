@@ -46,11 +46,15 @@ const Container = styled.div`
   overflow: hidden;
   cursor: pointer;
 
+  &:hover {
+    transform: scale(1.025);
+  }
+
   @media ${({ theme }) => theme.device.notebookS} {
     width: calc(50% - 2rem);
   }
   @media ${({ theme }) => theme.device.tablet} {
-    width: calc(80% - 2rem);
+    width: calc(100% - 2rem);
   }
 `;
 
