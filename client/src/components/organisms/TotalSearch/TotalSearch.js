@@ -30,6 +30,7 @@ export default function TotalSearch() {
       dummy[isDuplicate].word = word;
     }
     setTag(dummy);
+    setWord("");
   };
 
   const handleInput = (e) => {
@@ -45,20 +46,24 @@ export default function TotalSearch() {
     <>
       <Container>
         <AlignContainer>
-          <PostAlign size={"md"} />
-          <PostAlign alignType={"hot"} size={"md"} />
+          <PostAlign />
+          <PostAlign alignType={"hot"} />
         </AlignContainer>
-        <AlignContainer>
+        <SearchContainer>
           <Options
             icon={icon}
             handleIcon={handleIcon}
             isSelect={isSelect}
             setIsSelect={setIsSelect}
           />
-          <SearchInput handleSearch={handleSearch} handleInput={handleInput} />
-        </AlignContainer>
+          <SearchInput
+            handleSearch={handleSearch}
+            handleInput={handleInput}
+            word={word}
+          />
+        </SearchContainer>
       </Container>
-      <Container style={{ display: "block" }}>
+      <TagContainer>
         {tag.map((el, idx) => (
           <PostTag
             tagType={el.name}
@@ -66,20 +71,30 @@ export default function TotalSearch() {
             handleClick={() => handleClick(idx)}
           />
         ))}
-      </Container>
+      </TagContainer>
     </>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  height: 2rem;
-  /* border: 1px solid black; */
+  flex-wrap: wrap;
+  margin: 0 1rem 3rem 1rem;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 1rem 1rem 1rem;
 `;
 
 const AlignContainer = styled.div`
   display: flex;
-  height: 2rem;
+  gap: 1.5rem;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
   gap: 1rem;
+  margin-left: auto;
 `;

@@ -36,4 +36,8 @@ module.exports = {
   post_comments_info: require("./comments/post_comments_info"),
   put_comments_info: require("./comments/put_comments_info"),
   delete_comments_info: require("./comments/delete_comments_info"),
+  // likes
+  get_likes_info: require("./likes/get_likes_info"),
+  post_likes_info: require("./likes/post_likes_info"),
+  delete_likes_info: require("./likes/delete_likes_info"),
 };
