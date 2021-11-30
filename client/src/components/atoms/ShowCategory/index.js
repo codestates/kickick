@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IconText } from "../../../commons/styles/template";
 import {
   FaBook,
   FaAffiliatetheme,
@@ -30,13 +29,22 @@ export default function ShowCategory({ type = "학습" }) {
   );
 }
 
-const Container = styled(IconText)`
+const Container = styled.div`
   margin: 2rem 0;
 
-  font-size: 2rem;
-  cursor: default;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
 
+  border-radius: 5px;
+
+  font-size: 2rem;
+  font-weight: bold;
+
+  cursor: default;
   svg {
-    font-size: 2rem;
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+    pointer-events: none;
   }
 `;
