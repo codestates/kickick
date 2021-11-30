@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     alarm_info = alarm_info.get({ plain: true });
 
     if (user_id !== alarm_info.user_id) {
-      return res.status(400).json({ data: err, message: "권한이 없습니다." });
+      return res.status(401).json({ data: err, message: "권한이 없습니다." });
     }
 
     // alarms 테이블 업데이트
