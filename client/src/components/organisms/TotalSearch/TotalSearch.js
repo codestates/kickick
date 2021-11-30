@@ -79,7 +79,7 @@ export default function TotalSearch() {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 1rem 3rem 1rem;
+  margin: 0 1rem 1rem 1rem;
 `;
 
 const TagContainer = styled.div`

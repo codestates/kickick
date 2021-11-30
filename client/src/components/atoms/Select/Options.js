@@ -48,9 +48,9 @@ const Container = styled.div`
 `;
 
 const Selected = styled(IconText)`
-  font-size: 1.2rem;
+  font-size: 1rem;
   svg {
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 `;
 
@@ -68,9 +68,9 @@ const Option = styled(IconText)`
   padding: 0.5rem;
   margin: 0.1rem;
 
-  font-size: 1.25rem;
+  font-size: 1rem;
   svg {
-    font-size: 1.45rem;
+    font-size: 1rem;
   }
 
   :hover {
