@@ -17,7 +17,6 @@ export default function EditQuill() {
 
     input.onchange = async () => {
       const file = input.files[0];
-      console.log(file);
 
       AWS.config.update({
         region: process.env.REACT_APP_AWS_REGION,
