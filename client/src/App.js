@@ -8,8 +8,8 @@ import { light, dark } from "./commons/styles/theme";
 
 import KickBoard from "./pages/KickBoard";
 import { Nav } from "./components";
-import Main from "./pages/main";
-import Login from "./pages/Login"
+import Main from "./pages/Main";
+import Login from "./pages/Login";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
