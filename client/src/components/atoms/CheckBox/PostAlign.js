@@ -16,4 +16,9 @@ export default function PostAlign({ alignType = "recent", handleClick }) {
   );
 }
 
-const PostAlignButton = styled(IconText)``;
+const PostAlignButton = styled(IconText)`
+  font-size: 1.25rem;
+  svg {
+    font-size: 1.45rem;
+  }
+`;
