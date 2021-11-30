@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
+import kickpostsReducer from "./reducers/kickpostsReducer";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    kickposts: kickpostsReducer,
   },
 });
