@@ -1,63 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-
 import {
   FaHashtag,
   FaUserAstronaut,
   FaAlignJustify,
   FaAngleDown,
+  FaAngleRight,
 } from "react-icons/fa";
 
-export default function Select({
-  size = "md",
-  handleIcon,
-  icon,
-  isSelect,
-  setIsSelect,
-}) {
-  let scale = 1;
-  if (size === "sm") scale = 0.75;
-  if (size === "lg") scale = 1.5;
+import { IconText } from "../../../commons/styles/template";
+
+export default function Select({ handleIcon, icon, isSelect, setIsSelect }) {
+  const iconList = [
+    { icon: <FaAlignJustify />, name: "제목" },
+    { icon: <FaUserAstronaut />, name: "글쓴이" },
+    { icon: <FaHashtag />, name: "태그" },
+  ];
   return (
     <Container>
-      <Choosen scale={scale}>
-        <FaAngleDown
-          onClick={() => setIsSelect(!isSelect)}
-          style={{ cursor: "pointer", marginRight: "0.5rem" }}
-        />
-
-        <Selected scale={scale} style={{}}>
-          {icon.icon}
-          {icon.name}
-        </Selected>
-      </Choosen>
+      <Selected onClick={() => setIsSelect(!isSelect)}>
+        {isSelect ? <FaAngleDown /> : <FaAngleRight />}
+        {icon.icon}
+        {icon.name}
+      </Selected>
       {isSelect ? (
-        <Options scale={scale}>
-          <Option
-            scale={scale}
-            onClick={() =>
-              handleIcon({ icon: <FaAlignJustify />, name: "제목" })
-            }
-          >
-            <FaAlignJustify />
-            제목
-          </Option>
-          <Option
-            scale={scale}
-            onClick={() =>
-              handleIcon({ icon: <FaUserAstronaut />, name: "글쓴이" })
-            }
-          >
-            <FaUserAstronaut />
-            글쓴이
-          </Option>
-          <Option
-            scale={scale}
-            onClick={() => handleIcon({ icon: <FaHashtag />, name: "태그" })}
-          >
-            <FaHashtag />
-            태그
-          </Option>
+        <Options>
+          {iconList
+            .filter((el) => el.name !== icon.name)
+            .map((el) => (
+              <Option key={el.name} onClick={() => handleIcon(el)}>
+                {el.icon}
+                {el.name}
+              </Option>
+            ))}
         </Options>
       ) : null}
     </Container>
@@ -65,61 +40,41 @@ export default function Select({
 }
 
 const Container = styled.div`
-  width: 5rem;
-`;
-
-const Choosen = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 
-  width: ${(props) => props.scale * 6}rem;
-  height: ${(props) => props.scale * 2}rem;
-
-  font-size: ${(props) => props.scale}rem;
-  font-weight: bold;
-  line-height: 0.9;
+  width: 7.5rem;
 `;
 
-const Selected = styled.div`
-  display: flex;
-  align-items: center;
-
-  width: ${(props) => props.scale * 4.9}rem;
-  height: ${(props) => props.scale * 2}rem;
-  padding-left: 0.2rem;
-
-  font-size: ${(props) => props.scale}rem;
-  font-weight: bold;
-  line-height: 0.9;
+const Selected = styled(IconText)`
+  font-size: 1.2rem;
+  svg {
+    font-size: 1.4rem;
+  }
 `;
 
 const Options = styled.div`
-  width: ${(props) => props.scale * 5}rem;
-  height: ${(props) => props.scale * 6}rem;
+  position: absolute;
+  left: 1rem;
+  top: 2.5rem;
 
-  border: 1px solid black;
-  border-radius: 10px;
+  width: 7rem;
+
+  border-radius: 0.25rem;
+  box-shadow: 1px 1px 7px gray;
 `;
-const Option = styled.div`
-  display: flex;
-  align-items: center;
+const Option = styled(IconText)`
+  padding: 0.5rem;
+  margin: 0.1rem;
 
-  width: ${(props) => props.scale * 4.9}rem;
-  height: ${(props) => props.scale * 2}rem;
-  padding-left: 0.2rem;
+  font-size: 1.25rem;
+  svg {
+    font-size: 1.45rem;
+  }
 
-  border-radius: 10px;
-
-  font-size: ${(props) => props.scale}rem;
-  font-weight: bold;
-  line-height: 0.9;
-
-  cursor: pointer;
   :hover {
     color: #ffffff;
     background-color: #0c0c42;
-  }
-  svg {
-    margin-right: 0.3rem;
   }
 `;

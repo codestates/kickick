@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import NavBtn from "../../atoms/Button/NavBtn";
-import BtnChamber from "../../molecules/BtnChamber/BtnChamber"
+import BtnChamber from "../../molecules/BtnChamber/BtnChamber";
 
 export default function Nav({ toggleTheme }) {
   return (
