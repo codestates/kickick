@@ -6,13 +6,6 @@ export default function Comment({ size = "lg", handleClick, ...props }) {
   if (size === "sm") scale = 0.75;
   if (size === "lg") scale = 1.5;
 
-  // const style = {
-  //   width: `${scale * 21}rem`,
-  //   minHeight: `${scale * 2}rem`,
-  //   padding: `${scale * 0.5}rem`,
-  //   fontSize: `${scale * 0.5}rem`,
-  // };
-
   return (
     <Container
       scale={scale}

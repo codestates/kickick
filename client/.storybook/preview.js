@@ -1,6 +1,10 @@
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
+<<<<<<< HEAD
 import { store } from "../src/store/store";
+=======
+import { store } from "../src/store";
+>>>>>>> 51fe99403836c23ec7912daee6ac908ba85b4024
 import GlobalStyles from "../src/commons/styles/GlobalStyles";
 import { light, dark } from "../src/commons/styles/theme";
 

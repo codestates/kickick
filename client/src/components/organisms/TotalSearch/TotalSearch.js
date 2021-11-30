@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import PostAlign from "../../atoms/CheckBox/PostAlign";
+
+import PostAlign from "../../molecules/CheckBox/PostAlign";
 import Options from "../../atoms/Select/Options";
 import SearchInput from "../../atoms/Input/SearchInput";
 import PostTag from "../../atoms/Tag/PostTag";
 
-import { FaAlignJustify } from "react-icons/fa";
-
 export default function TotalSearch() {
   const [isSelect, setIsSelect] = useState(false);
-  const [icon, setIcon] = useState({
-    icon: <FaAlignJustify />,
-    name: "제목",
-  });
+  const [icon, setIcon] = useState({ label: "제목" });
   const [tag, setTag] = useState([]);
   const [word, setWord] = useState("");
+  const [highlight, setHighlight] = useState("최신");
 
-  const handleIcon = ({ icon, name }) => {
-    setIcon({ icon, name });
+  const handleAlign = (event) => {
+    const label = event.target.innerText;
+    setHighlight(label);
+  };
+
+  const handleIcon = (label) => {
+    setIcon(label);
     setIsSelect(!isSelect);
   };
 
   const handleSearch = () => {
     let dummy = [...tag];
-    let isDuplicate = dummy.findIndex((el) => el.name === icon.name);
+    console.log(dummy);
+    let isDuplicate = dummy.findIndex((el) => el.label === icon.label);
     if (isDuplicate === -1) {
-      dummy.push({ name: icon.name, word });
+      dummy.push({ label: icon.label, word });
     } else {
       dummy[isDuplicate].word = word;
     }
@@ -45,10 +48,7 @@ export default function TotalSearch() {
   return (
     <>
       <Container>
-        <AlignContainer>
-          <PostAlign />
-          <PostAlign alignType={"hot"} />
-        </AlignContainer>
+        <PostAlign highlight={highlight} handleAlign={handleAlign} />
         <SearchContainer>
           <Options
             icon={icon}
@@ -66,7 +66,7 @@ export default function TotalSearch() {
       <TagContainer>
         {tag.map((el, idx) => (
           <PostTag
-            tagType={el.name}
+            type={el.label}
             detail={el.word}
             handleClick={() => handleClick(idx)}
           />
@@ -85,16 +85,12 @@ const Container = styled.div`
 const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  min-height: 2.5rem;
   margin: 0 1rem 1rem 1rem;
-`;
-
-const AlignContainer = styled.div`
-  display: flex;
-  gap: 1.5rem;
 `;
 
 const SearchContainer = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   margin-left: auto;
 `;

@@ -1,37 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  FaHashtag,
-  FaUserAstronaut,
-  FaAlignJustify,
-  FaAngleDown,
-  FaAngleRight,
-} from "react-icons/fa";
 
-import { IconText } from "../../../commons/styles/template";
+import IconText, { iconList } from "../IconText";
+import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 
 export default function Select({ handleIcon, icon, isSelect, setIsSelect }) {
-  const iconList = [
-    { icon: <FaAlignJustify />, name: "제목" },
-    { icon: <FaUserAstronaut />, name: "글쓴이" },
-    { icon: <FaHashtag />, name: "태그" },
-  ];
   return (
     <Container>
       <Selected onClick={() => setIsSelect(!isSelect)}>
         {isSelect ? <FaAngleDown /> : <FaAngleRight />}
-        {icon.icon}
-        {icon.name}
+        <IconText label={icon.label} />
       </Selected>
       {isSelect ? (
         <Options>
           {iconList
-            .filter((el) => el.name !== icon.name)
+            .filter((el) => el.category === "검색")
+            .filter((el) => el.label !== icon.label)
             .map((el) => (
-              <Option key={el.name} onClick={() => handleIcon(el)}>
-                {el.icon}
-                {el.name}
-              </Option>
+              <IconText
+                key={el.label}
+                label={el.label}
+                handleClick={() => handleIcon(el)}
+              />
             ))}
         </Options>
       ) : null}
@@ -47,10 +37,17 @@ const Container = styled.div`
   width: 7.5rem;
 `;
 
-const Selected = styled(IconText)`
-  font-size: 1rem;
-  svg {
+const Selected = styled.div`
+  display: flex;
+  align-items: center;
+
+  > div {
     font-size: 1rem;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+    font-size: 1.125rem;
   }
 `;
 
@@ -63,18 +60,17 @@ const Options = styled.div`
 
   border-radius: 0.25rem;
   box-shadow: 1px 1px 7px gray;
-`;
-const Option = styled(IconText)`
-  padding: 0.5rem;
-  margin: 0.1rem;
 
-  font-size: 1rem;
-  svg {
-    font-size: 1rem;
+  > div {
+    padding: 0.5rem;
+    margin: 0.1rem;
+    font-size: 1.25rem;
   }
-
-  :hover {
+  > div:hover {
     color: #ffffff;
     background-color: #0c0c42;
+  }
+  svg {
+    font-size: 1.3rem;
   }
 `;
