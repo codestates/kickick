@@ -8,9 +8,9 @@ export default function BoardListTitle() {
         <div style={{ flex: 4 }}>제목</div>
         <div style={{ flex: 3 }}>태그</div>
         <div style={{ flex: 1 }}>글쓴이</div>
-        <div style={{ flex: 1.2 }}>날짜</div>
-        <div style={{ flex: 1 }}>조회수</div>
-        <div style={{ flex: 1 }}>댓글</div>
+        <div style={{ flex: 1.6 }}>날짜</div>
+        <div style={{ flex: 0.8 }}>조회수</div>
+        <div style={{ flex: 0.8 }}>댓글</div>
       </TitleContainer>
       <ListContainer>
         <div
@@ -29,15 +29,17 @@ export default function BoardListTitle() {
           <span>#하드코딩</span>
         </div>
         <div style={{ flex: 1, textAlign: "center" }}>soso</div>
-        <div style={{ flex: 1.2, textAlign: "center" }}>2021.11.29</div>
-        <div style={{ flex: 1, textAlign: "center" }}>2020</div>
-        <div style={{ flex: 1, textAlign: "center" }}>0</div>
+        <div style={{ flex: 1.6, textAlign: "center" }}>2021.11.29</div>
+        <div style={{ flex: 0.8, textAlign: "center" }}>2020</div>
+        <div style={{ flex: 0.8, textAlign: "center" }}>0</div>
       </ListContainer>
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 1.8rem;
+`;
 const TitleContainer = styled.div`
   display: flex;
 
