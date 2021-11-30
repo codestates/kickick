@@ -31,7 +31,10 @@ export default function ShowCategory({ type = "학습" }) {
 }
 
 const Container = styled(IconText)`
+  margin: 2rem 0;
+
   font-size: 2rem;
+  cursor: default;
 
   svg {
     font-size: 2rem;
