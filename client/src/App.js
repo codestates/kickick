@@ -7,7 +7,7 @@ import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
 
 import KickBoard from "./pages/KickBoard";
-import Nav from './components/organisms/Nav/Nav'
+import { Nav } from "./components";
 import Main from "./pages/main";
 import Login from "./pages/Login"
 

@@ -14,4 +14,6 @@ export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputCha
 
 // organisms
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
-export { default as Nav } from "./organisms/Nav/Nav"
+export { default as Nav } from "./organisms/Nav/Nav";
+export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
+export { default as BoardBottom } from "./organisms/BoardBottom";
