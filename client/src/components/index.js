@@ -2,9 +2,11 @@
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
+export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as PostTag } from "./atoms/Tag/PostTag";
 export { default as Comment } from "./atoms/Textarea/Comment";
+export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as ShowCategory } from "./atoms/ShowCategory";
 export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
