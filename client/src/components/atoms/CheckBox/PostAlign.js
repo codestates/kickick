@@ -24,14 +24,16 @@ export default function PostAlign({
 
 const PostAlignButton = styled.div`
   display: flex;
+  align-items: center;
 
-  width: ${(props) => props.scale * 5}rem;
+  width: ${(props) => props.scale * 4}rem;
   height: ${(props) => props.scale * 2}rem;
 
   font-size: ${(props) => props.scale}rem;
   font-weight: bold;
   line-height: 0.9;
 
+  cursor: pointer;
   svg {
     margin-right: 0.3rem;
   }
