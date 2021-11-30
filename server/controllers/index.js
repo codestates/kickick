@@ -33,4 +33,23 @@ module.exports = {
   delete_tags_info: require("./tags/delete_tags_info"),
   // comments
   get_comments_info: require("./comments/get_comments_info"),
+  post_comments_info: require("./comments/post_comments_info"),
+  put_comments_info: require("./comments/put_comments_info"),
+  delete_comments_info: require("./comments/delete_comments_info"),
+  // likes
+  get_likes_info: require("./likes/get_likes_info"),
+  post_likes_info: require("./likes/post_likes_info"),
+  delete_likes_info: require("./likes/delete_likes_info"),
+  // favorites
+  get_favorites_info: require("./favorites/get_favorites_info"),
+  post_favorites_info: require("./favorites/post_favorites_info"),
+  delete_favorites_info: require("./favorites/delete_favorites_info"),
+  // alarms
+  get_alarms_info: require("./alarms/get_alarms_info"),
+  post_alarms_info: require("./alarms/post_alarms_info"),
+  put_alarms_info: require("./alarms/put_alarms_info"),
+  delete_alarms_info: require("./alarms/delete_alarms_info"),
+  // logs
+  get_logs_info: require("./logs/get_logs_info"),
+  delete_logs_info: require("./logs/delete_logs_info"),
 };
