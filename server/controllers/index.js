@@ -40,4 +40,8 @@ module.exports = {
   get_likes_info: require("./likes/get_likes_info"),
   post_likes_info: require("./likes/post_likes_info"),
   delete_likes_info: require("./likes/delete_likes_info"),
+  // favorites
+  get_favorites_info: require("./favorites/get_favorites_info"),
+  post_favorites_info: require("./favorites/post_favorites_info"),
+  delete_favorites_info: require("./favorites/delete_favorites_info"),
 };
