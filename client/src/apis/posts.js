@@ -1,5 +1,4 @@
 import api from "./index";
-
 /**
  * @param {number} post_id
  **/
