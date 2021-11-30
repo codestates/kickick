@@ -14,6 +14,10 @@ module.exports = async (req, res) => {
       .json({ data: null, message: "토큰이 존재하지 않습니다." });
   }
 
+  // page_num과 limit 기본값 설정
+  const page_num = Number(req.query.page_num) || 1;
+  const limit = Number(req.query.limit) || 10;
+
   const token = req.cookies.token.access_token;
   let decoded;
   try {
@@ -38,6 +42,8 @@ module.exports = async (req, res) => {
         {
           model: favorites,
           attributes: ["id", "post_id"],
+          offset: limit * (page_num - 1),
+          limit: limit,
           include: [
             {
               model: posts,
