@@ -44,4 +44,9 @@ module.exports = {
   get_favorites_info: require("./favorites/get_favorites_info"),
   post_favorites_info: require("./favorites/post_favorites_info"),
   delete_favorites_info: require("./favorites/delete_favorites_info"),
+  // alarms
+  get_alarms_info: require("./alarms/get_alarms_info"),
+  post_alarms_info: require("./alarms/post_alarms_info"),
+  put_alarms_info: require("./alarms/put_alarms_info"),
+  delete_alarms_info: require("./alarms/delete_alarms_info"),
 };
