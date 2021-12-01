@@ -25,13 +25,12 @@ const Container = styled.div`
   align-items: center;
 
   padding: 0.5rem;
-  margin-right: 1rem;
-  border: 2px solid ${({ color }) => color};
+  border: 2px solid gray;
   border-radius: 10px;
 
   font-size: 1rem;
   font-weight: bold;
-  color: ${({ color }) => color};
+  color: gray;
 
   cursor: pointer;
 

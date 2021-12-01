@@ -10,7 +10,7 @@ export default function PostAlign({ highlight, handleAlign }) {
         .filter((el) => el.category === "정렬")
         .map((el) => (
           <IconText
-            highlight={highlight}
+            isActive={highlight === el.label}
             label={el.label}
             handleClick={handleAlign}
           />
@@ -21,5 +21,14 @@ export default function PostAlign({ highlight, handleAlign }) {
 
 const Container = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    > div {
+      font-size: 1rem;
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+  }
 `;
