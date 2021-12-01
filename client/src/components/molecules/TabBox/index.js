@@ -1,30 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 
-import MyPageTab from "../../atoms/Tab";
+import Tab from "../../atoms/Tab";
 
-export default function TabBox({
-  list = [
-    "회원정보",
-    "즐겨찾기",
-    "내가 올린 글",
-    "내가 단 댓글",
-    "킥 구매 목록",
-    "킥머니 로그",
-    "이벤트 당첨 목록",
-  ],
-}) {
+export default function TabBox({ list }) {
   return (
     <Conatiner>
       {list.map((el) => (
-        <MyPageTab label={el} key={el} />
+        <Tab label={el.label} to={el.to} key={el} />
       ))}
     </Conatiner>
   );
 }
 
 const Conatiner = styled.div`
-  width: 15rem;
+  width: 10rem;
 
-  border: 1px solid #dddddd;
+  border-top: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+
+  .active {
+    border-left: 3px solid #0c0c42;
+    background-color: #eeeeee;
+    cursor: default;
+    pointer-events: none;
+    font-weight: bold;
+    color: #0c0c42;
+  }
 `;

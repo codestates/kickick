@@ -10,4 +10,6 @@ export default {
 const Template = (args) => <Tab {...args} />;
 
 export const Control = Template.bind({});
-Control.args = {};
+Control.args = {
+  label: "회원정보",
+};
