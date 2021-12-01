@@ -5,8 +5,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import AWS from "aws-sdk";
 
-export default function EditQuill() {
+export default function EditQuill({ image = true }) {
   const quill = useRef(null);
+  //quill.current.state.value
 
   const handleImage = () => {
     const input = document.createElement("input");
@@ -63,8 +64,7 @@ export default function EditQuill() {
           { indent: "-1" },
           { indent: "+1" },
         ],
-        ["link", "image", "video", "code-block"],
-        ["clean"],
+        image ? ["link", "image", "video", "code-block", "clean"] : ["clean"],
       ],
       handlers: { image: handleImage },
     },
