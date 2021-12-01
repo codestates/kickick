@@ -109,4 +109,6 @@ export default function EditQuill({ image = true }) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  z-index: 1;
+`;

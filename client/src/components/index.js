@@ -19,6 +19,7 @@ export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputCha
 export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInput";
 export { default as TagInput } from "./molecules/InputBox/TagInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
+export { default as Options } from "./molecules/Select/Options";
 
 // organisms
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";

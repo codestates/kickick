@@ -1,17 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { EditQuill, TitleInput, Common, TagInput } from "../../components";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  EditQuill,
+  TitleInput,
+  Common,
+  TagInput,
+  Options,
+} from "../../components";
+
+import {
+  getCategory,
+  getPostsName,
+  getContent,
+} from "../../store/actions/postadd";
 
 export default function EditBoard() {
+  const [isSelect, setIsSelect] = useState(false);
+  const [icon, setIcon] = useState({ label: "학습" });
+  const state = useSelector((state) => state.postAdd);
+  const dispatch = useDispatch();
+  const handleIcon = (label) => {
+    setIcon(label);
+    setIsSelect(!isSelect);
+  };
+
+  const handleClick = () => {
+    dispatch(getCategory(icon.label));
+    console.log(state);
+  };
   return (
     <Container>
       <TitleContainer>
-        <TitleInput />
+        <Options
+          isSelect={isSelect}
+          setIsSelect={setIsSelect}
+          icon={icon}
+          handleIcon={handleIcon}
+          category="분류"
+        />
+        <TitleInput padding="0.3rem" />
       </TitleContainer>
       <EditQuill image={false} />
       <TagInput />
       <BtnContainer>
-        <Common label="등 록" btnType="bigger" />
+        <Common label="등 록" btnType="bigger" handleClick={handleClick} />
       </BtnContainer>
     </Container>
   );
@@ -26,6 +59,7 @@ const Container = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  display: flex;
   margin-top: 2rem;
 `;
 const BtnContainer = styled.div`
