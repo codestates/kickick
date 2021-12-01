@@ -5,7 +5,9 @@ import { EditQuill, TitleInput, Common, TagInput } from "../../components";
 export default function EditBoard() {
   return (
     <Container>
-      <TitleInput />
+      <TitleContainer>
+        <TitleInput />
+      </TitleContainer>
       <EditQuill image={false} />
       <TagInput />
       <BtnContainer>
@@ -16,10 +18,16 @@ export default function EditBoard() {
 }
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 88rem;
   margin: 0 auto;
+  gap: 1rem;
 `;
 
+const TitleContainer = styled.div`
+  margin-top: 2rem;
+`;
 const BtnContainer = styled.div`
   text-align: center;
 `;

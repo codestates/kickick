@@ -56,10 +56,13 @@ const Container = styled.div`
 const TagContainer = styled.div`
   padding: 0.5rem;
   font-weight: bold;
-  background-color: #c4c4c4;
+  color: #f15f5f;
+  border: 2px solid #f15f5f;
+  border-radius: 10px;
 
   cursor: pointer;
   svg {
     height: 0.8rem;
+    color: #f15f5f;
   }
 `;
