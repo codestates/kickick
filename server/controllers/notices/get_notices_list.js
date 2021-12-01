@@ -11,13 +11,13 @@ module.exports = async (req, res) => {
   try {
     data = await notices.findAll({
       attributes: [
-        "id",
+        ["id", "notice_id"],
         "user_id",
         "type",
         "notice_name",
         "thumbnail",
         "summary",
-        "content",
+        // "content",
         "created_at",
       ],
       include: {
@@ -27,6 +27,14 @@ module.exports = async (req, res) => {
       offset: limit * (page_num - 1),
       limit: limit,
     });
+
+    // id 명시적으로
+    // data = data.map((el) => {
+    //   el = el.get({ plain: true });
+    //   el.notice_id = el.id;
+    //   delete el.id;
+    //   return el;
+    // });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

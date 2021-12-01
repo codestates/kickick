@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
         post_id: post_id,
       },
     });
-    console.log(kick_info);
+
     if (kick_info) {
       return res.status(400).json({
         data: null,
@@ -68,13 +68,19 @@ module.exports = async (req, res) => {
     }
     // kick 생성
     data = await kicks.create(req.body);
-    console.log(data);
     data = data.get({ plain: true });
+
     // users_kicks 생성
     await users_kicks.create({
       user_id: user_id,
       kick_id: data.id,
     });
+
+    delete data.postId;
+
+    // id 명시적으로
+    data.kick_id = data.id;
+    delete data.id;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
