@@ -49,4 +49,7 @@ module.exports = {
   post_alarms_info: require("./alarms/post_alarms_info"),
   put_alarms_info: require("./alarms/put_alarms_info"),
   delete_alarms_info: require("./alarms/delete_alarms_info"),
+  // logs
+  get_logs_info: require("./logs/get_logs_info"),
+  delete_logs_info: require("./logs/delete_logs_info"),
 };
