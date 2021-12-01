@@ -17,6 +17,7 @@ export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as PostAlign } from "./molecules/CheckBox/PostAlign";
 export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInput";
+export { default as TagInput } from "./molecules/InputBox/TagInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
 
 // organisms

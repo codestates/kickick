@@ -97,9 +97,8 @@ export default function EditQuill({ image = true }) {
         ref={quill}
         theme="snow"
         style={{
-          height: 350,
-          marginTop: "1rem",
-          padding: "0 2rem",
+          height: "60vh",
+
           display: "flex",
           flexDirection: "column",
         }}
