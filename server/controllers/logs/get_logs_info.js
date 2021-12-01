@@ -42,6 +42,7 @@ module.exports = async (req, res) => {
         {
           model: logs,
           attributes: [["id", "log_id"], "type", "content", "created_at"],
+
           offset: limit * (page_num - 1),
           limit: limit,
         },

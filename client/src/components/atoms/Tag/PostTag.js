@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function PostTag({ handleClick, tagType = "hashtag", detail }) {
+export default function PostTag({ handleClick, type = "hashtag", detail }) {
   let color = "#F15F5F";
   let tag = "# ";
-  if (tagType === "제목") {
+  if (type === "제목") {
     tag = "제목 : ";
     color = "#86E57F";
-  } else if (tagType === "글쓴이") {
+  } else if (type === "글쓴이") {
     tag = "글쓴이 : ";
     color = "#6799FF";
   }

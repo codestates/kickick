@@ -6,9 +6,11 @@ import useAxios from "./hooks/useAxios";
 import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
 
-import Main from "./pages/Main";
 import KickBoard from "./pages/KickBoard";
 import { Nav } from "./components";
+import Main from "./pages/Main";
+import Login from "./pages/Login";
+import Board from "./pages/Board";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -36,6 +38,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/kickboard" element={<KickBoard />} />
+            <Route path="/board" element={<Board />} />
+          </Routes>
+          <Routes>
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Container>
       </Router>
@@ -47,6 +53,6 @@ const Container = styled.div`
   position: relative;
   width: 100vw;
   max-width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
   margin-top: 4rem;
 `;
