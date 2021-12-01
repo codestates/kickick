@@ -11,6 +11,7 @@ import { Nav } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Board from "./pages/Board";
+import MyPage, { Profile, Favorite, Post } from "./pages/MyPage";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -37,11 +38,16 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/kickboard" element={<KickBoard />} />
-            <Route path="/board" element={<Board />} />
+            <Route path="kickboard" element={<KickBoard />} />
+            <Route path="board" element={<Board />} />
+            <Route path="mypage" element={<MyPage />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="favorite" element={<Favorite />} />
+              <Route path="post" element={<Post />} />
+            </Route>
           </Routes>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="login" element={<Login />} />
           </Routes>
         </Container>
       </Router>
