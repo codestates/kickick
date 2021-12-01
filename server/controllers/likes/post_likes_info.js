@@ -1,5 +1,6 @@
-const { users, likes } = require("../../models");
+const { users, posts, likes, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
+const post_alarms_info = require("../alarms/post_alarms_info");
 
 module.exports = async (req, res) => {
   // TODO 좋아요 생성 및 수정
@@ -80,6 +81,37 @@ module.exports = async (req, res) => {
       // id 명시적으로
       data.like_id = data.id;
       delete data.id;
+    }
+    // post_id 로 like_info 가져와서 투표수 총합 확인
+    let like_info = await likes.findAndCountAll({
+      attributes: [["id", "like_id"]],
+      where: {
+        post_id: post_id,
+      },
+    });
+    console.log(like_info);
+    const like_count = like_info.count;
+    console.log(like_count);
+
+    // 총 투표수가 10이상이면 alarm 생성
+    if (like_count === 10) {
+      // post_id로 작성자 아이디 구함
+      let post_info = await posts.findOne({
+        attributes: ["user_id"],
+        where: {
+          id: post_id,
+        },
+      });
+      const post_user_id = post_info.get({ plain: true }).user_id;
+      await alarms.create({
+        user_id: post_user_id,
+        type: "likes",
+        reference: JSON.stringify({
+          table: posts,
+          id: post_id,
+        }),
+        content: `내 게시글이 추천을 10개 받았습니다.`,
+      });
     }
   } catch (err) {
     console.log(err);
