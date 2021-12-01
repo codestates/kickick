@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import PostAlign from "../../molecules/CheckBox/PostAlign";
-import Options from "../../molecules/Select/Options";
+import Select from "../../molecules/Select";
 import SearchInput from "../../atoms/Input/SearchInput";
-import PostTag from "../../atoms/Tag/PostTag";
+import Tag from "../../atoms/Tag";
 
 export default function TotalSearch() {
   const [isSelect, setIsSelect] = useState(false);
@@ -49,7 +49,7 @@ export default function TotalSearch() {
       <Container>
         <PostAlign highlight={highlight} handleAlign={handleAlign} />
         <SearchContainer>
-          <Options
+          <Select
             icon={icon}
             handleIcon={handleIcon}
             isSelect={isSelect}
@@ -64,8 +64,9 @@ export default function TotalSearch() {
       </Container>
       <TagContainer>
         {tag.map((el, idx) => (
-          <PostTag
-            type={el.label}
+          <Tag
+            key={el.label}
+            label={el.label}
             detail={el.word}
             handleClick={() => handleClick(idx)}
           />

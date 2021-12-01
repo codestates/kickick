@@ -1,19 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function PostTag({ handleClick, type = "hashtag", detail }) {
-  let color = "#F15F5F";
-  let tag = "# ";
-  if (type === "제목") {
-    tag = "제목 : ";
-    color = "#86E57F";
-  } else if (type === "글쓴이") {
-    tag = "글쓴이 : ";
-    color = "#6799FF";
-  }
+const tagList = [
+  { tag: "# ", label: "태그" },
+  { tag: "제목 : ", label: "제목" },
+  { tag: "글쓴이 : ", label: "글쓴이" },
+];
+
+export default function Tag({ handleClick, label, detail }) {
+  const { tag } = tagList.find((i) => i.label === label);
 
   return (
-    <Container onClick={handleClick} color={color}>
+    <Container onClick={handleClick}>
       {tag}
       {detail}
     </Container>

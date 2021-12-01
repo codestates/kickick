@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import IconText from "../../atoms/IconText";
 
-export default function BoardCategory({ label = "학습" }) {
+export default function BoardCategory({ label }) {
   return (
     <Container>
       <IconText label={label} />

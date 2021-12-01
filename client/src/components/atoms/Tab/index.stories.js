@@ -2,7 +2,7 @@ import React from "react";
 import Tab from "./";
 
 export default {
-  title: "atoms/Tab/MyPageTab",
+  title: "atoms/Tab",
   component: Tab,
   argTypes: {},
 };

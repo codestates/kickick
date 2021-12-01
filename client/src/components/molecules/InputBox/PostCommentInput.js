@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Common, Comment } from "../../";
+import { Common, Textarea } from "../../";
 
 export default function PostCommentInput({ size = "lg" }) {
   let scale = 1;
@@ -10,7 +10,7 @@ export default function PostCommentInput({ size = "lg" }) {
 
   return (
     <Container scale={scale}>
-      <Comment size={size} />
+      <Textarea size={size} />
       <CommentButtons scale={scale}>
         <Common label={"댓글등록"} size={size} />
       </CommentButtons>

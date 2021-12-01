@@ -10,6 +10,7 @@ export default function PostAlign({ highlight, handleAlign }) {
         .filter((el) => el.category === "정렬")
         .map((el) => (
           <IconText
+            key={el.label}
             isActive={highlight === el.label}
             label={el.label}
             handleClick={handleAlign}
