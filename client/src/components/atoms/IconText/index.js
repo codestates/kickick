@@ -28,7 +28,7 @@ export const iconList = [
   { icon: <FaHelicopter />, label: "여행", category: "게시판" },
 ];
 
-export default function IconText({ isActive, label, handleClick }) {
+export default function IconText({ isActive, label, handleClick, board }) {
   const { icon, color, category } = iconList.find((i) => i.label === label);
 
   return (
@@ -37,6 +37,7 @@ export default function IconText({ isActive, label, handleClick }) {
       isActive={isActive}
       color={color}
       category={category}
+      board={board}
     >
       {icon}
       {label}
@@ -48,12 +49,12 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-
+  font-size: 1rem;
   font-weight: bold;
 
   svg {
     margin-right: 0.5rem;
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     pointer-events: none;
   }
 
@@ -62,9 +63,13 @@ export const Container = styled.div`
     css`
       border-bottom: 3px solid
         ${({ isActive, color }) => (isActive ? color : "transparent")};
+      font-size: 1.5rem;
       color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
       transition: all 0.2s ease-out;
       cursor: pointer;
+      svg {
+        font-size: 1.8rem;
+      }
     `}
 
   ${({ category }) =>
@@ -77,8 +82,9 @@ export const Container = styled.div`
       }
     `}
 
-    ${({ category }) =>
+    ${({ category, board }) =>
     category === "게시판" &&
+    board &&
     css`
       font-size: 2rem;
       svg {
