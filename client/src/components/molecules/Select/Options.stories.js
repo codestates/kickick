@@ -3,7 +3,7 @@ import React from "react";
 import Select from "./Options";
 
 export default {
-  title: "Atoms/Select/Options",
+  title: "Molecules/Select/Options",
   component: Select,
 };
 
