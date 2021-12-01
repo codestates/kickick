@@ -1,15 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-import { BoardTodayKicks, ShowCategory } from "../../";
+import { BoardTodayKicks, IconText } from "../../";
 
 export default function BoardTop() {
   return (
     <div>
       <BoardTodayKicks />
-      <ShowCategory />
+      <IconContainer>
+        <IconText label="예술" fontSize="2rem" />
+      </IconContainer>
     </div>
   );
 }
 
-const Container = styled.div``;
+const IconContainer = styled.div`
+  margin: 2rem 0;
+`;

@@ -126,10 +126,11 @@ module.exports = async (req, res) => {
         {
           model: posts,
           attributes: [
-            "id",
+            ["id", "post_id"],
+            // "id",
             "category",
             "post_name",
-            "content",
+            // "content",
             "cost",
             "view_count",
             "created_at",
@@ -148,17 +149,17 @@ module.exports = async (req, res) => {
             },
             {
               model: kicks,
-              attributes: ["id", "thumbnail"],
+              attributes: [["id", "kick_id"], "thumbnail"],
             },
             {
               model: comments,
-              attributes: ["id", "content"],
-              include: [
-                {
-                  model: users,
-                  attributes: ["username", "profile", "created_at"],
-                },
-              ],
+              attributes: [["id", "comment_id"], "content"],
+              // include: [
+              //   {
+              //     model: users,
+              //     attributes: ["username", "profile", "created_at"],
+              //   },
+              // ],
             },
             {
               model: posts_tags,
@@ -199,6 +200,17 @@ module.exports = async (req, res) => {
     // tags 가공
     post.tags = post.posts_tags.map((tag) => tag.tag.content);
     delete post.posts_tags;
+
+    // comments 카운트
+    post.comments = post.comments.length;
+
+    // id 명시적으로
+    // post.post_id = post.id;
+    // delete post.id;
+    // if (post.kick) {
+    //   post.kick.kick_id = post.kick.id;
+    //   delete post.kick.id;
+    // }
   });
 
   return res.status(200).json({ data: data, message: "ok" });

@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 
-  const { username } = decoded;
+  const { username, type } = decoded;
   const comment_id = req.params.comment_id;
 
   try {
@@ -49,8 +49,8 @@ module.exports = async (req, res) => {
 
     comment_info = comment_info.get({ plain: true });
 
-    // 댓글 작성자가 맞는지 확인
-    if (user_id !== comment_info.user_id) {
+    // 댓글 작성자가 맞는지 확인 // 관리자는 가능
+    if (user_id !== comment_info.user_id && type !== "admin") {
       return res.status(401).json({ data: null, message: "권한이 없습니다." });
     }
 

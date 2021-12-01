@@ -10,18 +10,15 @@ import {
 
 export default function Board() {
   return (
-    <>
-      <TopNavigator />
-      <Container>
-        <BoardTop />
-        <TotalSearch />
-        <BoardBottom />
-      </Container>
-    </>
+    <Container>
+      <BoardTop />
+      <TotalSearch />
+      <BoardBottom />
+    </Container>
   );
 }
 
 const Container = styled.div`
-  width: 80vw;
-  margin: 1rem auto;
+  width: 88rem;
+  margin: 0 auto;
 `;

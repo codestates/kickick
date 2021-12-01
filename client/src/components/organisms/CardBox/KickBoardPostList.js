@@ -7,8 +7,8 @@ export default function KickBoardPostList() {
   const arr = Array(10).fill(0);
   return (
     <Container>
-      {arr.map((el) => (
-        <KickBoardPost />
+      {arr.map((el, idx) => (
+        <KickBoardPost key={idx} />
       ))}
     </Container>
   );
