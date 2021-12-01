@@ -41,19 +41,14 @@ module.exports = async (req, res) => {
       include: [
         {
           model: logs,
-          attributes: ["id", "type", "content", "created_at"],
+          attributes: [["id", "log_id"], "type", "content", "created_at"],
           offset: limit * (page_num - 1),
           limit: limit,
         },
       ],
     });
     data = data.get({ plain: true });
-    console.log(data);
-    data.logs = data.logs.map((el) => {
-      el.log_id = el.id;
-      delete el.id;
-      return el;
-    });
+    delete data.id;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
