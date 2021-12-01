@@ -11,6 +11,7 @@ import { Nav } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Board from "./pages/Board";
+import EditBoard from "./pages/EditBoard";
 import MyPage, { Profile, Favorite, Post } from "./pages/MyPage";
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="editboard" element={<EditBoard />} />
             <Route path="kickboard" element={<KickBoard />} />
             <Route path="board" element={<Board />} />
             <Route path="mypage" element={<MyPage />}>

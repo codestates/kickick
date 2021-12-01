@@ -12,6 +12,7 @@ export default function Common({
   let multiple = 1;
   if (btnType === "register") multiple = 1.5;
   else if (btnType === "write") multiple = 0.5;
+  else if (btnType === "bigger") multiple = 2.5;
 
   let scale = 1 * multiple;
   if (size === "sm") scale = 0.75 * multiple;
@@ -23,6 +24,7 @@ export default function Common({
       scale={scale}
       backgroundColor={backgroundColor}
       color={color}
+      btnType={btnType}
     >
       {label}
     </Container>
@@ -34,6 +36,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
+  width: ${({ btnType }) => (btnType === "bigger" ? "10rem" : null)};
   height: ${(props) => props.scale * 1}rem;
   padding: ${(props) => props.scale * 0.1}rem ${(props) => props.scale * 0.3}rem;
   border-radius: 10px;
