@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
             {
               model: kicks,
               attributes: [
-                "id",
+                ["id", "kick_id"],
                 "post_id",
                 "thumbnail",
                 "content",
@@ -71,11 +71,18 @@ module.exports = async (req, res) => {
     // 데이터 가공
     data = data.get({ plain: true }).users_kicks;
     data = data.map((el) => {
-      el.kick.user = el.kick.post.user;
-      el.kick.post_name = el.kick.post.post_name;
-      delete el.kick.post;
-      return el.kick;
+      if (el.kick) {
+        el.kick.user = el.kick.post.user;
+        el.kick.post_name = el.kick.post.post_name;
+        delete el.kick.post;
+        // id 명시적으로
+        // el.kick.kick_id = el.kick.id;
+        // delete el.kick.id;
+        return el.kick;
+      }
     });
+
+    // id 명시적으로
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

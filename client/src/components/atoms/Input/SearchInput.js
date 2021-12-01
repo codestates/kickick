@@ -23,15 +23,16 @@ export default function SearchInput({ handleSearch, handleInput, word }) {
 const Container = styled.div`
   display: flex;
   align-items: center;
+  width: 20rem;
 `;
 
 const Search = styled.input`
-  border: none;
+  width: 100%;
+  height: 80%;
+
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  outline: none;
-  width: 20rem;
-  height: 100%;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  background-color: transparent;
 
   &:focus {
     border-bottom: 1px solid black;

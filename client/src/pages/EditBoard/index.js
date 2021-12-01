@@ -6,7 +6,7 @@ import {
   TitleInput,
   Common,
   TagInput,
-  Options,
+  Select,
 } from "../../components";
 
 import {
@@ -32,12 +32,13 @@ export default function EditBoard() {
   return (
     <Container>
       <TitleContainer>
-        <Options
+        <Select
           isSelect={isSelect}
           setIsSelect={setIsSelect}
           icon={icon}
           handleIcon={handleIcon}
-          category="분류"
+          category="게시판"
+          fontSize="1rem"
         />
         <TitleInput padding="0.3rem" />
       </TitleContainer>

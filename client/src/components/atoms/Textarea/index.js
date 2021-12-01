@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Comment({ size = "lg", handleClick, ...props }) {
+export default function Textarea({ size = "lg", handleClick, ...props }) {
   let scale = 1;
   if (size === "sm") scale = 0.75;
   if (size === "lg") scale = 1.5;

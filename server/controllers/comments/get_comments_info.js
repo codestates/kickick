@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { users, posts, comments } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
@@ -20,6 +7,7 @@ module.exports = async (req, res) => {
   if (req.query.post_id) {
     let data;
     const post_id = req.query.post_id;
+
     try {
       data = await posts.findOne({
         attributes: ["id"],
@@ -29,7 +17,7 @@ module.exports = async (req, res) => {
         include: [
           {
             model: comments,
-            attributes: ["user_id", "content", "created_at"],
+            attributes: [["id", "comment_id"], "content", "created_at"],
             include: [
               {
                 model: users,

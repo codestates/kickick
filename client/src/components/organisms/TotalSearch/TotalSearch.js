@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import PostAlign from "../../molecules/CheckBox/PostAlign";
-import Options from "../../molecules/Select/Options";
+import Select from "../../molecules/Select";
 import SearchInput from "../../atoms/Input/SearchInput";
-import PostTag from "../../atoms/Tag/PostTag";
+import Tag from "../../atoms/Tag";
 
 export default function TotalSearch() {
   const [isSelect, setIsSelect] = useState(false);
@@ -25,7 +25,6 @@ export default function TotalSearch() {
 
   const handleSearch = () => {
     let dummy = [...tag];
-    console.log(dummy);
     let isDuplicate = dummy.findIndex((el) => el.label === icon.label);
     if (isDuplicate === -1) {
       dummy.push({ label: icon.label, word });
@@ -50,7 +49,7 @@ export default function TotalSearch() {
       <Container>
         <PostAlign highlight={highlight} handleAlign={handleAlign} />
         <SearchContainer>
-          <Options
+          <Select
             icon={icon}
             handleIcon={handleIcon}
             isSelect={isSelect}
@@ -65,8 +64,9 @@ export default function TotalSearch() {
       </Container>
       <TagContainer>
         {tag.map((el, idx) => (
-          <PostTag
-            type={el.label}
+          <Tag
+            key={el.label}
+            label={el.label}
             detail={el.word}
             handleClick={() => handleClick(idx)}
           />
@@ -87,10 +87,28 @@ const TagContainer = styled.div`
   flex-wrap: wrap;
   min-height: 2.5rem;
   margin: 0 1rem 1rem 1rem;
+  gap: 1rem;
 `;
 
 const SearchContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-left: auto;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+    height: 8rem;
+    margin: 1rem 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+    border-radius: 10px;
+
+    > div:nth-of-type(2) {
+      width: 40%;
+      input {
+        font-size: 0.8rem;
+      }
+    }
+  }
 `;

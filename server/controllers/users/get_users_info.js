@@ -12,36 +12,24 @@ module.exports = async (req, res) => {
   const page_num = req.query.page_num || 1;
   const limit = req.query.limit || 10;
 
-  // email로 검색요청
-  if (req.query.email) {
-    let data;
-    try {
-      data = await users.findAll({
-        attributes: [
-          "type",
-          "username",
-          "email",
-          "profile",
-          "birthday",
-          "kick_money",
-        ],
-        where: {
-          email: {
-            [Op.like]: `%${req.query.email}%`,
-          },
+  // email 또는 username 으로 검색
+  if (req.query.email || req.query.username) {
+    // where_obj로 분기 구현
+    let where_obj;
+    if (req.query.email) {
+      where_obj = {
+        email: {
+          [Op.like]: `%${req.query.email}%`,
         },
-        offset: limit * (page_num - 1),
-        limit: limit,
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({ data: err, message: "데이터베이스 에러" });
+      };
+    } else {
+      where_obj = {
+        username: {
+          [Op.like]: `%${req.query.username}%`,
+        },
+      };
     }
-    return res.status(200).json({ data: data, message: "ok" });
-  }
 
-  // username으로 검색요청
-  if (req.query.username) {
     let data;
     try {
       data = await users.findAll({
@@ -53,11 +41,7 @@ module.exports = async (req, res) => {
           "birthday",
           "kick_money",
         ],
-        where: {
-          username: {
-            [Op.like]: `%${req.query.username}%`,
-          },
-        },
+        where: where_obj,
         offset: limit * (page_num - 1),
         limit: limit,
       });

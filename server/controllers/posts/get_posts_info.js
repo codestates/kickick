@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
   try {
     data = await posts.findOne({
       attributes: [
-        "id",
+        ["id", "post_id"],
         "user_id",
         "category",
         "post_name",
@@ -47,18 +47,18 @@ module.exports = async (req, res) => {
         },
         {
           model: kicks,
-          attributes: ["id", "thumbnail"],
+          attributes: [["id", "kick_id"], "thumbnail"],
         },
-        {
-          model: comments,
-          attributes: ["id", "content", "created_at"],
-          include: [
-            {
-              model: users,
-              attributes: ["username", "profile"],
-            },
-          ],
-        },
+        // {
+        //   model: comments,
+        //   attributes: ["id", "content", "created_at"],
+        //   include: [
+        //     {
+        //       model: users,
+        //       attributes: ["username", "profile"],
+        //     },
+        //   ],
+        // },
         {
           model: posts_tags,
           attributes: ["tag_id"],
@@ -79,32 +79,33 @@ module.exports = async (req, res) => {
       },
       {
         where: {
-          id: data.id,
+          id: data.post_id,
         },
       }
     );
+
+    // likes 가공
+    let likes_obj = {
+      true: 0,
+      false: 0,
+    };
+    data.likes.forEach((like) => {
+      if (like.agreement) {
+        likes_obj.true += 1;
+      } else {
+        likes_obj.false += 1;
+      }
+    });
+    data.likes = likes_obj;
+
+    // tags 가공
+    data.tags = data.posts_tags.map((tag) => tag.tag.content);
+    delete data.user_id;
+    delete data.posts_tags;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-
-  // likes 가공
-  let likes_obj = {
-    true: 0,
-    false: 0,
-  };
-  data.likes.forEach((like) => {
-    if (like.agreement) {
-      likes_obj.true += 1;
-    } else {
-      likes_obj.false += 1;
-    }
-  });
-  data.likes = likes_obj;
-  // tags 가공
-  data.tags = data.posts_tags.map((tag) => tag.tag.content);
-  delete data.user_id;
-  delete data.posts_tags;
 
   return res.status(200).json({ data: data, message: "ok" });
 };
