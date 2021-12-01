@@ -18,6 +18,7 @@ export default function BtnChamber() {
           context={el.context}
           pathname={el.pathname}
           size="1.4rem"
+          key={el.context}
         />
       ))}
     </Container>

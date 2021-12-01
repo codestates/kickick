@@ -10,6 +10,7 @@ import KickBoard from "./pages/KickBoard";
 import { Nav } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import MyPage, { Profile, Favorite, Post } from "./pages/MyPage";
@@ -47,9 +48,8 @@ export default function App() {
               <Route path="favorite" element={<Favorite />} />
               <Route path="post" element={<Post />} />
             </Route>
-          </Routes>
-          <Routes>
-            <Route path="login" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </Container>
       </Router>
