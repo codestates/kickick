@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import PostAlign from "../../molecules/CheckBox/PostAlign";
-import Options from "../../atoms/Select/Options";
+import Options from "../../molecules/Select/Options";
 import SearchInput from "../../atoms/Input/SearchInput";
 import PostTag from "../../atoms/Tag/PostTag";
 

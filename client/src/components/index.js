@@ -1,11 +1,11 @@
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
+export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as PostTag } from "./atoms/Tag/PostTag";
 export { default as Comment } from "./atoms/Textarea/Comment";
-export { default as ShowCategory } from "./atoms/ShowCategory";
 export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
 
@@ -16,6 +16,9 @@ export { default as PostAlign } from "./molecules/CheckBox/PostAlign";
 export { default as LoginInputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
+export { default as BoardCategory } from "./molecules/BoardCategory";
+export { default as Select } from "./molecules/Select/Options";
+export { default as TabBox } from "./molecules/TabBox";
 
 // organisms
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";

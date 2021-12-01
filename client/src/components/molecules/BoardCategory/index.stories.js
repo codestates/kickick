@@ -1,10 +1,10 @@
 import React from "react";
 
-import ShowCategory from "./";
+import BoardCategory from ".";
 
 export default {
-  title: "Atoms/ShowCategory",
-  component: ShowCategory,
+  title: "Moleculess/BoardCategory",
+  component: BoardCategory,
   argTypes: {
     type: {
       options: ["학습", "여가", "생활", "예술", "경제", "여행"],
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-const Template = (args) => <ShowCategory {...args} />;
+const Template = (args) => <BoardCategory {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import IconText, { iconList } from "../IconText";
+import IconText, { iconList } from "../../atoms/IconText";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 
 export default function Select({ handleIcon, icon, isSelect, setIsSelect }) {
