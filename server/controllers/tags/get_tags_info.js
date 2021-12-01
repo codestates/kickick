@@ -36,8 +36,16 @@ module.exports = async (req, res) => {
     });
     data = data.get({ plain: true });
     // data 가공
-    console.log(data);
     data = data.posts_tags.map((el) => el.tag);
+
+    console.log(data);
+
+    // id 명시적으로
+    data = data.map((el) => {
+      el.tag_id = el.id;
+      delete el.id;
+      return el;
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

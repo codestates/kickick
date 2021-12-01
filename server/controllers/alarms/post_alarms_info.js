@@ -29,7 +29,10 @@ module.exports = async (req, res) => {
   }
 
   try {
-    data = await alarms.create(req.body);
+    data = await alarms.create({
+      ...req.body,
+      reference: JSON.stringify(req.body.reference),
+    });
     data = data.get({ plain: true });
     delete data.userId;
   } catch (err) {

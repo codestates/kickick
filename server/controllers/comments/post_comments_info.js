@@ -49,6 +49,8 @@ module.exports = async (req, res) => {
     delete data.user_id;
     delete data.postId;
     delete data.userId;
+
+    // 게시글 작성자에 알림
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
