@@ -11,6 +11,11 @@ const common = {
     xxxl: calcRem(24),
     titleSize: calcRem(50),
   },
+  fontFamily: {
+    luckiestGuy: "'Luckiest Guy', cursive",
+    jua: "'Jua', sans-serif",
+    blackHanSans: "'Black Han Sans', sans-serif",
+  },
   paddings: {
     small: calcRem(8),
     base: calcRem(10),
@@ -59,7 +64,8 @@ export const light = {
     basicBtn: "#0c0c42",
     modalBtn: "#82B0F5",
     comment: "#3467ce",
-    tag: "82B0F5",
+    tag: "#82B0F5",
+    placeholderGray: "#5A5A5A",
   },
 };
 

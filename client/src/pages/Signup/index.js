@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import { InputChamber } from "../../components";
+import { InputForm } from "../../components";
 
-export default function Login () {
+export default function Signup () {
   return (
     <Container>
-      <InputChamber />
+      <InputForm />
     </Container>
   );
 }
