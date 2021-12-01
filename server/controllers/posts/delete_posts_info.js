@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 
-  const { username } = decoded;
+  const { username, type } = decoded;
   const post_id = req.params.post_id;
 
   try {
@@ -43,8 +43,8 @@ module.exports = async (req, res) => {
       },
     });
     post_info.get({ plain: true });
-    // user_id 가 일치하지 않으면 권한x
-    if (post_info.user_id !== user_id) {
+    // user_id 가 일치하지 않으면 권한x // 관리자는 가능
+    if (post_info.user_id !== user_id && type !== "admin") {
       return res
         .status(401)
         .json({ data: err, message: "게시글을 삭제할 권한이 없습니다." });
