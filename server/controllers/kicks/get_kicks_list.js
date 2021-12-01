@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
             {
               model: kicks,
               attributes: [
-                "id",
+                ["id", "kick_id"],
                 "post_id",
                 "thumbnail",
                 "content",
@@ -76,8 +76,8 @@ module.exports = async (req, res) => {
         el.kick.post_name = el.kick.post.post_name;
         delete el.kick.post;
         // id 명시적으로
-        el.kick.kick_id = el.kick.id;
-        delete el.kick.id;
+        // el.kick.kick_id = el.kick.id;
+        // delete el.kick.id;
         return el.kick;
       }
     });

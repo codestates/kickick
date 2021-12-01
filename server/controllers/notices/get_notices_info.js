@@ -11,6 +11,15 @@ module.exports = async (req, res) => {
   let data;
   try {
     data = await notices.findOne({
+      attributes: [
+        ["id", "notice_id"],
+        "type",
+        "notice_name",
+        "thumbnail",
+        "summary",
+        "content",
+        "created_at",
+      ],
       where: {
         id: notice_id,
       },
@@ -19,10 +28,10 @@ module.exports = async (req, res) => {
     delete data.userId;
 
     // id 명시적으로
-    if (data) {
-      data.notice_id = data.id;
-      delete data.id;
-    }
+    // if (data) {
+    //   data.notice_id = data.id;
+    //   delete data.id;
+    // }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

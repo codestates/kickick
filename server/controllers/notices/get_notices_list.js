@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   try {
     data = await notices.findAll({
       attributes: [
-        "id",
+        ["id", "notice_id"],
         "user_id",
         "type",
         "notice_name",
@@ -28,12 +28,12 @@ module.exports = async (req, res) => {
     });
 
     // id 명시적으로
-    data = data.map((el) => {
-      el = el.get({ plain: true });
-      el.notice_id = el.id;
-      delete el.id;
-      return el;
-    });
+    // data = data.map((el) => {
+    //   el = el.get({ plain: true });
+    //   el.notice_id = el.id;
+    //   delete el.id;
+    //   return el;
+    // });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 
   try {
     data = await posts.findOne({
-      attributes: ["id"],
+      attributes: [["id", "post_id"]],
       where: {
         id: post_id,
       },
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
           include: [
             {
               model: tags,
-              attributes: ["id", "content"],
+              attributes: [["id", "tag_id"], "content"],
             },
           ],
         },
@@ -38,14 +38,12 @@ module.exports = async (req, res) => {
     // data 가공
     data = data.posts_tags.map((el) => el.tag);
 
-    console.log(data);
-
     // id 명시적으로
-    data = data.map((el) => {
-      el.tag_id = el.id;
-      delete el.id;
-      return el;
-    });
+    // data = data.map((el) => {
+    //   el.tag_id = el.id;
+    //   delete el.id;
+    //   return el;
+    // });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

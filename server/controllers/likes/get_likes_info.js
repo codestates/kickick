@@ -9,14 +9,14 @@ module.exports = async (req, res) => {
     let data;
     try {
       data = await posts.findOne({
-        attributes: ["id", "post_name"],
+        attributes: [["id", "post_id"], "post_name"],
         where: {
           id: post_id,
         },
         include: [
           {
             model: likes,
-            attributes: ["user_id", "post_id", "agreement", "created_at"],
+            attributes: [["id", "like_id"],"user_id", "post_id", "agreement", "created_at"],
             include: [
               {
                 model: users,
@@ -79,18 +79,18 @@ module.exports = async (req, res) => {
 
   try {
     data = await users.findOne({
-      attributes: ["id", "username", "profile"],
+      attributes: ["username"],
       where: {
         username: username,
       },
       include: [
         {
           model: likes,
-          attributes: ["post_id", "agreement", "created_at"],
+          attributes: [["id", "like_id"],"agreement", "created_at"],
           include: [
             {
               model: posts,
-              attributes: ["id", "post_name", "view_count"],
+              attributes: [["id", "post_id"], "post_name", "view_count"],
             },
           ],
         },

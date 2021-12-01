@@ -50,6 +50,10 @@ module.exports = async (req, res) => {
     delete data.postId;
     delete data.userId;
 
+    // id 명시적으로
+    data.comment_id = data.id;
+    delete data.id;
+
     // 게시글 작성자에 알림
   } catch (err) {
     console.log(err);

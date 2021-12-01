@@ -79,7 +79,7 @@ module.exports = async (req, res) => {
       },
       {
         where: {
-          id: data.id,
+          id: data.post_id,
         },
       }
     );

@@ -41,15 +41,15 @@ module.exports = async (req, res) => {
       include: [
         {
           model: favorites,
-          attributes: ["id", "post_id"],
+          attributes: [["id", "favorite_id"]],
           offset: limit * (page_num - 1),
           limit: limit,
           include: [
             {
               model: posts,
               attributes: [
-                "id",
-                "user_id",
+                ["id", "post_id"],
+                // "user_id",
                 "category",
                 "post_name",
                 "view_count",
@@ -65,15 +65,7 @@ module.exports = async (req, res) => {
         },
       ],
     });
-    data = data.get({ plain: true });
-    // data 가공
-    data = data.favorites.map((el) => {
-      delete el.post.user_id;
-      el.post.post_id = el.post.id;
-      delete el.post.id;
-      el.post.favorite_id = el.id;
-      return el.post;
-    });
+    data = data.get({ plain: true }).favorites;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

@@ -50,7 +50,8 @@ module.exports = async (req, res) => {
         {
           model: posts,
           attributes: [
-            "id",
+            ["id", "post_id"],
+            // "id",
             "category",
             "post_name",
             // "content",
@@ -72,11 +73,11 @@ module.exports = async (req, res) => {
             },
             {
               model: kicks,
-              attributes: ["id", "thumbnail"],
+              attributes: [["id", "kick_id"], "thumbnail"],
             },
             {
               model: comments,
-              attributes: ["id", "content"],
+              attributes: [["id", "comment_id"], "content"],
               // include: [
               //   {
               //     model: users,
@@ -128,12 +129,12 @@ module.exports = async (req, res) => {
     post.comments = post.comments.length;
 
     // id 명시적으로
-    post.post_id = post.id;
-    delete post.id;
-    if (post.kick) {
-      post.kick.kick_id = post.kick.id;
-      delete post.kick.id;
-    }
+    // post.post_id = post.id;
+    // delete post.id;
+    // if (post.kick) {
+    //   post.kick.kick_id = post.kick.id;
+    //   delete post.kick.id;
+    // }
   });
 
   return res.status(200).json({ data: data, message: "ok" });

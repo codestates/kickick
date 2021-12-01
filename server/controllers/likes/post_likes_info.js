@@ -34,13 +34,19 @@ module.exports = async (req, res) => {
         username: username,
       },
     });
-    console.log(user_info);
 
     const user_id = user_info.get({ plain: true }).id;
 
     // 이미 좋아요 버튼을 누른적이 있는지 확인
     data = await likes.findOne({
-      attributes: ["id"],
+      attributes: [
+        ["id", "like_id"],
+        "user_id",
+        "post_id",
+        "agreement",
+        "created_at",
+        "updated_at",
+      ],
       where: {
         user_id: user_id,
         post_id: post_id,
@@ -57,11 +63,10 @@ module.exports = async (req, res) => {
         },
         {
           where: {
-            id: data.id,
+            id: data.like_id,
           },
         }
       );
-      data = null;
     } else {
       // 누른 적 없으면 생성
       data = await likes.create({
@@ -69,6 +74,12 @@ module.exports = async (req, res) => {
         user_id: user_id,
       });
       data = data.get({ plain: true });
+      delete data.postId;
+      delete data.userId;
+
+      // id 명시적으로
+      data.like_id = data.id;
+      delete data.id;
     }
   } catch (err) {
     console.log(err);
