@@ -39,14 +39,14 @@ export default function LoginInput({
       : part === "password"
       ? !(
           (
-            inputValue.length > 8 &&
+            inputValue.length > 3 &&
             inputValue.length < 20 &&
             //8자 이상 20자 이하
-            inputValue.search(/\s/) === -1 &&
+            inputValue.search(/\s/) === -1 
             //공백이 없음
-            num !== -1 &&
-            eng !== -1 &&
-            spe !== -1
+            // num !== -1 &&
+            // eng !== -1 &&
+            // spe !== -1
           )
           //영문,숫자,특문을 혼합
         )
