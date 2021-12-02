@@ -32,17 +32,20 @@ module.exports = async (req, res) => {
 
     // TODO 인증 메일 보내기
 
-    // const authorize =
+    const CLIENT_URL = process.env.CLIENT_URL;
+    const redirect = `${CLIENT_URL}/signup/${req.body.username}`;
 
     let email_template;
-    ejs.renderFile(__dirname + "/email_template.ejs", { test }, (err, data) => {
-      if (err) {
-        console.log(err);
+    ejs.renderFile(
+      __dirname + "/email_template.ejs",
+      { redirect },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        email_template = data;
       }
-
-      email_template = data;
-    });
-    console.log(email_template);
+    );
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -53,19 +56,19 @@ module.exports = async (req, res) => {
     });
 
     const mailOptions = {
-      from: `"킥킥 관리자" <${process.env.NODEMAILER_EMAIL}>`,
-      to: "ksb628@naver.com",
-      subject: "Kickick 회원가입 인증 메일입니다.",
+      from: `"KICKICK 관리자" <${process.env.NODEMAILER_EMAIL}>`,
+      to: req.body.email,
+      subject: "KICKICK 회원가입 인증 메일입니다.",
       html: email_template,
     };
 
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-    //     console.log("Email sent: " + info.response);
-    //   }
-    // });
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: null, message: "데이터베이스 에러" });
