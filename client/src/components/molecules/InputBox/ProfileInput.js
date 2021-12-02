@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IconText, Profile } from "../..";
+import { Common, Profile } from "../..";
 import { fileReader } from "../../../commons/utils/fileReader";
 
 export default function ProfileInput({ head, type, placeholder }) {
@@ -19,7 +19,7 @@ export default function ProfileInput({ head, type, placeholder }) {
             style={{ display: "none" }}
           />
           <label htmlFor="file">
-            <IconText label="프로필 수정" />
+            <Common type="imgedit" label="이미지 수정" />
           </label>
         </form>
       </Container>
@@ -59,6 +59,10 @@ const Container = styled.div`
 
   label {
     position: relative;
-    left: 2rem;
+    left: 4.5rem;
+    top: -0.5rem;
+  }
+  img {
+    margin: 2rem;
   }
 `;

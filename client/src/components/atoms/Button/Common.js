@@ -34,6 +34,7 @@ const Container = styled.div`
   color: #ffffff;
   line-height: 0.9;
   cursor: pointer;
+
   ${({ type }) =>
     type === "imgedit" &&
     css`
@@ -41,6 +42,10 @@ const Container = styled.div`
       background-color: white;
       color: black;
       border: 1px solid #ddd;
+      box-shadow: 1px 1px 5px #eee;
+      &:hover {
+        background-color: #ddd;
+      }
     `}
   ${({ type }) =>
     type === "register" &&

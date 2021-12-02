@@ -44,4 +44,4 @@ export { default as BoardTop } from "./organisms/BoardTop";
 export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
 export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
-export { default as ProfileEditForm } from "./organisms/ProfileEditForm";
+export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";

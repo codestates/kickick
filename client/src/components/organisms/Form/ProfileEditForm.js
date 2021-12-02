@@ -33,7 +33,7 @@ export default function ProfileEditForm({ head }) {
 
 const Container = styled.div`
   display: flex;
-  gap: 4rem;
+  gap: 5rem;
   h2 {
     font-size: 1.5rem;
     font-weight: bold;
