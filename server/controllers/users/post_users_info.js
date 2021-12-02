@@ -1,6 +1,8 @@
 const { users } = require("../../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const nodemailer = require("nodemailer");
+const ejs = require("ejs");
 
 module.exports = async (req, res) => {
   // TODO 회원가입 구현
@@ -28,7 +30,45 @@ module.exports = async (req, res) => {
       });
     });
 
-    // TODO 인증 메일 보내기 차후 구현
+    // TODO 인증 메일 보내기
+
+    const CLIENT_URL = process.env.CLIENT_URL;
+    const redirect = `${CLIENT_URL}/signup/${req.body.username}`;
+
+    let email_template;
+    ejs.renderFile(
+      __dirname + "/email_template.ejs",
+      { redirect },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        email_template = data;
+      }
+    );
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: `"KICKICK 관리자" <${process.env.NODEMAILER_EMAIL}>`,
+      to: req.body.email,
+      subject: "KICKICK 회원가입 인증 메일입니다.",
+      html: email_template,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: null, message: "데이터베이스 에러" });
