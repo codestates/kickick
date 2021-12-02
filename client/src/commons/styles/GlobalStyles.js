@@ -5,7 +5,7 @@ const GlobalStyles = createGlobalStyle`
     ${reset}
     * {
         box-sizing: border-box;
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family: Roboto, "Noto Sans KR", sans-serif;
     }
     a {
         margin: 0;

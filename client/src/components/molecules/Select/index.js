@@ -12,13 +12,13 @@ export default function Select({
   category = "검색",
 }) {
   return (
-    <Container category={category}>
+    <Container>
       {isSelect ? <FaAngleDown /> : <FaAngleRight />}
-      <Selected onClick={() => setIsSelect(!isSelect)} category={category}>
+      <Selected onClick={() => setIsSelect(!isSelect)}>
         <IconText label={icon.label} />
       </Selected>
       {isSelect ? (
-        <Options category={category}>
+        <Options>
           {iconList
             .filter((el) => el.category === category)
             .filter((el) => el.label !== icon.label)
@@ -40,6 +40,10 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 
+<<<<<<< HEAD
+=======
+  width: 7.7rem;
+>>>>>>> 3d23d9046f88cdb610c9ab1d5e0703af4e309e97
   padding: 0 0.2rem;
 
   > svg {
@@ -52,6 +56,10 @@ const Selected = styled.div`
   align-items: center;
 
   width: 5.8rem;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d23d9046f88cdb610c9ab1d5e0703af4e309e97
   border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.08);
   cursor: pointer;
@@ -63,10 +71,17 @@ const Options = styled.div`
   left: 1.7rem;
   width: 5.8rem;
 
+<<<<<<< HEAD
   background-color: white;
 
   border-radius: 0.25rem;
 
+=======
+  width: 5.8rem;
+  background-color: white;
+
+  border-radius: 0.25rem;
+>>>>>>> 3d23d9046f88cdb610c9ab1d5e0703af4e309e97
   box-shadow: 0.5px 0.5px 5px #eee;
 
   cursor: pointer;

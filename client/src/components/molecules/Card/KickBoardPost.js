@@ -17,7 +17,7 @@ export default function KickBoardPost() {
           <p>2. 공부한다</p>
         </PostSummary>
         <PostUser>
-          <Profile profileType={"post"} />
+          <Profile type="post" />
           <div className="username">석창환</div>
           <div className="datetime">46분전</div>
           <div className="seperator">·</div>

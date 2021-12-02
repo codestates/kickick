@@ -11,7 +11,7 @@ export default function PostCommentItem({ size = "lg" }) {
   return (
     <Container scale={scale}>
       <UserInfoContainer scale={scale}>
-        <Profile size={size} profileType={"post"} />
+        <Profile type="post" />
         <div className="username">어쩔</div>
         <div className="datetime">46분전</div>
       </UserInfoContainer>
