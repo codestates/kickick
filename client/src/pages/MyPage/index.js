@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import {
   MyPageAside,
   Landscape,
@@ -8,6 +8,7 @@ import {
   TabBox,
   ProfileEditForm,
 } from "../../components";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function MyPage() {
   return (
@@ -44,28 +45,62 @@ export function MyPageHome() {
 export function ProfileEdit() {
   return (
     <ProfileEditContainer>
-      <ProfileEditForm head="프로필 수정" />
+      <Navigator />
+      <ProfileEditForm />
     </ProfileEditContainer>
   );
 }
 
 export function ProfileAttendance() {
-  return <ProfileAttendanceContainer>출석</ProfileAttendanceContainer>;
+  return (
+    <ProfileAttendanceContainer>
+      <Navigator />
+    </ProfileAttendanceContainer>
+  );
 }
 
-export function Favorite() {
-  return <FavoriteContainer>즐겨찾기</FavoriteContainer>;
+export function MyActivityFavorite() {
+  return (
+    <MyActivityFavoriteContainer>
+      <Navigator />
+      즐겨찾기
+    </MyActivityFavoriteContainer>
+  );
 }
-export function Activity() {
-  return <ActivityContainer>나의 활동</ActivityContainer>;
+export function MyActivityMyPost() {
+  return (
+    <MyActivityMyPostContainer>
+      <Navigator />
+      내가 쓴 글
+    </MyActivityMyPostContainer>
+  );
+}
+export function MyActivityMyComment() {
+  return (
+    <MyActivityMyCommentContainer>
+      <Navigator />
+      내가 쓴 댓글
+    </MyActivityMyCommentContainer>
+  );
 }
 
+export function Navigator() {
+  const navigate = useNavigate();
+
+  return (
+    <FaArrowLeft
+      onClick={() => {
+        navigate(-1);
+      }}
+    />
+  );
+}
 const Container = styled.div`
   display: flex;
   gap: 2rem;
   position: relative;
   top: -15rem;
-  z-index: 2;
+  z-index: 3;
 
   width: 77rem;
   margin: 0 auto;
@@ -86,6 +121,10 @@ const SubContainer = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
   }
+  > svg {
+    font-size: 2rem;
+    cursor: pointer;
+  }
 `;
 
 const ListContainer = styled.div`
@@ -97,5 +136,6 @@ const ListContainer = styled.div`
 const MyPageHomeContainer = styled(SubContainer)``;
 const ProfileEditContainer = styled(SubContainer)``;
 const ProfileAttendanceContainer = styled(SubContainer)``;
-const FavoriteContainer = styled(SubContainer)``;
-const ActivityContainer = styled(SubContainer)``;
+const MyActivityFavoriteContainer = styled(SubContainer)``;
+const MyActivityMyPostContainer = styled(SubContainer)``;
+const MyActivityMyCommentContainer = styled(SubContainer)``;

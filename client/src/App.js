@@ -18,8 +18,9 @@ import MyPage, {
   MyPageHome,
   ProfileEdit,
   ProfileAttendance,
-  Favorite,
-  Activity,
+  MyActivityFavorite,
+  MyActivityMyPost,
+  MyActivityMyComment,
 } from "./pages/MyPage";
 
 export default function App() {
@@ -58,8 +59,15 @@ export default function App() {
                 path="profile/attendance"
                 element={<ProfileAttendance />}
               />
-              <Route path="favorite" element={<Favorite />} />
-              <Route path="activity" element={<Activity />} />
+              <Route
+                path="activity/favorite"
+                element={<MyActivityFavorite />}
+              />
+              <Route path="activity/mypost" element={<MyActivityMyPost />} />
+              <Route
+                path="activity/mycomment"
+                element={<MyActivityMyComment />}
+              />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
