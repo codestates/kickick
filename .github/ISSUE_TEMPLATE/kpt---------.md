@@ -1,9 +1,9 @@
 ---
 name: 'KPT 회고 이슈카드 '
 about: 'KPT 회고 이슈카드 '
-title: "[KPT] 제목을 작성해주세요."
-labels: ''
-assignees: ''
+title: "[KPT] 월 일 KPT회고"
+labels: KPT
+assignees: snowone4426
 
 ---
 
