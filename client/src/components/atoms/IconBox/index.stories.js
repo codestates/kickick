@@ -6,7 +6,7 @@ export default {
   component: IconBox,
   argTypes: {
     label: {
-      options: ["arrow", "heart", "edit"],
+      options: ["arrow", "heart", "edit", "user", "count"],
       control: { type: "radio" },
     },
   },

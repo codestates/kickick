@@ -14,6 +14,7 @@ export { default as Tag } from "./atoms/Tag";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
+export { default as IconBox } from "./atoms/IconBox";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
@@ -29,7 +30,7 @@ export { default as TabBox } from "./molecules/TabBox";
 
 // organisms
 export { default as Nav } from "./organisms/Nav/Nav";
-export { default as InputForm } from "./organisms/SignupForm"
+export { default as InputForm } from "./organisms/SignupForm";
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardBottom } from "./organisms/BoardBottom";
