@@ -11,7 +11,7 @@ export default function PostCommentItem({ size = "lg" }) {
   return (
     <Container scale={scale}>
       <UserInfoContainer scale={scale}>
-        <Profile size={size} profileType={"post"} />
+        <Profile type="post" />
         <div className="username">어쩔</div>
         <div className="datetime">46분전</div>
       </UserInfoContainer>
@@ -23,11 +23,14 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: ${(props) => props.scale * 27}rem;
-  margin-bottom: ${(props) => props.scale * 0.5}rem;
+  /* width: ${(props) => props.scale * 27}rem; */
+  width: 95%;
+  margin: 0.5rem auto;
+  /* margin-bottom: ${(props) => props.scale * 0.5}rem; */
   border-bottom: 1px solid #eeeeee;
 
-  font-size: ${(props) => props.scale * 0.5}rem;
+  /* font-size: ${(props) => props.scale * 0.5}rem; */
+  font-size: 1rem;
 
   .comment {
     width: ${(props) => props.scale * 27}rem;

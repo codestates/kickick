@@ -12,7 +12,7 @@ export default function PostCommentInput({ size = "lg" }) {
     <Container scale={scale}>
       <Textarea size={size} />
       <CommentButtons scale={scale}>
-        <Common label={"댓글등록"} size={size} />
+        <Common label={"댓글등록"} type="write" />
       </CommentButtons>
     </Container>
   );
@@ -21,7 +21,7 @@ export default function PostCommentInput({ size = "lg" }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${(props) => props.scale * 27}rem;
+  /* width: ${(props) => props.scale * 27}rem; */
 `;
 
 const CommentButtons = styled.div`

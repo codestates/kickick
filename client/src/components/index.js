@@ -1,3 +1,5 @@
+import PostComment from "./organisms/PostComment";
+
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
@@ -14,6 +16,7 @@ export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
+export { default as IconBox } from "./atoms/IconBox";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
@@ -28,6 +31,7 @@ export { default as TagInput } from "./molecules/InputBox/TagInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
 export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
+export { default as IconContainer } from "./molecules/IconContainer";
 
 // organisms
 export { default as Nav } from "./organisms/Nav/Nav";
@@ -37,5 +41,7 @@ export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList"
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardBottom } from "./organisms/BoardBottom";
 export { default as BoardTop } from "./organisms/BoardTop";
+export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
+export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/ProfileEditForm";

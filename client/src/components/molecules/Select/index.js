@@ -53,24 +53,27 @@ const Selected = styled.div`
   align-items: center;
 
   width: 5.8rem;
-
   border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
 `;
 
 const Options = styled.div`
   position: absolute;
   top: 2.5rem;
   left: 1.7rem;
-
   width: 5.8rem;
+
   background-color: white;
 
   border-radius: 0.25rem;
   box-shadow: 0.5px 0.5px 5px #eee;
 
+  cursor: pointer;
+
   > div:hover {
     color: #ffffff;
     background-color: #0c0c42;
   }
+  /* commit */
 `;

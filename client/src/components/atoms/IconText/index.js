@@ -42,7 +42,7 @@ export const iconList = [
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
 ];
 
-export default function IconText({ isActive, label, handleClick }) {
+export default function IconText({ isActive, label, handleClick, board }) {
   const { icon, color, category } = iconList.find((i) => i.label === label);
 
   return (
@@ -51,6 +51,7 @@ export default function IconText({ isActive, label, handleClick }) {
       isActive={isActive}
       color={color}
       category={category}
+      board={board}
     >
       {icon}
       {label}
@@ -62,7 +63,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-
   font-size: 1rem;
   font-weight: bold;
 
@@ -96,8 +96,9 @@ export const Container = styled.div`
       }
     `}
 
-    ${({ category }) =>
+    ${({ category, board }) =>
     category === "게시판" &&
+    board &&
     css`
       font-size: 2rem;
       svg {
