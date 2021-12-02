@@ -12,7 +12,7 @@ export default function PostCommentInput({ size = "lg" }) {
     <Container scale={scale}>
       <Textarea size={size} />
       <CommentButtons scale={scale}>
-        <Common label={"댓글등록"} type="write" />
+        <Common label={"댓글등록"} type="comment" />
       </CommentButtons>
     </Container>
   );
