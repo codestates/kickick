@@ -32,7 +32,7 @@ export default function EditBoard() {
       <EditQuill image={false} />
       <TagInput />
       <BtnContainer>
-        <Common label="등 록" btnType="bigger" handleClick={handleClick} />
+        <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>
     </Container>
   );
