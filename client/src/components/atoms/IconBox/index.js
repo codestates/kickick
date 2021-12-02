@@ -45,6 +45,6 @@ const Container = styled.div`
 
   svg {
     font-size: ${({ label }) =>
-      label === "user" || label === "count" ? "1.5rem" : "2rem"};
+      label === "user" || label === "count" ? "1.8rem" : "2rem"};
   }
 `;

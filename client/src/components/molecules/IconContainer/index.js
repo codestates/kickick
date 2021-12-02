@@ -7,6 +7,7 @@ export default function IconContainer() {
     <Container>
       <IconBox label="arrow" />
       <IconBox label="heart" />
+      <IconBox label="edit" />
     </Container>
   );
 }
