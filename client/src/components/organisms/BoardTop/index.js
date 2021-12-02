@@ -8,7 +8,7 @@ export default function BoardTop() {
     <div>
       <BoardTodayKicks />
       <IconContainer>
-        <IconText label="예술" fontSize="2rem" />
+        <IconText label="예술" board={true} />
       </IconContainer>
     </div>
   );

@@ -8,11 +8,11 @@ export default function PostComment({ size = "lg" }) {
   const arr = Array(52).fill(0);
   return (
     <Container>
-      <h3>댓글달기</h3>
+      <H3>댓글달기</H3>
       <PostCommentInput size={size} />
-      <h3>
+      <H3>
         댓글 <strong>52</strong>
-      </h3>
+      </H3>
       {arr.map((i) => (
         <PostCommentItem size={size} />
       ))}
@@ -27,4 +27,11 @@ const Container = styled.div`
   strong {
     color: skyblue;
   }
+`;
+
+const H3 = styled.div`
+  margin: 1rem 0;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
 `;

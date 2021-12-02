@@ -6,7 +6,7 @@ import {
   TitleInput,
   Common,
   TagInput,
-  Select,
+  IconText,
 } from "../../components";
 
 import {
@@ -16,36 +16,23 @@ import {
 } from "../../store/actions/postadd";
 
 export default function EditBoard() {
-  const [isSelect, setIsSelect] = useState(false);
-  const [icon, setIcon] = useState({ label: "학습" });
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
-  const handleIcon = (label) => {
-    setIcon(label);
-    setIsSelect(!isSelect);
-  };
 
   const handleClick = () => {
-    dispatch(getCategory(icon.label));
+    dispatch(getCategory("학습"));
     console.log(state);
   };
   return (
     <Container>
       <TitleContainer>
-        <Select
-          isSelect={isSelect}
-          setIsSelect={setIsSelect}
-          icon={icon}
-          handleIcon={handleIcon}
-          category="게시판"
-          fontSize="1rem"
-        />
+        <IconText label="학습" />
         <TitleInput padding="0.3rem" />
       </TitleContainer>
       <EditQuill image={false} />
       <TagInput />
       <BtnContainer>
-        <Common label="등 록" btnType="bigger" handleClick={handleClick} />
+        <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>
     </Container>
   );
