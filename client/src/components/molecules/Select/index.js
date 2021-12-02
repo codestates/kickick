@@ -12,13 +12,13 @@ export default function Select({
   category = "검색",
 }) {
   return (
-    <Container category={category}>
+    <Container>
       {isSelect ? <FaAngleDown /> : <FaAngleRight />}
-      <Selected onClick={() => setIsSelect(!isSelect)} category={category}>
+      <Selected onClick={() => setIsSelect(!isSelect)}>
         <IconText label={icon.label} />
       </Selected>
       {isSelect ? (
-        <Options category={category}>
+        <Options>
           {iconList
             .filter((el) => el.category === category)
             .filter((el) => el.label !== icon.label)
@@ -40,7 +40,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 
-  width: ${({ category }) => (category === "게시판" ? "10rem" : "5.8rem")};
+  width: 7.7rem;
   padding: 0 0.2rem;
 
   > svg {
@@ -52,7 +52,7 @@ const Selected = styled.div`
   display: flex;
   align-items: center;
 
-  width: ${({ category }) => (category === "게시판" ? "8rem" : "5.8rem")};
+  width: 5.8rem;
 
   border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.08);
@@ -63,18 +63,10 @@ const Options = styled.div`
   top: 2.5rem;
   left: 1.7rem;
 
-  width: ${({ category }) => (category === "게시판" ? "8rem" : "5.8rem")};
+  width: 5.8rem;
   background-color: white;
 
   border-radius: 0.25rem;
-
-  z-index: 10;
-  > div {
-    padding: 0.5rem;
-    margin: 0.1rem;
-    font-size: 1rem;
-    background-color: #ffffff;
-  }
   box-shadow: 0.5px 0.5px 5px #eee;
 
   > div:hover {

@@ -13,7 +13,13 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
-import MyPage, { Profile, Favorite, Post } from "./pages/MyPage";
+import MyPage, {
+  MyPageHome,
+  ProfileEdit,
+  ProfileAttendance,
+  Favorite,
+  Activity,
+} from "./pages/MyPage";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -44,9 +50,14 @@ export default function App() {
             <Route path="kickboard" element={<KickBoard />} />
             <Route path="board" element={<Board />} />
             <Route path="mypage" element={<MyPage />}>
-              <Route path="profile" element={<Profile />} />
+              <Route path="home" element={<MyPageHome />} />
+              <Route path="profile/edit" element={<ProfileEdit />} />
+              <Route
+                path="profile/attendance"
+                element={<ProfileAttendance />}
+              />
               <Route path="favorite" element={<Favorite />} />
-              <Route path="post" element={<Post />} />
+              <Route path="activity" element={<Activity />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
