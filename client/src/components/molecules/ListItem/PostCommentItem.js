@@ -24,7 +24,7 @@ const Container = styled.div`
   flex-direction: column;
 
   /* width: ${(props) => props.scale * 27}rem; */
-  width: 90%;
+  width: 95%;
   margin: 0.5rem auto;
   /* margin-bottom: ${(props) => props.scale * 0.5}rem; */
   border-bottom: 1px solid #eeeeee;
