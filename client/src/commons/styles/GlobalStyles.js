@@ -5,16 +5,15 @@ const GlobalStyles = createGlobalStyle`
     ${reset}
     * {
         box-sizing: border-box;
+        font-family: Roboto, "Noto Sans KR", sans-serif;
     }
     a {
         margin: 0;
         padding: 0;
         font-size: 100%;
         vertical-align: baseline;
-        background: transparent;
         text-decoration: none;
         color: black;
-        font-weight: bold;
     }
     input {
         border: none;

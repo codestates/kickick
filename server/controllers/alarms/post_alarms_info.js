@@ -29,9 +29,15 @@ module.exports = async (req, res) => {
   }
 
   try {
-    data = await alarms.create(req.body);
+    data = await alarms.create({
+      ...req.body,
+      reference: JSON.stringify(req.body.reference),
+    });
     data = data.get({ plain: true });
     delete data.userId;
+    // id 명시적으로
+    data.alarm_id = data.id;
+    delete data.id;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

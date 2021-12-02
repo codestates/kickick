@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import InputChamber from "../../components/molecules/InputBox/LoginInputChamber"
+import { InputChamber } from "../../components";
 
 export default function Login () {
   return (
     <Container>
-      <InputChamber/>
+      <InputChamber />
     </Container>
-    )
+  );
 }
 
 const Container = styled.div`

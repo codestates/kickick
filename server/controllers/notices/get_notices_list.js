@@ -1,4 +1,6 @@
 const { users, notices } = require("../../models");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
   // TODO 공지 리스트 요청 구현
@@ -7,19 +9,27 @@ module.exports = async (req, res) => {
   const page_num = Number(req.query.page_num) || 1;
   const limit = Number(req.query.limit) || 10;
 
+  let where_obj = {};
+  if (req.query.type) where_obj.type = req.query.type;
+  if (req.query.notice_name)
+    where_obj.notice_name = {
+      [Op.like]: `%${req.query.notice_name}%`,
+    };
+
   let data;
   try {
     data = await notices.findAll({
       attributes: [
-        "id",
+        ["id", "notice_id"],
         "user_id",
         "type",
         "notice_name",
         "thumbnail",
         "summary",
-        "content",
+        // "content",
         "created_at",
       ],
+      where: where_obj,
       include: {
         model: users,
         attributes: ["username"],
@@ -27,6 +37,14 @@ module.exports = async (req, res) => {
       offset: limit * (page_num - 1),
       limit: limit,
     });
+
+    // id 명시적으로
+    // data = data.map((el) => {
+    //   el = el.get({ plain: true });
+    //   el.notice_id = el.id;
+    //   delete el.id;
+    //   return el;
+    // });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

@@ -30,6 +30,7 @@ module.exports = async (req, res) => {
   const { username } = decoded;
   const post_id = req.body.post_id;
   const content = req.body.content;
+  let data;
 
   try {
     // 토큰의 username으로 user_id 구함
@@ -73,7 +74,8 @@ module.exports = async (req, res) => {
 
     // tag_id 와 post_id로 posts_tags에 추가
     // 똑같은 태그를 또 추가하는 경우를 피하기 위해 findOrCreate 사용
-    const tag_id = tag_info.get({ plain: true }).id;
+    tag_info = tag_info.get({ plain: true });
+    const tag_id = tag_info.id;
 
     await posts_tags.findOrCreate({
       where: {
@@ -85,10 +87,15 @@ module.exports = async (req, res) => {
         tag_id: tag_id,
       },
     });
+    data = tag_info;
+
+    // id 명시적으로
+    data.tag_id = data.id;
+    delete data.id;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(201).json({ data: null, message: "ok" });
+  return res.status(201).json({ data: data, message: "ok" });
 };

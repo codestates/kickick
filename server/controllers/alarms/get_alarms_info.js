@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
         {
           model: alarms,
           attributes: [
-            "id",
+            ["id", "alarm_id"],
             "type",
             "reference",
             "content",
@@ -53,8 +53,6 @@ module.exports = async (req, res) => {
     data = data.get({ plain: true });
     // data 가공
     data = data.alarms.map((el) => {
-      el.alarm_id = el.id;
-      delete el.id;
       el.reference = JSON.parse(el.reference);
       return el;
     });

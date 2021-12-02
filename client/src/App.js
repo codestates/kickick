@@ -10,7 +10,17 @@ import KickBoard from "./pages/KickBoard";
 import { Nav } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Board from "./pages/Board";
+import EditBoard from "./pages/EditBoard";
+import DetailBoard from "./pages/DetailBoard";
+import MyPage, {
+  MyPageHome,
+  ProfileEdit,
+  ProfileAttendance,
+  Favorite,
+  Activity,
+} from "./pages/MyPage";
 
 export default function App() {
   // NOTICE useAxios, api 모듈화 Test 용 밑에꺼 주석 해제후 테스트해보세요
@@ -37,11 +47,22 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/kickboard" element={<KickBoard />} />
-            <Route path="/board" element={<Board />} />
-          </Routes>
-          <Routes>
+            <Route path="editboard" element={<EditBoard />} />
+            <Route path="kickboard" element={<KickBoard />} />
+            <Route path="board" element={<Board />} />
+            <Route path="detailboard" element={<DetailBoard />} />
+            <Route path="mypage" element={<MyPage />}>
+              <Route path="home" element={<MyPageHome />} />
+              <Route path="profile/edit" element={<ProfileEdit />} />
+              <Route
+                path="profile/attendance"
+                element={<ProfileAttendance />}
+              />
+              <Route path="favorite" element={<Favorite />} />
+              <Route path="activity" element={<Activity />} />
+            </Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </Container>
       </Router>

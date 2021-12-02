@@ -27,29 +27,29 @@ module.exports = async (req, res) => {
   }
 
   const notice_id = req.params.notice_id;
-  const { username } = decoded;
-  let data;
+  const { type } = decoded;
 
   try {
-    // 토큰정보로 user_id 가져옴
-    let user_info = await users.findOne({
-      attributes: ["id"],
-      where: {
-        username: username,
-      },
-    });
+    // // 토큰정보로 user_id 가져옴
+    // let user_info = await users.findOne({
+    //   attributes: ["id"],
+    //   where: {
+    //     username: username,
+    //   },
+    // });
 
-    user_info = user_info.get({ plain: true });
-    const user_id = user_info.id;
-    // notice_id로 notice_info 가져옴
-    let notice_info = await notices.findOne({
-      where: {
-        id: notice_id,
-      },
-    });
-    notice_info = notice_info.get({ plain: true });
-    // user_id가 일치하지 않으면 권한 x
-    if (user_id !== notice_info.user_id) {
+    // user_info = user_info.get({ plain: true });
+    // const user_id = user_info.id;
+    // // notice_id로 notice_info 가져옴
+    // let notice_info = await notices.findOne({
+    //   where: {
+    //     id: notice_id,
+    //   },
+    // });
+    // notice_info = notice_info.get({ plain: true });
+
+    // 관리자 가능
+    if (type !== "admin") {
       return res.status(401).json({ data: err, message: "권한이 없습니다." });
     }
     // 공지 삭제

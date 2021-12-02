@@ -17,7 +17,7 @@ export default function LoginInput({
     part,
     `${part}을(를) 입력해주세요`,
     "양식이 잘못되었습니다.",
-    "완료되었습니다",
+    "통과!",
   ];
   let num = inputValue.search(/[0-9]/g);
   let eng = inputValue.search(/[a-z]/gi);
@@ -39,14 +39,14 @@ export default function LoginInput({
       : part === "password"
       ? !(
           (
-            inputValue.length > 8 &&
+            inputValue.length > 3 &&
             inputValue.length < 20 &&
             //8자 이상 20자 이하
-            inputValue.search(/\s/) === -1 &&
+            inputValue.search(/\s/) === -1 
             //공백이 없음
-            num !== -1 &&
-            eng !== -1 &&
-            spe !== -1
+            // num !== -1 &&
+            // eng !== -1 &&
+            // spe !== -1
           )
           //영문,숫자,특문을 혼합
         )
@@ -106,16 +106,16 @@ const Container = styled.div`
   margin: 0.5rem 0;
   padding: ${({ height }) => `${height * 0.08}rem`};
   border: 0.1rem solid;
-  border-color: ${({ isChange, validation }) =>
+  border-color: ${({ isChange, validation, theme }) =>
     isChange === true && validation
       ? //한번이라도 입력했는데 벨리데이션을 통과 못함.
-        "#FF0000"
+        "red"
       : isChange === true && !validation
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
-        "#048EF1"
-      : "#000000"};
+        "blue"
+      : theme.color.font};
   border-radius: ${({ height }) => `${height * 0.08}rem`};
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.color.back};
   overflow: hidden;
 `;
 
@@ -135,14 +135,14 @@ const WarningBox = styled.div`
     inputValue.length
       ? `${((height * 1) / 3) * 0.7}rem`
       : `${((height * 2) / 3) * 0.7}rem`};
-  color: ${({ isChange, validation }) =>
+  color: ${({ isChange, validation, theme }) =>
     isChange === true && validation
       ? //한번이라도 입력했는데 벨리데이션을 통과 못함.
-        "#FF0000"
+        "red"
       : isChange === true && !validation
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
-        "#048EF1"
-      : "#5A5A5A"};
+        "blue"
+      : theme.color.placeholderGray};
   transition: font-size 0.15s;
   pointer-events: none;
 `;

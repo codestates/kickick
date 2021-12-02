@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import LoginInput from "../../atoms/Input/LoginInput"
+import { LoginInput } from "../../../components";
+import { signIn } from "../../../apis/auth"
 
 export default function LoginInputChamber({ 
   width = 30,
@@ -11,7 +12,7 @@ export default function LoginInputChamber({
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [isValid, setIsValid] = useState({ id: false, password: false });
 
-  const inputlist = ["id", "password"]
+  const inputlist = [{ part: "id", type: 'text' }, { part:"password",type:"password"}]
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -25,9 +26,10 @@ export default function LoginInputChamber({
     setIsValid({ ...newObj });
   };
 
-  const testHanlder = () => {
+  const loginHandler = () => {
     if (isValid.id && isValid.password) {
-      console.log("성공")
+      signIn(inputValue.id, inputValue.password)
+        .then((res) => console.log(res.data.data));
     }
   }
 
@@ -36,7 +38,8 @@ export default function LoginInputChamber({
     <Container width={width} height={height}>
       {inputlist.map((el, idx) => (
         <LoginInput
-          part={el}
+          part={el.part}
+          type={el.type}
           width={width}
           height={height}
           inputHandler={inputHandler}
@@ -44,7 +47,12 @@ export default function LoginInputChamber({
           key={idx}
         />
       ))}
-      <SubmitBtn width={width} height={height} onClick={testHanlder}>
+      <SubmitBtn
+        width={width}
+        height={height}
+        onClick={loginHandler}
+        isValid={isValid}
+      >
         로그인
       </SubmitBtn>
     </Container>
@@ -54,8 +62,8 @@ export default function LoginInputChamber({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   width: ${({ width }) => `${width}rem`};
 `;
 
@@ -65,5 +73,23 @@ const SubmitBtn = styled.button`
   margin-top: 1rem;
   border-radius: ${({ height }) => `${height * 0.08}rem`};
   font-size: ${({ height }) => `${height * 0.7}rem`};
-  background-color: green;
+  color: ${({ theme }) => theme.color.back};
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+  background-color: ${({ theme }) => theme.color.main};
+  cursor: default;
+
+  ${({ isValid }) =>
+    isValid.id && isValid.password
+      ? `
+  cursor:pointer;
+  : hover {
+    opacity: 0.8;
+  }
+
+  :active {
+    opacity: 1;
+  }`
+      : `
+  opacity: 0.8
+  `}
 `;

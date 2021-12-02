@@ -1,4 +1,4 @@
-const { users, comments } = require("../../models");
+const { users, posts, comments, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
@@ -29,16 +29,17 @@ module.exports = async (req, res) => {
 
   const { username } = decoded;
   let data;
+  const post_id = req.body.post_id;
 
   try {
     // 토큰으로 user_id 구함
     let user_info = await users.findOne({
-      attributes: ["id"],
+      attributes: [["id", "user_id"]],
       where: {
         username: username,
       },
     });
-    const user_id = user_info.get({ plain: true }).id;
+    const user_id = user_info.get({ plain: true }).user_id;
 
     // 댓글 생성
     data = await comments.create({
@@ -49,11 +50,41 @@ module.exports = async (req, res) => {
     delete data.user_id;
     delete data.postId;
     delete data.userId;
+
+    // id 명시적으로
+    data.comment_id = data.id;
+    delete data.id;
+
+    // 게시글 작성자에 알림
+    // req.body.post_id 로 작성자 id 구함
+    let post_info = await posts.findOne({
+      where: {
+        id: post_id,
+      },
+      include: [
+        {
+          model: users,
+          attributes: [["id", "user_id"]],
+        },
+      ],
+    });
+    post_info = post_info.get({ plain: true });
+
+    await alarms.create({
+      user_id: post_info.user.user_id,
+      type: "comments",
+      reference: JSON.stringify({
+        table: "post",
+        id: post_id,
+      }),
+      content: `${username}님이 내 게시글에 댓글을 달았습니다.`,
+    });
+
+    // 작성자 id로 alarms 테이블에 추가 type comment
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  console.log(data);
 
   return res.status(201).json({ data: data, message: "ok" });
 };
