@@ -13,7 +13,7 @@ export default function BoardBottom() {
     <Container>
       <BoardListTitle />
       <BtnContainer>
-        <Common handleClick={handleMovePage} />
+        <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       </BtnContainer>
       <Pagination />
     </Container>

@@ -10,11 +10,7 @@ export default {
       options: ["register", "write", "confirm"],
       control: { type: "radio" },
     },
-    size: {
-      description: "크기",
-      options: ["sm", "md", "lg"],
-      control: { type: "radio" },
-    },
+
     label: {
       type: "string",
     },
@@ -26,5 +22,5 @@ const Template = (args) => <Common {...args} />;
 export const Control = Template.bind({});
 Control.args = {
   btnType: "register",
-  size: "lg",
+  label: "글쓰기",
 };

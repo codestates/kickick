@@ -1,29 +1,44 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaAngleRight } from "react-icons/fa";
 
-export default function Tab({ label, handleClick, to }) {
+import IconText from "../IconText";
+
+export default function Tab({ label, to }) {
   return (
-    <Container to={to} onClick={handleClick}>
-      {label}
+    <Container to={to}>
+      <IconText label={label} />
+      <FaAngleRight />
     </Container>
   );
 }
 
-const Container = styled(NavLink)`
+const Container = styled(Link)`
   display: flex;
-  justify-content: center;
-  align-items: center;
 
+  align-items: center;
+  width: calc(50% - 1rem);
   height: 3rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   background-color: white;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-family: Roboto, "Noto Sans KR", sans-serif;
 
   &:hover {
     background-color: #eeeeee;
+    > div {
+      font-weight: bold;
+    }
+    svg {
+      color: black;
+    }
   }
 
-  & + & {
-    border-top: 1px solid #dddddd;
+  > svg {
+    margin-left: auto;
+    margin-right: 1rem;
+    color: #cccccc;
   }
 `;

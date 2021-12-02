@@ -12,6 +12,13 @@ import {
   FaGuitar,
   FaMoneyBillAlt,
   FaHelicopter,
+  FaRegEdit,
+  FaRegCalendarAlt,
+  FaRegBookmark,
+  FaRegComment,
+  FaRegClipboard,
+  FaRegHeart,
+  FaDollarSign,
 } from "react-icons/fa";
 
 export const iconList = [
@@ -26,6 +33,13 @@ export const iconList = [
   { icon: <FaGuitar />, label: "예술", category: "게시판" },
   { icon: <FaMoneyBillAlt />, label: "경제", category: "게시판" },
   { icon: <FaHelicopter />, label: "여행", category: "게시판" },
+  { icon: <FaRegEdit />, label: "프로필 수정", category: "마이페이지" },
+  { icon: <FaRegCalendarAlt />, label: "출석", category: "마이페이지" },
+  { icon: <FaRegBookmark />, label: "스크랩 한 글", category: "마이페이지" },
+  { icon: <FaRegClipboard />, label: "내가 쓴 글", category: "마이페이지" },
+  { icon: <FaRegComment />, label: "내가 쓴 댓글", category: "마이페이지" },
+  { icon: <FaRegHeart />, label: "내가 산 킥", category: "마이페이지" },
+  { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
 ];
 
 export default function IconText({ isActive, label, handleClick }) {
@@ -88,6 +102,19 @@ export const Container = styled.div`
       font-size: 2rem;
       svg {
         font-size: 2.5rem;
+      }
+    `}
+
+    ${({ category }) =>
+    category === "마이페이지" &&
+    css`
+      font-size: 1rem;
+      font-weight: normal;
+
+      svg {
+        margin-right: 1rem;
+        font-size: 1.5rem;
+        color: #555;
       }
     `}
 `;
