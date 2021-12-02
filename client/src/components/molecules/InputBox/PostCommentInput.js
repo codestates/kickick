@@ -21,7 +21,7 @@ export default function PostCommentInput({ size = "lg" }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${(props) => props.scale * 27}rem;
+  /* width: ${(props) => props.scale * 27}rem; */
 `;
 
 const CommentButtons = styled.div`

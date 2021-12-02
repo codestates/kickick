@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-import { IconContainer, IconBox } from "../../";
+import { IconBox } from "../../";
+
+import gag from "../../../assets/images/gag.jpeg";
 
 export default function DetailBoardTop() {
   return (
     <Container>
-      <IconContainer />
-      <DetailContainer>
-        <Title>헤어진 연인 붙잡는 법</Title>
+      <TopContainer>
+        <Title>다시 연락온 연인 물리치는 비법</Title>
         <UserAndCountContainer>
           <UserContainer>
             <IconBox label="user" />
@@ -25,20 +26,24 @@ export default function DetailBoardTop() {
           <span>#뭐해?</span>
           <span>#자니?</span>
         </TagContainer>
-      </DetailContainer>
+      </TopContainer>
+      <Content>
+        <img style={{ width: "30rem" }} src={gag} />
+        <p>돈 빌려달라고 하면 바로 연락 안 옮 ㅅㄱ</p>
+      </Content>
     </Container>
   );
 }
 
 const Container = styled.div`
-  display: flex;
-  padding: 1rem;
-  gap: 2rem;
+  width: 60vw;
 `;
-const DetailContainer = styled.div`
-  width: 50vw;
+
+const TopContainer = styled.div`
+  padding-bottom: 1.5rem;
   border-bottom: 2px dashed #c4c4c4;
 `;
+
 const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
@@ -63,4 +68,10 @@ const TagContainer = styled.div`
     margin-right: 1rem;
     font-weight: bold;
   }
+`;
+
+const Content = styled.div`
+  height: auto;
+  margin-left: 3rem;
+  padding: 2rem 1rem;
 `;

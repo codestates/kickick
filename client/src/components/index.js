@@ -1,3 +1,5 @@
+import PostComment from "./organisms/PostComment";
+
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
@@ -37,3 +39,5 @@ export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardBottom } from "./organisms/BoardBottom";
 export { default as BoardTop } from "./organisms/BoardTop";
 export { default as MyPageTab } from "./organisms/MyPageTab";
+export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
+export { default as PostComment } from "./organisms/PostComment";

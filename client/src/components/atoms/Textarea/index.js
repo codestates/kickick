@@ -8,7 +8,7 @@ export default function Textarea({ size = "lg", handleClick, ...props }) {
 
   return (
     <Container
-      scale={scale}
+      // scale={scale}
       placeholder={"로그인 후 사용가능합니다"}
       {...props}
     />
@@ -16,12 +16,15 @@ export default function Textarea({ size = "lg", handleClick, ...props }) {
 }
 
 const Container = styled.textarea`
-  width: ${(props) => props.scale * 27}rem;
-  min-height: ${(props) => props.scale * 3}rem;
+  /* width: ${(props) => props.scale * 30}rem; */
+  min-width: 100%;
+  height: 7rem;
+  /* min-height: ${(props) => props.scale * 3}rem; */
   padding: ${(props) => props.scale * 0.25}rem;
   border-radius: 5px;
   border: 2px solid #eeeeee;
   font-size: ${(props) => props.scale * 0.5}rem;
+  resize: none;
 
   &:focus {
     outline: none;
