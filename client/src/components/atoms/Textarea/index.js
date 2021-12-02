@@ -31,6 +31,8 @@ const Container = styled.div`
   position: relative;
   p {
     position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
   }
 `;
 const TextArea = styled.textarea`
