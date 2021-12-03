@@ -12,12 +12,18 @@ export default function Nav({ toggleTheme }) {
           context="KICK"
           size="3rem"
           fontFamily={`'Luckiest Guy', cursive`}
+          pathname="/"
         />
         <BtnChamber />
       </Separation>
       <Separation>
-        <NavBtn context="로그인" />
-        <NavBtn context="회원가입" color="#ffffff" backgroundColor="#350480" />
+        <NavBtn context="로그인" pathname="/login" />
+        <NavBtn
+          context="회원가입"
+          pathname="/signup"
+          color="#ffffff"
+          backgroundColor="#350480"
+        />
       </Separation>
     </Container>
   );

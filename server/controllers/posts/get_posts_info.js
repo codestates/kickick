@@ -2,7 +2,6 @@ const {
   users,
   posts,
   kicks,
-  comments,
   likes,
   posts_tags,
   tags,
