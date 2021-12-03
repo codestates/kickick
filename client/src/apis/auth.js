@@ -9,8 +9,8 @@ export const duplicationCheck = (email, password) =>
  *  @param {string} email
  *  @param {string} password
  **/
-export const signIn = (email, password) =>
-  api.post(`/auth/signin`, { email, password });
+export const signIn = (username, password) =>
+  api.post(`/auth/signin`, { username, password });
   /**
  *  @param {string} email
  *  @param {string} password
