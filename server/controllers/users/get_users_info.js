@@ -1,4 +1,4 @@
-const { users } = require("../../models");
+const { users, logs } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
@@ -22,7 +22,8 @@ module.exports = async (req, res) => {
           [Op.like]: `%${req.query.email}%`,
         },
       };
-    } else {
+    }
+    if (req.query.username) {
       where_obj = {
         username: {
           [Op.like]: `%${req.query.username}%`,
@@ -74,6 +75,7 @@ module.exports = async (req, res) => {
   try {
     data = await users.findOne({
       attributes: [
+        ["id", "user_id"],
         "type",
         "username",
         "email",
@@ -85,6 +87,16 @@ module.exports = async (req, res) => {
         username: username,
       },
     });
+    data = data.get({ plain: true });
+
+    // today_login false면 로그에 기록
+    if (req.query.today_login === "false") {
+      await logs.create({
+        user_id: data.user_id,
+        type: "signin",
+        content: `${data.username}님이 로그인 하였습니다.`,
+      });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
