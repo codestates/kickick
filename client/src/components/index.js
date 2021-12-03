@@ -5,6 +5,7 @@ export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as DatePicker } from "./atoms/Input/DatePicker";
 export { default as SignupInput } from "./atoms/Input/SignupInput";
+export { default as Condition} from "./atoms/CheckBox/Condition"
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
@@ -31,6 +32,7 @@ export { default as PostItem } from "./molecules/ListItem/PostItem";
 export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
+export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamber";
 
 // organisms
 export { default as Nav } from "./organisms/Nav/Nav";

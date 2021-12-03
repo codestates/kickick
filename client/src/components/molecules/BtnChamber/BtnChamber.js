@@ -8,8 +8,8 @@ export default function BtnChamber() {
   const list = [
     { pathname: "", context: "소개" },
     { pathname: "", context: "공지" },
-    { pathname: "", context: "게시판" },
-    { pathname: "", context: "킥 배우기" },
+    { pathname: "board", context: "게시판" },
+    { pathname: "kickboard", context: "킥 배우기" },
   ];
   return (
     <Container>
