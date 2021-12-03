@@ -19,6 +19,6 @@ export default function Board() {
 }
 
 const Container = styled.div`
-  width: 88rem;
+  width: 66rem;
   margin: 0 auto;
 `;

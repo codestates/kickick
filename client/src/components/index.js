@@ -27,10 +27,10 @@ export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInp
 export { default as ProfileInput } from "./molecules/InputBox/ProfileInput";
 export { default as TagInput } from "./molecules/InputBox/TagInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
+export { default as PostItem } from "./molecules/ListItem/PostItem";
 export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
-export { default as Column } from "./molecules/Column";
 
 // organisms
 export { default as Nav } from "./organisms/Nav/Nav";
@@ -44,3 +44,4 @@ export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
 export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
+export { default as List } from "./organisms/List";

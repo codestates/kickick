@@ -7,7 +7,7 @@ import {
   PostStaticsList,
   TabBox,
   ProfileEditForm,
-  Column,
+  List,
 } from "../../components";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -46,7 +46,7 @@ export function MyPageHome() {
 export function ProfileEdit() {
   return (
     <ProfileEditContainer>
-      <Navigator />
+      <Navigator head="프로필 수정" />
       <ProfileEditForm />
     </ProfileEditContainer>
   );
@@ -55,7 +55,7 @@ export function ProfileEdit() {
 export function ProfileAttendance() {
   return (
     <ProfileAttendanceContainer>
-      <Navigator />
+      <Navigator head="출석" />
     </ProfileAttendanceContainer>
   );
 }
@@ -63,39 +63,58 @@ export function ProfileAttendance() {
 export function MyActivityFavorite() {
   return (
     <MyActivityFavoriteContainer>
-      <Navigator />
-      <Column />
+      <Navigator head="스크랩 한 글" />
+      <List type="mypagefavorite" />
     </MyActivityFavoriteContainer>
   );
 }
 export function MyActivityMyPost() {
   return (
     <MyActivityMyPostContainer>
-      <Navigator />
-      내가 쓴 글
+      <Navigator head="내가 쓴 글" />
+      <List type="mypagemypost" />
     </MyActivityMyPostContainer>
   );
 }
 export function MyActivityMyComment() {
   return (
     <MyActivityMyCommentContainer>
-      <Navigator />
-      내가 쓴 댓글
+      <Navigator head="내가 쓴 댓글" />
+      <List type="mypagemycomment" />
     </MyActivityMyCommentContainer>
   );
 }
 
-export function Navigator() {
+export function Navigator({ head }) {
   const navigate = useNavigate();
 
   return (
-    <FaArrowLeft
-      onClick={() => {
-        navigate(-1);
-      }}
-    />
+    <NavContainer>
+      <FaArrowLeft
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
+      <h2>{head}</h2>
+    </NavContainer>
   );
 }
+
+const NavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  svg {
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+`;
 const Container = styled.div`
   display: flex;
   gap: 2rem;
@@ -117,15 +136,6 @@ const SubContainer = styled.div`
   width: 77%;
   padding: 2rem;
   border-left: 2px dashed #dddddd;
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  > svg {
-    font-size: 2rem;
-    cursor: pointer;
-  }
 `;
 
 const ListContainer = styled.div`

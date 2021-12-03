@@ -13,7 +13,6 @@ const profileInputList = [
 export default function ProfileEditForm() {
   return (
     <>
-      <h2>프로필 수정</h2>
       <Container>
         <ListContainer>
           {profileInputList.map((el) => (
@@ -34,10 +33,6 @@ export default function ProfileEditForm() {
 const Container = styled.div`
   display: flex;
   gap: 5rem;
-  h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
 `;
 
 const ListContainer = styled.div`
