@@ -141,6 +141,11 @@ module.exports = async (req, res) => {
     where_obj.content = {
       [Op.like]: `%${req.query.content}%`,
     };
+  // 글쓴이 태그 검색 추가 필요
+  let users_where_obj = {};
+  if (req.query.username) {
+    users_where_obj.username = req.query.username;
+  }
 
   let data;
   let count;
@@ -163,6 +168,7 @@ module.exports = async (req, res) => {
         {
           model: users,
           attributes: ["username", "profile"],
+          where: users_where_obj,
         },
         {
           model: likes,
