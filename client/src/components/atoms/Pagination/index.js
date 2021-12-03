@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -7,9 +8,16 @@ import {
   FaAngleRight,
 } from "react-icons/fa";
 
+import { useSelector, useDispatch } from "react-redux";
+import { getPostsList } from "../../../apis/posts";
+import { getList } from "../../../store/actions/postadd/boardList";
+
 export default function Pagination() {
-  const [totalPage, setTotalPage] = useState(12);
-  const limitPage = 6;
+  const state = useSelector((state) => state.board);
+  const dispatch = useDispatch();
+
+  const limitPage = 3;
+  const totalPage = Math.ceil(state.count / limitPage);
   const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
@@ -55,6 +63,17 @@ export default function Pagination() {
       }
     });
   };
+
+  const handleClickNum = (idx) => {
+    setSelectPage(idx + 1 + selectDividPage * limitPage);
+  };
+
+  useEffect(() => {
+    getPostsList("학습", null, null, 5, selectPage)
+      .then((data) => dispatch(getList(data.data)))
+      .catch((err) => console.log(err.response));
+  }, [selectPage]);
+
   return (
     <Container>
       <IconContainer onClick={handleDubleLeft}>
@@ -68,9 +87,7 @@ export default function Pagination() {
         .map((el, idx) => {
           return (
             <PageNum
-              onClick={() =>
-                setSelectPage(idx + 1 + selectDividPage * limitPage)
-              }
+              onClick={() => handleClickNum(idx)}
               isActive={idx + 1 + selectDividPage * limitPage === selectPage}
             >
               {idx + 1 + selectDividPage * limitPage}
