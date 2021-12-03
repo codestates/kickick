@@ -18,18 +18,14 @@ export default function BoardListTitle() {
         <div style={{ flex: 0.6 }}>댓글</div>
       </TitleContainer>
       {test.data.map((data) => (
-        <BoardList
-          key={data.post_id}
-          data={data}
-          onClick={() => handleClick(data.post.id)}
-        />
+        <BoardList key={data.post_id} data={data} handleClick={handleClick} />
       ))}
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin-top: 1.8rem;
+  /* margin-top: 0rem; */
 `;
 const TitleContainer = styled.div`
   display: flex;

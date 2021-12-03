@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function BoardList({ data }) {
+export default function BoardList({ data, handleClick }) {
   return (
     <ListContainer>
       <div
@@ -19,11 +19,13 @@ export default function BoardList({ data }) {
         <span>#하드코디디</span>
       </div>
       <div
+        onClick={() => handleClick(data.post_id)}
         style={{
           flex: 4,
           whiteSpace: "nowrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
+          cursor: "pointer",
         }}
       >
         {data.post_name}
@@ -42,18 +44,15 @@ const ListContainer = styled.div`
   display: flex;
 
   border-bottom: 1px solid #d8d8d8;
-
+  &:hover {
+    color: #ffffff;
+    background-color: #0c0c42;
+    font-weight: bold;
+  }
   > div {
     height: 2.6rem;
     line-height: 2.6rem;
     padding: 0 0.5rem;
-    div {
-      padding-right: 0.5rem;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
   span {
     padding-right: 0.5rem;

@@ -41,7 +41,11 @@ export default function TotalSearch() {
 
     if (icon.label === "제목") {
       getPostsList("학습", word, null, 20)
-        .then((data) => dispatch(getList(data.data, icon.label, word)))
+        .then((data) =>
+          dispatch(
+            getList(data.data, icon.label, state.writer, state.tag, word)
+          )
+        )
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
     } else if (icon.label === "태그") {
@@ -57,10 +61,11 @@ export default function TotalSearch() {
     let dummy = [...tag];
     dummy.splice(idx, 1);
     setTag(dummy);
-    // if (state.lable === label) {
-    //   getPostsList("학습", null, null, 20)
-    //   .then(data => dispatch(getList(data.data, )));
-    // }
+    if (state.title === label) {
+      getPostsList("학습", null, null, 20).then((data) =>
+        dispatch(getList(data.data, null, state.writer, state.tag))
+      );
+    }
   };
 
   return (

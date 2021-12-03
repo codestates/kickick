@@ -71,7 +71,11 @@ export default function Pagination() {
   useEffect(() => {
     if (state.label === "제목") {
       getPostsList("학습", state.word, null, 20, selectPage)
-        .then((data) => dispatch(getList(data.data, state.label, state.word)))
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, state.word)
+          )
+        )
         .catch((err) => console.log(err.response));
     } else {
       getPostsList("학습", null, null, 20, selectPage)
@@ -93,6 +97,7 @@ export default function Pagination() {
         .map((el, idx) => {
           return (
             <PageNum
+              key={idx}
               onClick={() => handleClickNum(idx)}
               isActive={idx + 1 + selectDividPage * limitPage === selectPage}
             >

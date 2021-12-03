@@ -6,8 +6,8 @@ export default function BoardTodayKicks({ kicks = ["1", "1!", "1"] }) {
     <Container>
       <TodayKick>오늘의 킥</TodayKick>
       <KicksContainer>
-        {kicks.map((el) => (
-          <Kick>{el}</Kick>
+        {kicks.map((el, idx) => (
+          <Kick key={idx}>{el}</Kick>
         ))}
       </KicksContainer>
     </Container>

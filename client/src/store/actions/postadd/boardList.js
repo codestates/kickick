@@ -1,8 +1,8 @@
 export const GET_LIST = "GET_LIST";
 
-export const getList = (data, label, word) => {
+export const getList = (data, title, writer, tag, word) => {
   return {
     type: GET_LIST,
-    payload: { ...data, label, word },
+    payload: { ...data, title, writer, tag, word },
   };
 };
