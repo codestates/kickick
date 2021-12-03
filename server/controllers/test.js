@@ -47,11 +47,25 @@ module.exports = async (req, res) => {
     const user_id = user_info.user_id;
 
     // user_id 로 log 검색
+    let log_info = await logs.findAll({
+      attributes: [
+        ["id", "log_id"],
+        "user_id",
+        "type",
+        "content",
+        "created_at",
+      ],
+      where: {
+        user_id: user_id,
+      },
+    });
+    log_info = log_info.map((el) => el.get({ plain: true }));
+    data = log_info;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data, message: "ok" });
+  return res.status(200).json({ data: data, message: "ok" });
   return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
 };
