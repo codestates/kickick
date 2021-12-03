@@ -97,6 +97,11 @@ module.exports = async (req, res) => {
         content: `${data.username}님이 로그인 하였습니다.`,
       });
     }
+    // 수정 예정
+
+    // log 살펴보고 오늘 로그인한 기록이 있는지 확인
+    // 그에 따라 로그에 기록할지말지 결정
+    // 로그에 기록하게 되면 킥머니도 지급해야함
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
