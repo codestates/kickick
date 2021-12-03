@@ -11,6 +11,7 @@ import { Nav } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import MailAuth from "./pages/Signup/MailAuth"
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
@@ -63,6 +64,7 @@ export default function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signup/:username" element={<MailAuth />} />
           </Routes>
         </Container>
       </Router>
