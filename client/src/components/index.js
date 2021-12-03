@@ -1,5 +1,3 @@
-import PostComment from "./organisms/PostComment";
-
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
@@ -32,6 +30,7 @@ export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem
 export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
+export { default as Column } from "./molecules/Column";
 
 // organisms
 export { default as Nav } from "./organisms/Nav/Nav";

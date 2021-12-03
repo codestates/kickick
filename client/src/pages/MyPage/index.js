@@ -7,6 +7,7 @@ import {
   PostStaticsList,
   TabBox,
   ProfileEditForm,
+  Column,
 } from "../../components";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -63,7 +64,7 @@ export function MyActivityFavorite() {
   return (
     <MyActivityFavoriteContainer>
       <Navigator />
-      즐겨찾기
+      <Column />
     </MyActivityFavoriteContainer>
   );
 }
