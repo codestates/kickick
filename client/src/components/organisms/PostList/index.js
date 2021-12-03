@@ -14,7 +14,7 @@ const postList = [
   },
   {
     type: "mypagemycomment",
-    label: ["댓글", "좋아요", "날짜"],
+    label: ["게시판", "댓글", "좋아요", "날짜"],
   },
   {
     type: "freepost",
@@ -22,14 +22,18 @@ const postList = [
   },
 ];
 
-export default function List({ type }) {
+export default function PostList({ type, data }) {
   const { label } = postList.find((el) => el.type === type);
   return (
     <Container type={type}>
-      {label.map((el) => (
-        <div>{el}</div>
-      ))}
-      <PostItem type="mypagemycomment" />
+      <div className="columnName">
+        {label.map((el) => (
+          <div>{el}</div>
+        ))}
+      </div>
+      {/* {data.map((el) => (
+        <PostItem key={el.post_id} data={el} type={type} />
+      ))} */}
     </Container>
   );
 }
@@ -37,6 +41,12 @@ export default function List({ type }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+
+  .columnName {
+    background: linear-gradient(to bottom, #fff 25%, #eee 100%);
+    box-shadow: 1px 1px 7px #eee;
+    font-weight: bold;
+  }
 
   > div {
     display: flex;
@@ -65,16 +75,19 @@ const Container = styled.div`
       `}
 
     ${({ type }) =>
-      type === "mypagecomment" &&
+      type === "mypagemycomment" &&
       css`
         > div:nth-of-type(1) {
-          flex: 7;
+          flex: 2;
         }
         > div:nth-of-type(2) {
-          flex: 2;
+          flex: 5;
         }
         > div:nth-of-type(3) {
           flex: 1;
+        }
+        > div:nth-of-type(4) {
+          flex: 2;
         }
       `}
   }

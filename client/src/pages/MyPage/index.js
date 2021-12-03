@@ -7,7 +7,7 @@ import {
   PostStaticsList,
   TabBox,
   ProfileEditForm,
-  List,
+  PostList,
 } from "../../components";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -64,7 +64,7 @@ export function MyActivityFavorite() {
   return (
     <MyActivityFavoriteContainer>
       <Navigator head="스크랩 한 글" />
-      <List type="mypagefavorite" />
+      <PostList type="mypagefavorite" />
     </MyActivityFavoriteContainer>
   );
 }
@@ -72,7 +72,7 @@ export function MyActivityMyPost() {
   return (
     <MyActivityMyPostContainer>
       <Navigator head="내가 쓴 글" />
-      <List type="mypagemypost" />
+      <PostList type="mypagemypost" />
     </MyActivityMyPostContainer>
   );
 }
@@ -80,7 +80,7 @@ export function MyActivityMyComment() {
   return (
     <MyActivityMyCommentContainer>
       <Navigator head="내가 쓴 댓글" />
-      <List type="mypagemycomment" />
+      <PostList type="mypagemycomment" />
     </MyActivityMyCommentContainer>
   );
 }
@@ -136,6 +136,11 @@ const SubContainer = styled.div`
   width: 77%;
   padding: 2rem;
   border-left: 2px dashed #dddddd;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 `;
 
 const ListContainer = styled.div`
