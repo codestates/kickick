@@ -12,42 +12,30 @@ const {
   logs,
   notices,
 } = require("./../models");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 module.exports = async (req, res) => {
   // TODO
   let data;
   try {
-    data = await users.findOne({
-      where: {
-        id: 1,
-      },
-      // raw: true,
-      include: [
-        {
-          model: users_kicks,
-          include: kicks,
-        },
-        {
-          model: comments,
-          include: {
-            model: posts,
-            include: {
-              model: posts_tags,
-              include: tags,
-            },
-          },
-        },
-        likes,
-        favorites,
-        alarms,
-        logs,
-        notices,
-      ],
+    bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .json({ data: null, message: "데이터베이스 에러" });
+      }
+
+      data = await users.create({
+        ...req.body,
+        password: hash,
+      });
     });
   } catch (err) {
     console.log(err);
   }
-  data = data.get({ plain: true });
+  // data = data.get({ plain: true });
   console.log(data);
 
   return res.status(200).json({ data, message: "ok" });
