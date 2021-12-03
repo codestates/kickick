@@ -15,8 +15,13 @@ export const signIn = (email, password) =>
  *  @param {string} email
  *  @param {string} password
  **/
+export const mailCheck = (username) =>
+  api.post(`/auth/email`, { username });
+  /**
+*  @param {string} username
+**/
 export const signUp = ( data ) =>
-  api.post(`/auth/signin`, data);
+  api.post(`/users/info`, data);
 /**
  *
  **/
