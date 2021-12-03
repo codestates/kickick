@@ -1,5 +1,5 @@
 import React from "react";
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from "styled-components";
 
 export default function NavBtn({
@@ -11,10 +11,10 @@ export default function NavBtn({
   backgroundColor,
 }) {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
-  // const navigate = useNavigate();
-  // const moveHandler = (path) => {
-  //   navigate(`/${path}`);
-  // }
+  const navigate = useNavigate();
+  const moveHandler = (path) => {
+    navigate(path);
+  }
   return (
     <Container
       size={size}
@@ -22,7 +22,7 @@ export default function NavBtn({
       backgroundColor={backgroundColor}
       fontFamily={fontFamily}
       context={context}
-      // onClick={() => moveHandler(pathname)}
+      onClick={() => moveHandler(pathname)}
     >
       {context}
     </Container>

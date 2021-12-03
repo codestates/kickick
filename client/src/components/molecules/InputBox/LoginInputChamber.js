@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { LoginInput } from "../../../components";
@@ -12,6 +13,7 @@ export default function LoginInputChamber({
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [isValid, setIsValid] = useState({ id: false, password: false });
 
+  const navigate = useNavigate();
   const inputlist = [{ part: "id", type: 'text' }, { part:"password",type:"password"}]
 
   const inputHandler = (key, value) => {
@@ -29,7 +31,8 @@ export default function LoginInputChamber({
   const loginHandler = () => {
     if (isValid.id && isValid.password) {
       signIn(inputValue.id, inputValue.password)
-        .then((res) => console.log(res.data.data));
+        .then((res) => console.log(res.data.data))
+        .then(() => navigate("/"));
     }
   }
 
