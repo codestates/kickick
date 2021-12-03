@@ -16,8 +16,8 @@ export default function Pagination() {
   const state = useSelector((state) => state.board);
   const dispatch = useDispatch();
 
-  const limitPage = 3;
-  const totalPage = Math.ceil(state.count / limitPage);
+  const limitPage = 10;
+  const totalPage = state.count !== 0 ? Math.ceil(state.count / 20) : 1;
   const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
@@ -69,9 +69,15 @@ export default function Pagination() {
   };
 
   useEffect(() => {
-    getPostsList("학습", null, null, 5, selectPage)
-      .then((data) => dispatch(getList(data.data)))
-      .catch((err) => console.log(err.response));
+    if (state.label === "제목") {
+      getPostsList("학습", state.word, null, 20, selectPage)
+        .then((data) => dispatch(getList(data.data, state.label, state.word)))
+        .catch((err) => console.log(err.response));
+    } else {
+      getPostsList("학습", null, null, 20, selectPage)
+        .then((data) => dispatch(getList(data.data)))
+        .catch((err) => console.log(err.response));
+    }
   }, [selectPage]);
 
   return (

@@ -8,7 +8,7 @@ export default function BoardTop() {
   const state = useSelector((state) => state.board);
   return (
     <div>
-      <BoardTodayKicks />
+      {/* <BoardTodayKicks /> */}
       <IconContainer>
         <IconText label="학습" board={true} />
       </IconContainer>
