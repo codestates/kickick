@@ -61,6 +61,7 @@ module.exports = async (req, res) => {
               "view_count",
               "created_at",
             ],
+            order: [["id", "DESC"]],
             offset: limit * (page_num - 1),
             limit: limit,
 
@@ -146,6 +147,10 @@ module.exports = async (req, res) => {
   if (req.query.username) {
     users_where_obj.username = req.query.username;
   }
+  let tags_where_obj = {};
+  if (req.query.tag) {
+    tags_where_obj.content = req.query.tag;
+  }
 
   let data;
   let count;
@@ -164,6 +169,7 @@ module.exports = async (req, res) => {
       where: where_obj,
       offset: limit * (page_num - 1),
       limit: limit,
+      order: [["id", "DESC"]],
       include: [
         {
           model: users,
@@ -180,7 +186,7 @@ module.exports = async (req, res) => {
         },
         {
           model: comments,
-          attributes: ["id", "content"],
+          attributes: [["id", "comment_id"], "content"],
           include: [
             {
               model: users,
@@ -194,6 +200,7 @@ module.exports = async (req, res) => {
           include: {
             model: tags,
             attributes: ["content"],
+            where: {},
           },
         },
       ],
