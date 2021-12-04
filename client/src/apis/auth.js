@@ -24,15 +24,12 @@ export const signUp = ( data ) =>
 /**
  *
  **/
-export const signOut = () => {
-  return api.post(`/auth/signout`);
-};
+export const signOut = () => api.post(`/auth/signout`);
 /**
  *  @param {string} code
  **/
-export const kakaoAuth = (code) => {
-  return api.post(`/auth/kakao`, { code });
-};
+export const kakaoAuth = (code) => api.post(`/auth/kakao`, { code });
+
 /**
  *  @param {string} code
  *  @param {string} state

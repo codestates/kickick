@@ -6,6 +6,7 @@ const btnList = [
   { type: "confirm", size: 1.5 * 1 },
   { type: "register", size: 1.5 * 1.5 },
   { type: "imgedit", size: 1.5 * 1.2 },
+  { type: "comment", size: 1.5 * 1.8 },
   { type: "bigger", size: 1.5 * 2.5 },
 ];
 
@@ -34,6 +35,7 @@ const Container = styled.div`
   color: #ffffff;
   line-height: 0.9;
   cursor: pointer;
+
   ${({ type }) =>
     type === "imgedit" &&
     css`
@@ -41,6 +43,10 @@ const Container = styled.div`
       background-color: white;
       color: black;
       border: 1px solid #ddd;
+      box-shadow: 1px 1px 5px #eee;
+      &:hover {
+        background-color: #ddd;
+      }
     `}
   ${({ type }) =>
     type === "register" &&

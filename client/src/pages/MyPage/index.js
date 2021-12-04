@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import {
   MyPageAside,
   Landscape,
   PostStaticsList,
   TabBox,
   ProfileEditForm,
+  PostList,
 } from "../../components";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function MyPage() {
   return (
@@ -44,28 +46,81 @@ export function MyPageHome() {
 export function ProfileEdit() {
   return (
     <ProfileEditContainer>
-      <ProfileEditForm head="프로필 수정" />
+      <Navigator head="프로필 수정" />
+      <ProfileEditForm />
     </ProfileEditContainer>
   );
 }
 
 export function ProfileAttendance() {
-  return <ProfileAttendanceContainer>출석</ProfileAttendanceContainer>;
+  return (
+    <ProfileAttendanceContainer>
+      <Navigator head="출석" />
+    </ProfileAttendanceContainer>
+  );
 }
 
-export function Favorite() {
-  return <FavoriteContainer>즐겨찾기</FavoriteContainer>;
+export function MyActivityFavorite() {
+  return (
+    <MyActivityFavoriteContainer>
+      <Navigator head="스크랩 한 글" />
+      <PostList type="mypagefavorite" />
+    </MyActivityFavoriteContainer>
+  );
 }
-export function Activity() {
-  return <ActivityContainer>나의 활동</ActivityContainer>;
+export function MyActivityMyPost() {
+  return (
+    <MyActivityMyPostContainer>
+      <Navigator head="내가 쓴 글" />
+      <PostList type="mypagemypost" />
+    </MyActivityMyPostContainer>
+  );
+}
+export function MyActivityMyComment() {
+  return (
+    <MyActivityMyCommentContainer>
+      <Navigator head="내가 쓴 댓글" />
+      <PostList type="mypagemycomment" />
+    </MyActivityMyCommentContainer>
+  );
 }
 
+export function Navigator({ head }) {
+  const navigate = useNavigate();
+
+  return (
+    <NavContainer>
+      <FaArrowLeft
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
+      <h2>{head}</h2>
+    </NavContainer>
+  );
+}
+
+const NavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  svg {
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+`;
 const Container = styled.div`
   display: flex;
   gap: 2rem;
   position: relative;
   top: -15rem;
-  z-index: 2;
+  z-index: 3;
 
   width: 77rem;
   margin: 0 auto;
@@ -97,5 +152,6 @@ const ListContainer = styled.div`
 const MyPageHomeContainer = styled(SubContainer)``;
 const ProfileEditContainer = styled(SubContainer)``;
 const ProfileAttendanceContainer = styled(SubContainer)``;
-const FavoriteContainer = styled(SubContainer)``;
-const ActivityContainer = styled(SubContainer)``;
+const MyActivityFavoriteContainer = styled(SubContainer)``;
+const MyActivityMyPostContainer = styled(SubContainer)``;
+const MyActivityMyCommentContainer = styled(SubContainer)``;
