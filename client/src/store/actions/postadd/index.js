@@ -5,20 +5,20 @@ export const GET_CONTENT = "GET_CONTENT";
 export const getCategory = (category) => {
   return {
     type: GET_CATEGORY,
-    payload: category,
+    payload: { category },
   };
 };
 
 export const getPostName = (post_name) => {
   return {
     type: GET_POST_NAME,
-    payload: post_name,
+    payload: { post_name },
   };
 };
 
 export const getContent = (content) => {
   return {
     type: GET_CONTENT,
-    payload: content,
+    payload: { content },
   };
 };

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import AWS from "aws-sdk";
 
-export default function EditQuill({ image = true }) {
+export default function EditQuill({
+  image = true,
+  content,
+  setContent,
+  handleQuill,
+}) {
   const quill = useRef(null);
   //quill.current.state.value
 
@@ -50,32 +55,32 @@ export default function EditQuill({ image = true }) {
     };
   };
 
-  const modules = {
-    toolbar: {
-      container: [
-        [{ size: ["small", false, "large", "huge"] }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        [{ align: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [{ color: [] }, { background: [] }],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ size: ["small", false, "large", "huge"] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ align: [] }],
+          ["underline", "strike", "blockquote"],
+          [{ color: [] }, { background: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          image ? ["link", "image", "video", "code-block", "clean"] : ["clean"],
         ],
-        image ? ["link", "image", "video", "code-block", "clean"] : ["clean"],
-      ],
-      handlers: { image: handleImage },
-    },
-  };
+        handlers: { image: handleImage },
+      },
+    };
+  }, []);
 
   const formats = [
     "header",
     "font",
     "size",
-    "bold",
-    "italic",
     "underline",
     "strike",
     "blockquote",
@@ -95,10 +100,12 @@ export default function EditQuill({ image = true }) {
     <Container>
       <ReactQuill
         ref={quill}
+        value={content}
+        onChange={setContent}
+        onBlur={handleQuill}
         theme="snow"
         style={{
           height: "60vh",
-
           display: "flex",
           flexDirection: "column",
         }}
