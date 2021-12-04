@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 
 import { PostItem } from "../..";
 
@@ -22,8 +23,9 @@ const postList = [
   },
 ];
 
-export default function PostList({ type, data }) {
+export default function PostList({ type }) {
   const { label } = postList.find((el) => el.type === type);
+  const data = useSelector((state) => state.board);
 
   return (
     <Container type={type}>
@@ -32,7 +34,7 @@ export default function PostList({ type, data }) {
           <div>{el}</div>
         ))}
       </div>
-      {data.map((el) => (
+      {data.data.map((el) => (
         <PostItem key={el.post_id} data={el} type={type} />
       ))}
     </Container>

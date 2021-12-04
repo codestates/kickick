@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
+import { getPostsList } from "../../apis/posts";
+import { getList } from "../../store/actions/postadd/boardList";
 
 import {
   TotalSearch,
-  BoardTodayKicks,
   BoardBottom,
   BoardTop,
+  BoardTodayKicks,
 } from "../../components/";
-import useAxios from "../../hooks/useAxios";
-import { getPostsList } from "../../apis/posts";
 
 export default function Board() {
-  const { data, loading } = useAxios(getPostsList("학습"));
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getPostsList("학습", null, null, 20)
+      .then((data) => dispatch(getList(data.data)))
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err.response));
+  }, []);
 
-  if (loading) return "로딩중";
-
+  if (loading) return "";
   return (
     <>
       <BoardTop />
@@ -23,7 +31,7 @@ export default function Board() {
           <BoardTodayKicks />
           <BoardContainer>
             <TotalSearch />
-            <BoardBottom data={data} />
+            <BoardBottom />
           </BoardContainer>
         </MainContainer>
       </Container>

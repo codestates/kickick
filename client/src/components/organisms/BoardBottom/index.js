@@ -6,7 +6,7 @@ import Pagination from "../../atoms/Pagination";
 import Common from "../../atoms/Button/Common";
 import PostList from "../../organisms/PostList";
 
-export default function BoardBottom({ data }) {
+export default function BoardBottom() {
   const navigate = useNavigate();
   const handleMovePage = () => {
     navigate("/editboard");
@@ -14,7 +14,7 @@ export default function BoardBottom({ data }) {
 
   return (
     <Container>
-      <PostList type="freepost" data={data} />
+      <PostList type="freepost" />
       <BtnContainer>
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       </BtnContainer>
