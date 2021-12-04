@@ -1,5 +1,3 @@
-import PostComment from "./organisms/PostComment";
-
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
@@ -7,7 +5,7 @@ export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as DatePicker } from "./atoms/Input/DatePicker";
 export { default as SignupInput } from "./atoms/Input/SignupInput";
-export { default as Condition} from "./atoms/CheckBox/Condition"
+export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
@@ -15,7 +13,6 @@ export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
-export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
 export { default as IconBox } from "./atoms/IconBox";
 
@@ -30,6 +27,7 @@ export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInp
 export { default as ProfileInput } from "./molecules/InputBox/ProfileInput";
 export { default as TagInput } from "./molecules/InputBox/TagInput";
 export { default as PostCommentItem } from "./molecules/ListItem/PostCommentItem";
+export { default as PostItem } from "./molecules/ListItem/PostItem";
 export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
@@ -46,4 +44,5 @@ export { default as BoardTop } from "./organisms/BoardTop";
 export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
 export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
-export { default as ProfileEditForm } from "./organisms/ProfileEditForm";
+export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
+export { default as PostList } from "./organisms/PostList";

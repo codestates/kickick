@@ -16,21 +16,17 @@ export default function EditQuill({
 
   const handleImage = () => {
     const input = document.createElement("input");
-
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
-
     input.onchange = async () => {
       const file = input.files[0];
-
       AWS.config.update({
         region: process.env.REACT_APP_AWS_REGION,
         credentials: new AWS.CognitoIdentityCredentials({
           IdentityPoolId: process.env.REACT_APP_AWS_IDENTITYPOOLID,
         }),
       });
-
       const upload = new AWS.S3.ManagedUpload({
         params: {
           Bucket: process.env.REACT_APP_S3_IMG_BUCKET,
@@ -38,9 +34,7 @@ export default function EditQuill({
           Body: file,
         },
       });
-
       const promise = upload.promise();
-
       promise.then(
         function (data) {
           const imgURL = data.Location;
@@ -96,7 +90,6 @@ export default function EditQuill({
     "code-block",
     "align",
   ];
-
   return (
     <Container>
       <ReactQuill
@@ -116,7 +109,6 @@ export default function EditQuill({
     </Container>
   );
 }
-
 const Container = styled.div`
   z-index: 1;
 `;

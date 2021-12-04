@@ -15,7 +15,6 @@ export default function TagInput({ tagArr, setTagArr }) {
       setValue("");
     }
   };
-
   const handleChange = (e) => {
     setValue(e.target.value);
   };

@@ -3,14 +3,10 @@ import styled from "styled-components";
 
 import Profile from "../../atoms/Img/Profile";
 
-export default function PostCommentItem({ size = "lg" }) {
-  let scale = 1;
-  if (size === "sm") scale = 0.75;
-  else if (size === "lg") scale = 1.5;
-
+export default function PostCommentItem() {
   return (
-    <Container scale={scale}>
-      <UserInfoContainer scale={scale}>
+    <Container scale={1.5}>
+      <UserInfoContainer scale={1.5}>
         <Profile type="post" />
         <div className="username">어쩔</div>
         <div className="datetime">46분전</div>

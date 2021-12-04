@@ -22,12 +22,10 @@ export default function TotalSearch() {
     const label = event.target.innerText;
     setHighlight(label);
   };
-
   const handleIcon = (label) => {
     setIcon(label);
     setIsSelect(!isSelect);
   };
-
   const handleSearch = () => {
     let dummy = [...tag];
     let isDuplicate = dummy.findIndex((el) => el.label === icon.label);

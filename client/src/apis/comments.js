@@ -24,12 +24,11 @@ export const postComments = (post_id, content) =>
  *  @param {string} content
  **/
 export const putComments = (comment_id, content) => {
-  return api.put(`/comments/info`, { content }, { params: { comment_id } });
+  return api.put(`/comments/info/${comment_id}`, { content });
 };
 /**
  *  @param {number} comment_id
- *  @param {string} content
  **/
 export const delComments = (comment_id) => {
-  return api.delete(`/comments/info`, { params: { comment_id } });
+  return api.delete(`/comments/info/${comment_id}`);
 };
