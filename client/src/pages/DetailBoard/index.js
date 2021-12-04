@@ -16,7 +16,7 @@ export default function DetailBoard() {
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 70vw;
+  width: 48rem;
   margin: 0 auto;
 `;
 

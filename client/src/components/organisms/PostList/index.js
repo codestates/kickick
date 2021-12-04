@@ -18,12 +18,13 @@ const postList = [
   },
   {
     type: "freepost",
-    label: ["제목", "태그", "글쓴이", "날짜", "조회수", "댓글"],
+    label: ["태그", "제목", "글쓴이", "날짜", "조회수", "댓글"],
   },
 ];
 
 export default function PostList({ type, data }) {
   const { label } = postList.find((el) => el.type === type);
+
   return (
     <Container type={type}>
       <div className="columnName">
@@ -31,9 +32,9 @@ export default function PostList({ type, data }) {
           <div>{el}</div>
         ))}
       </div>
-      {/* {data.map((el) => (
+      {data.map((el) => (
         <PostItem key={el.post_id} data={el} type={type} />
-      ))} */}
+      ))}
     </Container>
   );
 }
@@ -44,17 +45,21 @@ const Container = styled.div`
 
   .columnName {
     background: linear-gradient(to bottom, #fff 25%, #eee 100%);
-    box-shadow: 1px 1px 7px #eee;
+    box-shadow: 1px 1px 5px #eee;
     font-weight: bold;
   }
 
   > div {
     display: flex;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #d8d8d8;
 
     > div {
+      margin: auto 0;
       text-align: center;
       padding: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     ${({ type }) =>
@@ -88,6 +93,29 @@ const Container = styled.div`
         }
         > div:nth-of-type(4) {
           flex: 2;
+        }
+      `}
+
+      ${({ type }) =>
+      type === "freepost" &&
+      css`
+        > div:nth-of-type(1) {
+          flex: 2;
+        }
+        > div:nth-of-type(2) {
+          flex: 4.5;
+        }
+        > div:nth-of-type(3) {
+          flex: 2;
+        }
+        > div:nth-of-type(4) {
+          flex: 1;
+        }
+        > div:nth-of-type(5) {
+          flex: 0.75;
+        }
+        > div:nth-of-type(6) {
+          flex: 0.75;
         }
       `}
   }
