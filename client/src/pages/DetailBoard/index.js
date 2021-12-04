@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { DetailBoardTop, PostComment, IconContainer } from "../../components";
+import { useSelector } from "react-redux";
 export default function DetailBoard() {
+  const state = useSelector((state) => state.board);
   return (
     <Container>
       <IconContainer />

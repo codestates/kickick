@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import BoardList from "./";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function BoardListTitle() {
-  const test = useSelector((state) => state.board);
+  const navigate = useNavigate();
+  const board = useSelector((state) => state.board);
   const handleClick = (id) => {
+    navigate("/detailboard");
     console.log(id);
   };
   return (
@@ -17,7 +20,7 @@ export default function BoardListTitle() {
         <div style={{ flex: 0.6 }}>조회</div>
         <div style={{ flex: 0.6 }}>댓글</div>
       </TitleContainer>
-      {test.data.map((data) => (
+      {board.data.map((data) => (
         <BoardList key={data.post_id} data={data} handleClick={handleClick} />
       ))}
     </Container>
