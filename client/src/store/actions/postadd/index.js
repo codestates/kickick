@@ -1,6 +1,7 @@
 export const GET_CATEGORY = "GET_CATEGORY";
 export const GET_POST_NAME = "GET_POST_NAME";
 export const GET_CONTENT = "GET_CONTENT";
+export const RESET = "RESET";
 
 export const getCategory = (category) => {
   return {
@@ -20,5 +21,11 @@ export const getContent = (content) => {
   return {
     type: GET_CONTENT,
     payload: { content },
+  };
+};
+
+export const reset = () => {
+  return {
+    type: RESET,
   };
 };

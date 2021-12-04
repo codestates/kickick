@@ -14,6 +14,7 @@ import {
   getCategory,
   getPostName,
   getContent,
+  reset,
 } from "../../store/actions/postadd";
 import { createPost } from "../../apis/posts";
 
@@ -34,7 +35,10 @@ export default function EditBoard() {
 
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
-      .then((data) => navigate("/board"))
+      .then((data) => {
+        dispatch(reset());
+        navigate("/board");
+      })
       .catch((err) => console.log(err.response));
   };
 
