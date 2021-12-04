@@ -43,7 +43,7 @@ export default function App() {
             <Route path="editboard" element={<EditBoard />} />
             <Route path="kickboard" element={<KickBoard />} />
             <Route path="board" element={<Board />} />
-            <Route path="detailboard" element={<DetailBoard />} />
+            <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage" element={<MyPage />}>
               <Route path="home" element={<MyPageHome />} />
               <Route path="profile/edit" element={<ProfileEdit />} />

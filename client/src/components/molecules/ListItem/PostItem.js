@@ -30,7 +30,7 @@ export function Freepost({ data }) {
         <span>#어질어질</span>
       </div>
       <div>
-        <Link to={`/board/${data.post_id}`}>{data.post_name}</Link>
+        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
       </div>
       <div>{data.user.username}</div>
       <div>{dateConverter(data.created_at)}</div>

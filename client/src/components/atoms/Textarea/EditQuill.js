@@ -56,7 +56,7 @@ export default function EditQuill({
           [{ size: ["small", false, "large", "huge"] }],
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
           [{ align: [] }],
-          ["underline", "strike", "blockquote"],
+          ["bold", "italic", "underline", "strike", "blockquote"],
           [{ color: [] }, { background: [] }],
           [
             { list: "ordered" },
@@ -73,7 +73,8 @@ export default function EditQuill({
 
   const formats = [
     "header",
-    "font",
+    "bold",
+    "italic",
     "size",
     "underline",
     "strike",

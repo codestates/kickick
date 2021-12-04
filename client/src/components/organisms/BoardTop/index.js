@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import spacebackground from "../../../assets/images/space_background.jpg";
 import study from "../../../assets/images/studyplanet.png";
 
 export default function BoardTop() {
+  const state = useSelector((state) => state.board);
   return (
     <Container image={spacebackground}>
       <img src={study} alt="" />

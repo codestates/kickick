@@ -11,7 +11,7 @@ export default function PostComment() {
       <H3>댓글달기</H3>
       <PostCommentInput />
       <H3>
-        댓글 <strong>52</strong>
+        댓글 <strong>0</strong>
       </H3>
       {arr.map((i) => (
         <PostCommentItem />
