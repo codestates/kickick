@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import IconText, { iconList } from "../../atoms/IconText";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 
 export default function Select({
   handleIcon,
@@ -13,9 +13,9 @@ export default function Select({
 }) {
   return (
     <Container>
-      {isSelect ? <FaAngleDown /> : <FaAngleRight />}
       <Selected onClick={() => setIsSelect(!isSelect)}>
         <IconText label={icon.label} />
+        <FaAngleDown />
       </Selected>
       {isSelect ? (
         <Options>
@@ -40,29 +40,27 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 
-  width: 7.7rem;
-  padding: 0 0.2rem;
-
-  > svg {
-    margin-right: 0.5rem;
-  }
+  width: 7rem;
 `;
 
 const Selected = styled.div`
   display: flex;
   align-items: center;
 
-  width: 5.8rem;
+  width: 7rem;
   border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.08);
   cursor: pointer;
+  svg {
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
 `;
 
 const Options = styled.div`
   position: absolute;
   top: 2.5rem;
-  left: 1.7rem;
-  width: 5.8rem;
+  width: 7rem;
 
   background-color: white;
 
@@ -75,5 +73,4 @@ const Options = styled.div`
     color: #ffffff;
     background-color: #0c0c42;
   }
-  /* commit */
 `;

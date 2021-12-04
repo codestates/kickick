@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
+
 import {
   TotalSearch,
   BoardBottom,
   BoardTop,
   BoardTodayKicks,
-  TopNavigator,
 } from "../../components/";
 
 export default function Board() {
@@ -21,33 +21,44 @@ export default function Board() {
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
   }, []);
-  if (loading) return ""; //로딩스피너로 대체
+
+  if (loading) return "";
   return (
-    <Container>
-      <TodayKickFrame>
+    <>
+      <BoardTop />
+      <Container>
         <BoardTodayKicks />
-      </TodayKickFrame>
-      <Frame>
-        <BoardTop />
-        <TotalSearch />
-        <BoardBottom />
-      </Frame>
-    </Container>
+        <BoardContainer>
+          <TotalSearch />
+          <BoardBottom />
+        </BoardContainer>
+      </Container>
+    </>
   );
 }
-
 const Container = styled.div`
-  position: relative;
   display: flex;
-  justify-content: center;
   margin: 0 auto;
+  width: 90rem;
+
+  @media ${({ theme }) => theme.device.notebookL} {
+    flex-direction: column;
+    width: 64rem;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
-const Frame = styled.div`
-  width: 55vw;
-`;
+const BoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 64rem;
 
-const TodayKickFrame = styled.div`
-  margin-top: 2rem;
-  padding-right: 2rem;
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: column;
+    width: 100%;
+  }
 `;

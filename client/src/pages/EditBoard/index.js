@@ -64,7 +64,6 @@ export default function EditBoard() {
     </Container>
   );
 }
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,7 +71,6 @@ const Container = styled.div`
   margin: 0 auto;
   gap: 1rem;
 `;
-
 const TitleContainer = styled.div`
   display: flex;
   margin-top: 2rem;

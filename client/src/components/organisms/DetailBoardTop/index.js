@@ -58,7 +58,7 @@ export default function DetailBoardTop() {
 }
 
 const Container = styled.div`
-  width: 60vw;
+  /* width: 60vw; */
 `;
 
 const TopContainer = styled.div`

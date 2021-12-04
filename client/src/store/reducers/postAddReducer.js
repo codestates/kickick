@@ -9,7 +9,6 @@ const initialState = {
   post_name: "",
   content: "",
 };
-
 export const postAddReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CATEGORY:

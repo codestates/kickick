@@ -21,14 +21,11 @@ export default function Pagination() {
   const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
-
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
   let lastPage = limitPage * (selectDividPage + 1);
-
   if (totalPage < lastPage) {
     lastPage = totalPage;
   }
-
   const handleLeftIdx = () => {
     if (selectPage === 1) return;
     if (selectPage === firstPage) {
@@ -114,25 +111,21 @@ export default function Pagination() {
     </Container>
   );
 }
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.2rem;
 `;
-
 const IconContainer = styled.div`
   display: grid;
   place-items: center;
   width: 2rem;
   height: 2rem;
-
   text-align: center;
   line-height: 2rem;
   cursor: pointer;
 `;
-
 const PageNum = styled.div`
   width: 2rem;
   height: 2rem;
