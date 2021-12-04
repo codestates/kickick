@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import BoardList from "./";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getPostInfo } from "../../../store/actions/postadd";
+import { getPostsInfo } from "../../../apis/posts";
+
 export default function BoardListTitle() {
   const navigate = useNavigate();
   const board = useSelector((state) => state.board);
+
   const handleClick = (id) => {
-    navigate("/detailboard");
-    console.log(id);
+    navigate(`/detailboard/${id}`);
   };
   return (
     <Container>

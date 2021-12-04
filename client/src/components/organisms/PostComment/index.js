@@ -5,17 +5,15 @@ import PostCommentInput from "../../molecules/InputBox/PostCommentInput";
 import PostCommentItem from "../../molecules/ListItem/PostCommentItem";
 
 export default function PostComment({ size = "lg" }) {
-  const arr = Array(52).fill(0);
   return (
     <Container>
       <H3>댓글달기</H3>
       <PostCommentInput size={size} />
       <H3>
-        댓글 <strong>52</strong>
+        댓글 <strong>0</strong>
       </H3>
-      {arr.map((i) => (
-        <PostCommentItem size={size} />
-      ))}
+
+      {/* <PostCommentItem size={size} /> */}
     </Container>
   );
 }
