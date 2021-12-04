@@ -36,13 +36,13 @@ export default function EditBoard() {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        dispatch(reset());
         navigate("/board");
       })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
+    dispatch(reset());
     dispatch(getCategory("학습"));
   }, []);
   return (

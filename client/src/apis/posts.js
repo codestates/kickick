@@ -27,7 +27,7 @@ export const getPostsList = (category, post_name, content, limit, page_num) => {
  * @param {string} category required
  * @param {string} post_name required
  * @param {string} content required
- * @param {Number} cost option
+ * @param {number} cost option
  **/
 export const createPost = (category, post_name, content, cost) => {
   const data = { category, post_name, content, cost };
