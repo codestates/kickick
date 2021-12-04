@@ -49,6 +49,10 @@ const Container = styled.div`
     background: linear-gradient(to bottom, #fff 25%, #eee 100%);
     box-shadow: 1px 1px 5px #eee;
     font-weight: bold;
+
+    @media ${({ theme }) => theme.device.tablet} {
+      display: none;
+    }
   }
 
   > div {
@@ -62,6 +66,9 @@ const Container = styled.div`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      @media ${({ theme }) => theme.device.tablet} {
+        height: 4rem;
+      }
     }
 
     ${({ type }) =>
@@ -105,13 +112,13 @@ const Container = styled.div`
           flex: 2;
         }
         > div:nth-of-type(2) {
-          flex: 4.5;
+          flex: 4.25;
         }
         > div:nth-of-type(3) {
           flex: 2;
         }
         > div:nth-of-type(4) {
-          flex: 1;
+          flex: 1.25;
         }
         > div:nth-of-type(5) {
           flex: 0.75;

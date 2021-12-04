@@ -5,7 +5,7 @@ export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as DatePicker } from "./atoms/Input/DatePicker";
 export { default as SignupInput } from "./atoms/Input/SignupInput";
-export { default as Condition} from "./atoms/CheckBox/Condition"
+export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
@@ -13,7 +13,6 @@ export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
-export { default as TopNavigator } from "./atoms/TopNavigator/";
 export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
 export { default as IconBox } from "./atoms/IconBox";
 

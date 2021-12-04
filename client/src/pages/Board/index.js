@@ -27,34 +27,38 @@ export default function Board() {
     <>
       <BoardTop />
       <Container>
-        <MainContainer>
-          <BoardTodayKicks />
-          <BoardContainer>
-            <TotalSearch />
-            <BoardBottom />
-          </BoardContainer>
-        </MainContainer>
+        <BoardTodayKicks />
+        <BoardContainer>
+          <TotalSearch />
+          <BoardBottom />
+        </BoardContainer>
       </Container>
     </>
   );
 }
+const Container = styled.div`
+  display: flex;
+  margin: 0 auto;
+  width: 90rem;
+
+  @media ${({ theme }) => theme.device.notebookL} {
+    flex-direction: column;
+    width: 64rem;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: column;
+    width: 100%;
+  }
+`;
 
 const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 66rem;
-`;
+  width: 64rem;
 
-const MainContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 88rem;
-  gap: 2rem;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  width: 88rem;
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
