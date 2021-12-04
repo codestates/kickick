@@ -11,8 +11,12 @@ export default function SearchInput({ handleSearch, handleInput, word }) {
         placeholder="검색어를 입력하세요."
         value={word}
         onChange={handleInput}
-        onKeyUp={(e) => {
-          if (e.code === "Enter") handleSearch(e);
+        onKeyPress={(e) => {
+          if (
+            (e.code === "Enter" && word) ||
+            (e.code === "NumpadEnter" && word)
+          )
+            handleSearch(e);
         }}
       />
       <FaSearch style={{ cursor: "pointer" }} onClick={handleSearch} />
