@@ -1,54 +1,49 @@
 import React from "react";
 import styled from "styled-components";
+import BoardList from "./";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getPostInfo } from "../../../store/actions/postadd";
+import { getPostsInfo } from "../../../apis/posts";
 
 export default function BoardListTitle() {
+  const navigate = useNavigate();
+  const board = useSelector((state) => state.board);
+
+  const handleClick = (id) => {
+    navigate(`/detailboard/${id}`);
+  };
   return (
     <Container>
       <TitleContainer>
+        <div style={{ flex: 2 }}>태그</div>
         <div style={{ flex: 4 }}>제목</div>
-        <div style={{ flex: 3 }}>태그</div>
-        <div style={{ flex: 1 }}>글쓴이</div>
+        <div style={{ flex: 1.6 }}>글쓴이</div>
         <div style={{ flex: 1.6 }}>날짜</div>
-        <div style={{ flex: 0.8 }}>조회수</div>
-        <div style={{ flex: 0.8 }}>댓글</div>
+        <div style={{ flex: 0.6 }}>조회</div>
+        <div style={{ flex: 0.6 }}>댓글</div>
       </TitleContainer>
-      <ListContainer>
-        <div
-          style={{
-            flex: 4,
-
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          대격변! 환상수호전!
-        </div>
-        <div style={{ flex: 3, textAlign: "center" }}>
-          <span>#어그로</span>
-          <span>#하드코딩</span>
-        </div>
-        <div style={{ flex: 1, textAlign: "center" }}>soso</div>
-        <div style={{ flex: 1.6, textAlign: "center" }}>2021.11.29</div>
-        <div style={{ flex: 0.8, textAlign: "center" }}>2020</div>
-        <div style={{ flex: 0.8, textAlign: "center" }}>0</div>
-      </ListContainer>
+      {board.data.map((data) => (
+        <BoardList key={data.post_id} data={data} handleClick={handleClick} />
+      ))}
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin-top: 1.8rem;
+  /* margin-top: 0rem; */
 `;
 const TitleContainer = styled.div`
   display: flex;
 
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #d8d8d8;
   font-weight: bold;
 
   div {
+    height: 2.6rem;
+    line-height: 2.6rem;
+    padding: 0 0.5rem;
     text-align: center;
-    padding: 0.5rem;
   }
 `;
 

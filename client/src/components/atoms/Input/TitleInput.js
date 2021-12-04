@@ -7,6 +7,7 @@ export default function TitleInput({
   padding = "none",
   handleKeyon,
   handleChange,
+  handleBlur,
   val,
 }) {
   return (
@@ -14,10 +15,11 @@ export default function TitleInput({
       type="text"
       placeholder={holder}
       width={width}
+      onBlur={handleBlur}
       onKeyUp={handleKeyon}
       onChange={handleChange}
-      value={val}
       padding={padding}
+      value={val}
     />
   );
 }

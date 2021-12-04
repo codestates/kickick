@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   EditQuill,
   TitleInput,
@@ -11,26 +12,52 @@ import {
 
 import {
   getCategory,
-  getPostsName,
+  getPostName,
   getContent,
+  reset,
 } from "../../store/actions/postadd";
+import { createPost } from "../../apis/posts";
 
 export default function EditBoard() {
+  const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
+  const [content, setContent] = useState("");
+  const [tagArr, setTagArr] = useState([]);
+
+  const handleBlur = (e) => {
+    dispatch(getPostName(e.target.value));
+  };
+
+  const handleQuill = () => {
+    dispatch(getContent(content));
+  };
 
   const handleClick = () => {
-    dispatch(getCategory("학습"));
-    console.log(state);
+    createPost(state.category, state.post_name, state.content)
+      .then((data) => {
+        dispatch(reset());
+        navigate("/board");
+      })
+      .catch((err) => console.log(err.response));
   };
+
+  useEffect(() => {
+    dispatch(getCategory("학습"));
+  }, []);
   return (
     <Container>
       <TitleContainer>
         <IconText label="학습" />
-        <TitleInput padding="0.3rem" />
+        <TitleInput padding="0.3rem" handleBlur={handleBlur} />
       </TitleContainer>
-      <EditQuill image={false} />
-      <TagInput />
+      <EditQuill
+        image={false}
+        content={content}
+        setContent={setContent}
+        handleQuill={handleQuill}
+      />
+      <TagInput tagArr={tagArr} setTagArr={setTagArr} />
       <BtnContainer>
         <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>

@@ -1,19 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function BoardTodayKicks({
-  kicks = [
-    "이거나만아는건데공유한다",
-    "하드코딩ㄴㄴ? 오히려하드코딩이 더 빠르다!",
-    "헬로 월드 다른언어로 쳐보자",
-  ],
-}) {
+export default function BoardTodayKicks({ kicks = ["1", "1!", "1"] }) {
   return (
     <Container>
       <TodayKick>오늘의 킥</TodayKick>
       <KicksContainer>
-        {kicks.map((el) => (
-          <Kick>{el}</Kick>
+        {kicks.map((el, idx) => (
+          <Kick key={idx}>{el}</Kick>
         ))}
       </KicksContainer>
     </Container>
@@ -21,8 +15,12 @@ export default function BoardTodayKicks({
 }
 
 const Container = styled.div`
+  position: sticky;
+  top: 4rem;
+  width: 15vw;
+  height: 80vh;
   padding: 1rem;
-
+  flex-shrink: 0;
   border-radius: 5px;
   background-color: #eeeeee;
 `;
@@ -31,8 +29,8 @@ const TodayKick = styled.div`
   margin-bottom: 1rem;
 `;
 const KicksContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
 `;
 const Kick = styled.div`
   flex: 0 0 48%;
