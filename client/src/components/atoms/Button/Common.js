@@ -6,6 +6,7 @@ const btnList = [
   { type: "confirm", size: 1.5 * 1 },
   { type: "register", size: 1.5 * 1.5 },
   { type: "imgedit", size: 1.5 * 1.2 },
+  { type: "comment", size: 1.5 * 1.8 },
   { type: "bigger", size: 1.5 * 2.5 },
 ];
 
