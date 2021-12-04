@@ -6,19 +6,18 @@ import api from "./";
 export const duplicationCheck = (email, password) =>
   api.post(`/auth/duplication-check`, { email, password });
 /**
- *  @param {string} email
+ *  @param {string} username
  *  @param {string} password
  **/
 export const signIn = (username, password) =>
   api.post(`/auth/signin`, { username, password });
   /**
- *  @param {string} email
- *  @param {string} password
+ *  @param {string} username
  **/
 export const mailCheck = (username) =>
   api.post(`/auth/email`, { username });
   /**
-*  @param {string} username
+*  @param {object} data
 **/
 export const signUp = ( data ) =>
   api.post(`/users/info`, data);

@@ -9,6 +9,7 @@ export default function NavBtn({
   color = "#000000",
   fontFamily = `'Jua', sans-serif`,
   backgroundColor,
+  func = () => { return null }
 }) {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
   const navigate = useNavigate();
@@ -22,7 +23,10 @@ export default function NavBtn({
       backgroundColor={backgroundColor}
       fontFamily={fontFamily}
       context={context}
-      onClick={() => moveHandler(pathname)}
+      onClick={() => {
+        func();
+        moveHandler(pathname)
+      }}
     >
       {context}
     </Container>

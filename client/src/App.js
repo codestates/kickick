@@ -7,7 +7,7 @@ import { getPostsInfo } from "./apis/posts";
 import { light, dark } from "./commons/styles/theme";
 
 import KickBoard from "./pages/KickBoard";
-import { Nav } from "./components";
+import { Nav,Footer } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -34,6 +34,7 @@ export default function App() {
   // NOTICE theme 테스트 중
   // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
   const [themeMode, setThemeMode] = useState("light"); // 테마 모드 세팅
+  const [isLogin, setIsLogin] = useState(true);
   const toggleTheme = () =>
     setThemeMode(themeMode === "light" ? "dark" : "light"); // thememode 바꾸기
 
@@ -41,16 +42,21 @@ export default function App() {
 
   // NOTICE ${({theme}) => theme.paddings.small}
   // NOTICE @media ${({theme}) => theme.device.mobileS} {...}
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Container>
-          <Nav toggleTheme={toggleTheme} />
+          <Nav
+            toggleTheme={toggleTheme}
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+          />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="editboard" element={<EditBoard />} />
-            <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board" element={<Board />} />
+            <Route path="kickboard/:category" element={<KickBoard />} />
+            <Route path="board/:category" element={<Board />} />
             <Route path="detailboard" element={<DetailBoard />} />
             <Route path="mypage" element={<MyPage />}>
               <Route path="home" element={<MyPageHome />} />
@@ -66,6 +72,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
           </Routes>
+          <Footer />
         </Container>
       </Router>
     </ThemeProvider>

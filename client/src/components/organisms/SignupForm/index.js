@@ -205,6 +205,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100rem;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
 `;
