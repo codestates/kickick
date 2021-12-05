@@ -17,5 +17,18 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  min-height: calc(100vh - 4rem);
+  min-height: 79vh;
+  overflow: hidden;
+  animation-name: rightMove;
+  animation-duration: 1s;
+  animation-direction: normal;
+
+  @keyframes rightMove {
+    0% {
+      right: -100vw;
+    }
+    100% {
+      right: 0;
+    }
+  }
 `;

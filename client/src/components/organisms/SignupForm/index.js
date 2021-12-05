@@ -1,11 +1,13 @@
 
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { SignupInputBox, DatePicker, ConditionChamber } from "../../../components";
 import { signUp } from "../../../apis/auth"
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const width = 30;
   const height = 3;
   const inputRef1 = useRef();
@@ -161,8 +163,9 @@ export default function SignupForm() {
       countIsvalid === ArrInfo.length &&
       Object.keys(inputValue).join("").includes("birthday")
     ) {
-      // console.log("signupData:", inputValue);
-      signUp(inputValue).then((res)=>res.data.data);
+      signUp(inputValue)
+        .then((res) => res.data.data)
+        .then(() => navigate("/", { replace: true }));
     }
   }
   
@@ -205,7 +208,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100rem;
+  min-height: 79vh;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
 `;

@@ -13,9 +13,10 @@ export default function Login() {
 
 const Container = styled.div`
   position: relative;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  min-height: calc(100vh - 4rem);
+  min-height: 79vh;
 `;

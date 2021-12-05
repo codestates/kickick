@@ -8,6 +8,7 @@ import KickBoard from "./pages/KickBoard";
 import { Nav,Footer } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
+import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
@@ -56,7 +57,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<SignupSelect />} />
+            <Route path="/signup/:type" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
             <Route path="editboard" element={<EditBoard />} />
             <Route path="kickboard" element={<KickBoard />} />

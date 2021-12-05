@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,12 @@ export default function LoginInputChamber({
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const passwordInput = useRef();
   const todayLogin = useSelector((state) => state.login.todayLogin);
-  const inputlist = [{ part: "id", type: 'text' }, { part:"password",type:"password"}]
+  const inputlist = [
+    { part: "id", type: "text", ref: null },
+    { part: "password", type: "password", ref: passwordInput },
+  ];
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -39,7 +43,8 @@ export default function LoginInputChamber({
           dispatch(setIsLogin(true))
           if (todayLogin) dispatch(setTodayLogin(true));
         })
-        .then(() => navigate("/"));
+        .then(() => navigate("/"))
+        .catch(() => alert("로그인이 실패하였습니다."));
     }
   }
 
@@ -54,6 +59,9 @@ export default function LoginInputChamber({
           height={height}
           inputHandler={inputHandler}
           validHandler={validHandler}
+          loginHandler={loginHandler}
+          coordinate={el.ref}
+          passwordInput={passwordInput}
           key={idx}
         />
       ))}
