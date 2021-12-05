@@ -8,6 +8,7 @@ export { default as SignupInput } from "./atoms/Input/SignupInput";
 export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
+export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
@@ -47,4 +48,4 @@ export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
 export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
-export { default as PostList } from "./organisms/PostList";
+export { default as PostList } from "./organisms/PostList"

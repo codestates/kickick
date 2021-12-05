@@ -37,7 +37,7 @@ export default function Nav({ toggleTheme, isLogin, setIsLogin }) {
         </LoginChanger>
         <LoginChanger isLogin={isLogin}>
           <AlarmBtn />
-          <NavBtn context="마이페이지" pathname="/mypage" />
+          <NavBtn context="마이페이지" pathname="/mypage/home" />
           <NavBtn
             context="로그아웃"
             pathname="/"
@@ -58,13 +58,13 @@ const VerticalAlign = styled.div`
 
 const Container = styled(VerticalAlign)`
   position: fixed;
-  top: ${({ scroll }) => scroll.scrollDirection === "up" ? "-4rem" : 0};
+  top: ${({ scroll }) => (scroll.scrollDirection === "up" ? "-8rem" : 0)};
   z-index: 999;
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
   background-color: rgb(255, 255, 255, 0.7);
-  transition: 0.3s;
+  transition: top 0.5s;
 `;
 
 const Separation = styled(VerticalAlign)`

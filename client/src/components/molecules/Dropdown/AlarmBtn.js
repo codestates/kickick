@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 import styled, { css } from "styled-components";
 
 import { FaBell } from "react-icons/fa";
 import { getAlarm } from "../../../apis/alarm"
+import dateConverter from "../../../commons/utils/dateConverter"
 
 export default function AlarmBtn({ fontSize = "xl" }) {
+  const navigate = useNavigate();
+
   const [alarmOpen, setAlarmOpen] = useState(false);
   const [isOver, setIsOver] = useState(false);
   const [alarmArr, setAlarmArr] = useState([]);
   const [pagenation, setPagenation] = useState({ limit: 5, page_num: 1 });
+
+  useEffect(() => {
+    getAlarm(pagenation.limit, pagenation.page_num)
+      .then((res) => {
+        setAlarmArr(res.data.data);
+      })
+      .then(() => console.log("alarmArr:", alarmArr));
+  },[])
   
   const alarmOpner = () => {
     if (alarmOpen) {
@@ -19,6 +31,14 @@ export default function AlarmBtn({ fontSize = "xl" }) {
       setAlarmOpen(true);
     }).then(()=>console.log("alarmArr:", alarmArr));
   }
+
+  const moveRefer = (obj) => {
+    if (obj.reference.table === "post") {
+      navigate(`/detailboard/${obj.reference.id}`);
+      setAlarmOpen(false);
+    }
+  }
+
   return (
     <Container>
       <AlarmContainer
@@ -38,9 +58,15 @@ export default function AlarmBtn({ fontSize = "xl" }) {
           <FaBell />
         </AlarmFrame>
       </AlarmContainer>
-      <Dropdown dropdownOpen={alarmOpen} fontSize={fontSize}>
+      <Dropdown dropdownOpen={alarmOpen} fontSize={fontSize} top="2.3rem">
         {alarmArr.map((el) => (
-          <li>{el.content}</li>
+          <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
+            <DropdownContext>{el.content}</DropdownContext>
+            {dateConverter(el.created_at).includes("전") ? (
+              <DropdownCreated>dateConverter(el.created_at)</DropdownCreated>
+            ) : null}
+            <DropdownCreated>3시간 전</DropdownCreated>
+          </DropdownList>
         ))}
       </Dropdown>
     </Container>
@@ -108,18 +134,36 @@ const AlarmFrame = styled.div`
 
 const Dropdown = styled.ul`
   position: absolute;
-  top: 2.3rem;
+  top: ${({top})=>top};
   display: ${({ dropdownOpen }) => (dropdownOpen ? "default" : "none")};
-  /* left: -4rem; */
-  width: 12rem;
-  height: 30rem;
+  left: -4rem;
+  width: 16rem;
+  max-height: 30rem;
+  border:1px solid black;
+  border-radius: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 0.3}rem`};
   color: ${({ theme }) => theme.color.back};
   background-color: ${({ theme }) => theme.color.main};
+`;
 
-  li {
-    padding: 0.3rem;
-    font-size: 0.7rem;
-    cursor: pointer;
-    border-bottom: 1px solid white;
+const DropdownList = styled.li`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0.4rem;
+  padding: 0.5rem 0;
+  font-size: 0.7rem;
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+  cursor: pointer;
+  border-bottom: 0.01rem solid #2e2e2e;
+
+  :last-child {
+    border-bottom: none;
   }
+`;
+
+const DropdownContext = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+`;
+
+const DropdownCreated = styled(DropdownContext)`
+  font-size: ${({ theme }) => theme.fontSizes.xs};
 `;

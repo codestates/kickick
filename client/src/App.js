@@ -67,7 +67,7 @@ export default function App() {
                 element={<MyActivityMyComment />}
               />
             </Route>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
           </Routes>
