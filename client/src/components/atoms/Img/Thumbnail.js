@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+
 import sampleImg from "../../../assets/images/KickBoardPostThumbnail.png";
 
-export default function Profile({ thumbnailType = "post", src }) {
-  let multiple = 1;
-  if (thumbnailType === "notice") multiple = 2;
-  else if (thumbnailType === "confirm") multiple = 1.2;
+const thumbnailList = [
+  { type: "post", size: 20 },
+  { type: "notice", size: 12 },
+  { type: "confirm", size: 26 },
+];
 
-  const imgSize = multiple;
-  return <Container imgSize={imgSize} src={sampleImg} alt="" />;
+export default function Profile({ type = "post", src }) {
+  const { size } = thumbnailList.find((el) => el.type === type);
+
+  return <Container size={size} src={sampleImg} alt="" />;
 }
 
 const Container = styled.img`
-  min-width: ${(props) => props.imgSize * 10}rem;
+  min-width: ${({ size }) => size}rem;
 `;

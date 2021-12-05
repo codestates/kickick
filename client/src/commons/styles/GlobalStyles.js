@@ -36,6 +36,9 @@ const GlobalStyles = createGlobalStyle`
     }
     strong { font-weight: bold !important; }
     em { font-style: italic !important; }
+    h2,h3 {
+        font-weight:bold;
+    }
 `;
 
 export default GlobalStyles;

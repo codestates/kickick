@@ -5,6 +5,7 @@ import sampleImg from "../../../assets/images/whale.jpg";
 const profileList = [
   { type: "comment", size: "1.5rem" },
   { type: "post", size: "1.5rem" },
+  { type: "confirm", size: "2rem" },
   { type: "mypage", size: "7rem" },
   { type: "mypageedit", size: "10rem" },
 ];

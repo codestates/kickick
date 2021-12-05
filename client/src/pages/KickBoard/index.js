@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
 
 import { KickBoardPostList, TotalSearch, KickConfirm } from "../../components";
 
@@ -9,6 +8,7 @@ export default function KickBoard() {
     <Container>
       <TotalSearch />
       <KickBoardPostList />
+      <KickConfirm />
     </Container>
   );
 }

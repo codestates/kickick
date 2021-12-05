@@ -42,12 +42,12 @@ const Container = styled.div`
   width: 90rem;
 
   @media ${({ theme }) => theme.device.notebookL} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 64rem;
   }
 
   @media ${({ theme }) => theme.device.notebookS} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 100%;
   }
 `;

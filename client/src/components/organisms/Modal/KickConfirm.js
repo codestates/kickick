@@ -1,17 +1,72 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Profile, Thumbnail, Common } from "../../../components";
+import { modalOffAction } from "../../../store/actions/kickboard";
+
+import KickMoney from "../../../assets/images/kickmoney.png";
 
 export default function KickConfirm() {
-  <>
-    <ModalOverlay />
-    <ModalWrapper>
-      <ModalInner></ModalInner>
-    </ModalWrapper>
-  </>;
+  const dispatch = useDispatch();
+  const { modal } = useSelector((state) => state.kickboard);
+
+  return (
+    <>
+      <ModalOverlay visible={modal} />
+      <ModalWrapper
+        visible={modal}
+        onClick={(e) => {
+          dispatch(modalOffAction());
+        }}
+      >
+        <ModalInner onClick={(e) => e.stopPropagation()}>
+          <KickConfirmSummary>
+            <h2>자바스크립트 개 잘하는법</h2>
+            <Thumbnail type="confirm" />
+            <KickConfirmUser>
+              <Profile type="confirm" />
+              <div className="username">석창환</div>
+              <div className="datetime">46분전</div>
+              <div className="seperator">·</div>
+              <div className="commentCount">{5} 개의 댓글</div>
+            </KickConfirmUser>
+            <KickConfirmIntroduction>
+              <h3>소개</h3>
+              <p>1. 코드스테이츠 부트캠프를 등록한다</p>
+              <p>2. 공부한다</p>
+            </KickConfirmIntroduction>
+            <KickConfirmReview>
+              <h3>리뷰</h3>
+              <KickConfirmUser>
+                <Profile type="confirm" />
+                <div className="username">석창환</div>
+                <div className="comment">와 ㅋㅋㅋㅋ</div>
+              </KickConfirmUser>
+              <KickConfirmUser>
+                <Profile type="confirm" />
+                <div className="username">석창환</div>
+                <div className="comment">와 ㅋㅋㅋㅋ</div>
+              </KickConfirmUser>
+              <KickConfirmUser>
+                <Profile type="confirm" />
+                <div className="username">석창환</div>
+                <div className="comment">와 ㅋㅋㅋㅋ</div>
+              </KickConfirmUser>
+            </KickConfirmReview>
+            <KickConfirmKickMoney>
+              <img src={KickMoney} alt="" />
+              <h2>300</h2>
+            </KickConfirmKickMoney>
+            <Common type="confirm" label="보기" />
+          </KickConfirmSummary>
+        </ModalInner>
+      </ModalWrapper>
+    </>
+  );
 }
 
 const ModalWrapper = styled.div`
-  box-sizing: border-box;
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -20,11 +75,9 @@ const ModalWrapper = styled.div`
   left: 0;
   z-index: 1000;
   overflow: auto;
-  outline: 0;
 `;
 
 const ModalOverlay = styled.div`
-  box-sizing: border-box;
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
   top: 0;
@@ -36,15 +89,79 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalInner = styled.div`
-  box-sizing: border-box;
   position: relative;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
-  border-radius: 10px;
-  width: 360px;
-  max-width: 480px;
+  border-radius: 0.5rem;
+  width: 30rem;
+  height: 50rem;
   top: 50%;
   transform: translateY(-50%);
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 2rem;
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    color: #0c0c52;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    white-space: pre-line;
+    line-height: 1.5;
+  }
+`;
+
+const KickConfirmSummary = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 8rem;
+  gap: 1rem;
+`;
+const KickConfirmUser = styled.div`
+  display: flex;
+
+  > div {
+    color: gray;
+    font-size: ${({ theme }) => theme.fontSizes.small};
+    line-height: 2;
+  }
+  .username {
+    margin-left: ${({ theme }) => theme.margins.small};
+    margin-right: 1.5rem;
+    color: black;
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes.small};
+  }
+  .seperator {
+    margin: 0 ${({ theme }) => theme.margins.small};
+  }
+  .datetime {
+    margin-left: auto;
+  }
+`;
+
+const KickConfirmIntroduction = styled.div`
+  padding: 0.5rem;
+`;
+const KickConfirmReview = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+`;
+const KickConfirmKickMoney = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
 `;

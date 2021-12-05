@@ -1,15 +1,20 @@
-import { GET_KICKS_INFO } from "../actions/kickboard";
+import { GET_KICKS_INFO, MODAL_ON, MODAL_OFF } from "../actions/kickboard";
 
 const initialState = {
-  modal: "off",
+  modal: false,
 };
 
 const kickboardReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_KICKS_INFO:
-      return { ...state };
+      return { ...state, ...action.payload };
+    case MODAL_ON:
+      return { ...state, ...action.payload };
+    case MODAL_OFF:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
 };
+
 export default kickboardReducer;

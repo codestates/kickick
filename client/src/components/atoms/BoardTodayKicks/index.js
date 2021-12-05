@@ -29,7 +29,6 @@ const KicksContainer = styled.div`
 
   h2 {
     font-size: 1.5rem;
-    font-weight: bold;
   }
 `;
 
