@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Profile, Thumbnail, Common } from "../../../components";
+import { Profile, Common, Chart } from "../../../components";
 import { modalOffAction } from "../../../store/actions/kickboard";
 
 import KickMoney from "../../../assets/images/kickmoney.png";
+import reviewicon from "../../../assets/images/reviewicon.png";
+import introicon from "../../../assets/images/introicon.png";
+import staticsicon from "../../../assets/images/staticsicon.png";
 
 export default function KickConfirm() {
   const dispatch = useDispatch();
@@ -23,42 +26,43 @@ export default function KickConfirm() {
         <ModalInner onClick={(e) => e.stopPropagation()}>
           <KickConfirmSummary>
             <h2>자바스크립트 개 잘하는법</h2>
-            {/* <Thumbnail type="confirm" /> */}
-            <KickConfirmUser>
-              <Profile type="confirm" />
-              <div className="username">석창환</div>
-              <div className="datetime">46분전</div>
-              <div className="seperator">·</div>
-              <div className="commentCount">{5} 개의 댓글</div>
-            </KickConfirmUser>
-            <h3>소개</h3>
+            <KickSubtitle>
+              <img src={introicon} alt="" />
+              <h3>소개</h3>
+            </KickSubtitle>
             <KickConfirmIntroduction>
               <p>1. 코드스테이츠 부트캠프를 등록한다</p>
               <p>2. 공부한다</p>
             </KickConfirmIntroduction>
-            <h3>댓글</h3>
+            <KickSubtitle>
+              <img src={staticsicon} alt="" />
+              <h3>통계</h3>
+            </KickSubtitle>
+            <Chart />
+            <KickSubtitle>
+              <img src={reviewicon} alt="" />
+              <h3>댓글</h3>
+            </KickSubtitle>
             <KickConfirmReview>
               <KickConfirmUser>
                 <Profile type="confirm" />
-                <div className="username">석창환</div>
-                <div className="comment">와 ㅋㅋㅋㅋ</div>
+                <span className="username">석창환</span>
+                <p className="comment">와 ㅋㅋㅋㅋ</p>
               </KickConfirmUser>
               <KickConfirmUser>
                 <Profile type="confirm" />
-                <div className="username">석창환야야야야</div>
-                <div className="comment">
-                  zzzzzzzzzzzzzzzzzzzddddddddddddzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-                </div>
+                <span className="username">석창환야야야야</span>
+                <p className="comment">이거 보고 자바스크립트 마스터함요</p>
               </KickConfirmUser>
               <KickConfirmUser>
                 <Profile type="confirm" />
-                <div className="username">석창환</div>
-                <div className="comment">와 ㅋㅋㅋㅋ</div>
+                <span className="username">석창환</span>
+                <p className="comment">와 ㅋㅋㅋㅋ</p>
               </KickConfirmUser>
             </KickConfirmReview>
             <KickConfirmKickMoney>
               <img src={KickMoney} alt="" />
-              <h2>300</h2>
+              <h3>300</h3>
             </KickConfirmKickMoney>
             <Common type="confirm" label="보기" />
           </KickConfirmSummary>
@@ -104,6 +108,7 @@ const ModalInner = styled.div`
 
   h2 {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   h3 {
@@ -111,10 +116,9 @@ const ModalInner = styled.div`
     color: #0c0c52;
   }
 
-  p {
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    white-space: pre-line;
-    line-height: 1.5;
+  img {
+    width: 2rem;
+    height: 2rem;
   }
 `;
 
@@ -122,20 +126,19 @@ const KickConfirmSummary = styled.div`
   display: flex;
   flex-direction: column;
   height: 8rem;
-  gap: 1.5rem;
+  gap: 0.75rem;
 `;
 const KickConfirmUser = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  > div {
+  > span {
     color: gray;
     font-size: ${({ theme }) => theme.fontSizes.small};
     line-height: 2;
   }
   .username {
     margin-left: ${({ theme }) => theme.margins.small};
-    margin-right: 1.5rem;
     color: black;
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSizes.small};
@@ -153,11 +156,16 @@ const KickConfirmIntroduction = styled.div`
   background-color: #faffff;
   border: 1px solid #eee;
   border-radius: 0.5rem;
+
+  p {
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
 `;
 const KickConfirmReview = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
   padding: 1rem;
   background-color: #faffff;
   border: 1px solid #eee;
@@ -170,16 +178,21 @@ const KickConfirmReview = styled.div`
   .comment {
     margin-left: 2.5rem;
     word-break: break-all;
+    color: gray;
+    font-size: 0.85rem;
   }
 `;
 const KickConfirmKickMoney = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
+`;
+
+const KickSubtitle = styled.div`
+  display: flex;
+  align-items: center;
 
   img {
-    width: 2rem;
-    height: 2rem;
+    margin-right: 0.5rem;
   }
 `;
