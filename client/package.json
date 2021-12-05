@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "aws-sdk": "^2.1039.0",
     "axios": "^0.24.0",
+    "chart.js": "^3.6.1",
     "disable-scroll": "^0.6.0",
     "react": "^17.0.2",
     "react-datepicker": "^4.4.0",

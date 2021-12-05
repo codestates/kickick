@@ -6,7 +6,7 @@ import sampleImg from "../../../assets/images/KickBoardPostThumbnail.png";
 const thumbnailList = [
   { type: "post", size: 20 },
   { type: "notice", size: 12 },
-  { type: "confirm", size: 26 },
+  { type: "confirm", size: 12 },
 ];
 
 export default function Profile({ type = "post", src }) {

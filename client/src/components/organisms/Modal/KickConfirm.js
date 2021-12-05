@@ -23,7 +23,7 @@ export default function KickConfirm() {
         <ModalInner onClick={(e) => e.stopPropagation()}>
           <KickConfirmSummary>
             <h2>자바스크립트 개 잘하는법</h2>
-            <Thumbnail type="confirm" />
+            {/* <Thumbnail type="confirm" /> */}
             <KickConfirmUser>
               <Profile type="confirm" />
               <div className="username">석창환</div>
@@ -31,13 +31,13 @@ export default function KickConfirm() {
               <div className="seperator">·</div>
               <div className="commentCount">{5} 개의 댓글</div>
             </KickConfirmUser>
+            <h3>소개</h3>
             <KickConfirmIntroduction>
-              <h3>소개</h3>
               <p>1. 코드스테이츠 부트캠프를 등록한다</p>
               <p>2. 공부한다</p>
             </KickConfirmIntroduction>
+            <h3>댓글</h3>
             <KickConfirmReview>
-              <h3>리뷰</h3>
               <KickConfirmUser>
                 <Profile type="confirm" />
                 <div className="username">석창환</div>
@@ -45,8 +45,10 @@ export default function KickConfirm() {
               </KickConfirmUser>
               <KickConfirmUser>
                 <Profile type="confirm" />
-                <div className="username">석창환</div>
-                <div className="comment">와 ㅋㅋㅋㅋ</div>
+                <div className="username">석창환야야야야</div>
+                <div className="comment">
+                  zzzzzzzzzzzzzzzzzzzddddddddddddzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+                </div>
               </KickConfirmUser>
               <KickConfirmUser>
                 <Profile type="confirm" />
@@ -107,7 +109,6 @@ const ModalInner = styled.div`
   h3 {
     font-size: ${({ theme }) => theme.fontSizes.xl};
     color: #0c0c52;
-    margin-bottom: 1rem;
   }
 
   p {
@@ -121,10 +122,11 @@ const KickConfirmSummary = styled.div`
   display: flex;
   flex-direction: column;
   height: 8rem;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 const KickConfirmUser = styled.div`
   display: flex;
+  flex-wrap: wrap;
 
   > div {
     color: gray;
@@ -147,18 +149,34 @@ const KickConfirmUser = styled.div`
 `;
 
 const KickConfirmIntroduction = styled.div`
-  padding: 0.5rem;
+  padding: 1rem;
+  background-color: #faffff;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
 `;
 const KickConfirmReview = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
+  background-color: #faffff;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+
+  .username {
+    width: 80%;
+  }
+
+  .comment {
+    margin-left: 2.5rem;
+    word-break: break-all;
+  }
 `;
-const KickConfirmKickMoney = styled.span`
+const KickConfirmKickMoney = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: auto;
 
   img {
     width: 2rem;
