@@ -69,7 +69,7 @@ export default function Pagination() {
   useEffect(() => {
     if (state.label === "제목") {
       getPostsList({
-        category: "학습",
+        category: "학습_자유",
         post_name: state.word,
         limit: 20,
         page_num: selectPage,
@@ -82,7 +82,7 @@ export default function Pagination() {
         .catch((err) => console.log(err.response));
     } else {
       getPostsList({
-        category: "학습",
+        category: "학습_자유",
         limit: 20,
         page_num: selectPage,
       })

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Profile, Common, Chart } from "../../../components";
 import { modalOffAction } from "../../../store/actions/kickboard";
 
-import KickMoney from "../../../assets/images/kickmoney.png";
+import kickmoney from "../../../assets/images/kickmoney.png";
 import reviewicon from "../../../assets/images/reviewicon.png";
 import introicon from "../../../assets/images/introicon.png";
 import staticsicon from "../../../assets/images/staticsicon.png";
@@ -31,8 +31,7 @@ export default function KickConfirm() {
               <h3>소개</h3>
             </KickSubtitle>
             <KickConfirmIntroduction>
-              <p>1. 코드스테이츠 부트캠프를 등록한다</p>
-              <p>2. 공부한다</p>
+              <p>자바스크립트를 마스터하는 방법을 알려드리겠습니다</p>
             </KickConfirmIntroduction>
             <KickSubtitle>
               <img src={staticsicon} alt="" />
@@ -61,7 +60,7 @@ export default function KickConfirm() {
               </KickConfirmUser>
             </KickConfirmReview>
             <KickConfirmKickMoney>
-              <img src={KickMoney} alt="" />
+              <img src={kickmoney} alt="" />
               <h3>300</h3>
             </KickConfirmKickMoney>
             <Common type="confirm" label="보기" />

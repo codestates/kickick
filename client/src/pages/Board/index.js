@@ -12,7 +12,7 @@ import {
   BoardTodayKicks,
 } from "../../components";
 
-const apiArguments = [{ category: "학습", limit: 20 }];
+const apiArguments = [{ category: "학습_자유", limit: 20 }];
 
 export default function Board() {
   const [loading, setLoading] = useState(true);
