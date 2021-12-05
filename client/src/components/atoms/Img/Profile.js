@@ -9,7 +9,7 @@ const profileList = [
   { type: "mypageedit", size: "10rem" },
 ];
 
-export default function Profile({ type }) {
+export default function Profile({ type, src }) {
   const { size } = profileList.find((i) => i.type === type);
 
   return <Container size={size} src={sampleImg} alt="" />;

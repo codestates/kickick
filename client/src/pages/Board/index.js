@@ -10,7 +10,7 @@ import {
   BoardBottom,
   BoardTop,
   BoardTodayKicks,
-} from "../../components/";
+} from "../../components";
 
 export default function Board() {
   const [loading, setLoading] = useState(true);

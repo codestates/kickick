@@ -62,4 +62,13 @@ const Container = styled.div`
       text-decoration: underline;
     }
   }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    height: 8rem;
+    padding: 0.5rem 0;
+
+    span {
+      font-size: 0.75rem;
+    }
+  }
 `;

@@ -1,3 +1,5 @@
+import KickConfirm from "./organisms/Modal/KickConfirm";
+
 //atoms
 export { default as Common } from "./atoms/Button/Common";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
@@ -46,3 +48,4 @@ export { default as PostComment } from "./organisms/PostComment";
 export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
 export { default as PostList } from "./organisms/PostList";
+export { default as KickConfirm } from "./organisms/Modal/KickConfirm";

@@ -50,7 +50,7 @@ const Container = styled.div`
     box-shadow: 1px 1px 5px #eee;
     font-weight: bold;
 
-    @media ${({ theme }) => theme.device.tablet} {
+    @media ${({ theme }) => theme.device.mobileL} {
       display: none;
     }
   }
@@ -66,9 +66,6 @@ const Container = styled.div`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      @media ${({ theme }) => theme.device.tablet} {
-        height: 4rem;
-      }
     }
 
     ${({ type }) =>
@@ -125,6 +122,47 @@ const Container = styled.div`
         }
         > div:nth-of-type(6) {
           flex: 0.75;
+        }
+
+        @media ${({ theme }) => theme.device.mobileL} {
+          display: flex;
+          flex-wrap: wrap;
+
+          > div:nth-of-type(1) {
+            flex: 2;
+            font-size: 0.7rem;
+            text-align: start;
+          }
+
+          > div:nth-of-type(2) {
+            flex-basis: 100%;
+            font-size: 1.2rem;
+
+            font-weight: bold;
+            text-align: start;
+          }
+          > div:nth-of-type(3) {
+            flex: 1;
+            flex-basis: 5rem;
+            text-align: start;
+            font-size: 0.8rem;
+          }
+          > div:nth-of-type(4) {
+            flex: 0.5;
+            flex-basis: 5rem;
+            text-align: start;
+            font-size: 0.8rem;
+          }
+          > div:nth-of-type(5) {
+            flex: 0.25;
+            flex-basis: 3rem;
+            text-align: start;
+            font-size: 0.8rem;
+          }
+          > div:nth-of-type(6) {
+            flex: 6;
+            color: transparent;
+          }
         }
       `}
   }
