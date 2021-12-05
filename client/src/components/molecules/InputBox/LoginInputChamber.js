@@ -7,10 +7,11 @@ import { LoginInput } from "../../../components";
 import { signIn } from "../../../apis/auth"
 import { setIsLogin, setTodayLogin } from "../../../store/actions/login";
 
-export default function LoginInputChamber({ 
+export default function LoginInputChamber({
   width = 30,
-  height = 3
-  }) {
+  height = 3,
+  setIsClicked,
+}) {
   // 로그인에 쓰이는 인풋 박스 모음집
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [isValid, setIsValid] = useState({ id: false, password: false });
@@ -38,15 +39,23 @@ export default function LoginInputChamber({
 
   const loginHandler = () => {
     if (isValid.id && isValid.password) {
-      signIn(inputValue.id, inputValue.password)
-        .then(() => {
-          dispatch(setIsLogin(true))
-          if (todayLogin) dispatch(setTodayLogin(true));
-        })
-        .then(() => navigate("/"))
-        .catch(() => alert("로그인이 실패하였습니다."));
+      setIsClicked(true);
+      setTimeout(() => {
+        signIn(inputValue.id, inputValue.password)
+          .then(() => {
+            dispatch(setIsLogin(true));
+            if (todayLogin) dispatch(setTodayLogin(true));
+          })
+          .then(() => navigate("/", { replace: true }))
+          .catch(() => {
+            setIsClicked(false);
+            setTimeout(() => {
+              alert("로그인이 실패하였습니다.")
+            },1300)
+          });
+      },1000)
     }
-  }
+  };
 
   console.log("inputValue:", inputValue, "isValid:", isValid);
   return (
