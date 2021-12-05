@@ -38,16 +38,42 @@ export default function TotalSearch() {
     setWord("");
 
     if (icon.label === "제목") {
-      getPostsList("학습", word, null, 20)
+      getPostsList("학습", word, state.writer.word, state.tag.word, null, 20)
         .then((data) =>
           dispatch(
-            getList(data.data, icon.label, state.writer, state.tag, word)
+            getList(
+              data.data,
+              { type: icon.label, word },
+              state.writer,
+              state.tag
+            )
           )
         )
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
+      getPostsList("학습", state.title.word, word, state.tag.word, null, 20)
+        .then((data) =>
+          dispatch(
+            getList(
+              data.data,
+              state.title,
+              { type: icon.label, word },
+              state.tag
+            )
+          )
+        )
+        .catch((err) => err.response);
     } else if (icon.label === "태그") {
-      console.log(word);
+      getPostsList("학습", state.title.word, state.writer.word, word, null, 20)
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, {
+              type: icon.label,
+              word,
+            })
+          )
+        )
+        .catch((err) => err.response);
     }
   };
 
@@ -59,10 +85,24 @@ export default function TotalSearch() {
     let dummy = [...tag];
     dummy.splice(idx, 1);
     setTag(dummy);
-    if (state.title === label) {
-      getPostsList("학습", null, null, 20).then((data) =>
-        dispatch(getList(data.data, null, state.writer, state.tag))
-      );
+    if (state.title.type === label) {
+      getPostsList("학습", null, state.writer.word, state.tag.word, null, 20)
+        .then((data) =>
+          dispatch(getList(data.data, null, state.writer, state.tag))
+        )
+        .catch((err) => err.response);
+    } else if (state.writer.type === label) {
+      getPostsList("학습", state.title.word, null, state.tag.word, null, 20)
+        .then((data) =>
+          dispatch(getList(data.data, state.title, null, state.tag))
+        )
+        .catch((err) => err.response);
+    } else if (state.tag.type === label) {
+      getPostsList("학습", state.title.word, state.writer.word, null, null, 20)
+        .then((data) =>
+          dispatch(getList(data.data, state.title, state.writer, null))
+        )
+        .catch((err) => err.response);
     }
   };
 

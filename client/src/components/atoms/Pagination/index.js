@@ -66,19 +66,27 @@ export default function Pagination() {
   };
 
   useEffect(() => {
-    if (state.label === "제목") {
-      getPostsList("학습", state.word, null, 20, selectPage)
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, state.writer, state.tag, state.word)
-          )
-        )
-        .catch((err) => console.log(err.response));
-    } else {
-      getPostsList("학습", null, null, 20, selectPage)
-        .then((data) => dispatch(getList(data.data)))
-        .catch((err) => console.log(err.response));
-    }
+    // if (state.label === "제목") {
+    //   getPostsList("학습", state.word, null, null, null, 20, selectPage)
+    //     .then((data) =>
+    //       dispatch(
+    //         getList(data.data, state.title, state.writer, state.tag, state.word)
+    //       )
+    //     )
+    //     .catch((err) => console.log(err.response));
+    // } else {
+    getPostsList(
+      "학습",
+      state.title.word,
+      state.writer.word,
+      state.tag.word,
+      null,
+      20,
+      selectPage
+    )
+      .then((data) => dispatch(getList(data.data)))
+      .catch((err) => console.log(err.response));
+    // }
   }, [selectPage]);
 
   return (

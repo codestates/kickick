@@ -11,11 +11,21 @@ export const getPostsInfo = (post_id) =>
  *  @param {number} limit
  *  @param {number} page_num
  **/
-export const getPostsList = (category, post_name, content, limit, page_num) => {
+export const getPostsList = (
+  category,
+  post_name,
+  username,
+  tag,
+  content,
+  limit,
+  page_num
+) => {
   let query = "";
 
   if (category) query += `category=${category}&`;
   if (post_name) query += `post_name=${post_name}&`;
+  if (username) query += `username=${username}&`;
+  if (tag) query += `tag=${tag}&`;
   if (content) query += `content=${content}&`;
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
