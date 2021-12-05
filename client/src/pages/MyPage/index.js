@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Outlet, useNavigate } from "react-router";
 import {
@@ -10,6 +10,10 @@ import {
   PostList,
 } from "../../components";
 import { FaArrowLeft } from "react-icons/fa";
+
+import { getPostsList } from "../../apis/posts";
+import { getComments } from "../../apis/comments";
+import { getFavorites } from "../../apis/favorites";
 
 export default function MyPage() {
   return (
@@ -61,26 +65,41 @@ export function ProfileAttendance() {
 }
 
 export function MyActivityFavorite() {
+  useEffect(() => {
+    getFavorites()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <MyActivityFavoriteContainer>
       <Navigator head="스크랩 한 글" />
-      <PostList type="mypagefavorite" />
+      {/* <PostList type="mypagefavorite" /> */}
     </MyActivityFavoriteContainer>
   );
 }
 export function MyActivityMyPost() {
+  useEffect(() => {
+    getPostsList()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <MyActivityMyPostContainer>
       <Navigator head="내가 쓴 글" />
-      <PostList type="mypagemypost" />
+      {/* <PostList type="mypagemypost" /> */}
     </MyActivityMyPostContainer>
   );
 }
 export function MyActivityMyComment() {
+  useEffect(() => {
+    getComments()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <MyActivityMyCommentContainer>
       <Navigator head="내가 쓴 댓글" />
-      <PostList type="mypagemycomment" />
+      {/* <PostList type="mypagemycomment" /> */}
     </MyActivityMyCommentContainer>
   );
 }

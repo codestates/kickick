@@ -5,19 +5,19 @@ import api from "./";
  *  @param {number} page_num
  **/
 export const getComments = (post_id, limit, page_num) => {
-  let query = "";
+  let query = "?";
 
   if (post_id) query += `post_id=${post_id}&`;
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 
-  return api.get(`/comments/info?${query.slice(0, -1)}`);
+  return api.get(`/comments/info${query.slice(0, -1)}`);
 };
 /**
  *  @param {number} post_id
  *  @param {string} content
  **/
-export const postComments = (post_id, content) =>
+export const createComments = (post_id, content) =>
   api.post(`/comments/info`, { post_id, content });
 /**
  *  @param {number} comment_id

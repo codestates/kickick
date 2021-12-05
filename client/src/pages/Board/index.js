@@ -12,12 +12,17 @@ import {
   BoardTodayKicks,
 } from "../../components";
 
+const apiArguments = [{ category: "학습", limit: 20 }];
+
 export default function Board() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    getPostsList("학습", null, null, 20)
-      .then((data) => dispatch(getList(data.data)))
+    getPostsList(apiArguments[0])
+      .then((data) => {
+        dispatch(getList(data.data));
+      })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
   }, []);
