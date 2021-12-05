@@ -7,13 +7,12 @@ const profileInputList = [
   { head: "닉네임", type: "text", placeholder: "닉네임을 입력해주세요" },
   { head: "이메일", type: "email", placeholder: "이메일을 입력해주세요" },
   { head: "내상태", type: "text", placeholder: "내상태을 입력해주세요" },
-  { head: "이미지 수정", type: "file" },
+  { head: "프로필 이미지 ", type: "file" },
 ];
 
-export default function ProfileEditForm({ head }) {
+export default function ProfileEditForm() {
   return (
     <>
-      <h2>{head}</h2>
       <Container>
         <ListContainer>
           {profileInputList.map((el) => (
@@ -33,11 +32,7 @@ export default function ProfileEditForm({ head }) {
 
 const Container = styled.div`
   display: flex;
-  gap: 4rem;
-  h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+  gap: 5rem;
 `;
 
 const ListContainer = styled.div`

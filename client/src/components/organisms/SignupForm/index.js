@@ -1,12 +1,13 @@
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-import { SignupInputBox, DatePicker } from "../../../components";
+import { SignupInputBox, DatePicker, ConditionChamber } from "../../../components";
+import { signUp } from "../../../apis/auth"
 
 export default function SignupForm() {
-  // 여기에 유저 등록정보가 다있어야됨.
-  // 벨리데이션 성공여부도 있어야됨.
+  const width = 30;
+  const height = 3;
   const inputRef1 = useRef();
   const inputRef2 = useRef();
   const inputRef3 = useRef();
@@ -36,11 +37,35 @@ export default function SignupForm() {
       validation: validpassword,
     },
   ];
+  const conditionArr = [
+    {
+      essential: true,
+      context: "약관1",
+      description: "약관 내용입니다.",
+    },
+    {
+      essential: true,
+      context: "약관2",
+      description: "약관 내용입니다.",
+    },
+    {
+      essential: false,
+      context: "약관3",
+      description: "약관 내용입니다.",
+    },
+  ];
 
 
   const [inputValue, setInputValue] = useState("");
   const [isvalid, setIsVaild] = useState([]);
+  const [conditionCheck,setConditionCheck] = useState({})
 
+
+  const conditonChecker = (key, value) => {
+    let newObj = { ...conditionCheck };
+    newObj[key] = value;
+    setConditionCheck({ ...newObj });
+  }
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -119,14 +144,25 @@ export default function SignupForm() {
   }
 
   const submitHandler = () => {
-    let count = 0;
+    let countIsvalid = 0;
+    let countCondition = 0;
 
     for (let i = 0; i < isvalid.length; i++) {
-      if(isvalid[i] === true) count++;
+      if(isvalid[i] === true) countIsvalid++;
     }
-
-    if (count === ArrInfo.length) {
-      console.log("성공!");
+    for (let k = 0; k < conditionArr.length; k++) {
+      if (conditionArr[k].essential) countCondition++;
+    }
+    for (let l = 0; l < Object.values(conditionCheck).length; l++) {
+      if(Object.values(conditionCheck)[l]) countCondition--;
+    }
+    if (
+      countCondition === 0 &&
+      countIsvalid === ArrInfo.length &&
+      Object.keys(inputValue).join("").includes("birthday")
+    ) {
+      // console.log("signupData:", inputValue);
+      signUp(inputValue).then((res)=>res.data.data);
     }
   }
   
@@ -139,8 +175,8 @@ export default function SignupForm() {
           title={el.title}
           type={el.type}
           part={el.part}
-          width={20}
-          height={3}
+          width={width}
+          height={height}
           placeholder={el.placeholder}
           inputHandler={inputHandler}
           moveNextInput={moveNextInput}
@@ -151,7 +187,13 @@ export default function SignupForm() {
           key={idx}
         />
       ))}
-      <DatePicker inputHandler={inputHandler} />
+      <DatePicker width={width} height={height} inputHandler={inputHandler} />
+      <ConditionChamber
+        conditionArr={conditionArr}
+        width={width}
+        height={height}
+        conditonChecker={conditonChecker}
+      />
       <SubmitContainer>
         <SubmitBtn onClick={submitHandler}>가입하기</SubmitBtn>
       </SubmitContainer>
@@ -163,6 +205,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100rem;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
 `;

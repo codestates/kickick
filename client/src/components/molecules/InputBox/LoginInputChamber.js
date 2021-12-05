@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { LoginInput } from "../../../components";
 import { signIn } from "../../../apis/auth"
 
 export default function LoginInputChamber({ 
+  setIsLogin,
   width = 30,
   height = 3
   }) {
@@ -31,7 +32,7 @@ export default function LoginInputChamber({
   const loginHandler = () => {
     if (isValid.id && isValid.password) {
       signIn(inputValue.id, inputValue.password)
-        .then((res) => console.log(res.data.data))
+        .then(() => setIsLogin(true))
         .then(() => navigate("/"));
     }
   }

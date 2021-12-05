@@ -20,6 +20,4 @@ const Container = styled.img`
   height: ${({ size }) => size};
 
   border-radius: 50%;
-
-  box-shadow: 1px 1px 7px #eeeeee;
 `;

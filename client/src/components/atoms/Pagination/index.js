@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -7,20 +8,24 @@ import {
   FaAngleRight,
 } from "react-icons/fa";
 
+import { useSelector, useDispatch } from "react-redux";
+import { getPostsList } from "../../../apis/posts";
+import { getList } from "../../../store/actions/postadd/boardList";
+
 export default function Pagination() {
-  const [totalPage, setTotalPage] = useState(12);
-  const limitPage = 6;
+  const state = useSelector((state) => state.board);
+  const dispatch = useDispatch();
+
+  const limitPage = 10;
+  const totalPage = state.count !== 0 ? Math.ceil(state.count / 20) : 1;
   const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
-
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
   let lastPage = limitPage * (selectDividPage + 1);
-
   if (totalPage < lastPage) {
     lastPage = totalPage;
   }
-
   const handleLeftIdx = () => {
     if (selectPage === 1) return;
     if (selectPage === firstPage) {
@@ -55,6 +60,27 @@ export default function Pagination() {
       }
     });
   };
+
+  const handleClickNum = (idx) => {
+    setSelectPage(idx + 1 + selectDividPage * limitPage);
+  };
+
+  useEffect(() => {
+    if (state.label === "제목") {
+      getPostsList("학습", state.word, null, 20, selectPage)
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, state.word)
+          )
+        )
+        .catch((err) => console.log(err.response));
+    } else {
+      getPostsList("학습", null, null, 20, selectPage)
+        .then((data) => dispatch(getList(data.data)))
+        .catch((err) => console.log(err.response));
+    }
+  }, [selectPage]);
+
   return (
     <Container>
       <IconContainer onClick={handleDubleLeft}>
@@ -68,9 +94,8 @@ export default function Pagination() {
         .map((el, idx) => {
           return (
             <PageNum
-              onClick={() =>
-                setSelectPage(idx + 1 + selectDividPage * limitPage)
-              }
+              key={idx}
+              onClick={() => handleClickNum(idx)}
               isActive={idx + 1 + selectDividPage * limitPage === selectPage}
             >
               {idx + 1 + selectDividPage * limitPage}
@@ -86,25 +111,21 @@ export default function Pagination() {
     </Container>
   );
 }
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.2rem;
 `;
-
 const IconContainer = styled.div`
   display: grid;
   place-items: center;
   width: 2rem;
   height: 2rem;
-
   text-align: center;
   line-height: 2rem;
   cursor: pointer;
 `;
-
 const PageNum = styled.div`
   width: 2rem;
   height: 2rem;

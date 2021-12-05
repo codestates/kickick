@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
-import PostAlign from "../../molecules/CheckBox/PostAlign";
-import Select from "../../molecules/Select";
-import SearchInput from "../../atoms/Input/SearchInput";
-import Tag from "../../atoms/Tag";
+import { getPostsList } from "../../../apis/posts";
+import { getList } from "../../../store/actions/postadd/boardList";
+import { PostAlign, Select, SearchInput, Tag } from "../../../components";
 
 export default function TotalSearch() {
+  const state = useSelector((state) => state.board);
+  const dispatch = useDispatch();
   const [isSelect, setIsSelect] = useState(false);
   const [icon, setIcon] = useState({ label: "제목" });
   const [tag, setTag] = useState([]);
@@ -17,12 +19,10 @@ export default function TotalSearch() {
     const label = event.target.innerText;
     setHighlight(label);
   };
-
   const handleIcon = (label) => {
     setIcon(label);
     setIsSelect(!isSelect);
   };
-
   const handleSearch = () => {
     let dummy = [...tag];
     let isDuplicate = dummy.findIndex((el) => el.label === icon.label);
@@ -33,17 +33,36 @@ export default function TotalSearch() {
     }
     setTag(dummy);
     setWord("");
+
+    if (icon.label === "제목") {
+      getPostsList("학습", word, null, 20)
+        .then((data) =>
+          dispatch(
+            getList(data.data, icon.label, state.writer, state.tag, word)
+          )
+        )
+        .catch((err) => err.response);
+    } else if (icon.label === "글쓴이") {
+    } else if (icon.label === "태그") {
+      console.log(word);
+    }
   };
 
   const handleInput = (e) => {
     setWord(e.target.value);
   };
 
-  const handleClick = (idx) => {
+  const handleClick = (idx, label) => {
     let dummy = [...tag];
     dummy.splice(idx, 1);
     setTag(dummy);
+    if (state.title === label) {
+      getPostsList("학습", null, null, 20).then((data) =>
+        dispatch(getList(data.data, null, state.writer, state.tag))
+      );
+    }
   };
+
   return (
     <>
       <Container>
@@ -68,7 +87,7 @@ export default function TotalSearch() {
             key={el.label}
             label={el.label}
             detail={el.word}
-            handleClick={() => handleClick(idx)}
+            handleClick={() => handleClick(idx, el.label)}
           />
         ))}
       </TagContainer>
