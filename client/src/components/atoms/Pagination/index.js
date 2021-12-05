@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
 
-export default function Pagination() {
+export default function Pagination({ boardCategory }) {
   const state = useSelector((state) => state.board);
   const dispatch = useDispatch();
 
@@ -66,17 +66,8 @@ export default function Pagination() {
   };
 
   useEffect(() => {
-    // if (state.label === "제목") {
-    //   getPostsList("학습", state.word, null, null, null, 20, selectPage)
-    //     .then((data) =>
-    //       dispatch(
-    //         getList(data.data, state.title, state.writer, state.tag, state.word)
-    //       )
-    //     )
-    //     .catch((err) => console.log(err.response));
-    // } else {
     getPostsList(
-      "학습_자유",
+      boardCategory,
       state.title.word,
       state.writer.word,
       state.tag.word,
@@ -84,9 +75,12 @@ export default function Pagination() {
       20,
       selectPage
     )
-      .then((data) => dispatch(getList(data.data)))
+      .then((data) =>
+        dispatch(
+          getList(data.data, state.title, state.writer, state.tag, selectPage)
+        )
+      )
       .catch((err) => console.log(err.response));
-    // }
   }, [selectPage]);
 
   return (

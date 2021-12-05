@@ -10,6 +10,7 @@ import {
   IconText,
 } from "../../components";
 
+import { categoryName } from "../../features";
 import {
   getCategory,
   getPostName,
@@ -36,7 +37,7 @@ export default function EditBoard({ boardCategory }) {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        createTag(data.data.data.post_id, boardCategory)
+        createTag(data.data.data.post_id, categoryName(boardCategory))
           .then((data) => navigate("/board"))
           .catch((err) => console.log(err.response));
       })
@@ -50,7 +51,7 @@ export default function EditBoard({ boardCategory }) {
   return (
     <Container>
       <TitleContainer>
-        <IconText label={boardCategory} />
+        <IconText label={categoryName(boardCategory)} />
         <TitleInput padding="0.3rem" handleBlur={handleBlur} />
       </TitleContainer>
       <EditQuill

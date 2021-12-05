@@ -116,7 +116,9 @@ export default function TotalSearch({ boardCategory }) {
         20
       )
         .then((data) =>
-          dispatch(getList(data.data, null, state.writer, state.tag))
+          dispatch(
+            getList(data.data, { type: "", word: "" }, state.writer, state.tag)
+          )
         )
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
@@ -129,7 +131,9 @@ export default function TotalSearch({ boardCategory }) {
         20
       )
         .then((data) =>
-          dispatch(getList(data.data, state.title, null, state.tag))
+          dispatch(
+            getList(data.data, state.title, { type: "", word: "" }, state.tag)
+          )
         )
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
@@ -142,7 +146,12 @@ export default function TotalSearch({ boardCategory }) {
         20
       )
         .then((data) =>
-          dispatch(getList(data.data, state.title, state.writer, null))
+          dispatch(
+            getList(data.data, state.title, state.writer, {
+              type: "",
+              word: "",
+            })
+          )
         )
         .catch((err) => err.response);
     }
@@ -200,13 +209,13 @@ const SearchContainer = styled.div`
   margin-left: auto;
 
   @media ${({ theme }) => theme.device.tablet} {
-    width: 100%;
+    width: 200%;
     height: 8rem;
     margin: 1rem 0;
     justify-content: center;
     align-items: center;
     background-color: #eeeeee;
-    border-radius: 10px;
+    border-radius: 20px;
 
     > div:nth-of-type(2) {
       width: 40%;

@@ -8,7 +8,7 @@ import {
   FaRegEye,
 } from "react-icons/fa";
 
-export default function IconBox({ label = "arrow" }) {
+export default function IconBox({ label = "arrow", handleClick }) {
   let icon;
   if (label === "arrow") icon = <FaArrowLeft color="#c4c4c4" />;
   else if (label === "heart") icon = <FaRegHeart color="#FFAFAF" />;
@@ -16,7 +16,11 @@ export default function IconBox({ label = "arrow" }) {
   else if (label === "user") icon = <FaRegUserCircle />;
   else if (label === "count") icon = <FaRegEye />;
 
-  return <Container label={label}>{icon}</Container>;
+  return (
+    <Container label={label} onClick={() => handleClick(label)}>
+      {icon}
+    </Container>
+  );
 }
 
 const Container = styled.div`
