@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 import { NavBtn, AlarmBtn, BtnChamber } from "../../../components"
 import { signOut } from "../../../apis/auth"
 import { useScroll } from "../../../hooks/useScroll"
+import { setIsLogin } from "../../../store/actions/login"
 
-export default function Nav({ toggleTheme, isLogin, setIsLogin }) {
+export default function Nav({ toggleTheme }) {
+  const dispatch = useDispatch();
   const scroll = useScroll();
+  const isLogin = useSelector((state) => state.login.isLogin);
 
   const logoutHanlder = () => {
     signOut().then(() => {
-      setIsLogin(false);
+      dispatch(setIsLogin(false));
     });
   };
 

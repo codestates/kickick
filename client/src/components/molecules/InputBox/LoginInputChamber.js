@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
 import { signIn } from "../../../apis/auth"
+import { setIsLogin, setTodayLogin } from "../../../store/actions/login";
 
 export default function LoginInputChamber({ 
-  setIsLogin,
   width = 30,
   height = 3
   }) {
@@ -15,6 +16,8 @@ export default function LoginInputChamber({
   const [isValid, setIsValid] = useState({ id: false, password: false });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const todayLogin = useSelector((state) => state.login.todayLogin);
   const inputlist = [{ part: "id", type: 'text' }, { part:"password",type:"password"}]
 
   const inputHandler = (key, value) => {
@@ -32,7 +35,10 @@ export default function LoginInputChamber({
   const loginHandler = () => {
     if (isValid.id && isValid.password) {
       signIn(inputValue.id, inputValue.password)
-        .then(() => setIsLogin(true))
+        .then(() => {
+          dispatch(setIsLogin(true))
+          if (todayLogin) dispatch(setTodayLogin(true));
+        })
         .then(() => navigate("/"));
     }
   }

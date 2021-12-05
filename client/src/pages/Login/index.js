@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 import { InputChamber } from "../../components";
 
-export default function Login({ setIsLogin }) {
+export default function Login() {
   return (
     <Container>
-      <InputChamber setIsLogin={setIsLogin} />
+      <InputChamber />
     </Container>
   );
 }

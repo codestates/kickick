@@ -5,6 +5,11 @@ import api from "./";
  **/
 export const duplicationCheck = (email, password) =>
   api.post(`/auth/duplication-check`, { email, password });
+  /**
+ *
+ **/
+export const nowImLogin = (todayLogin) =>
+  api.get(`/users/info?todayLogin=${todayLogin}`);
 /**
  *  @param {string} username
  *  @param {string} password

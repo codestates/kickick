@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
 
+import {nowImLogin} from "./apis/auth"
 import KickBoard from "./pages/KickBoard";
 import { Nav,Footer } from "./components";
 import Main from "./pages/Main";
@@ -21,31 +23,41 @@ import MyPage, {
 } from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
+import { setIsLogin, setTodayLogin } from "./store/actions/login";
 
 export default function App() {
   // NOTICE theme 테스트 중
   // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
   const [themeMode, setThemeMode] = useState("light"); // 테마 모드 세팅
-  const [isLogin, setIsLogin] = useState(true);
+
+  const dispatch = useDispatch();
+  const todayLogin = useSelector((state)=>state.login.todayLogin);
   const toggleTheme = () =>
     setThemeMode(themeMode === "light" ? "dark" : "light"); // thememode 바꾸기
-
   const theme = themeMode === "light" ? light : dark; // 테마 환경에 맞는 테마 컬러 가져오기.
+
+  useEffect(() => {
+    nowImLogin(todayLogin)
+      .then(() => {
+        dispatch(setIsLogin(true));
+        if (todayLogin) dispatch(setTodayLogin(true));
+      })
+      .catch(() => dispatch(setIsLogin(false)));
+  }, []);
 
   // NOTICE ${({theme}) => theme.paddings.small}
   // NOTICE @media ${({theme}) => theme.device.mobileS} {...}
-
+  console.log(useSelector((state) => state.login));
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Container>
-          <Nav
-            toggleTheme={toggleTheme}
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-          />
+          <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup/:username" element={<MailAuth />} />
             <Route path="editboard" element={<EditBoard />} />
             <Route path="kickboard" element={<KickBoard />} />
             <Route path="board" element={<Board />} />
@@ -67,9 +79,6 @@ export default function App() {
                 element={<MyActivityMyComment />}
               />
             </Route>
-            <Route path="/login" element={<Login setIsLogin={setIsLogin} />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signup/:username" element={<MailAuth />} />
           </Routes>
           <Footer />
         </Container>

@@ -63,9 +63,9 @@ export default function AlarmBtn({ fontSize = "xl" }) {
           <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
             <DropdownContext>{el.content}</DropdownContext>
             {dateConverter(el.created_at).includes("전") ? (
-              <DropdownCreated>dateConverter(el.created_at)</DropdownCreated>
+              <DropdownCreated>{dateConverter(el.created_at)}</DropdownCreated>
             ) : null}
-            <DropdownCreated>3시간 전</DropdownCreated>
+            {/* <DropdownCreated>3시간 전</DropdownCreated> */}
           </DropdownList>
         ))}
       </Dropdown>
