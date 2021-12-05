@@ -9,7 +9,7 @@ import Tag from "../../atoms/Tag";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
 
-export default function TotalSearch() {
+export default function TotalSearch({ boardCategory }) {
   const state = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const [isSelect, setIsSelect] = useState(false);
@@ -38,7 +38,14 @@ export default function TotalSearch() {
     setWord("");
 
     if (icon.label === "제목") {
-      getPostsList("학습", word, state.writer.word, state.tag.word, null, 20)
+      getPostsList(
+        boardCategory,
+        word,
+        state.writer.word,
+        state.tag.word,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(
             getList(
@@ -51,7 +58,14 @@ export default function TotalSearch() {
         )
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
-      getPostsList("학습", state.title.word, word, state.tag.word, null, 20)
+      getPostsList(
+        boardCategory,
+        state.title.word,
+        word,
+        state.tag.word,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(
             getList(
@@ -64,7 +78,14 @@ export default function TotalSearch() {
         )
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
-      getPostsList("학습", state.title.word, state.writer.word, word, null, 20)
+      getPostsList(
+        boardCategory,
+        state.title.word,
+        state.writer.word,
+        word,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(
             getList(data.data, state.title, state.writer, {
@@ -86,19 +107,40 @@ export default function TotalSearch() {
     dummy.splice(idx, 1);
     setTag(dummy);
     if (state.title.type === label) {
-      getPostsList("학습", null, state.writer.word, state.tag.word, null, 20)
+      getPostsList(
+        boardCategory,
+        null,
+        state.writer.word,
+        state.tag.word,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(getList(data.data, null, state.writer, state.tag))
         )
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
-      getPostsList("학습", state.title.word, null, state.tag.word, null, 20)
+      getPostsList(
+        boardCategory,
+        state.title.word,
+        null,
+        state.tag.word,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(getList(data.data, state.title, null, state.tag))
         )
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
-      getPostsList("학습", state.title.word, state.writer.word, null, null, 20)
+      getPostsList(
+        boardCategory,
+        state.title.word,
+        state.writer.word,
+        null,
+        null,
+        20
+      )
         .then((data) =>
           dispatch(getList(data.data, state.title, state.writer, null))
         )

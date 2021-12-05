@@ -12,11 +12,11 @@ import {
   BoardTodayKicks,
 } from "../../components/";
 
-export default function Board() {
+export default function Board({ boardCategory }) {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    getPostsList("학습", null, null, null, null, 20)
+    getPostsList(boardCategory, null, null, null, null, 20)
       .then((data) => dispatch(getList(data.data)))
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
@@ -29,7 +29,7 @@ export default function Board() {
       <Container>
         <BoardTodayKicks />
         <BoardContainer>
-          <TotalSearch />
+          <TotalSearch boardCategory={boardCategory} />
           <BoardBottom />
         </BoardContainer>
       </Container>

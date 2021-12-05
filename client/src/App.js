@@ -31,6 +31,7 @@ export default function App() {
 
   const theme = themeMode === "light" ? light : dark; // 테마 환경에 맞는 테마 컬러 가져오기.
 
+  const [boardCategory, setBoardCategory] = useState("학습_자유"); //
   // NOTICE ${({theme}) => theme.paddings.small}
   // NOTICE @media ${({theme}) => theme.device.mobileS} {...}
   return (
@@ -40,9 +41,15 @@ export default function App() {
           <Nav toggleTheme={toggleTheme} />
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="editboard" element={<EditBoard />} />
+            <Route
+              path="editboard"
+              element={<EditBoard boardCategory={boardCategory} />}
+            />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board" element={<Board />} />
+            <Route
+              path="board"
+              element={<Board boardCategory={boardCategory} />}
+            />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage" element={<MyPage />}>
               <Route path="home" element={<MyPageHome />} />

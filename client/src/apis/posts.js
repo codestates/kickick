@@ -39,6 +39,15 @@ export const getPostsList = (
  * @param {number} cost option
  **/
 export const createPost = (category, post_name, content, cost) => {
-  const data = { category, post_name, content, cost };
-  return api.post(`/posts/info`, data);
+  const post = { category, post_name, content, cost };
+  return api.post(`/posts/info`, post);
+};
+
+/**
+ * @param {number} post_id required
+ * @param {string} content required
+ **/
+export const createTag = (post_id, content) => {
+  const tags = { post_id, content };
+  return api.post("/tags/info", tags);
 };

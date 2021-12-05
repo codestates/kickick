@@ -53,8 +53,8 @@ export default function EditQuill({
     return {
       toolbar: {
         container: [
-          [{ size: ["small", false, "large", "huge"] }],
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ header: "1" }, { header: "2" }],
+          [{ size: [] }],
           [{ align: [] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
           [{ color: [] }, { background: [] }],

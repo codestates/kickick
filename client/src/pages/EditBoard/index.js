@@ -16,9 +16,9 @@ import {
   getContent,
   reset,
 } from "../../store/actions/postadd";
-import { createPost } from "../../apis/posts";
+import { createPost, createTag } from "../../apis/posts";
 
-export default function EditBoard() {
+export default function EditBoard({ boardCategory }) {
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
@@ -36,19 +36,21 @@ export default function EditBoard() {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        navigate("/board");
+        createTag(data.data.data.post_id, boardCategory)
+          .then((data) => navigate("/board"))
+          .catch((err) => console.log(err.response));
       })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
     dispatch(reset());
-    dispatch(getCategory("학습"));
+    dispatch(getCategory(boardCategory));
   }, []);
   return (
     <Container>
       <TitleContainer>
-        <IconText label="학습" />
+        <IconText label={boardCategory} />
         <TitleInput padding="0.3rem" handleBlur={handleBlur} />
       </TitleContainer>
       <EditQuill

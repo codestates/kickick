@@ -76,7 +76,7 @@ export default function Pagination() {
     //     .catch((err) => console.log(err.response));
     // } else {
     getPostsList(
-      "학습",
+      "학습_자유",
       state.title.word,
       state.writer.word,
       state.tag.word,
