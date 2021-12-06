@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavBtn, AlarmBtn, BtnChamber } from "../../../components";
 import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
-import { isLoginAction } from "../../../store/actions/login";
+import { isLoginAction, isPointAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
 import sun from "../../../assets/images/sun.png"
 import moon from "../../../assets/images/moon.png";
@@ -15,12 +15,14 @@ export default function Nav({ themeCode }) {
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
   const themeMode = useSelector((state) => state.themeMode);
+  const userPoint = useSelector((state) => state.login.isPoint);
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
 
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));
+      dispatch(isPointAction(false));
     });
   };
 
@@ -49,7 +51,10 @@ export default function Nav({ themeCode }) {
             onClick={themeChanger}
             alt="themeBtn"
           />
-          <LoginChanger isLogin={!isLogin}>
+          <LoginChanger isLogin={userPoint !== false}>
+            <Point>{`${userPoint} P`}</Point>
+          </LoginChanger>
+          <LoginChanger isLogin={isLogin === false || isLogin === "guest"}>
             <NavBtn context="로그인" pathname="/login" />
             <NavBtn
               context="회원가입"
@@ -58,7 +63,7 @@ export default function Nav({ themeCode }) {
               backgroundColor="#350480"
             />
           </LoginChanger>
-          <LoginChanger isLogin={isLogin}>
+          <LoginChanger isLogin={isLogin === true}>
             <AlarmBtn />
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
@@ -74,6 +79,11 @@ export default function Nav({ themeCode }) {
     </Container>
   );
 }
+
+const Point = styled.div`
+  margin: 0.2rem;
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+`;
 
 const VerticalAlign = styled.div`
   display: flex;

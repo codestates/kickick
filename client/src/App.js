@@ -18,7 +18,11 @@ import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
-import { isLoginAction, todayLoginAction } from "./store/actions/login";
+import {
+  isLoginAction,
+  todayLoginAction,
+  isPointAction,
+} from "./store/actions/login";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -39,12 +43,20 @@ export default function App() {
     }, 580);
 
     nowImLogin(todayLogin)
-      .then(() => {
-        dispatch(isLoginAction(true));
-        if (todayLogin) dispatch(todayLoginAction(true));
+      .then((res) => {
+        if (res.data.message !== 'guest login') {
+          dispatch(isLoginAction(true));
+          dispatch(isPointAction(res.data.data.kick_money));
+          if (todayLogin) dispatch(todayLoginAction(true));
+        } 
+        if (res.data.message === 'guest login') { 
+          dispatch(isLoginAction("guest"));
+          dispatch(isPointAction(res.data.data.kick_money));
+        }
       })
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
+
   return (
     <ThemeProvider theme={theme[0]}>
       <Router>
