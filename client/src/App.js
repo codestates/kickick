@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ import MyPage, {
 } from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
-import { setIsLogin, setTodayLogin } from "./store/actions/login";
+import { isLoginAction, todayLoginAction } from "./store/actions/login";
 
 export default function App() {
   // NOTICE theme 테스트 중
@@ -38,10 +38,10 @@ export default function App() {
   useEffect(() => {
     nowImLogin(todayLogin)
       .then(() => {
-        dispatch(setIsLogin(true));
-        if (todayLogin) dispatch(setTodayLogin(true));
+        dispatch(isLoginAction(true));
+        if (todayLogin) dispatch(todayLoginAction(true));
       })
-      .catch(() => dispatch(setIsLogin(false)));
+      .catch(() => dispatch(isLoginAction(false)));
   }, []);
 
   // NOTICE ${({theme}) => theme.paddings.small}

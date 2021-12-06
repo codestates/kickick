@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
 import { signIn } from "../../../apis/auth"
-import { setIsLogin, setTodayLogin } from "../../../store/actions/login";
+import { isLoginAction, todayLoginAction } from "../../../store/actions/login";
 
 export default function LoginInputChamber({
   width = 30,
@@ -43,8 +43,8 @@ export default function LoginInputChamber({
       setTimeout(() => {
         signIn(inputValue.id, inputValue.password)
           .then(() => {
-            dispatch(setIsLogin(true));
-            if (todayLogin) dispatch(setTodayLogin(true));
+            dispatch(isLoginAction(true));
+            if (todayLogin) dispatch(todayLoginAction(true));
           })
           .then(() => navigate("/", { replace: true }))
           .catch(() => {

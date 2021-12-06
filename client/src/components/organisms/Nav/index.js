@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavBtn, AlarmBtn, BtnChamber } from "../../../components"
 import { signOut } from "../../../apis/auth"
 import { useScroll } from "../../../hooks/useScroll"
-import { setIsLogin } from "../../../store/actions/login"
-import { setThemeMode } from "../../../store/actions/nav";
+import { isLoginAction } from "../../../store/actions/login";
+import { themeModeAction } from "../../../store/actions/nav";
 
 export default function Nav () {
   const dispatch = useDispatch();
@@ -17,13 +17,13 @@ export default function Nav () {
 
   const logoutHanlder = () => {
     signOut().then(() => {
-      dispatch(setIsLogin(false));
+      dispatch(isLoginAction(false));
     });
   };
 
   const themeChanger = () => {
-    if (themeMode === "light") dispatch(setThemeMode("dark"));
-    else dispatch(setThemeMode("dark"));
+    if (themeMode === "light") dispatch(themeModeAction("dark"));
+    else dispatch(themeModeAction("dark"));
   }
   console.log(themeMode)
   return (
