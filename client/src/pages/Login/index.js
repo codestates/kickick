@@ -15,6 +15,7 @@ export default function Login() {
         <RightHand src={rightHand} alt="hand" />
         <LeftHand src={leftHand} alt="hand" />
         <BackBoard src={script} alt="board" />
+        <Fail isClicked={isClicked}>Fail_</Fail>
         <Title>비행 허가 신청서</Title>
         <InputChamber setIsClicked={setIsClicked} />
       </Frame>
@@ -36,6 +37,18 @@ const Title = styled.p`
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
   color: ${({ theme }) => theme.color.font};
   pointer-events: none;
+`;
+
+const Fail = styled.p`
+  position: absolute;
+  top: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 9}rem`};
+  left: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 8.5}rem`};
+  display:${({ isClicked }) => isClicked === "" ? "default":"none"};
+  border-radius: 40%;
+  font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 5}rem`};
+  font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
+  color: red;
+  transform: rotate(-28deg);
 `;
 
 const Frame = styled.div`

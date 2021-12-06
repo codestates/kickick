@@ -48,10 +48,7 @@ export default function LoginInputChamber({
           })
           .then(() => navigate("/", { replace: true }))
           .catch(() => {
-            setIsClicked(false);
-            setTimeout(() => {
-              alert("로그인이 실패하였습니다.")
-            },1300)
+            setIsClicked("");
           });
       },1000)
     }
