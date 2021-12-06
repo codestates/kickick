@@ -126,7 +126,11 @@ module.exports = async (req, res) => {
     data.likes = likes_obj;
 
     // tags 가공
-    data.tags = data.posts_tags.map((tag) => tag.tag.content);
+    data.tags = data.posts_tags.map((tag) => {
+      tag.content = tag.tag.content;
+      delete tag.tag;
+      return tag;
+    });
     delete data.user_id;
     delete data.posts_tags;
   } catch (err) {
