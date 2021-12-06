@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
+import { nowImLogin } from "./apis/auth";
 import KickBoard from "./pages/KickBoard";
-import { Nav } from "./components";
+import { Nav, Footer } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
+import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
@@ -15,13 +18,25 @@ import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
+import { isLoginAction, todayLoginAction } from "./store/actions/login";
 
 export default function App() {
-  const [themeMode, setThemeMode] = useState("light"); // 테마 모드 세팅
+  // NOTICE theme 테스트 중
+  // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
+
+  const dispatch = useDispatch();
+  const todayLogin = useSelector((state) => state.login.todayLogin);
+  const themeMode = useSelector((state) => state.themeMode);
   const theme = themeMode === "light" ? light : dark; // 테마 환경에 맞는 테마 컬러 가져오기.
 
-  const toggleTheme = () =>
-    setThemeMode(themeMode === "light" ? "dark" : "light"); // thememode 바꾸기
+  useEffect(() => {
+    nowImLogin(todayLogin)
+      .then(() => {
+        dispatch(isLoginAction(true));
+        if (todayLogin) dispatch(todayLoginAction(true));
+      })
+      .catch(() => dispatch(isLoginAction(false)));
+  }, []);
 
   const [boardCategory, setBoardCategory] = useState("학습_자유"); //
 
@@ -29,9 +44,13 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Container>
-          <Nav toggleTheme={toggleTheme} />
+          <Nav />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignupSelect />} />
+            <Route path="/signup/:type" element={<Signup />} />
+            <Route path="/signup/:username" element={<MailAuth />} />
             <Route
               path="editboard"
               element={<EditBoard boardCategory={boardCategory} />}
@@ -46,12 +65,9 @@ export default function App() {
               element={<Board boardCategory={boardCategory} />}
             />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
-            <Route path="kickboard" element={<KickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signup/:username" element={<MailAuth />} />
           </Routes>
+          <Footer />
         </Container>
       </Router>
     </ThemeProvider>

@@ -1,9 +1,9 @@
 import React from "react";
-import Nav from "./Nav"
+import Footer from "./"
 
 export default {
-  title: "organisms/Nav/Nav",
-  component: Nav,
+  title: "organisms/Footer",
+  component: Footer,
   // argTypes: {
   //   size: {
   //     description: "인풋 크기",
@@ -12,9 +12,9 @@ export default {
   // },
 };
 
-const Template = (args) => <Nav {...args} />;
+const Template = (args) => <Footer {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {
-  label: "Nav",
+  label: "Footer",
 };

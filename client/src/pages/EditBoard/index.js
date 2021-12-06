@@ -38,7 +38,10 @@ export default function EditBoard({ boardCategory }) {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        createTag(data.data.data.post_id, [categoryName(boardCategory)])
+        createTag(data.data.data.post_id, [
+          categoryName(boardCategory),
+          ...tagArr,
+        ])
           .then((data) => navigate("/board"))
           .catch((err) => console.log(err.response));
       })

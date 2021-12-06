@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
 import { signIn } from "../../../apis/auth"
+import { isLoginAction, todayLoginAction } from "../../../store/actions/login";
 
-export default function LoginInputChamber({ 
+export default function LoginInputChamber({
   width = 30,
-  height = 3
-  }) {
+  height = 3,
+  setIsClicked,
+}) {
   // 로그인에 쓰이는 인풋 박스 모음집
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [isValid, setIsValid] = useState({ id: false, password: false });
 
   const navigate = useNavigate();
-  const inputlist = [{ part: "id", type: 'text' }, { part:"password",type:"password"}]
+  const dispatch = useDispatch();
+  const passwordInput = useRef();
+  const todayLogin = useSelector((state) => state.login.todayLogin);
+  const inputlist = [
+    { part: "id", type: "text", ref: null },
+    { part: "password", type: "password", ref: passwordInput },
+  ];
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -30,11 +39,20 @@ export default function LoginInputChamber({
 
   const loginHandler = () => {
     if (isValid.id && isValid.password) {
-      signIn(inputValue.id, inputValue.password)
-        .then((res) => console.log(res.data.data))
-        .then(() => navigate("/"));
+      setIsClicked(true);
+      setTimeout(() => {
+        signIn(inputValue.id, inputValue.password)
+          .then(() => {
+            dispatch(isLoginAction(true));
+            if (todayLogin) dispatch(todayLoginAction(true));
+          })
+          .then(() => navigate("/", { replace: true }))
+          .catch(() => {
+            setIsClicked("");
+          });
+      },1000)
     }
-  }
+  };
 
   console.log("inputValue:", inputValue, "isValid:", isValid);
   return (
@@ -47,6 +65,9 @@ export default function LoginInputChamber({
           height={height}
           inputHandler={inputHandler}
           validHandler={validHandler}
+          loginHandler={loginHandler}
+          coordinate={el.ref}
+          passwordInput={passwordInput}
           key={idx}
         />
       ))}

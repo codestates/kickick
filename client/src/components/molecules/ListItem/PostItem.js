@@ -39,11 +39,13 @@ export function Freepost({ data }) {
   return (
     <Container>
       <div>
-        {/* {data.tags.map((el) => (
-          <span># {el.content}</span>
-        ))} */}
-        <span>#어질어질</span>
-        <span>#어질어질</span>
+        {data.tags.length === 1
+          ? data.tags.map((tag) => <span># {tag}</span>)
+          : data.tags
+              .filter((_, idx) => idx !== 0)
+              .map((tag) => <span> # {tag}</span>)}
+        {/* <span>#어질어질</span>
+        <span>#어질어질</span> */}
       </div>
       <div>
         <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>

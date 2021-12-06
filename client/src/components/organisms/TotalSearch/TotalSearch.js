@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-import PostAlign from "../../molecules/CheckBox/PostAlign";
-import Select from "../../molecules/Select";
-import SearchInput from "../../atoms/Input/SearchInput";
-import Tag from "../../atoms/Tag";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
 import { search, delSearch } from "../../../store/actions/postadd";
+import { PostAlign, Select, SearchInput, Tag } from "../../../components";
 
 export default function TotalSearch({ boardCategory, setSelectPage }) {
   const state = useSelector((state) => state.board);
