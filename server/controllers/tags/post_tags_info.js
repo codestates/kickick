@@ -4,10 +4,13 @@ const jwt = require("jsonwebtoken");
 module.exports = async (req, res) => {
   // TODO 게시글에 태그 달기 구현
   // 태그 배열로 받기
-  if (!req.body.tags) {
+  if (!(req.body.tags && req.body.post_id)) {
     return res
       .status(400)
-      .json({ data: null, message: "태그 정보가 존재하지 않습니다." });
+      .json({
+        data: null,
+        message: "post_id, 태그 정보 중 누락된 항목이 있습니다.",
+      });
   }
 
   if (!req.cookies.token) {
