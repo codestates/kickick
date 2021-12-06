@@ -23,6 +23,10 @@ import {
   getMyCommentAction,
 } from "../../store/actions/mypage";
 
+import profileinfoicon from "../../assets/images/profileinfoicon.png";
+import activityicon from "../../assets/images/activityicon.png";
+import purchaselog from "../../assets/images/purchaselog.png";
+
 const pageList = [
   { category: "home", component: <Home /> },
   { category: "profile", component: <Profile />, title: "프로필" },
@@ -69,16 +73,25 @@ export function Home() {
   return (
     <>
       <ListContainer>
-        <h2>회원정보</h2>
+        <Subtitle>
+          <img src={profileinfoicon} alt="" />
+          <h2>회원정보</h2>
+        </Subtitle>
         <PostStaticsList />
         <TabBox category="회원정보" />
       </ListContainer>
       <ListContainer>
-        <h2>나의활동</h2>
+        <Subtitle>
+          <img src={activityicon} alt="" />
+          <h2>나의활동</h2>
+        </Subtitle>
         <TabBox category="나의활동" />
       </ListContainer>
       <ListContainer>
-        <h2>구매목록</h2>
+        <Subtitle>
+          <img src={purchaselog} alt="" />
+          <h2>구매목록</h2>
+        </Subtitle>
         <TabBox category="구매목록" />
       </ListContainer>
     </>
@@ -165,4 +178,14 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 3rem;
+`;
+
+const Subtitle = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+  }
 `;
