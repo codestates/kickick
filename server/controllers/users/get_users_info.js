@@ -71,20 +71,14 @@ module.exports = async (req, res) => {
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
   const { username, type } = decoded;
+  let data;
 
   // type guest 일 때,
   if (type === "guest") {
+    console.log("guest");
     try {
       data = await users.findOne({
-        attributes: [
-          ["id", "user_id"],
-          "type",
-          "username",
-          "email",
-          "profile",
-          "birthday",
-          "kick_money",
-        ],
+        attributes: ["type", "username", "kick_money"],
         where: {
           username: username,
         },
@@ -93,9 +87,8 @@ module.exports = async (req, res) => {
       console.log(err);
       return res.status(500).json({ data: err, message: "데이터베이스 에러" });
     }
-    return res.status(400).json({ data: data, message: "guest login" });
+    return res.status(200).json({ data: data, message: "guest login" });
   }
-  let data;
   try {
     data = await users.findOne({
       attributes: [
