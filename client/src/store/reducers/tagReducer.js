@@ -1,6 +1,6 @@
 import { SEARCH, DEL_SEARCH, RESET_TAG } from "../actions/postadd";
 
-export const tagReducer = (state = [], action) => {
+export default function tagReducer(state = [], action) {
   switch (action.type) {
     case SEARCH:
       let newArr = state.slice();
@@ -22,4 +22,4 @@ export const tagReducer = (state = [], action) => {
     default:
       return state;
   }
-};
+}

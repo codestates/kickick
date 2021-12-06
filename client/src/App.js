@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { nowImLogin } from "./apis/auth";
 import KickBoard from "./pages/KickBoard";
 import { Nav, Footer } from "./components";
 import Main from "./pages/Main";
@@ -18,6 +17,7 @@ import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
+import { nowImLogin } from "./apis/auth";
 import { isLoginAction, todayLoginAction } from "./store/actions/login";
 
 export default function App() {

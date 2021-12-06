@@ -18,7 +18,7 @@ const Container = styled(Link)`
   display: flex;
 
   align-items: center;
-  width: calc(50% - 1rem);
+  width: calc(50% - 0.5rem);
   height: 3rem;
   border: 1px solid #ddd;
   border-radius: 5px;
