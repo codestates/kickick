@@ -132,7 +132,6 @@ module.exports = async (req, res) => {
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
   let regexp = fuzzy_searcher(req.query.post_name);
-  console.log(regexp);
   if (req.query.post_name)
     where_obj.post_name = {
       [Op.regexp]: regexp,
