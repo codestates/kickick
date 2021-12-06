@@ -200,7 +200,6 @@ module.exports = async (req, res) => {
         },
       ],
     });
-    console.log(post_info);
     count = post_info.count;
     data = post_info.rows.map((el) => el.get({ plain: true }));
 
