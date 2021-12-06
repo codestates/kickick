@@ -2,7 +2,7 @@
 name: "[✍️ Dev Log]"
 about: Describe this issue template's purpose here.
 title: "[✍️ Dev Log]"
-labels: KPT
+labels: devlog
 assignees: ''
 
 ---
