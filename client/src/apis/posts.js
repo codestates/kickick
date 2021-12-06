@@ -1,26 +1,38 @@
 import api from "./";
 /**
- *  @param {number} post_id
+ *  @param {number} post_id required
  **/
 export const getPostsInfo = (post_id) =>
   api.get(`/posts/info?post_id=${post_id}`);
 /**
- *  @param {string} category
- *  @param {string} post_name
- *  @param {string} content
- *  @param {number} limit
- *  @param {number} page_num
+ *  @param {string} category option (이거 require아님?)
+ *  @param {string} post_name option
+ *  @param {string} username option
+ *  @param {string} tag option
+ *  @param {string} content option
+ *  @param {number} limit option
+ *  @param {number} page_num option
  **/
-export const getPostsList = (category, post_name, content, limit, page_num) => {
-  let query = "";
+export const getPostsList = ({
+  category,
+  post_name,
+  username,
+  tag,
+  content,
+  limit,
+  page_num,
+}) => {
+  let query = "?";
 
   if (category) query += `category=${category}&`;
   if (post_name) query += `post_name=${post_name}&`;
+  if (username) query += `username=${username}&`;
+  if (tag) query += `tag=${tag}&`;
   if (content) query += `content=${content}&`;
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 
-  return api.get(`/posts/list?${query.slice(0, -1)}`);
+  return api.get(`/posts/list${query.slice(0, -1)}`);
 };
 /**
  * @param {string} category required
@@ -31,4 +43,21 @@ export const getPostsList = (category, post_name, content, limit, page_num) => {
 export const createPost = (category, post_name, content, cost) => {
   const data = { category, post_name, content, cost };
   return api.post(`/posts/info`, data);
+};
+/**
+ * @param {string} category required
+ * @param {string} post_name required
+ * @param {string} content required
+ * @param {number} cost option
+ * @param {number} post_id required
+ **/
+export const putPost = (category, post_name, content, cost, post_id) => {
+  const data = { category, post_name, content, cost };
+  return api.put(`/posts/info/${post_id}`, data);
+};
+/**
+ * @param {number} post_id required
+ **/
+export const delPost = (post_id) => {
+  return api.delete(`/posts/info/${post_id}`);
 };

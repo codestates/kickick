@@ -10,14 +10,19 @@ import {
   BoardBottom,
   BoardTop,
   BoardTodayKicks,
-} from "../../components/";
+} from "../../components";
+
+const apiArguments = [{ category: "학습_자유", limit: 20 }];
 
 export default function Board() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    getPostsList("학습", null, null, 20)
-      .then((data) => dispatch(getList(data.data)))
+    getPostsList(apiArguments[0])
+      .then((data) => {
+        dispatch(getList(data.data));
+      })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
   }, []);
@@ -42,12 +47,12 @@ const Container = styled.div`
   width: 90rem;
 
   @media ${({ theme }) => theme.device.notebookL} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 64rem;
   }
 
   @media ${({ theme }) => theme.device.notebookS} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 100%;
   }
 `;
