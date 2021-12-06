@@ -37,23 +37,8 @@ const pageList = [
 ];
 
 export default function MyPage() {
-  const dispatch = useDispatch();
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
-
-  useEffect(() => {
-    getFavorites({})
-      .then((data) => dispatch(getFavoritesAction(data)))
-      .catch((err) => console.log(err));
-
-    getPostsList({})
-      .then((data) => dispatch(getMyPostAction(data)))
-      .catch((err) => console.log(err));
-
-    getComments({})
-      .then((data) => dispatch(getMyCommentAction(data)))
-      .catch((err) => console.log(err));
-  }, [dispatch]);
 
   return (
     <>
@@ -107,12 +92,30 @@ export function Attendance() {
 }
 
 export function Favorites() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getFavorites({})
+      .then((data) => dispatch(getFavoritesAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagefavorites" />;
 }
 export function MyPost() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getPostsList({})
+      .then((data) => dispatch(getMyPostAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagemypost" />;
 }
 export function MyComment() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getComments({})
+      .then((data) => dispatch(getMyCommentAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagemycomment" />;
 }
 

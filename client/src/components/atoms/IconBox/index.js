@@ -1,50 +1,103 @@
 import React from "react";
 import styled, { css } from "styled-components";
+
 import {
   FaArrowLeft,
   FaRegHeart,
   FaRegEdit,
   FaRegUserCircle,
   FaRegEye,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaAngleLeft,
+  FaAngleRight,
 } from "react-icons/fa";
 
-export default function IconBox({ label = "arrow" }) {
-  let icon;
-  if (label === "arrow") icon = <FaArrowLeft color="#c4c4c4" />;
-  else if (label === "heart") icon = <FaRegHeart color="#FFAFAF" />;
-  else if (label === "edit") icon = <FaRegEdit color="#396EB0" />;
-  else if (label === "user") icon = <FaRegUserCircle />;
-  else if (label === "count") icon = <FaRegEye />;
+const iconList = [
+  {
+    label: "arrow",
+    icon: <FaArrowLeft />,
+    color: "#c4c4c4",
+    category: "postNav",
+  },
+  {
+    label: "heart",
+    icon: <FaRegHeart />,
+    color: "#FFAFAF",
+    category: "postNav",
+  },
+  { label: "edit", icon: <FaRegEdit />, color: "#396EB0", category: "postNav" },
+  {
+    label: "user",
+    icon: <FaRegUserCircle />,
+    color: "#000000",
+    category: "postInfo",
+  },
+  {
+    label: "count",
+    icon: <FaRegEye />,
+    color: "#000000",
+    category: "postInfo",
+  },
+  {
+    label: "doubleleft",
+    icon: <FaAngleDoubleLeft />,
+    color: "#000000",
+    category: "pagination",
+  },
+  {
+    label: "doubleright",
+    icon: <FaAngleDoubleRight />,
+    color: "#000000",
+    category: "pagination",
+  },
+  {
+    label: "left",
+    icon: <FaAngleLeft />,
+    color: "#000000",
+    category: "pagination",
+  },
+  {
+    label: "right",
+    icon: <FaAngleRight />,
+    color: "#000000",
+    category: "pagination",
+  },
+];
 
-  return <Container label={label}>{icon}</Container>;
+export default function IconBox({ label = "arrow", handleClick }) {
+  const { icon, color, category } = iconList.find((el) => el.label === label);
+
+  return (
+    <Container
+      label={label}
+      color={color}
+      onClick={handleClick}
+      category={category}
+    >
+      {icon}
+    </Container>
+  );
 }
 
 const Container = styled.div`
-  width: 3.2rem;
+  width: 2rem;
+  height: 2rem;
   padding: 0.5rem;
-  ${({ label }) =>
-    label === "arrow" &&
-    css`
-      border: 1px solid #c4c4c4;
-      cursor: pointer;
-    `}
-  ${({ label }) =>
-    label === "heart" &&
-    css`
-      border: 1px solid #ffafaf;
-      cursor: pointer;
-    `}
-  ${({ label }) =>
-    label === "edit" &&
-    css`
-      border: 1px solid #396eb0;
-      cursor: pointer;
-    `}
-  border-radius: 10px;
   text-align: center;
+  cursor: pointer;
 
-  svg {
-    font-size: ${({ label }) =>
-      label === "user" || label === "count" ? "1.8rem" : "2rem"};
-  }
+  ${({ category, color }) =>
+    category === "postNav" &&
+    css`
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid ${color};
+      color: ${color};
+
+      border-radius: 10px;
+      svg {
+        font-size: 1.5rem;
+      }
+    `}
 `;

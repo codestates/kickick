@@ -25,7 +25,7 @@ const Container = styled.div`
   ${({ type }) =>
     type === "imgedit" &&
     css`
-      width: 5rem;
+      width: 6rem;
       background-color: white;
       color: black;
       border: 1px solid #ddd;
@@ -34,9 +34,12 @@ const Container = styled.div`
         background-color: #ddd;
       }
     `}
+
   ${({ type }) =>
     type === "register" &&
     css`
+      margin-left: auto;
+      width: 5rem;
       height: 2.5rem;
       &:hover {
         background-color: gray;
