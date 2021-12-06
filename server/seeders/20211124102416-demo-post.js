@@ -5,7 +5,7 @@ module.exports = {
     return await queryInterface.bulkInsert("posts", [
       {
         user_id: 1,
-        category: "여가",
+        category: "여가_킥",
         post_name: "테스트용 게시글",
         content: "테스트 게시글 내용",
         created_at: new Date(),

@@ -1,4 +1,4 @@
-const { users } = require("../../models");
+const { users, logs } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
@@ -22,7 +22,8 @@ module.exports = async (req, res) => {
           [Op.like]: `%${req.query.email}%`,
         },
       };
-    } else {
+    }
+    if (req.query.username) {
       where_obj = {
         username: {
           [Op.like]: `%${req.query.username}%`,
@@ -69,11 +70,29 @@ module.exports = async (req, res) => {
       .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
-  const { username } = decoded;
+  const { username, type } = decoded;
   let data;
+
+  // type guest 일 때,
+  if (type === "guest") {
+    console.log("guest");
+    try {
+      data = await users.findOne({
+        attributes: [["id", "user_id"], "type", "username", "kick_money"],
+        where: {
+          username: username,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ data: err, message: "데이터베이스 에러" });
+    }
+    return res.status(200).json({ data: data, message: "guest login" });
+  }
   try {
     data = await users.findOne({
       attributes: [
+        ["id", "user_id"],
         "type",
         "username",
         "email",
@@ -85,6 +104,20 @@ module.exports = async (req, res) => {
         username: username,
       },
     });
+    data = data.get({ plain: true });
+
+    // today_login false면 로그에 기록
+    if (req.query.today_login === "false") {
+      // await logs.create({
+      //   user_id: data.user_id,
+      //   type: "signin",
+      //   content: `${data.username}님이 로그인 하였습니다.`,
+      // });
+      // 수정 예정
+      // log 살펴보고 오늘 로그인한 기록이 있는지 확인
+      // 그에 따라 로그에 기록할지말지 결정
+      // 로그에 기록하게 되면 킥머니도 지급해야함
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
