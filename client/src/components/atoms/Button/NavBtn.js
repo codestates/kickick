@@ -90,6 +90,11 @@ const MainBtn = styled.div`
   border-radius: ${({ size }) => `${size.replace("rem", "") / 2}rem`};
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
+
+  
+  :hover {
+    opacity: 0.8;
+  }
 `;
 
 const SubNav = styled.div`

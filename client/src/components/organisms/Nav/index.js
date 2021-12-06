@@ -118,4 +118,8 @@ const ThemeBtn = styled.img`
   margin-right: 0.3rem;
   border-radius: 3rem;
   cursor: pointer;
+
+  :hover {
+    opacity:0.8;
+  }
 `;

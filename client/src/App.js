@@ -94,7 +94,6 @@ const Container = styled.div`
   min-height: calc(100vh - 4rem);
   margin-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
-  z-index: -2;
 `;
 
 const Theme = styled.img`

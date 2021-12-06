@@ -89,6 +89,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
+  z-index: 2;
 `;
 
 const SubmitBtn = styled.button`
