@@ -8,6 +8,36 @@ module.exports = async (req, res) => {
   // TODO 회원가입 구현
   // username email password 필수
   // email 인증요청 구현
+
+  // 게스트 로그인 구현
+  if (req.body.type === "guest") {
+    let data = await users.create({
+      type: "guest",
+      kick_money: 300,
+    });
+    data.get({ plain: true });
+    await users.update(
+      {
+        username: `guest${data.id}`,
+      },
+      {
+        where: {
+          id: data.id,
+        },
+      }
+    );
+    data = await users.findOne({
+      attributes: ["type", "username", "kick_money"],
+      where: {
+        id: data.id,
+      },
+    });
+
+    return res.status(201).json({
+      data: data,
+      message: "guest 회원가입",
+    });
+  }
   if (!(req.body.username && req.body.email && req.body.password)) {
     return res.status(400).json({
       data: null,
