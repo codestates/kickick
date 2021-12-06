@@ -78,7 +78,7 @@ module.exports = async (req, res) => {
     console.log("guest");
     try {
       data = await users.findOne({
-        attributes: ["type", "username", "kick_money"],
+        attributes: [["id", "user_id"], "type", "username", "kick_money"],
         where: {
           username: username,
         },
