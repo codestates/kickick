@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,6 +11,7 @@ export default function Nav({ toggleTheme }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
+  const [isHover,setIsHover] = useState(false);
 
   const logoutHanlder = () => {
     signOut().then(() => {
@@ -19,38 +20,43 @@ export default function Nav({ toggleTheme }) {
   };
 
   return (
-    <Container scroll={scroll}>
-      <Separation>
-        <NavBtn
-          context="KICK"
-          size="3rem"
-          fontFamily={`'Luckiest Guy', cursive`}
-          pathname="/"
-        />
-        <BtnChamber />
-      </Separation>
-      <Separation>
-        <LoginChanger isLogin={!isLogin}>
-          <NavBtn context="로그인" pathname="/login" />
+    <Container
+      onMouseOver={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <Frame scroll={scroll} isHover={isHover}>
+        <Separation>
           <NavBtn
-            context="회원가입"
-            pathname="/signup"
-            color="#ffffff"
-            backgroundColor="#350480"
-          />
-        </LoginChanger>
-        <LoginChanger isLogin={isLogin}>
-          <AlarmBtn />
-          <NavBtn context="마이페이지" pathname="/mypage/home" />
-          <NavBtn
-            context="로그아웃"
+            context="KICK"
+            size="3rem"
+            fontFamily={`'Luckiest Guy', cursive`}
             pathname="/"
-            color="#ffffff"
-            func={logoutHanlder}
-            backgroundColor="#350480"
           />
-        </LoginChanger>
-      </Separation>
+          <BtnChamber />
+        </Separation>
+        <Separation>
+          <LoginChanger isLogin={!isLogin}>
+            <NavBtn context="로그인" pathname="/login" />
+            <NavBtn
+              context="회원가입"
+              pathname="/signup"
+              color="#ffffff"
+              backgroundColor="#350480"
+            />
+          </LoginChanger>
+          <LoginChanger isLogin={isLogin}>
+            <AlarmBtn />
+            <NavBtn context="마이페이지" pathname="/mypage/home" />
+            <NavBtn
+              context="로그아웃"
+              pathname="/"
+              color="#ffffff"
+              func={logoutHanlder}
+              backgroundColor="#350480"
+            />
+          </LoginChanger>
+        </Separation>
+      </Frame>
     </Container>
   );
 }
@@ -62,8 +68,16 @@ const VerticalAlign = styled.div`
 
 const Container = styled(VerticalAlign)`
   position: fixed;
-  top: ${({ scroll }) => (scroll.scrollDirection === "up" ? "-8rem" : 0)};
+  top:0;
+  width: 100vw;
+  height: 4rem;
   z-index: 999;
+`;
+
+const Frame = styled(VerticalAlign)`
+  position: relative;
+  top: ${({ scroll, isHover }) =>
+    scroll.scrollDirection === "up" && !isHover ? "-8rem" : 0};
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
