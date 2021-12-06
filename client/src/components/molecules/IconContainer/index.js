@@ -1,25 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { goBack } from "../../../store/actions/postadd";
 import { IconBox } from "../../";
 
 export default function IconContainer() {
+  const params = useParams();
+  const state = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = (label) => {
     if (label === "arrow") {
-      dispatch(goBack(true));
-      navigate("/board");
+      if (!state.data) {
+        navigate("/board");
+      } else {
+        dispatch(goBack(true));
+        navigate("/board");
+      }
+    }
+    if (label === "edit") {
+      navigate(`/myeditboard/${params.post_id}`);
     }
   };
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
       <IconBox label="heart" />
-      <IconBox label="edit" />
+      <IconBox label="edit" handleClick={handleClick} />
     </Container>
   );
 }

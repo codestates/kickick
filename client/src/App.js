@@ -11,6 +11,7 @@ import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
+import MyEditBoard from "./pages/MyEditBoard";
 import MyPage, {
   MyPageHome,
   ProfileEdit,
@@ -45,12 +46,17 @@ export default function App() {
               path="editboard"
               element={<EditBoard boardCategory={boardCategory} />}
             />
+            <Route
+              path="myeditboard/:post_id"
+              element={<MyEditBoard boardCategory={boardCategory} />}
+            />
             <Route path="kickboard" element={<KickBoard />} />
             <Route
               path="board"
               element={<Board boardCategory={boardCategory} />}
             />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
+
             <Route path="mypage" element={<MyPage />}>
               <Route path="home" element={<MyPageHome />} />
               <Route path="profile/edit" element={<ProfileEdit />} />

@@ -47,7 +47,6 @@ export const createPost = (category, post_name, content, cost) => {
  * @param {number} post_id required
  * @param {string} content required
  **/
-export const createTag = (post_id, content) => {
-  const tags = { post_id, content };
-  return api.post("/tags/info", tags);
+export const createTag = (post_id, item) => {
+  return api.post("/tags/info", { post_id, tags: item });
 };

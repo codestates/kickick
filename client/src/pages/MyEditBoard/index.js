@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   EditQuill,
   TitleInput,
@@ -15,14 +15,14 @@ import {
   getCategory,
   getPostName,
   getContent,
-  reset,
+  getPostInfo,
 } from "../../store/actions/postadd";
-import { createPost, createTag } from "../../apis/posts";
+import { createPost, createTag, getPostsInfo } from "../../apis/posts";
 
 export default function EditBoard({ boardCategory }) {
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
-  const stateOnoff = useSelector((state) => state.onoff);
+  const { post_id } = useParams();
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
@@ -36,18 +36,22 @@ export default function EditBoard({ boardCategory }) {
   };
 
   const handleClick = () => {
-    createPost(state.category, state.post_name, state.content)
-      .then((data) => {
-        createTag(data.data.data.post_id, [categoryName(boardCategory)])
-          .then((data) => navigate("/board"))
-          .catch((err) => console.log(err.response));
-      })
-      .catch((err) => console.log(err.response));
+    // createPost(state.category, state.post_name, state.content)
+    //   .then((data) => {
+    //     createTag(data.data.data.post_id, categoryName(boardCategory))
+    //       .then((data) => navigate(`/detailboard/${post_id}`))
+    //       .catch((err) => console.log(err.response));
+    //   })
+    //   .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
-    dispatch(reset());
     dispatch(getCategory(boardCategory));
+    getPostsInfo(post_id)
+      .then((data) => {
+        dispatch(getPostInfo(data.data));
+      })
+      .catch((err) => console.log(err.response));
   }, []);
   return (
     <Container>
@@ -63,7 +67,7 @@ export default function EditBoard({ boardCategory }) {
       />
       <TagInput tagArr={tagArr} setTagArr={setTagArr} />
       <BtnContainer>
-        <Common label="등 록" type="bigger" handleClick={handleClick} />
+        <Common label="수 정" type="bigger" handleClick={handleClick} />
       </BtnContainer>
     </Container>
   );
