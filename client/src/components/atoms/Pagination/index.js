@@ -11,14 +11,16 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
+import { goBack } from "../../../store/actions/postadd/";
 
-export default function Pagination() {
+export default function Pagination({ category, selectPage, setSelectPage }) {
   const state = useSelector((state) => state.board);
+
   const dispatch = useDispatch();
 
   const limitPage = 10;
   const totalPage = state.count !== 0 ? Math.ceil(state.count / 20) : 1;
-  const [selectPage, setSelectPage] = useState(1);
+
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
@@ -67,32 +69,21 @@ export default function Pagination() {
   };
 
   useEffect(() => {
-    if (state.label === "제목") {
-      getPostsList({
-        category: "학습_자유",
-        post_name: state.word,
-        limit: 20,
-        page_num: selectPage,
-      })
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, state.writer, state.tag, state.word)
-          )
+    getPostsList({
+      category: category,
+      post_name: state.title.word,
+      username: state.writer.word,
+      tag: state.tag.word,
+      limit: 20,
+      page_num: selectPage,
+    })
+      .then((data) =>
+        dispatch(
+          getList(data.data, state.title, state.writer, state.tag, selectPage)
         )
-        .catch((err) => console.log(err.response));
-    } else {
-      getPostsList({
-        category: "학습_자유",
-        limit: 20,
-        page_num: selectPage,
-      })
-        .then((data) => {
-          dispatch(
-            getList(data.data, state.title, state.writer, state.tag, state.word)
-          );
-        })
-        .catch((err) => console.log(err.response));
-    }
+      )
+      .then(() => dispatch(goBack()))
+      .catch((err) => console.log(err.response));
   }, [selectPage]);
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const postItemList = [
   {
@@ -36,19 +36,19 @@ export default function PostItem({ type, data }) {
 }
 
 export function Freepost({ data }) {
+  const { category } = useParams();
   return (
     <Container>
       <div>
-        {/* {data.tags.map((el) => (
-          <span># {el.content}</span>
-        ))} */}
-        <span>#어질어질</span>
-        <span>#어질어질</span>
+        {data.tags.length === 1
+          ? data.tags.map((tag) => <span># {tag}</span>)
+          : data.tags
+              .filter((el) => el !== category)
+              .map((tag) => <span> # {tag}</span>)}
       </div>
       <div>
-        <Link to={`/detailboard/${data.post_id}`}>
+        <Link to={`/detailboard/${category}/${data.post_id}`}>
           {data.post_name}
-          <span>[{data.comments.length}]</span>
         </Link>
       </div>
       <div>{data.user.username}</div>

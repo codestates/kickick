@@ -68,7 +68,9 @@ export default function PostList({ type }) {
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && <MyPagination count={count} />}
+      {data.length !== 0 && type !== "freepost" && (
+        <MyPagination count={count} />
+      )}
     </Container>
   );
 }

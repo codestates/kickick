@@ -67,12 +67,12 @@ const iconList = [
 
 export default function IconBox({ label = "arrow", handleClick }) {
   const { icon, color, category } = iconList.find((el) => el.label === label);
-
+  console.log(handleClick);
   return (
     <Container
       label={label}
       color={color}
-      onClick={handleClick}
+      onClick={() => handleClick(label)}
       category={category}
     >
       {icon}

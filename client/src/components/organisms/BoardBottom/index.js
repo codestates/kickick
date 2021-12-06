@@ -4,10 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 import { Pagination, Common, PostList } from "../../../components";
 
-export default function BoardBottom() {
+export default function BoardBottom({
+  freeCategory,
+  category,
+  selectPage,
+  setSelectPage,
+}) {
   const navigate = useNavigate();
   const handleMovePage = () => {
-    navigate("/editboard");
+    navigate(`/editboard/${freeCategory}`);
   };
 
   return (
@@ -16,7 +21,11 @@ export default function BoardBottom() {
       <BtnContainer>
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       </BtnContainer>
-      <Pagination />
+      <Pagination
+        category={category}
+        selectPage={selectPage}
+        setSelectPage={setSelectPage}
+      />
     </Container>
   );
 }

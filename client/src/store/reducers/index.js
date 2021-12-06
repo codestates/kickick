@@ -5,3 +5,5 @@ export { default as postAddReducer } from "./postAddReducer";
 export { default as postInfoReducer } from "./postInfoReducer";
 export { default as kickboardReducer } from "./kickboardReducer";
 export { default as mypageReducer } from "./mypageReducer";
+export { default as onoffReducer } from "./onoffReducer";
+export { default as tagReducer } from "./tagReducer";

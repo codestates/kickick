@@ -4,14 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
+import { search, delSearch } from "../../../store/actions/postadd";
 import { PostAlign, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ boardCategory = "학습_자유" }) {
+export default function TotalSearch({ category, setSelectPage }) {
   const state = useSelector((state) => state.board);
+  const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
   const [isSelect, setIsSelect] = useState(false);
   const [icon, setIcon] = useState({ label: "제목" });
-  const [tag, setTag] = useState([]);
   const [word, setWord] = useState("");
   const [highlight, setHighlight] = useState("최신");
   const handleAlign = (event) => {
@@ -23,25 +24,18 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
     setIsSelect(!isSelect);
   };
   const handleSearch = () => {
-    let dummy = [...tag];
-    let isDuplicate = dummy.findIndex((el) => el.label === icon.label);
-    if (isDuplicate === -1) {
-      dummy.push({ label: icon.label, word });
-    } else {
-      dummy[isDuplicate].word = word;
-    }
-    setTag(dummy);
+    dispatch(search(icon.label, word));
     setWord("");
 
     if (icon.label === "제목") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: word,
         username: state.writer.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
-        .then((data) =>
+        .then((data) => {
           dispatch(
             getList(
               data.data,
@@ -49,16 +43,17 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
               state.writer,
               state.tag
             )
-          )
-        )
+          );
+        })
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -70,14 +65,15 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
             )
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: state.writer.word,
         tag: word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -87,6 +83,7 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
             })
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     }
   };
@@ -95,41 +92,42 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
     setWord(e.target.value);
   };
   const handleClick = (idx, label) => {
-    let dummy = [...tag];
-    dummy.splice(idx, 1);
-    setTag(dummy);
+    dispatch(delSearch(idx));
+
     if (state.title.type === label) {
       getPostsList({
-        category: boardCategory,
+        category,
         username: state.writer.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
             getList(data.data, { type: "", word: "" }, state.writer, state.tag)
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
       getPostsList({
-        category: boardCategory,
-        post_name: state.title?.word,
+        category,
+        post_name: state.title.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, { type: "", word: "" }, state.tag)
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: state.writer.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -139,6 +137,7 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
             })
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     }
   };
@@ -162,7 +161,7 @@ export default function TotalSearch({ boardCategory = "학습_자유" }) {
         </SearchContainer>
       </Container>
       <TagContainer>
-        {tag.map((el, idx) => (
+        {stateTag.map((el, idx) => (
           <Tag
             key={el.label}
             label={el.label}

@@ -13,6 +13,7 @@ import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
+import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
@@ -48,10 +49,17 @@ export default function App() {
             <Route path="/signup" element={<SignupSelect />} />
             <Route path="/signup/:type" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
+            <Route path="editboard/:category" element={<EditBoard />} />
+            <Route
+              path="myeditboard/:category/:post_id"
+              element={<MyEditBoard />}
+            />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board" element={<Board />} />
-            <Route path="editboard" element={<EditBoard />} />
-            <Route path="detailboard/:post_id" element={<DetailBoard />} />
+            <Route path="board/:category" element={<Board />} />
+            <Route
+              path="detailboard/:category/:post_id"
+              element={<DetailBoard />}
+            />
             <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />

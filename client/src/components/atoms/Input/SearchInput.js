@@ -12,7 +12,11 @@ export default function SearchInput({ handleSearch, handleInput, word }) {
         value={word}
         onChange={handleInput}
         onKeyPress={(e) => {
-          if (e.code === "Enter" && word) handleSearch(e);
+          if (
+            (e.code === "Enter" && word) ||
+            (e.code === "NumpadEnter" && word)
+          )
+            handleSearch(e);
         }}
       />
       <FaSearch style={{ cursor: "pointer" }} onClick={handleSearch} />

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
+import { resetTag } from "../../store/actions/postadd";
+import { categoryName } from "../../features";
 
 import {
   TotalSearch,
@@ -12,19 +15,39 @@ import {
   BoardTodayKicks,
 } from "../../components";
 
-const apiArguments = [{ category: "학습_자유", limit: 20 }];
-
 export default function Board() {
+  const { category } = useParams();
+  const state = useSelector((state) => state.board);
+  const stateOnoff = useSelector((state) => state.onoff);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const [selectPage, setSelectPage] = useState(
+    stateOnoff.goback ? (state.page ? state.page : 1) : 1
+  );
   useEffect(() => {
-    getPostsList(apiArguments[0])
-      .then((data) => {
-        dispatch(getList(data.data));
+    if (stateOnoff.goback) {
+      getPostsList({
+        category: categoryName(category),
+        post_name: state.title.word,
+        username: state.writer.word,
+        tag: state.tag.word,
+        limit: 20,
+        page_num: state.page,
       })
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, state.page)
+          )
+        )
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    } else {
+      dispatch(resetTag());
+      getPostsList({ category: categoryName(category), limit: 20 })
+        .then((data) => dispatch(getList(data.data)))
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    }
   }, []);
 
   if (loading) return "";
@@ -34,8 +57,16 @@ export default function Board() {
       <Container>
         <BoardTodayKicks />
         <BoardContainer>
-          <TotalSearch />
-          <BoardBottom />
+          <TotalSearch
+            category={categoryName(category)}
+            setSelectPage={setSelectPage}
+          />
+          <BoardBottom
+            category={categoryName(category)}
+            freeCategory={category}
+            selectPage={selectPage}
+            setSelectPage={setSelectPage}
+          />
         </BoardContainer>
       </Container>
     </>

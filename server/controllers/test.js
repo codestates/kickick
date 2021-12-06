@@ -12,44 +12,22 @@ const {
   logs,
   notices,
 } = require("./../models");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const jwt = require("jsonwebtoken");
+const escapeRegExp = require("lodash").escapeRegExp;
 
 module.exports = async (req, res) => {
-  // TODO
-  let data;
-  try {
-    data = await users.findOne({
-      where: {
-        id: 1,
-      },
-      // raw: true,
-      include: [
-        {
-          model: users_kicks,
-          include: kicks,
-        },
-        {
-          model: comments,
-          include: {
-            model: posts,
-            include: {
-              model: posts_tags,
-              include: tags,
-            },
-          },
-        },
-        likes,
-        favorites,
-        alarms,
-        logs,
-        notices,
-      ],
-    });
-  } catch (err) {
-    console.log(err);
+  const input = req.body.input;
+  function createFuzzyMatcher(input) {
+    // escapeRegExp는 lodash에서 가져옴
+    const pattern = input.split("").map(escapeRegExp).join(".*?");
+    console.log(pattern);
+    console.log(typeof pattern);
+    return pattern;
   }
-  data = data.get({ plain: true });
+  let data = createFuzzyMatcher(input);
   console.log(data);
-
-  return res.status(200).json({ data, message: "ok" });
-  return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+  console.log(typeof data);
+  return res.status(200).json({ data: data, message: "ok" });
 };

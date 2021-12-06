@@ -74,7 +74,6 @@ export default function MyPagination({ count }) {
     if (pathname === "/mypage/mypost") {
       getPostsList({ page_num: selectPage })
         .then((data) => {
-          console.log("d");
           dispatch(getMyPostAction(data));
         })
         .catch((err) => console.log(err));
@@ -87,8 +86,8 @@ export default function MyPagination({ count }) {
 
   return (
     <Container>
-      <IconBox label="doubleleft" onClick={handleDubleLeft} />
-      <IconBox label="left" onClick={handleLeftIdx} />
+      <IconBox label="doubleleft" handleClick={handleDubleLeft} />
+      <IconBox label="left" handleClick={handleLeftIdx} />
       {Array(lastPage % limitPage === 0 ? limitPage : lastPage % limitPage)
         .fill(0)
         .map((el, idx) => {
@@ -102,8 +101,8 @@ export default function MyPagination({ count }) {
             </PageNum>
           );
         })}
-      <IconBox label="right" onClick={handleRightIdx} />
-      <IconBox label="doubleright" onClick={handleDubleRight} />
+      <IconBox label="right" handleClick={handleRightIdx} />
+      <IconBox label="doubleright" handleClick={handleDubleRight} />
     </Container>
   );
 }

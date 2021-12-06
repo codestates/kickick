@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import { DetailBoardTop, PostComment, IconContainer } from "../../components";
-import { useMoveTop } from "../../hooks/useMoveTop"
+import { useMoveTop } from "../../hooks/useMoveTop";
 
 export default function DetailBoard() {
   const state = useSelector((state) => state.board);

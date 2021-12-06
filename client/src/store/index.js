@@ -8,6 +8,8 @@ import {
   loginReducer,
   themeReducer,
   mypageReducer,
+  onoffReducer,
+  tagReducer,
 } from "./reducers";
 
 export const store = configureStore({
@@ -16,6 +18,8 @@ export const store = configureStore({
     board: boardReducer,
     postAdd: postAddReducer,
     postInfo: postInfoReducer,
+    onoff: onoffReducer,
+    tag: tagReducer,
     login: loginReducer,
     themeMode: themeReducer,
     mypage: mypageReducer,
