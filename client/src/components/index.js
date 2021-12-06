@@ -1,6 +1,6 @@
 //atoms
 export { default as Common } from "./atoms/Button/Common";
-export { default as NavBtn } from "./atoms/Button/NavBtn";
+export { default as NavBtn } from "./atoms/Button/NavBtn"
 export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as DatePicker } from "./atoms/Input/DatePicker";
@@ -8,6 +8,7 @@ export { default as SignupInput } from "./atoms/Input/SignupInput";
 export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
+export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
@@ -18,6 +19,7 @@ export { default as IconBox } from "./atoms/IconBox";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
+export { default as AlarmBtn } from "./molecules/Dropdown/AlarmBtn";
 export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as PostStatics } from "./molecules/Card/PostStatics";
 export { default as PostAlign } from "./molecules/CheckBox/PostAlign";
@@ -34,7 +36,8 @@ export { default as IconContainer } from "./molecules/IconContainer";
 export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamber";
 
 // organisms
-export { default as Nav } from "./organisms/Nav/Nav";
+export { default as Nav } from "./organisms/Nav";
+export { default as Footer } from "./organisms/Footer";
 export { default as InputForm } from "./organisms/SignupForm";
 export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
 export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList";
