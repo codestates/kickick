@@ -6,11 +6,13 @@ import { NavBtn, AlarmBtn, BtnChamber } from "../../../components"
 import { signOut } from "../../../apis/auth"
 import { useScroll } from "../../../hooks/useScroll"
 import { setIsLogin } from "../../../store/actions/login"
+import { setThemeMode } from "../../../store/actions/nav";
 
-export default function Nav({ toggleTheme }) {
+export default function Nav () {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
+  const themeMode = useSelector((state) => state.themeMode);
   const [isHover,setIsHover] = useState(false);
 
   const logoutHanlder = () => {
@@ -19,6 +21,11 @@ export default function Nav({ toggleTheme }) {
     });
   };
 
+  const themeChanger = () => {
+    if (themeMode === "light") dispatch(setThemeMode("dark"));
+    else dispatch(setThemeMode("dark"));
+  }
+  console.log(themeMode)
   return (
     <Container
       onMouseOver={() => setIsHover(true)}
