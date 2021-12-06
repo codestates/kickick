@@ -10,6 +10,7 @@ const {
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
+const fuzzy_searcher = require("../../functions/fuzzy_searcher");
 
 module.exports = async (req, res) => {
   // TODO 게시글 목록 조회 구현
@@ -17,6 +18,9 @@ module.exports = async (req, res) => {
   // page_num과 limit 기본값 설정
   const page_num = Number(req.query.page_num) || 1;
   const limit = Number(req.query.limit) || 10;
+
+  delete req.query.page_num;
+  delete req.query.limit;
 
   if (Object.keys(req.query).length === 0) {
     // TODO 쿼리가 없으면 쿠키로 검색 (쿠키로만 검색하는건 내 게시글 목록)
@@ -127,14 +131,17 @@ module.exports = async (req, res) => {
   // 포함검색 구현 query 상황에 따라 where_obj 분기
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
+  let regexp = fuzzy_searcher(req.query.post_name);
+  console.log(regexp);
   if (req.query.post_name)
     where_obj.post_name = {
-      [Op.like]: `%${req.query.post_name}%`,
+      [Op.regexp]: regexp,
     };
   if (req.query.content)
     where_obj.content = {
       [Op.like]: `%${req.query.content}%`,
     };
+
   // 글쓴이 태그 검색 추가 필요
   let users_where_obj = {};
   if (req.query.username) {
