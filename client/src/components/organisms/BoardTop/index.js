@@ -30,6 +30,7 @@ const Container = styled.div`
   img {
     width: 4.5rem;
     height: 4.5rem;
+    pointer-events: none;
   }
   span {
     color: #4aa6c1;

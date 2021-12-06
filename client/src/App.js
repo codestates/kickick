@@ -14,14 +14,7 @@ import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
-import MyPage, {
-  MyPageHome,
-  ProfileEdit,
-  ProfileAttendance,
-  MyActivityFavorite,
-  MyActivityMyPost,
-  MyActivityMyComment,
-} from "./pages/MyPage";
+import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
 import { isLoginAction, todayLoginAction } from "./store/actions/login";
@@ -58,27 +51,11 @@ export default function App() {
             <Route path="/signup" element={<SignupSelect />} />
             <Route path="/signup/:type" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
-            <Route path="editboard" element={<EditBoard />} />
             <Route path="kickboard" element={<KickBoard />} />
             <Route path="board" element={<Board />} />
+            <Route path="editboard" element={<EditBoard />} />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
-            <Route path="mypage" element={<MyPage />}>
-              <Route path="home" element={<MyPageHome />} />
-              <Route path="profile/edit" element={<ProfileEdit />} />
-              <Route
-                path="profile/attendance"
-                element={<ProfileAttendance />}
-              />
-              <Route
-                path="activity/favorite"
-                element={<MyActivityFavorite />}
-              />
-              <Route path="activity/mypost" element={<MyActivityMyPost />} />
-              <Route
-                path="activity/mycomment"
-                element={<MyActivityMyComment />}
-              />
-            </Route>
+            <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />
         </Container>

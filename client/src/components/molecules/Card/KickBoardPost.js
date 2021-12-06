@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
+import { modalOnAction } from "../../../store/actions/kickboard";
 
 import Thumbnail from "../../atoms/Img/Thumbnail";
 import Profile from "../../atoms/Img/Profile";
@@ -7,8 +10,10 @@ import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
 
 export default function KickBoardPost() {
+  const dispatch = useDispatch();
+
   return (
-    <Container>
+    <Container onClick={() => dispatch(modalOnAction())}>
       <Thumbnail />
       <PostDescription>
         <PostSummary>

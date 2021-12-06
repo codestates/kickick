@@ -1,18 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import kickpostsReducer from "./reducers/kickpostsReducer";
-import { postAddReducer } from "./reducers/postAddReducer";
+import { kickboardReducer } from "./reducers/kickboardReducer";
 import { boardReducer } from "./reducers/boardReducer";
+import { postAddReducer } from "./reducers/postAddReducer";
 import { postInfoReducer } from "./reducers/postInfoReducer";
 import { loginReducer } from "./reducers/loginReducer"
 import { themeReducer } from "./reducers/themeReducer";
+import { mypageReducer } from "./reducers/mypageReducer";
 
 export const store = configureStore({
   reducer: {
-    kickposts: kickpostsReducer,
-    postAdd: postAddReducer,
+    kickboard: kickboardReducer,
     board: boardReducer,
+    postAdd: postAddReducer,
     postInfo: postInfoReducer,
     login: loginReducer,
     themeMode: themeReducer,
+    mypage: mypageReducer,
   },
 });

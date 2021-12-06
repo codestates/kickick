@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 import { FaBell } from "react-icons/fa";
 import { getAlarm } from "../../../apis/alarm"
-import dateConverter from "../../../commons/utils/dateConverter"
+import { dateConverter } from "../../../commons/utils/dateConverter"
 
 export default function AlarmBtn({ fontSize = "xl" }) {
   const navigate = useNavigate();
