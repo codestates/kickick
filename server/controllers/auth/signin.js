@@ -5,6 +5,47 @@ const bcrypt = require("bcrypt");
 module.exports = async (req, res) => {
   // TODO 로그인 로직 구현
   // req.body.username / req.body.password 로 db 검색 후 일치하는 값 있으면 jwt 토큰 생성해서 쿠키에 넣어주고 로그인
+  if (req.body.type === "guest") {
+    try {
+      // username 으로 유저 정보 검색
+      data = await users.findOne({
+        attributes: ["type", "username", "kick_money"],
+        where: {
+          username: req.body.username,
+        },
+      });
+      data = data.get({ plain: true });
+    } catch (err) {
+      console.log(err);
+      return res
+        .status(401)
+        .json({ data: err, message: "일치하는 닉네임이 없습니다." });
+    }
+
+    // 토큰 발급
+    const access_token = jwt.sign(
+      {
+        type: data.type,
+        username: data.username,
+      },
+      process.env.ACCESS_SECRET,
+      {
+        expiresIn: "3d",
+      }
+    );
+    delete data.id;
+
+    return res
+      .status(200)
+      .cookie(
+        "token",
+        { access_token },
+        {
+          httpOnly: true,
+        }
+      )
+      .json({ data: data, message: "ok" });
+  }
   if (req.body.username && req.body.password) {
     let data;
     try {
@@ -44,7 +85,9 @@ module.exports = async (req, res) => {
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ data: err, message: "데이터베이스 에러" });
+      return res
+        .status(401)
+        .json({ data: err, message: "일치하는 닉네임이 없습니다." });
     }
 
     // 토큰 발급
@@ -136,4 +179,7 @@ module.exports = async (req, res) => {
       )
       .json({ data: data, message: "ok" });
   }
+  return res
+    .status(400)
+    .json({ data: null, message: "로그인에 필요한 정보가 누락되었습니다." });
 };

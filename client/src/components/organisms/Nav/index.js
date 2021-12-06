@@ -8,7 +8,7 @@ import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
 
-export default function Nav() {
+export default function Nav({ setUpdate }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
@@ -39,7 +39,7 @@ export default function Nav() {
             fontFamily={`'Luckiest Guy', cursive`}
             pathname="/"
           />
-          <BtnChamber />
+          <BtnChamber setUpdate={setUpdate} />
         </Separation>
         <Separation>
           <LoginChanger isLogin={!isLogin}>

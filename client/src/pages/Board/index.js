@@ -15,7 +15,7 @@ import {
   BoardTodayKicks,
 } from "../../components";
 
-export default function Board() {
+export default function Board({ setUpdate, update }) {
   const { category } = useParams();
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);
@@ -25,6 +25,7 @@ export default function Board() {
     stateOnoff.goback ? (state.page ? state.page : 1) : 1
   );
   useEffect(() => {
+    setUpdate(false);
     if (stateOnoff.goback) {
       getPostsList({
         category: categoryName(category),
@@ -48,7 +49,7 @@ export default function Board() {
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
-  }, []);
+  }, [update]);
 
   if (loading) return "";
   return (

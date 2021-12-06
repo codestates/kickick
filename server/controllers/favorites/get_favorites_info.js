@@ -31,45 +31,43 @@ module.exports = async (req, res) => {
 
   const { username } = decoded;
   let data;
+  let count;
 
   try {
-    data = await users.findOne({
-      attributes: ["id"],
-      where: {
-        username: username,
-      },
+    const favorite_info = await favorites.findAndCountAll({
+      attributes: [["id", "favorite_id"]],
+      offset: limit * (page_num - 1),
+      limit: limit,
+      distinct: true,
       include: [
         {
-          model: favorites,
-          attributes: [["id", "favorite_id"]],
-          offset: limit * (page_num - 1),
-          limit: limit,
+          model: posts,
+          attributes: [
+            ["id", "post_id"],
+            // "user_id",
+            "category",
+            "post_name",
+            "view_count",
+          ],
           include: [
             {
-              model: posts,
-              attributes: [
-                ["id", "post_id"],
-                // "user_id",
-                "category",
-                "post_name",
-                "view_count",
-              ],
-              include: [
-                {
-                  model: users,
-                  attributes: ["username", "profile"],
-                },
-              ],
+              model: users,
+              attributes: ["username", "profile"],
+              where: {
+                username: username,
+              },
             },
           ],
         },
       ],
     });
-    data = data.get({ plain: true }).favorites;
+
+    data = favorite_info.rows.map((el) => el.get({ plain: true }));
+    count = favorite_info.count;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

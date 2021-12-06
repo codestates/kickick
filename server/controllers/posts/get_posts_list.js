@@ -10,6 +10,7 @@ const {
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
+const fuzzy_searcher = require("../../functions/fuzzy_searcher");
 
 module.exports = async (req, res) => {
   // TODO 게시글 목록 조회 구현
@@ -17,6 +18,9 @@ module.exports = async (req, res) => {
   // page_num과 limit 기본값 설정
   const page_num = Number(req.query.page_num) || 1;
   const limit = Number(req.query.limit) || 10;
+
+  delete req.query.page_num;
+  delete req.query.limit;
 
   if (Object.keys(req.query).length === 0) {
     // TODO 쿼리가 없으면 쿠키로 검색 (쿠키로만 검색하는건 내 게시글 목록)
@@ -40,66 +44,60 @@ module.exports = async (req, res) => {
     }
 
     let data;
+    let count;
     let { username } = decoded;
 
     try {
-      data = await users.findOne({
-        attributes: ["id"],
-        where: {
-          username: username,
-        },
+      const post_info = await posts.findAndCountAll({
+        attributes: [
+          ["id", "post_id"],
+          "category",
+          "post_name",
+          // "content",
+          "cost",
+          "view_count",
+          "created_at",
+        ],
+        offset: limit * (page_num - 1),
+        limit: limit,
+        distinct: true,
+        order: [["id", "DESC"]],
         include: [
           {
-            model: posts,
-            attributes: [
-              ["id", "post_id"],
-              // "id",
-              "category",
-              "post_name",
-              // "content",
-              "cost",
-              "view_count",
-              "created_at",
-            ],
-            offset: limit * (page_num - 1),
-            limit: limit,
-
-            include: [
-              {
-                model: users,
-                attributes: ["username", "profile"],
-              },
-              {
-                model: likes,
-                attributes: ["agreement"],
-              },
-              {
-                model: kicks,
-                attributes: [["id", "kick_id"], "thumbnail"],
-              },
-              {
-                model: comments,
-                attributes: [["id", "comment_id"], "content"],
-              },
-              {
-                model: posts_tags,
-                attributes: ["tag_id"],
-                include: {
-                  model: tags,
-                  attributes: ["content"],
-                },
-              },
-            ],
+            model: users,
+            attributes: ["username", "profile"],
+            where: {
+              username: username,
+            },
+          },
+          {
+            model: likes,
+            attributes: ["agreement"],
+          },
+          {
+            model: kicks,
+            attributes: [["id", "kick_id"], "thumbnail"],
+          },
+          {
+            model: comments,
+            attributes: [["id", "comment_id"], "content"],
+          },
+          {
+            model: posts_tags,
+            attributes: ["tag_id"],
+            include: {
+              model: tags,
+              attributes: ["content"],
+            },
           },
         ],
       });
+      data = post_info.rows.map((el) => el.get({ plain: true }));
+      count = post_info.count;
     } catch (err) {
       console.log(err);
       return res.status(500).json({ data: err, message: "데이터베이스 에러" });
     }
-
-    data = data.get({ plain: true });
-    data = data.posts;
 
     // 각 게시물에 접근
     data.forEach((post) => {
@@ -125,7 +123,7 @@ module.exports = async (req, res) => {
       post.comments = post.comments.length;
     });
 
-    return res.status(200).json({ data: data, message: "ok" });
+    return res.status(200).json({ count: count, data: data, message: "ok" });
   }
 
   // TODO 쿼리가 존재하면 쿼리로 검색
@@ -133,35 +131,50 @@ module.exports = async (req, res) => {
   // 포함검색 구현 query 상황에 따라 where_obj 분기
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
+  let regexp = fuzzy_searcher(req.query.post_name);
   if (req.query.post_name)
     where_obj.post_name = {
-      [Op.like]: `%${req.query.post_name}%`,
+      [Op.regexp]: regexp,
     };
   if (req.query.content)
     where_obj.content = {
       [Op.like]: `%${req.query.content}%`,
     };
 
+  // 글쓴이 태그 검색 추가 필요
+  let users_where_obj = {};
+  if (req.query.username) {
+    users_where_obj.username = req.query.username;
+  }
+  let tags_where_obj = {};
+  if (req.query.tag) {
+    tags_where_obj.content = req.query.tag;
+  }
+
   let data;
+  let count;
 
   try {
-    data = await posts.findAll({
+    let post_info = await posts.findAndCountAll({
       attributes: [
         ["id", "post_id"],
         "category",
         "post_name",
-        "content",
+        // "content",
         "cost",
         "view_count",
         "created_at",
       ],
+      distinct: true,
       where: where_obj,
       offset: limit * (page_num - 1),
       limit: limit,
+      order: [["id", "DESC"]],
       include: [
         {
           model: users,
           attributes: ["username", "profile"],
+          where: users_where_obj,
         },
         {
           model: likes,
@@ -173,7 +186,8 @@ module.exports = async (req, res) => {
         },
         {
           model: comments,
-          attributes: ["id", "content"],
+          attributes: [["id", "comment_id"], "content"],
+          order: [["id", "DESC"]],
           include: [
             {
               model: users,
@@ -187,11 +201,13 @@ module.exports = async (req, res) => {
           include: {
             model: tags,
             attributes: ["content"],
+            where: tags_where_obj,
           },
         },
       ],
     });
-    data = data.map((el) => el.get({ plain: true }));
+    count = post_info.count;
+    data = post_info.rows.map((el) => el.get({ plain: true }));
 
     // 각 게시물에 접근
     data.forEach((post) => {
@@ -217,5 +233,5 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

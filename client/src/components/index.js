@@ -1,6 +1,6 @@
 //atoms
 export { default as Common } from "./atoms/Button/Common";
-export { default as NavBtn } from "./atoms/Button/NavBtn"
+export { default as NavBtn } from "./atoms/Button/NavBtn";
 export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
 export { default as DatePicker } from "./atoms/Input/DatePicker";
@@ -14,8 +14,8 @@ export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
-export { default as BoardTodayKicks } from "./atoms/BoardTodayKicks/";
 export { default as IconBox } from "./atoms/IconBox";
+export { default as Pagination } from "./atoms/Pagination";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
@@ -51,3 +51,5 @@ export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
 export { default as PostList } from "./organisms/PostList";
 export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
 export { default as Chart } from "./organisms/Chart";
+export { default as MyPagination } from "./organisms/Pagination";
+export { default as BoardTodayKicks } from "./organisms/BoardTodayKicks";

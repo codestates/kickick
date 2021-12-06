@@ -19,6 +19,7 @@ export default function NavBtn({
   setIsHover = () => {
     return null;
   },
+  setUpdate,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +29,7 @@ export default function NavBtn({
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
   const moveHandler = (path) => {
     navigate(path);
+    setUpdate(true);
   };
   return (
     <Container

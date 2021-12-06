@@ -9,7 +9,7 @@ const initialState = {
   post_name: "",
   content: "",
 };
-export const postAddReducer = (state = initialState, action) => {
+export default function postAddReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CATEGORY:
       return { ...state, ...action.payload };
@@ -22,4 +22,4 @@ export const postAddReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}

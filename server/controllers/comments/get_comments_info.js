@@ -3,9 +3,15 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // TODO 댓글 정보 구현
+
+  // page_num과 limit 기본값 설정
+  const page_num = Number(req.query.page_num) || 1;
+  const limit = Number(req.query.limit) || 10;
+
   // post_id 가 있을 때 한 게시글의 댓글 정보
   if (req.query.post_id) {
     let data;
+    let count;
     const post_id = req.query.post_id;
 
     try {
@@ -27,12 +33,37 @@ module.exports = async (req, res) => {
           },
         ],
       });
-      data = data.get({ plain: true }).comments;
+      const comment_info = await comments.findAndCountAll({
+        attributes: [["id", "comment_id"], "content", "created_at"],
+        offset: limit * (page_num - 1),
+        limit: limit,
+        distinct: true,
+        order: [["id", "DESC"]],
+        include: [
+          {
+            model: users,
+            attributes: ["username", "profile"],
+          },
+          {
+            model: posts,
+            attributes: ["id"],
+            where: {
+              id: post_id,
+            },
+          },
+        ],
+      });
+      data = comment_info.rows.map((el) => {
+        el = el.get({ plain: true });
+        delete el.post;
+        return el;
+      });
+      count = comment_info.count;
     } catch (err) {
       console.log(err);
       return res.status(500).json({ data: err, message: "데이터베이스 에러" });
     }
-    return res.status(200).json({ data: data, message: "ok" });
+    return res.status(200).json({ count: count, data: data, message: "ok" });
   }
 
   // post_id 가 없을 때 쿠키로 내 댓글정보만
@@ -54,33 +85,36 @@ module.exports = async (req, res) => {
   }
 
   let data;
+  let count;
   const { username } = decoded;
 
   try {
-    data = await users.findOne({
-      attributes: ["id", "username", "profile"],
-      where: {
-        username: username,
-      },
+    const comment_info = await comments.findAndCountAll({
+      attributes: ["post_id", "content", "created_at"],
+      offset: limit * (page_num - 1),
+      limit: limit,
+      distinct: true,
+      order: [["id", "DESC"]],
       include: [
         {
-          model: comments,
-          attributes: ["post_id", "content", "created_at"],
-          include: [
-            {
-              model: posts,
-              attributes: ["post_name"],
-            },
-          ],
+          model: posts,
+          attributes: ["post_name"],
+        },
+        {
+          model: users,
+          attributes: ["username", "profile"],
+          where: {
+            username: username,
+          },
         },
       ],
     });
-    data = data.get({ plain: true });
-    delete data.id;
+    data = comment_info.rows.map((el) => el.get({ plain: true }));
+    count = comment_info.count;
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

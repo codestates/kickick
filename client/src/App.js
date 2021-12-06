@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { nowImLogin } from "./apis/auth";
 import KickBoard from "./pages/KickBoard";
 import { Nav, Footer } from "./components";
 import Main from "./pages/Main";
@@ -18,12 +17,13 @@ import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
+import { nowImLogin } from "./apis/auth";
 import { isLoginAction, todayLoginAction } from "./store/actions/login";
 
 export default function App() {
   // NOTICE theme 테스트 중
   // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
-
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
@@ -42,7 +42,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Container>
-          <Nav />
+          <Nav setUpdate={setUpdate} />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
@@ -55,7 +55,10 @@ export default function App() {
               element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board/:category" element={<Board />} />
+            <Route
+              path="board/:category"
+              element={<Board setUpdate={setUpdate} update={update} />}
+            />
             <Route
               path="detailboard/:category/:post_id"
               element={<DetailBoard />}

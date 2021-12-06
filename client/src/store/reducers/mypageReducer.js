@@ -6,7 +6,7 @@ const initialState = {
   mycomment: { count: 0, data: [] },
 };
 
-export const mypageReducer = (state = initialState, action) => {
+export default function mypageReducer(state = initialState, action) {
   switch (action.type) {
     case GET_FAVORITES:
       return { ...state, ...action.payload };
@@ -17,4 +17,4 @@ export const mypageReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}
