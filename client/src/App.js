@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +19,8 @@ import MyPage from "./pages/MyPage";
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
 import { isLoginAction, todayLoginAction } from "./store/actions/login";
+import lightToDark from "./assets/images/lightToDark.png";
+import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
   // NOTICE theme 테스트 중
@@ -27,22 +29,38 @@ export default function App() {
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
-  const theme = themeMode === "light" ? light : dark; // 테마 환경에 맞는 테마 컬러 가져오기.
+  const [theme, setTheme] = useState([light,"light"]);
 
   useEffect(() => {
+    setTimeout(() => {
+      if (themeMode === "light") {
+        setTheme([light,"light"]);
+      } else setTheme([dark,"dark"]);
+    }, 580);
+
     nowImLogin(todayLogin)
       .then(() => {
         dispatch(isLoginAction(true));
         if (todayLogin) dispatch(todayLoginAction(true));
       })
       .catch(() => dispatch(isLoginAction(false)));
-  }, []);
-
+  }, [themeMode]);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme[0]}>
       <Router>
         <Container>
-          <Nav />
+          {themeMode === "light" ? (
+            <LightChanger themeMode={themeMode}>
+              <DarkBox />
+              <Theme src={darkToLight} />
+            </LightChanger>
+          ) : (
+            <DarkChanger themeMode={themeMode}>
+              <Theme src={lightToDark} />
+              <DarkBox />
+            </DarkChanger>
+          )}
+          <Nav themeCode={theme[1]} />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
@@ -75,4 +93,45 @@ const Container = styled.div`
   max-width: 100%;
   min-height: calc(100vh - 4rem);
   margin-top: 4rem;
+  background-color: ${({ theme }) => theme.color.back};
+  z-index: -2;
+`;
+
+const Theme = styled.img`
+  position: relative;
+  height: 100vh;
+`;
+
+const DarkBox = styled.div`
+  width:110vw;
+  height: 100vh;
+  background-color:black;
+`;
+
+const ModeChanger = styled.div`
+  position: absolute;
+  top: -4rem;
+  right: 100vw;
+  display: flex;
+  z-index: 99999;
+  animation-name: slide;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+
+  @keyframes slide {
+    0% {
+      right: -210vw;
+    }
+    100% {
+      right: 100vw;
+    }
+  }
+`;
+
+const LightChanger = styled(ModeChanger)`
+  animation-duration: 2s;
+`;
+
+const DarkChanger = styled(ModeChanger)`
+  animation-duration: 2.2s;
 `;

@@ -7,12 +7,15 @@ import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
+import sun from "../../../assets/images/sun.png"
+import moon from "../../../assets/images/moon.png";
 
-export default function Nav() {
+export default function Nav({ themeCode }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
   const themeMode = useSelector((state) => state.themeMode);
+  const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
 
   const logoutHanlder = () => {
@@ -23,9 +26,8 @@ export default function Nav() {
 
   const themeChanger = () => {
     if (themeMode === "light") dispatch(themeModeAction("dark"));
-    else dispatch(themeModeAction("dark"));
+    else dispatch(themeModeAction("light"));
   };
-  // console.log(themeMode)
   return (
     <Container
       onMouseOver={() => setIsHover(true)}
@@ -42,6 +44,11 @@ export default function Nav() {
           <BtnChamber />
         </Separation>
         <Separation>
+          <ThemeBtn
+            src={themeCode === "light" ? themeImg[0] : themeImg[1]}
+            onClick={themeChanger}
+            alt="themeBtn"
+          />
           <LoginChanger isLogin={!isLogin}>
             <NavBtn context="로그인" pathname="/login" />
             <NavBtn
@@ -88,7 +95,8 @@ const Frame = styled(VerticalAlign)`
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
-  background-color: rgb(255, 255, 255, 0.7);
+  background-color: ${({ theme }) => theme.color.back};
+  /* background-color: rgb(255, 255, 255, 0.7); */
   transition: top 0.5s;
 `;
 
@@ -98,4 +106,16 @@ const Separation = styled(VerticalAlign)`
 
 const LoginChanger = styled.div`
   display: ${({ isLogin }) => (isLogin ? "flex" : "none")};
+`;
+
+
+const ThemeBtn = styled.img`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width: 3rem; 
+  height: 3rem;
+  margin-right: 0.3rem;
+  border-radius: 3rem;
+  cursor: pointer;
 `;

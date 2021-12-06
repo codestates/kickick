@@ -62,7 +62,7 @@ export default function NavBtn({
             mylocation={mylocation}
             pathname={pathname}
             key={el.pathname}
-            onClick={() => moveHandler(`${pathname}/${el}`)}
+            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />
             <SubTitle size={size}>{el}</SubTitle>

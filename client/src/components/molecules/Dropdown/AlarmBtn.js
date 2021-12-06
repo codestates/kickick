@@ -47,7 +47,7 @@ export default function AlarmBtn({ fontSize = "xl" }) {
         onMouseEnter={() => setIsOver(true)}
         onMouseOut={() => setIsOver(false)}
       >
-        <AlarmFrame>
+        <AlarmFrame fontSize={fontSize}>
           <AlarmCounter
             alarmLength={alarmArr.length}
             isOver={isOver}
@@ -129,6 +129,8 @@ const AlarmCounter = styled.div`
 `;
 
 const AlarmFrame = styled.div`
+  padding-top: ${({ theme, fontSize }) =>
+    `${theme.fontSizes[fontSize].split("rem")[0] * 0.15}rem`};
   pointer-events: none;
 `;
 
