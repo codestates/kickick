@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import {nowImLogin} from "./apis/auth"
+import { nowImLogin } from "./apis/auth";
 import KickBoard from "./pages/KickBoard";
-import { Nav,Footer } from "./components";
+import { Nav, Footer } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -14,6 +14,7 @@ import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board";
 import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
+import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
@@ -37,9 +38,6 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, []);
 
-  // NOTICE ${({theme}) => theme.paddings.small}
-  // NOTICE @media ${({theme}) => theme.device.mobileS} {...}
-  console.log(useSelector((state) => state.login));
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -51,10 +49,17 @@ export default function App() {
             <Route path="/signup" element={<SignupSelect />} />
             <Route path="/signup/:type" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
+            <Route path="editboard/:category" element={<EditBoard />} />
+            <Route
+              path="myeditboard/:category/:post_id"
+              element={<MyEditBoard />}
+            />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board" element={<Board />} />
-            <Route path="editboard" element={<EditBoard />} />
-            <Route path="detailboard/:post_id" element={<DetailBoard />} />
+            <Route path="board/:category" element={<Board />} />
+            <Route
+              path="detailboard/:category/:post_id"
+              element={<DetailBoard />}
+            />
             <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />

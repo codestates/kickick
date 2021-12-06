@@ -8,6 +8,7 @@ export default function TitleInput({
   handleChange,
   handleBlur,
   val,
+  title,
 }) {
   return (
     <Title
@@ -15,10 +16,11 @@ export default function TitleInput({
       placeholder={holder}
       width={width}
       onBlur={handleBlur}
-      onKeyUp={handleKeyon}
+      onKeyPress={handleKeyon}
       onChange={handleChange}
       padding={padding}
       value={val}
+      defaultValue={title ? title : null}
     />
   );
 }

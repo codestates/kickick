@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigate,useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import ufo from "../../../assets/images/ufo.png"
+import ufo from "../../../assets/images/ufo.png";
 
 export default function NavBtn({
   context = "버튼",
@@ -79,7 +79,8 @@ const Container = styled.div`
 
 const MainBtn = styled.div`
   position: relative;
-  top: ${({ context, size }) => context === "KICK" ? `${size.replace("rem", "") / 10}rem` : 0 };
+  top: ${({ context, size }) =>
+    context === "KICK" ? `${size.replace("rem", "") / 10}rem` : 0};
   /* 로고의 경우 위치가 안맞아서 그떄만 조정되도록 함. */
   margin: 0 0.3rem;
   padding: 0.5rem;

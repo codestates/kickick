@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   EditQuill,
   TitleInput,
@@ -10,17 +10,20 @@ import {
   IconText,
 } from "../../components";
 
+import { categoryName } from "../../features";
 import {
   getCategory,
   getPostName,
   getContent,
   reset,
 } from "../../store/actions/postadd";
-import { createPost } from "../../apis/posts";
+import { createPost, createTag } from "../../apis/posts";
 
 export default function EditBoard() {
+  const { category } = useParams();
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
+  const [Loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
@@ -36,19 +39,21 @@ export default function EditBoard() {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        dispatch(reset());
-        navigate("/board");
+        createTag(data.data.data.post_id, [category, ...tagArr])
+          .then(() => navigate(`/board/${category}`))
+          .catch((err) => console.log(err.response));
       })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
-    dispatch(getCategory("학습"));
+    dispatch(reset());
+    dispatch(getCategory(categoryName(category)));
   }, []);
   return (
     <Container>
       <TitleContainer>
-        <IconText label="학습" />
+        <IconText label={category} />
         <TitleInput padding="0.3rem" handleBlur={handleBlur} />
       </TitleContainer>
       <EditQuill
