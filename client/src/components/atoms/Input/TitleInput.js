@@ -15,7 +15,7 @@ export default function TitleInput({
       placeholder={holder}
       width={width}
       onBlur={handleBlur}
-      onKeyUp={handleKeyon}
+      onKeyPress={handleKeyon}
       onChange={handleChange}
       padding={padding}
       value={val}

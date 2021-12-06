@@ -6,7 +6,11 @@ import Pagination from "../../atoms/Pagination";
 import Common from "../../atoms/Button/Common";
 import PostList from "../../organisms/PostList";
 
-export default function BoardBottom({ boardCategory }) {
+export default function BoardBottom({
+  boardCategory,
+  selectPage,
+  setSelectPage,
+}) {
   const navigate = useNavigate();
   const handleMovePage = () => {
     navigate("/editboard");
@@ -18,7 +22,11 @@ export default function BoardBottom({ boardCategory }) {
       <BtnContainer>
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       </BtnContainer>
-      <Pagination boardCategory={boardCategory} />
+      <Pagination
+        boardCategory={boardCategory}
+        selectPage={selectPage}
+        setSelectPage={setSelectPage}
+      />
     </Container>
   );
 }

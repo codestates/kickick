@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
+import { resetTag } from "../../store/actions/postadd";
 
 import {
   TotalSearch,
@@ -14,29 +15,36 @@ import {
 
 export default function Board({ boardCategory }) {
   const state = useSelector((state) => state.board);
+  const stateOnoff = useSelector((state) => state.onoff);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [selectPage, setSelectPage] = useState(
+    stateOnoff.goback ? (state.page ? state.page : 1) : 1
+  );
   useEffect(() => {
-    // getPostsList(
-    //   boardCategory,
-    //   state.title.word,
-    //   state.writer.word,
-    //   state.tag.word,
-    //   20,
-    //   state.page
-    // )
-    //   .then((data) =>
-    //     dispatch(
-    //       getList(data.data, state.title, state.writer, state.tag, state.page)
-    //     )
-    //   )
-    //   .then(() => setLoading(false))
-    //   .catch((err) => console.log(err.response));
-
-    getPostsList(boardCategory, null, null, null, null, 20)
-      .then((data) => dispatch(getList(data.data)))
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
+    if (stateOnoff.goback) {
+      getPostsList(
+        boardCategory,
+        state.title.word,
+        state.writer.word,
+        state.tag.word,
+        20,
+        state.page
+      )
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, state.page)
+          )
+        )
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    } else {
+      dispatch(resetTag());
+      getPostsList(boardCategory, null, null, null, null, 20)
+        .then((data) => dispatch(getList(data.data)))
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    }
   }, []);
 
   if (loading) return "";
@@ -46,8 +54,15 @@ export default function Board({ boardCategory }) {
       <Container>
         <BoardTodayKicks />
         <BoardContainer>
-          <TotalSearch boardCategory={boardCategory} />
-          <BoardBottom boardCategory={boardCategory} />
+          <TotalSearch
+            boardCategory={boardCategory}
+            setSelectPage={setSelectPage}
+          />
+          <BoardBottom
+            boardCategory={boardCategory}
+            selectPage={selectPage}
+            setSelectPage={setSelectPage}
+          />
         </BoardContainer>
       </Container>
     </>

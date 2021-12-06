@@ -11,14 +11,20 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
+import { goBack } from "../../../store/actions/postadd/";
 
-export default function Pagination({ boardCategory }) {
+export default function Pagination({
+  boardCategory,
+  selectPage,
+  setSelectPage,
+}) {
   const state = useSelector((state) => state.board);
+
   const dispatch = useDispatch();
 
   const limitPage = 10;
   const totalPage = state.count !== 0 ? Math.ceil(state.count / 20) : 1;
-  const [selectPage, setSelectPage] = useState(1);
+
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
@@ -80,6 +86,7 @@ export default function Pagination({ boardCategory }) {
           getList(data.data, state.title, state.writer, state.tag, selectPage)
         )
       )
+      .then(() => dispatch(goBack()))
       .catch((err) => console.log(err.response));
   }, [selectPage]);
 
