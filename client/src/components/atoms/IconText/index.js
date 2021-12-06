@@ -25,7 +25,7 @@ export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
   { icon: <FaUserAstronaut />, label: "글쓴이", category: "검색" },
   { icon: <FaHashtag />, label: "태그", category: "검색" },
-  { icon: <FaRegClock />, label: "최신", category: "정렬", color: "blue" },
+  { icon: <FaRegClock />, label: "최신", category: "정렬", color: "skyblue" },
   { icon: <FaFireAlt />, label: "인기", category: "정렬", color: "red" },
   { icon: <FaBook />, label: "학습", category: "게시판" },
   { icon: <FaAffiliatetheme />, label: "여가", category: "게시판" },
@@ -59,7 +59,7 @@ export default function IconText({ isActive, label, handleClick, board }) {
   );
 }
 
-export const Container = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -77,12 +77,12 @@ export const Container = styled.div`
     css`
       border-bottom: 3px solid
         ${({ isActive, color }) => (isActive ? color : "transparent")};
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
       transition: all 0.2s ease-out;
       cursor: pointer;
       svg {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
       }
     `}
 

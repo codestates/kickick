@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function Textarea({ size = "lg", handleClick, ...props }) {
-  let scale = 1;
-  if (size === "sm") scale = 0.75;
-  if (size === "lg") scale = 1.5;
+export default function Textarea({ handleClick, ...props }) {
   const [value, setValue] = useState("");
   const handleChange = (e) => {
     if (e.target.value.length <= 200) {
@@ -16,8 +13,7 @@ export default function Textarea({ size = "lg", handleClick, ...props }) {
   return (
     <Container>
       <TextArea
-        // scale={scale}
-        placeholder={"로그인 후 사용가능합니다"}
+        placeholder="로그인 후 사용가능합니다"
         {...props}
         onChange={handleChange}
         value={value}
@@ -36,16 +32,13 @@ const Container = styled.div`
   }
 `;
 const TextArea = styled.textarea`
-  /* width: ${(props) => props.scale * 30}rem; */
   min-width: 100%;
   height: 7rem;
 
-  /* min-height: ${(props) => props.scale * 3}rem; */
-  /* padding: ${(props) => props.scale * 0.25}rem; */
   padding: 1rem;
   border-radius: 5px;
   border: 2px solid #eeeeee;
-  /* font-size: ${(props) => props.scale * 0.5}rem; */
+
   font-size: 1rem;
   resize: none;
 

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   EditQuill,
   TitleInput,
@@ -9,35 +10,65 @@ import {
   IconText,
 } from "../../components";
 
+import { categoryName } from "../../features";
 import {
   getCategory,
-  getPostsName,
+  getPostName,
   getContent,
+  reset,
 } from "../../store/actions/postadd";
+import { createPost, createTag } from "../../apis/posts";
 
 export default function EditBoard() {
+  const { category } = useParams();
+  const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
+  const [Loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [content, setContent] = useState("");
+  const [tagArr, setTagArr] = useState([]);
+
+  const handleBlur = (e) => {
+    dispatch(getPostName(e.target.value));
+  };
+
+  const handleQuill = () => {
+    dispatch(getContent(content));
+  };
 
   const handleClick = () => {
-    dispatch(getCategory("학습"));
-    console.log(state);
+    createPost(state.category, state.post_name, state.content)
+      .then((data) => {
+        createTag(data.data.data.post_id, [category, ...tagArr])
+          .then(() => navigate(`/board/${category}`))
+          .catch((err) => console.log(err.response));
+      })
+      .catch((err) => console.log(err.response));
   };
+
+  useEffect(() => {
+    dispatch(reset());
+    dispatch(getCategory(categoryName(category)));
+  }, []);
   return (
     <Container>
       <TitleContainer>
-        <IconText label="학습" />
-        <TitleInput padding="0.3rem" />
+        <IconText label={category} />
+        <TitleInput padding="0.3rem" handleBlur={handleBlur} />
       </TitleContainer>
-      <EditQuill image={false} />
-      <TagInput />
+      <EditQuill
+        image={false}
+        content={content}
+        setContent={setContent}
+        handleQuill={handleQuill}
+      />
+      <TagInput tagArr={tagArr} setTagArr={setTagArr} />
       <BtnContainer>
         <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>
     </Container>
   );
 }
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,7 +76,6 @@ const Container = styled.div`
   margin: 0 auto;
   gap: 1rem;
 `;
-
 const TitleContainer = styled.div`
   display: flex;
   margin-top: 2rem;

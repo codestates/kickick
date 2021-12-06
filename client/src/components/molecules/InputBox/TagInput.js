@@ -1,28 +1,28 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TitleInput } from "../../";
 import { FaHashtag } from "react-icons/fa";
 
-export default function TagInput() {
-  const [TagArr, setTagArr] = useState([]);
+export default function TagInput({ tagArr, setTagArr, category }) {
   const [value, setValue] = useState("");
 
   const handleKeyon = (e) => {
-    if (e.code === "Enter" || e.code === "NumpadEnter") {
-      let dummy = [...TagArr];
-      if (dummy.length === 3) return;
+    if ((e.code === "Enter" && value) || (e.code === "NumpadEnter" && value)) {
+      let dummy = [...tagArr];
+      if (value === category) return;
+      if (dummy.length === 2) return;
+      if (dummy.find((el) => el === value)) return;
       dummy.push(value);
       setTagArr(dummy);
       setValue("");
     }
   };
-
   const handleChange = (e) => {
     setValue(e.target.value);
   };
 
   const handleDel = (idx) => {
-    let dummy = [...TagArr];
+    let dummy = [...tagArr];
     dummy.splice(idx, 1);
     setTagArr(dummy);
   };
@@ -36,7 +36,7 @@ export default function TagInput() {
         handleChange={handleChange}
         val={value}
       />
-      {TagArr.map((inputValue, idx) => {
+      {tagArr.map((inputValue, idx) => {
         return (
           <TagContainer key={idx} onClick={() => handleDel(idx)}>
             <FaHashtag />

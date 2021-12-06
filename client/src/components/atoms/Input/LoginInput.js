@@ -6,6 +6,9 @@ export default function LoginInput({
   part = "email",
   inputHandler,
   validHandler,
+  coordinate,
+  passwordInput,
+  loginHandler,
   width = 20,
   height = 3,
 }) {
@@ -39,7 +42,7 @@ export default function LoginInput({
       : part === "password"
       ? !(
           (
-            inputValue.length > 8 &&
+            inputValue.length > 3 &&
             inputValue.length < 20 &&
             //8자 이상 20자 이하
             inputValue.search(/\s/) === -1 &&
@@ -62,7 +65,14 @@ export default function LoginInput({
     validHandler(part, validation);
   }
 
-  console.log(part, "=>  inputValue:", inputValue, ", validation:", validation);
+  const movePasswordInput = (e) => {
+    if (e.key === "Enter" && type === "text") {
+      passwordInput.current.focus()
+    }
+    if (e.key === "Enter" && type === "password") {
+      loginHandler();
+    }
+  }
   return (
     <Container
       width={width}
@@ -91,6 +101,8 @@ export default function LoginInput({
         value={inputValue}
         onChange={contextHandler}
         onKeyUp={validContoller}
+        onKeyPress={movePasswordInput}
+        ref={coordinate}
       />
     </Container>
   );

@@ -1,42 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 
 import { IconBox } from "../../";
-
-import gag from "../../../assets/images/gag.jpeg";
+import { useSelector, useDispatch } from "react-redux";
+import { getPostsInfo } from "../../../apis/posts";
+import { getPostInfo } from "../../../store/actions/postadd";
 
 export default function DetailBoardTop() {
+  const state = useSelector((state) => state.postInfo);
+  const dispatch = useDispatch();
+  const { post_id } = useParams();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getPostsInfo(post_id)
+      .then((data) => {
+        dispatch(getPostInfo(data.data));
+      })
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err.response));
+  }, []);
+
+  if (loading) return "";
   return (
     <Container>
       <TopContainer>
-        <Title>다시 연락온 연인 물리치는 비법</Title>
+        <Title>{state.data.post_name}</Title>
         <UserAndCountContainer>
           <UserContainer>
             <IconBox label="user" />
-            전남친
+            {state.data.user.username}
           </UserContainer>
           <UserContainer>
             <IconBox label="count" />
-            9797
+            {state.data.view_count}
           </UserContainer>
         </UserAndCountContainer>
         <TagContainer>
           <span>태그</span>
-          <span>#어디야?</span>
-          <span>#뭐해?</span>
-          <span>#자니?</span>
+          {state.data.tags.map((tag) => (
+            <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
+              # {tag.content}
+            </span>
+          ))}
         </TagContainer>
       </TopContainer>
       <Content>
-        <img style={{ width: "30rem" }} src={gag} />
-        <p>돈 빌려달라고 하면 바로 연락 안 옮 ㅅㄱ</p>
+        <ReactQuill
+          value={state.data.content}
+          readOnly={true}
+          theme={"bubble"}
+        />
       </Content>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 60vw;
+  /* width: 60vw; */
 `;
 
 const TopContainer = styled.div`
@@ -72,6 +96,5 @@ const TagContainer = styled.div`
 
 const Content = styled.div`
   height: auto;
-  margin-left: 3rem;
   padding: 2rem 1rem;
 `;
