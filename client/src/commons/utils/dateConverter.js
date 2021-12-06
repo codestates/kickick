@@ -1,4 +1,4 @@
-export default function dateConverter(date) {
+export function dateConverter(date) {
   const now = Date.now();
   const parsedDate = Date.parse(date);
 
@@ -10,6 +10,17 @@ export default function dateConverter(date) {
   if (seconds >= 1 && seconds < 60) return `${seconds}초 전`;
   if (minutes >= 1 && minutes < 60) return `${minutes}분 전`;
   if (hours >= 1 && hours < 24) return `${hours}시간 전`;
+
+  return date.slice(0, 10);
+}
+
+export function boardDateConverter(date) {
+  const now = new Date();
+  const isoNow = now.toISOString();
+
+  if (date.slice(0, 10) === isoNow.slice(0, 10)) {
+    return;
+  }
 
   return date.slice(0, 10);
 }

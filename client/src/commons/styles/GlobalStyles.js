@@ -39,6 +39,21 @@ const GlobalStyles = createGlobalStyle`
     h2,h3 {
         font-weight:bold;
     }
+
+    /* &::-webkit-scrollbar {
+      width: 5px;
+      height: 10px;
+      background: #ffffff;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3.5px;
+      background-color: #0c0c42;
+
+      &:hover {
+        background-color: #adb5bd;
+      }
+    } */
 `;
 
 export default GlobalStyles;

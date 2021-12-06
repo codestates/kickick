@@ -2,13 +2,29 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import dateConverter from "../../../commons/utils/dateConverter";
-
 const postItemList = [
   {
     type: "freepost",
     component(data) {
       return <Freepost data={data} />;
+    },
+  },
+  {
+    type: "mypagemypost",
+    component(data) {
+      return <MyPageMyPost data={data} />;
+    },
+  },
+  {
+    type: "mypagemycomment",
+    component(data) {
+      return <MyPageMyComment data={data} />;
+    },
+  },
+  {
+    type: "mypagefavorites",
+    component(data) {
+      return <MyPageFavorites data={data} />;
     },
   },
 ];
@@ -33,9 +49,66 @@ export function Freepost({ data }) {
         <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
       </div>
       <div>{data.user.username}</div>
-      <div>{dateConverter(data.created_at)}</div>
+      <div>{data.created_at}</div>
       <div>{data.view_count}</div>
       <div>{data.comments.length}</div>
+    </Container>
+  );
+}
+
+export function MyPageMyPost({ data }) {
+  return (
+    <Container>
+      <div>
+        {/* {data.tags.map((el) => (
+          <span># {el.content}</span>
+        ))} */}
+        <span>#어질어질</span>
+        <span>#어질어질</span>
+      </div>
+      <div>
+        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+      </div>
+      <div>{data.created_at}</div>
+      <div>{data.view_count}</div>
+    </Container>
+  );
+}
+
+export function MyPageMyComment({ data }) {
+  return (
+    <Container>
+      <div>
+        {/* {data.tags.map((el) => (
+          <span># {el.content}</span>
+        ))} */}
+        <span>#어질어질</span>
+        <span>#어질어질</span>
+      </div>
+      <div>
+        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+      </div>
+      <div>{data.created_at}</div>
+      <div>{data.view_count}</div>
+    </Container>
+  );
+}
+
+export function MyPageFavorites({ data }) {
+  return (
+    <Container>
+      <div>
+        {/* {data.tags.map((el) => (
+          <span># {el.content}</span>
+        ))} */}
+        <span>#어질어질</span>
+        <span>#어질어질</span>
+      </div>
+      <div>
+        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+      </div>
+      <div>{data.created_at}</div>
+      <div>{data.view_count}</div>
     </Container>
   );
 }

@@ -4,21 +4,21 @@ import styled from "styled-components";
 import Tab from "../../atoms/Tab";
 
 const generalTabList = [
-  { label: "프로필 수정", to: "/mypage/profile/edit", category: "회원정보" },
-  { label: "출석", to: "/mypage/profile/attendance", category: "회원정보" },
+  { label: "프로필 수정", to: "/mypage/profile", category: "회원정보" },
+  { label: "출석", to: "/mypage/attendance", category: "회원정보" },
   {
     label: "스크랩 한 글",
-    to: "/mypage/activity/favorite",
+    to: "/mypage/favorites",
     category: "나의활동",
   },
-  { label: "내가 쓴 글", to: "/mypage/activity/mypost", category: "나의활동" },
+  { label: "내가 쓴 글", to: "/mypage/mypost", category: "나의활동" },
   {
     label: "내가 쓴 댓글",
-    to: "/mypage/activity/mycomment",
+    to: "/mypage/mycomment",
     category: "나의활동",
   },
-  { label: "내가 산 킥", to: "/mypage/purchase/kick", category: "구매목록" },
-  { label: "킥머니 로그", to: "/mypage/purchase/log", category: "구매목록" },
+  { label: "내가 산 킥", to: "/mypage/kick", category: "구매목록" },
+  { label: "킥머니 로그", to: "/mypage/log", category: "구매목록" },
 ];
 
 const adminTabList = [

@@ -6,37 +6,47 @@ import { PostItem } from "../..";
 
 const postList = [
   {
-    type: "mypagefavorite",
+    reducer: ["mypage", "favorites"],
+    type: "mypagefavorites",
     label: ["제목", "태그", "글쓴이", "날짜"],
   },
   {
+    reducer: ["mypage", "mypost"],
     type: "mypagemypost",
-    label: ["제목", "태그", "조회수", "날짜"],
+    label: ["태그", "제목", "날짜", "조회수"],
   },
   {
+    reducer: ["mypage", "mycomment"],
     type: "mypagemycomment",
     label: ["게시판", "댓글", "좋아요", "날짜"],
   },
   {
+    reducer: ["board", "data"],
     type: "freepost",
     label: ["태그", "제목", "글쓴이", "날짜", "조회수", "댓글"],
   },
 ];
 
 export default function PostList({ type }) {
-  const { label } = postList.find((el) => el.type === type);
-  const data = useSelector((state) => state.board);
+  const { label, reducer } = postList.find((el) => el.type === type);
+  let data;
+  const temp = useSelector((state) => state[`${reducer[0]}`][`${reducer[1]}`]);
+  if (type === "freepost") {
+    data = temp;
+  } else data = temp.data;
 
   return (
     <Container type={type}>
       <div className="columnName">
         {label.map((el) => (
-          <div>{el}</div>
+          <div className="column">{el}</div>
         ))}
       </div>
-      {data.data.map((el) => (
-        <PostItem key={el.post_id} data={el} type={type} />
-      ))}
+      {data.length === 0 ? (
+        <div>등록된 글이 없습니다</div>
+      ) : (
+        data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
+      )}
     </Container>
   );
 }
@@ -69,7 +79,7 @@ const Container = styled.div`
     }
 
     ${({ type }) =>
-      (type === "mypagefavorite" || type === "mypagemypost") &&
+      (type === "mypagefavorites" || type === "mypagemypost") &&
       css`
         > div:nth-of-type(1) {
           flex: 3;

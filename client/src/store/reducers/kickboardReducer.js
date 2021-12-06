@@ -4,7 +4,7 @@ const initialState = {
   modal: false,
 };
 
-const kickboardReducer = (state = initialState, action) => {
+export const kickboardReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_KICKS_INFO:
       return { ...state, ...action.payload };
@@ -16,5 +16,3 @@ const kickboardReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default kickboardReducer;
