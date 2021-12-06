@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { TitleInput } from "../../";
 import { FaHashtag } from "react-icons/fa";
 
-export default function TagInput({ tagArr, setTagArr }) {
+export default function TagInput({ tagArr, setTagArr, category }) {
   const [value, setValue] = useState("");
 
   const handleKeyon = (e) => {
-    if (e.code === "Enter" || e.code === "NumpadEnter") {
+    if ((e.code === "Enter" && value) || (e.code === "NumpadEnter" && value)) {
       let dummy = [...tagArr];
+      if (value === category) return;
       if (dummy.length === 2) return;
+      if (dummy.find((el) => el === value)) return;
       dummy.push(value);
       setTagArr(dummy);
       setValue("");

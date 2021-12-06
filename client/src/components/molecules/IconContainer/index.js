@@ -14,14 +14,14 @@ export default function IconContainer() {
   const handleClick = (label) => {
     if (label === "arrow") {
       if (!state.data) {
-        navigate("/board");
+        navigate(`/board/${params.category}`);
       } else {
         dispatch(goBack(true));
-        navigate("/board");
+        navigate(`/board/${params.category}`);
       }
     }
     if (label === "edit") {
-      navigate(`/myeditboard/${params.post_id}`);
+      navigate(`/myeditboard/${params.category}/${params.post_id}`);
     }
   };
   return (

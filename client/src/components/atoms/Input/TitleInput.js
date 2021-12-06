@@ -8,6 +8,7 @@ export default function TitleInput({
   handleChange,
   handleBlur,
   val,
+  title,
 }) {
   return (
     <Title
@@ -19,6 +20,7 @@ export default function TitleInput({
       onChange={handleChange}
       padding={padding}
       value={val}
+      defaultValue={title ? title : null}
     />
   );
 }

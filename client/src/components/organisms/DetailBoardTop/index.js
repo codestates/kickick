@@ -41,9 +41,11 @@ export default function DetailBoardTop() {
         </UserAndCountContainer>
         <TagContainer>
           <span>태그</span>
-          <span>#어디야?</span>
-          <span>#뭐해?</span>
-          <span>#자니?</span>
+          {state.data.tags.map((tag) => (
+            <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
+              # {tag.content}
+            </span>
+          ))}
         </TagContainer>
       </TopContainer>
       <Content>

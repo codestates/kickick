@@ -7,7 +7,7 @@ import { getList } from "../../../store/actions/postadd/boardList";
 import { search, delSearch } from "../../../store/actions/postadd";
 import { PostAlign, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ boardCategory, setSelectPage }) {
+export default function TotalSearch({ category, setSelectPage }) {
   const state = useSelector((state) => state.board);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
@@ -29,13 +29,13 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
 
     if (icon.label === "제목") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: word,
         username: state.writer.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
-        .then((data) =>
+        .then((data) => {
           dispatch(
             getList(
               data.data,
@@ -43,17 +43,17 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
               state.writer,
               state.tag
             )
-          )
-        )
+          );
+        })
         .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -69,11 +69,11 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: state.writer.word,
         tag: word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -96,36 +96,38 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
 
     if (state.title.type === label) {
       getPostsList({
-        category: boardCategory,
+        category,
         username: state.writer.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
             getList(data.data, { type: "", word: "" }, state.writer, state.tag)
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         tag: state.tag.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, { type: "", word: "" }, state.tag)
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
       getPostsList({
-        category: boardCategory,
+        category,
         post_name: state.title.word,
         username: state.writer.word,
-        page_num: 20,
+        limit: 20,
       })
         .then((data) =>
           dispatch(
@@ -135,6 +137,7 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
             })
           )
         )
+        .then(() => setSelectPage(1))
         .catch((err) => err.response);
     }
   };

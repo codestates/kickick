@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
 import { resetTag } from "../../store/actions/postadd";
+import { categoryName } from "../../features";
 
 import {
   TotalSearch,
@@ -13,7 +15,8 @@ import {
   BoardTodayKicks,
 } from "../../components";
 
-export default function Board({ boardCategory }) {
+export default function Board() {
+  const { category } = useParams();
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);
   const [loading, setLoading] = useState(true);
@@ -24,7 +27,7 @@ export default function Board({ boardCategory }) {
   useEffect(() => {
     if (stateOnoff.goback) {
       getPostsList({
-        category: boardCategory,
+        category: categoryName(category),
         post_name: state.title.word,
         username: state.writer.word,
         tag: state.tag.word,
@@ -40,7 +43,7 @@ export default function Board({ boardCategory }) {
         .catch((err) => console.log(err.response));
     } else {
       dispatch(resetTag());
-      getPostsList(boardCategory, null, null, null, null, 20)
+      getPostsList({ category: categoryName(category), limit: 20 })
         .then((data) => dispatch(getList(data.data)))
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
@@ -55,11 +58,12 @@ export default function Board({ boardCategory }) {
         <BoardTodayKicks />
         <BoardContainer>
           <TotalSearch
-            boardCategory={boardCategory}
+            category={categoryName(category)}
             setSelectPage={setSelectPage}
           />
           <BoardBottom
-            boardCategory={boardCategory}
+            category={categoryName(category)}
+            freeCategory={category}
             selectPage={selectPage}
             setSelectPage={setSelectPage}
           />

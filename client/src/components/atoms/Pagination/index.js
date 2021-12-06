@@ -13,11 +13,7 @@ import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
 import { goBack } from "../../../store/actions/postadd/";
 
-export default function Pagination({
-  boardCategory,
-  selectPage,
-  setSelectPage,
-}) {
+export default function Pagination({ category, selectPage, setSelectPage }) {
   const state = useSelector((state) => state.board);
 
   const dispatch = useDispatch();
@@ -74,7 +70,7 @@ export default function Pagination({
 
   useEffect(() => {
     getPostsList({
-      category: boardCategory,
+      category: category,
       post_name: state.title.word,
       username: state.writer.word,
       tag: state.tag.word,

@@ -10,54 +10,65 @@ import {
   IconText,
 } from "../../components";
 
-import { categoryName } from "../../features";
-import {
-  getCategory,
-  getPostName,
-  getContent,
-  getPostInfo,
-} from "../../store/actions/postadd";
-import { createPost, createTag, getPostsInfo } from "../../apis/posts";
+import { getPostInfo } from "../../store/actions/postadd";
+import { getPostsInfo, putPost } from "../../apis/posts";
+import { delTags, createTags } from "../../apis/tags";
 
-export default function EditBoard({ boardCategory }) {
+export default function EditBoard() {
   const navigate = useNavigate();
-  const state = useSelector((state) => state.postAdd);
-  const { post_id } = useParams();
+  const state = useSelector((state) => state.postInfo);
+
+  const { post_id, category } = useParams();
   const dispatch = useDispatch();
-  const [content, setContent] = useState("");
-  const [tagArr, setTagArr] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [title, setTitle] = useState(state.data.post_name);
+  const [content, setContent] = useState(state.data.content);
+  const [tagArr, setTagArr] = useState(
+    state.data.tags
+      .filter((el) => el.content !== category)
+      .map((el) => el.content)
+  );
 
   const handleBlur = (e) => {
-    dispatch(getPostName(e.target.value));
+    setTitle(e.target.value);
   };
 
   const handleQuill = () => {
-    dispatch(getContent(content));
+    setContent(content);
   };
 
   const handleClick = () => {
-    // createPost(state.category, state.post_name, state.content)
-    //   .then((data) => {
-    //     createTag(data.data.data.post_id, categoryName(boardCategory))
-    //       .then((data) => navigate(`/detailboard/${post_id}`))
-    //       .catch((err) => console.log(err.response));
-    //   })
-    //   .catch((err) => console.log(err.response));
+    putPost(`${category}_자유`, title, content, null, post_id)
+      .then(() => {
+        state.data.tags.map((tag) => {
+          delTags(post_id, tag.tag_id).catch((err) =>
+            console.log(err.response)
+          );
+        });
+      })
+      .then(() => {
+        createTags(post_id, [category, ...tagArr])
+          .then(() => navigate(`/detailboard/${category}/${post_id}`))
+          .catch((err) => console.log(err.response));
+      })
+      .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
-    dispatch(getCategory(boardCategory));
     getPostsInfo(post_id)
       .then((data) => {
         dispatch(getPostInfo(data.data));
       })
+      .then(setLoading(false))
       .catch((err) => console.log(err.response));
   }, []);
+
+  if (loading) return "";
   return (
     <Container>
       <TitleContainer>
-        <IconText label={categoryName(boardCategory)} />
-        <TitleInput padding="0.3rem" handleBlur={handleBlur} />
+        <IconText label={category} />
+        <TitleInput padding="0.3rem" handleBlur={handleBlur} title={title} />
       </TitleContainer>
       <EditQuill
         image={false}
@@ -65,7 +76,7 @@ export default function EditBoard({ boardCategory }) {
         setContent={setContent}
         handleQuill={handleQuill}
       />
-      <TagInput tagArr={tagArr} setTagArr={setTagArr} />
+      <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
       <BtnContainer>
         <Common label="수 정" type="bigger" handleClick={handleClick} />
       </BtnContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -38,8 +38,6 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, []);
 
-  const [boardCategory, setBoardCategory] = useState("학습_자유"); //
-
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -51,20 +49,17 @@ export default function App() {
             <Route path="/signup" element={<SignupSelect />} />
             <Route path="/signup/:type" element={<Signup />} />
             <Route path="/signup/:username" element={<MailAuth />} />
+            <Route path="editboard/:category" element={<EditBoard />} />
             <Route
-              path="editboard"
-              element={<EditBoard boardCategory={boardCategory} />}
-            />
-            <Route
-              path="myeditboard/:post_id"
-              element={<MyEditBoard boardCategory={boardCategory} />}
+              path="myeditboard/:category/:post_id"
+              element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
+            <Route path="board/:category" element={<Board />} />
             <Route
-              path="board"
-              element={<Board boardCategory={boardCategory} />}
+              path="detailboard/:category/:post_id"
+              element={<DetailBoard />}
             />
-            <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />
