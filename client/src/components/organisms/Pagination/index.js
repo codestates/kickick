@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { IconBox } from "../..";
 
+import { getPostsList } from "../../../apis/posts";
+import { getComments } from "../../../apis/comments";
+import { getFavorites } from "../../../apis/favorites";
+
+import {
+  getFavoritesAction,
+  getMyPostAction,
+  getMyCommentAction,
+} from "../../../store/actions/mypage";
+
 export default function MyPagination({ count }) {
+  const { pathname } = useLocation();
+
   const dispatch = useDispatch();
 
   const limitPage = 10;
@@ -56,6 +69,22 @@ export default function MyPagination({ count }) {
   const handleClickNum = (idx) => {
     setSelectPage(idx + 1 + selectDividPage * limitPage);
   };
+
+  useEffect(() => {
+    if (pathname === "/mypage/mypost") {
+      getPostsList({ page_num: selectPage })
+        .then((data) => {
+          console.log("d");
+          dispatch(getMyPostAction(data));
+        })
+        .catch((err) => console.log(err));
+    } else if (pathname === "/mypage/mycomment") {
+      getComments({ page_num: selectPage })
+        .then((data) => dispatch(getMyCommentAction(data)))
+        .catch((err) => console.log(err));
+    }
+  }, [selectPage]);
+
   return (
     <Container>
       <IconBox label="doubleleft" onClick={handleDubleLeft} />

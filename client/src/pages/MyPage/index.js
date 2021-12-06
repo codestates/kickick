@@ -23,6 +23,8 @@ import {
   getMyCommentAction,
 } from "../../store/actions/mypage";
 
+import { useMoveTop } from "../../hooks/useMoveTop";
+
 import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";
 import purchaselog from "../../assets/images/purchaselog.png";
@@ -39,6 +41,8 @@ const pageList = [
 export default function MyPage() {
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
+
+  useMoveTop();
 
   return (
     <>

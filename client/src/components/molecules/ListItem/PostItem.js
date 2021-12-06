@@ -107,10 +107,13 @@ export function MyPageFavorites({ data }) {
         <span>#어질어질</span>
       </div>
       <div>
-        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+        <Link to={`/detailboard/${data.post.post_id}`}>
+          {data.post.post_name}
+        </Link>
       </div>
-      <div>{data.created_at}</div>
-      <div>{data.view_count}</div>
+      <div>{data.post.user.username}</div>
+      <div>{data.post.view_count}</div>
+      <div>{data.post.view_count}</div>
     </Container>
   );
 }
