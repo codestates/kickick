@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Outlet, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch } from "react-redux";
 import {
   MyPageAside,
   Landscape,
@@ -9,83 +10,113 @@ import {
   ProfileEditForm,
   PostList,
 } from "../../components";
+
 import { FaArrowLeft } from "react-icons/fa";
 
+import { getPostsList } from "../../apis/posts";
+import { getComments } from "../../apis/comments";
+import { getFavorites } from "../../apis/favorites";
+
+import {
+  getFavoritesAction,
+  getMyPostAction,
+  getMyCommentAction,
+} from "../../store/actions/mypage";
+
+import profileinfoicon from "../../assets/images/profileinfoicon.png";
+import activityicon from "../../assets/images/activityicon.png";
+import purchaselog from "../../assets/images/purchaselog.png";
+
+const pageList = [
+  { category: "home", component: <Home /> },
+  { category: "profile", component: <Profile />, title: "프로필" },
+  { category: "attendance", component: <Attendance />, title: "출석" },
+  { category: "favorites", component: <Favorites />, title: "스크랩 한 글" },
+  { category: "mypost", component: <MyPost />, title: "내가 쓴 글" },
+  { category: "mycomment", component: <MyComment />, title: "내가 단 댓글" },
+];
+
 export default function MyPage() {
+  const dispatch = useDispatch();
+  const { category } = useParams();
+  const { component, title } = pageList.find((el) => el.category === category);
+
+  useEffect(() => {
+    getFavorites({})
+      .then((data) => dispatch(getFavoritesAction(data)))
+      .catch((err) => console.log(err));
+
+    getPostsList({})
+      .then((data) => dispatch(getMyPostAction(data)))
+      .catch((err) => console.log(err));
+
+    getComments({})
+      .then((data) => dispatch(getMyCommentAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
+
   return (
     <>
       <Landscape />
       <Container>
         <MyPageAside />
-        <Outlet />
+        <SubContainer>
+          {category !== "home" && <Navigator title={title} />}
+          {component}
+        </SubContainer>
       </Container>
     </>
   );
 }
 
-export function MyPageHome() {
+export function Home() {
   return (
-    <MyPageHomeContainer>
+    <>
       <ListContainer>
-        <h2>회원정보</h2>
+        <Subtitle>
+          <img src={profileinfoicon} alt="" />
+          <h2>회원정보</h2>
+        </Subtitle>
         <PostStaticsList />
         <TabBox category="회원정보" />
       </ListContainer>
       <ListContainer>
-        <h2>나의활동</h2>
+        <Subtitle>
+          <img src={activityicon} alt="" />
+          <h2>나의활동</h2>
+        </Subtitle>
         <TabBox category="나의활동" />
       </ListContainer>
       <ListContainer>
-        <h2>구매목록</h2>
+        <Subtitle>
+          <img src={purchaselog} alt="" />
+          <h2>구매목록</h2>
+        </Subtitle>
         <TabBox category="구매목록" />
       </ListContainer>
-    </MyPageHomeContainer>
+    </>
   );
 }
 
-export function ProfileEdit() {
-  return (
-    <ProfileEditContainer>
-      <Navigator head="프로필 수정" />
-      <ProfileEditForm />
-    </ProfileEditContainer>
-  );
+export function Profile() {
+  return <ProfileEditForm />;
 }
 
-export function ProfileAttendance() {
-  return (
-    <ProfileAttendanceContainer>
-      <Navigator head="출석" />
-    </ProfileAttendanceContainer>
-  );
+export function Attendance() {
+  return <div>d</div>;
 }
 
-export function MyActivityFavorite() {
-  return (
-    <MyActivityFavoriteContainer>
-      <Navigator head="스크랩 한 글" />
-      <PostList type="mypagefavorite" />
-    </MyActivityFavoriteContainer>
-  );
+export function Favorites() {
+  return <PostList type="mypagefavorites" />;
 }
-export function MyActivityMyPost() {
-  return (
-    <MyActivityMyPostContainer>
-      <Navigator head="내가 쓴 글" />
-      <PostList type="mypagemypost" />
-    </MyActivityMyPostContainer>
-  );
+export function MyPost() {
+  return <PostList type="mypagemypost" />;
 }
-export function MyActivityMyComment() {
-  return (
-    <MyActivityMyCommentContainer>
-      <Navigator head="내가 쓴 댓글" />
-      <PostList type="mypagemycomment" />
-    </MyActivityMyCommentContainer>
-  );
+export function MyComment() {
+  return <PostList type="mypagemycomment" />;
 }
 
-export function Navigator({ head }) {
+export function Navigator({ title }) {
   const navigate = useNavigate();
 
   return (
@@ -95,7 +126,7 @@ export function Navigator({ head }) {
           navigate(-1);
         }}
       />
-      <h2>{head}</h2>
+      <h2>{title}</h2>
     </NavContainer>
   );
 }
@@ -131,7 +162,7 @@ const Container = styled.div`
 const SubContainer = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 5rem;
+  row-gap: 2rem;
 
   width: 77%;
   padding: 2rem;
@@ -149,9 +180,12 @@ const ListContainer = styled.div`
   row-gap: 3rem;
 `;
 
-const MyPageHomeContainer = styled(SubContainer)``;
-const ProfileEditContainer = styled(SubContainer)``;
-const ProfileAttendanceContainer = styled(SubContainer)``;
-const MyActivityFavoriteContainer = styled(SubContainer)``;
-const MyActivityMyPostContainer = styled(SubContainer)``;
-const MyActivityMyCommentContainer = styled(SubContainer)``;
+const Subtitle = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+  }
+`;

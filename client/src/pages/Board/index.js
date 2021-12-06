@@ -11,7 +11,7 @@ import {
   BoardBottom,
   BoardTop,
   BoardTodayKicks,
-} from "../../components/";
+} from "../../components";
 
 export default function Board({ boardCategory }) {
   const state = useSelector((state) => state.board);
@@ -23,14 +23,14 @@ export default function Board({ boardCategory }) {
   );
   useEffect(() => {
     if (stateOnoff.goback) {
-      getPostsList(
-        boardCategory,
-        state.title.word,
-        state.writer.word,
-        state.tag.word,
-        20,
-        state.page
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: state.title.word,
+        username: state.writer.word,
+        tag: state.tag.word,
+        limit: 20,
+        page_num: state.page,
+      })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, state.writer, state.tag, state.page)
@@ -74,12 +74,12 @@ const Container = styled.div`
   width: 90rem;
 
   @media ${({ theme }) => theme.device.notebookL} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 64rem;
   }
 
   @media ${({ theme }) => theme.device.notebookS} {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 100%;
   }
 `;

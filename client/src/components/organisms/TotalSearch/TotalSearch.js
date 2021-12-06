@@ -18,7 +18,6 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
   const [icon, setIcon] = useState({ label: "제목" });
   const [word, setWord] = useState("");
   const [highlight, setHighlight] = useState("최신");
-
   const handleAlign = (event) => {
     const label = event.target.innerText;
     setHighlight(label);
@@ -32,14 +31,13 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
     setWord("");
 
     if (icon.label === "제목") {
-      getPostsList(
-        boardCategory,
-        word,
-        state.writer.word,
-        state.tag.word,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: word,
+        username: state.writer.word,
+        tag: state.tag.word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(
@@ -53,14 +51,13 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
         .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
-      getPostsList(
-        boardCategory,
-        state.title.word,
-        word,
-        state.tag.word,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: state.title.word,
+        username: word,
+        tag: state.tag.word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(
@@ -74,14 +71,13 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
         .then(() => setSelectPage(1))
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
-      getPostsList(
-        boardCategory,
-        state.title.word,
-        state.writer.word,
-        word,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: state.title.word,
+        username: state.writer.word,
+        tag: word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, state.writer, {
@@ -98,19 +94,16 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
   const handleInput = (e) => {
     setWord(e.target.value);
   };
-
   const handleClick = (idx, label) => {
     dispatch(delSearch(idx));
 
     if (state.title.type === label) {
-      getPostsList(
-        boardCategory,
-        null,
-        state.writer.word,
-        state.tag.word,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        username: state.writer.word,
+        tag: state.tag.word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(data.data, { type: "", word: "" }, state.writer, state.tag)
@@ -118,14 +111,12 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
         )
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
-      getPostsList(
-        boardCategory,
-        state.title.word,
-        null,
-        state.tag.word,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: state.title.word,
+        tag: state.tag.word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, { type: "", word: "" }, state.tag)
@@ -133,14 +124,12 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
         )
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
-      getPostsList(
-        boardCategory,
-        state.title.word,
-        state.writer.word,
-        null,
-        null,
-        20
-      )
+      getPostsList({
+        category: boardCategory,
+        post_name: state.title.word,
+        username: state.writer.word,
+        page_num: 20,
+      })
         .then((data) =>
           dispatch(
             getList(data.data, state.title, state.writer, {
@@ -184,13 +173,11 @@ export default function TotalSearch({ boardCategory, setSelectPage }) {
     </>
   );
 }
-
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 1rem 1rem 1rem;
 `;
-
 const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -198,12 +185,10 @@ const TagContainer = styled.div`
   margin: 0 1rem 1rem 1rem;
   gap: 1rem;
 `;
-
 const SearchContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-left: auto;
-
   @media ${({ theme }) => theme.device.tablet} {
     width: 200%;
     height: 8rem;
@@ -212,7 +197,6 @@ const SearchContainer = styled.div`
     align-items: center;
     background-color: #eeeeee;
     border-radius: 20px;
-
     > div:nth-of-type(2) {
       width: 40%;
       input {

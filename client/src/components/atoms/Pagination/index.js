@@ -28,6 +28,7 @@ export default function Pagination({
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
+
   let lastPage = limitPage * (selectDividPage + 1);
   if (totalPage < lastPage) {
     lastPage = totalPage;
@@ -72,15 +73,14 @@ export default function Pagination({
   };
 
   useEffect(() => {
-    getPostsList(
-      boardCategory,
-      state.title.word,
-      state.writer.word,
-      state.tag.word,
-      null,
-      20,
-      selectPage
-    )
+    getPostsList({
+      category: boardCategory,
+      post_name: state.title.word,
+      username: state.writer.word,
+      tag: state.tag.word,
+      limit: 20,
+      page_num: selectPage,
+    })
       .then((data) =>
         dispatch(
           getList(data.data, state.title, state.writer, state.tag, selectPage)
