@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import {nowImLogin} from "./apis/auth"
 import KickBoard from "./pages/KickBoard";
-import { Nav,Footer } from "./components";
+import { Nav, Footer } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -17,6 +16,7 @@ import DetailBoard from "./pages/DetailBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
+import { nowImLogin } from "./apis/auth";
 import { isLoginAction, todayLoginAction } from "./store/actions/login";
 
 export default function App() {
@@ -37,9 +37,6 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, []);
 
-  // NOTICE ${({theme}) => theme.paddings.small}
-  // NOTICE @media ${({theme}) => theme.device.mobileS} {...}
-  console.log(useSelector((state) => state.login));
   return (
     <ThemeProvider theme={theme}>
       <Router>
