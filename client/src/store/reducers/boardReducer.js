@@ -1,7 +1,8 @@
 import { GET_LIST } from "../actions/postadd/boardList";
+
 import { dateConverter } from "../../commons/utils/dateConverter";
 
-export const boardReducer = (state = {}, action) => {
+export default function boardReducer(state = {}, action) {
   switch (action.type) {
     case GET_LIST:
       action.payload.data.map((el) => {
@@ -11,4 +12,4 @@ export const boardReducer = (state = {}, action) => {
     default:
       return state;
   }
-};
+}

@@ -82,16 +82,16 @@ const Container = styled.div`
       (type === "mypagefavorites" || type === "mypagemypost") &&
       css`
         > div:nth-of-type(1) {
-          flex: 3;
+          flex: 2;
         }
         > div:nth-of-type(2) {
-          flex: 4;
+          flex: 5;
         }
         > div:nth-of-type(3) {
-          flex: 1;
+          flex: 2;
         }
         > div:nth-of-type(4) {
-          flex: 2;
+          flex: 1;
         }
       `}
 

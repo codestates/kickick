@@ -71,7 +71,7 @@ export default function MyPage() {
 
 export function Home() {
   return (
-    <>
+    <HomeWrapper>
       <ListContainer>
         <Subtitle>
           <img src={profileinfoicon} alt="" />
@@ -94,7 +94,7 @@ export function Home() {
         </Subtitle>
         <TabBox category="구매목록" />
       </ListContainer>
-    </>
+    </HomeWrapper>
   );
 }
 
@@ -177,12 +177,20 @@ const SubContainer = styled.div`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 4rem;
+`;
+
+const HomeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   row-gap: 3rem;
 `;
 
 const Subtitle = styled.div`
   display: flex;
   align-items: center;
+
   img {
     width: 3rem;
     height: 3rem;
