@@ -5,7 +5,7 @@ const GlobalStyles = createGlobalStyle`
     ${reset}
     * {
         box-sizing: border-box;
-        font-family: 'Noto Sans KR', sans-serif;
+        font-family: Roboto, "Noto Sans KR", sans-serif;
     }
     a {
         margin: 0;
@@ -34,6 +34,26 @@ const GlobalStyles = createGlobalStyle`
             outline: none;
         }
     }
+    strong { font-weight: bold !important; }
+    em { font-style: italic !important; }
+    h2,h3 {
+        font-weight:bold;
+    }
+
+    /* &::-webkit-scrollbar {
+      width: 5px;
+      height: 10px;
+      background: #ffffff;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3.5px;
+      background-color: #0c0c42;
+
+      &:hover {
+        background-color: #adb5bd;
+      }
+    } */
 `;
 
 export default GlobalStyles;

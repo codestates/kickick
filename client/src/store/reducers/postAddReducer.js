@@ -1,25 +1,25 @@
-import { GET_CATEGORY, GET_POST_NAME, GET_CONTENT } from "../actions/postadd";
+import {
+  GET_CATEGORY,
+  GET_POST_NAME,
+  GET_CONTENT,
+  RESET,
+} from "../actions/postadd";
 const initialState = {
   category: "",
   post_name: "",
   content: "",
 };
-
-export const postAddReducer = (state = initialState, action) => {
+export default function postAddReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CATEGORY:
-      let dummy = { ...state };
-      dummy.category = action.payload;
-      return dummy;
+      return { ...state, ...action.payload };
     case GET_POST_NAME:
-      let dummy2 = { ...state };
-      dummy2.post_name = action.payload;
-      return dummy;
+      return { ...state, ...action.payload };
     case GET_CONTENT:
-      let dummy3 = { ...state };
-      dummy3.content = action.payload;
-      return dummy;
+      return { ...state, ...action.payload };
+    case RESET:
+      return initialState;
     default:
       return state;
   }
-};
+}

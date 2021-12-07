@@ -1,4 +1,4 @@
-const { users } = require("../../models");
+const { users, logs } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
@@ -22,7 +22,8 @@ module.exports = async (req, res) => {
           [Op.like]: `%${req.query.email}%`,
         },
       };
-    } else {
+    }
+    if (req.query.username) {
       where_obj = {
         username: {
           [Op.like]: `%${req.query.username}%`,
@@ -69,11 +70,29 @@ module.exports = async (req, res) => {
       .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
-  const { username } = decoded;
+  const { username, type } = decoded;
   let data;
+
+  // type guest 일 때,
+  if (type === "guest") {
+    console.log("guest");
+    try {
+      data = await users.findOne({
+        attributes: [["id", "user_id"], "type", "username", "kick_money"],
+        where: {
+          username: username,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ data: err, message: "데이터베이스 에러" });
+    }
+    return res.status(200).json({ data: data, message: "guest login" });
+  }
   try {
     data = await users.findOne({
       attributes: [
+        ["id", "user_id"],
         "type",
         "username",
         "email",
@@ -85,6 +104,69 @@ module.exports = async (req, res) => {
         username: username,
       },
     });
+    data = data.get({ plain: true });
+    const user_id = data.user_id;
+
+    // today_login false면 로그에 기록
+    if (req.query.today_login === "false") {
+      // 로그 정보중 제일 최근 로그인 기록 가져옴
+      let log_info = await logs.findAll({
+        where: {
+          user_id: user_id,
+          type: "signin",
+        },
+        order: [["id", "DESC"]],
+        offset: 0,
+        limit: 1,
+      });
+      let log_date;
+      if (log_info.length !== 0) {
+        log_info = log_info[0].get({ plain: true });
+        log_date = log_info.created_at;
+      }
+
+      const today = new Date();
+      // 생성날짜가 오늘이랑 다르면
+      if (
+        !log_date ||
+        !(
+          log_date.getDate() === today.getDate() &&
+          log_date.getMonth() === today.getMonth() &&
+          log_date.getFullYear() === today.getFullYear()
+        )
+      ) {
+        // 로그인 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "signin",
+          content: `${username}님이 로그인 하였습니다.`,
+        });
+        // 킥머니 지급
+        await users.update(
+          {
+            kick_money: sequelize.literal(`kick_money + 100`),
+          },
+          {
+            where: {
+              username: username,
+            },
+          }
+        );
+        data.kick_money += 100;
+        // 킥머니 지급 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "kick_money",
+          content: "100 킥머니를 받았습니다.",
+        });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: "로그인으로 100 킥머니를 받았습니다.",
+        });
+      }
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

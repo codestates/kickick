@@ -71,5 +71,7 @@ export const light = {
 
 export const dark = {
   ...common,
-  color: {},
+  color: {
+    back: "#000000",
+  },
 };

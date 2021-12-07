@@ -2,22 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import sampleImg from "../../../assets/images/whale.jpg";
 
-export default function Profile({ size = "lg", profileType = "comment" }) {
-  let scale = 1.5;
+const profileList = [
+  { type: "comment", size: "1.5rem" },
+  { type: "post", size: "1.5rem" },
+  { type: "confirm", size: "2rem" },
+  { type: "mypage", size: "7rem" },
+  { type: "mypageedit", size: "10rem" },
+];
 
-  if (size === "lg") scale = 2;
+export default function Profile({ type, src }) {
+  const { size } = profileList.find((i) => i.type === type);
 
-  let multiple = 1;
-  if (profileType === "post") multiple = 0.8;
-  else if (profileType === "mypage") multiple = 2;
-
-  const imgSize = scale * multiple;
-  return <Container imgSize={imgSize} src={sampleImg} alt="" />;
+  return <Container size={size} src={sampleImg} alt="" />;
 }
 
 const Container = styled.img`
-  width: ${(props) => props.imgSize}rem;
-  height: ${(props) => props.imgSize}rem;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 
   border-radius: 50%;
 `;

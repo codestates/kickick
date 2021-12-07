@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import IconText, { iconList } from "../../atoms/IconText";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa";
 
 export default function Select({
   handleIcon,
@@ -12,13 +12,13 @@ export default function Select({
   category = "검색",
 }) {
   return (
-    <Container category={category}>
-      {isSelect ? <FaAngleDown /> : <FaAngleRight />}
-      <Selected onClick={() => setIsSelect(!isSelect)} category={category}>
+    <Container>
+      <Selected onClick={() => setIsSelect(!isSelect)}>
         <IconText label={icon.label} />
+        <FaAngleDown />
       </Selected>
       {isSelect ? (
-        <Options category={category}>
+        <Options>
           {iconList
             .filter((el) => el.category === category)
             .filter((el) => el.label !== icon.label)
@@ -40,42 +40,34 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 
-  width: ${({ category }) => (category === "게시판" ? "10rem" : "5.8rem")};
-  padding: 0 0.2rem;
-
-  > svg {
-    margin-right: 0.5rem;
-  }
+  width: 7rem;
 `;
 
 const Selected = styled.div`
   display: flex;
   align-items: center;
 
-  width: ${({ category }) => (category === "게시판" ? "8rem" : "5.8rem")};
-
+  width: 7rem;
   border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  svg {
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
 `;
 
 const Options = styled.div`
   position: absolute;
   top: 2.5rem;
-  left: 1.7rem;
+  width: 7rem;
 
-  width: ${({ category }) => (category === "게시판" ? "8rem" : "5.8rem")};
   background-color: white;
 
   border-radius: 0.25rem;
-
-  z-index: 10;
-  > div {
-    padding: 0.5rem;
-    margin: 0.1rem;
-    font-size: 1rem;
-    background-color: #ffffff;
-  }
   box-shadow: 0.5px 0.5px 5px #eee;
+
+  cursor: pointer;
 
   > div:hover {
     color: #ffffff;

@@ -1,28 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-export default function Textarea({ size = "lg", handleClick, ...props }) {
-  let scale = 1;
-  if (size === "sm") scale = 0.75;
-  if (size === "lg") scale = 1.5;
+export default function Textarea({
+  handleClick,
+  value,
+  handleChange,
+  ...props
+}) {
+  const login = useSelector((state) => state.login);
 
   return (
-    <Container
-      scale={scale}
-      placeholder={"로그인 후 사용가능합니다"}
-      {...props}
-    />
+    <Container>
+      <TextArea
+        placeholder={
+          login.isLogin ? "댓글을 입력해 주세요." : "로그인 후 사용가능합니다."
+        }
+        {...props}
+        onChange={handleChange}
+        value={value}
+        login={login.isLogin}
+      />
+      <p>{value.length} / 200</p>
+    </Container>
   );
 }
 
-const Container = styled.textarea`
-  width: ${(props) => props.scale * 27}rem;
-  min-height: ${(props) => props.scale * 3}rem;
-  padding: ${(props) => props.scale * 0.25}rem;
+const Container = styled.div`
+  position: relative;
+  p {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+`;
+const TextArea = styled.textarea`
+  min-width: 100%;
+  height: 7rem;
+
+  padding: 1rem;
   border-radius: 5px;
   border: 2px solid #eeeeee;
-  font-size: ${(props) => props.scale * 0.5}rem;
 
+  font-size: 1rem;
+  resize: none;
+
+  pointer-events: ${({ login }) => (login ? null : "none")};
   &:focus {
     outline: none;
     border: 2px solid skyblue;

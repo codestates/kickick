@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { KickBoardPostList, TotalSearch } from "../../components";
+import { KickBoardPostList, TotalSearch, KickConfirm } from "../../components";
 
 export default function KickBoard() {
   return (
     <Container>
       <TotalSearch />
       <KickBoardPostList />
+      <KickConfirm />
     </Container>
   );
 }

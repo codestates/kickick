@@ -18,9 +18,8 @@ export default function Tag({ handleClick, label, detail }) {
   );
 }
 
-const Container = styled.div`
-  display: inline-flex;
-  align-items: center;
+const Container = styled.span`
+  display: inline;
 
   padding: 0.5rem;
   border: 2px solid gray;
@@ -31,9 +30,4 @@ const Container = styled.div`
   color: gray;
 
   cursor: pointer;
-
-  svg {
-    font-size: 1.2rem;
-    margin-left: 0.2rem;
-  }
 `;

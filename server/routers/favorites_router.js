@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get("/info", get_favorites_info);
 router.post("/info", post_favorites_info);
-router.delete("/info/:favorite_id", delete_favorites_info);
+router.delete("/info/:post_id", delete_favorites_info);
 
 module.exports = router;

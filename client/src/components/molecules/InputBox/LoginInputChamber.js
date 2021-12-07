@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
-import LoginInput from "../../atoms/Input/LoginInput"
+import { LoginInput } from "../../../components";
+import { signIn, signUp, tempoSignIn } from "../../../apis/auth";
+import {
+  isLoginAction,
+  todayLoginAction,
+  isPointAction,
+} from "../../../store/actions/login";
 
-export default function LoginInputChamber({ 
+export default function LoginInputChamber({
   width = 30,
-  height = 3
-  }) {
+  height = 3,
+  setIsClicked,
+}) {
   // 로그인에 쓰이는 인풋 박스 모음집
   const [inputValue, setInputValue] = useState({ id: "", password: "" });
   const [isValid, setIsValid] = useState({ id: false, password: false });
 
-  const inputlist = ["id", "password"]
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const passwordInput = useRef();
+  const todayLogin = useSelector((state) => state.login.todayLogin);
+  const inputlist = [
+    { part: "id", type: "text", ref: null },
+    { part: "password", type: "password", ref: passwordInput },
+  ];
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -25,38 +41,82 @@ export default function LoginInputChamber({
     setIsValid({ ...newObj });
   };
 
-  const testHanlder = () => {
+  const loginHandler = () => {
     if (isValid.id && isValid.password) {
-      console.log("성공")
+      setIsClicked(true);
+      setTimeout(() => {
+        signIn(inputValue.id, inputValue.password)
+          .then((res) => {
+            dispatch(isLoginAction(true));
+            dispatch(isPointAction(res.data.data.kick_money));
+            if (todayLogin) dispatch(todayLoginAction(true));
+          })
+          .then(() => navigate("/", { replace: true }))
+          .catch(() => {
+            setIsClicked("");
+          });
+      }, 1000);
     }
-  }
-
-  console.log("inputValue:", inputValue, "isValid:", isValid);
+  };
+  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  const tempoAuth = () => {
+    signUp({ type: "guest" }).then((res) => {
+      if (res.data.message === "guest 회원가입") {
+        tempoSignIn(res.data.data.username)
+          .then((res) => {
+            dispatch(isLoginAction("guest"));
+            dispatch(isPointAction(res.data.data.kick_money));
+          })
+          .then(() => navigate("/", { replace: true }))
+          .catch((err) => console.log(err));
+      }
+    });
+  };
+  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  
   return (
     <Container width={width} height={height}>
       {inputlist.map((el, idx) => (
         <LoginInput
-          part={el}
+          part={el.part}
+          type={el.type}
           width={width}
           height={height}
           inputHandler={inputHandler}
           validHandler={validHandler}
+          loginHandler={loginHandler}
+          coordinate={el.ref}
+          passwordInput={passwordInput}
           key={idx}
         />
       ))}
-      <SubmitBtn width={width} height={height} onClick={testHanlder}>
+      <SubmitBtn
+        width={width}
+        height={height}
+        onClick={loginHandler}
+        isValid={isValid}
+      >
         로그인
       </SubmitBtn>
+      <Test onClick={tempoAuth}>이거 클릭하면 임시 로그인</Test>
     </Container>
   );
 }
 
+const Test = styled.div`
+margin-top:1rem;
+border:1px solid black;
+cursor:pointer;
+:hover{color:red;}
+`
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   width: ${({ width }) => `${width}rem`};
+  z-index: 2;
 `;
 
 const SubmitBtn = styled.button`
@@ -65,5 +125,23 @@ const SubmitBtn = styled.button`
   margin-top: 1rem;
   border-radius: ${({ height }) => `${height * 0.08}rem`};
   font-size: ${({ height }) => `${height * 0.7}rem`};
-  background-color: green;
+  color: ${({ theme }) => theme.color.back};
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+  background-color: ${({ theme }) => theme.color.main};
+  cursor: default;
+
+  ${({ isValid }) =>
+    isValid.id && isValid.password
+      ? `
+  cursor:pointer;
+  : hover {
+    opacity: 0.8;
+  }
+
+  :active {
+    opacity: 1;
+  }`
+      : `
+  opacity: 0.8
+  `}
 `;

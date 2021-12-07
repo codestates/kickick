@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import NavBtn from '../../atoms/Button/NavBtn'
+import { NavBtn } from "../../../components";
 
-export default function BtnChamber() {
+export default function BtnChamber({ setUpdate }) {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼들의 모음집
   const list = [
-    { pathname: "", context: "소개" },
-    { pathname: "", context: "공지" },
-    { pathname: "", context: "게시판" },
-    { pathname: "", context: "킥 배우기" },
+    { pathname: "intro", context: "소개", isSubNav: false },
+    { pathname: "notice", context: "공지", isSubNav: false },
+    { pathname: "board/학습", context: "게시판", isSubNav: true },
+    { pathname: "kickboard", context: "킥 배우기", isSubNav: true },
   ];
+
+  const [isHover, setIsHover] = useState("");
+
   return (
     <Container>
       {list.map((el) => (
@@ -19,6 +22,10 @@ export default function BtnChamber() {
           pathname={el.pathname}
           size="1.4rem"
           key={el.context}
+          isSubNav={el.isSubNav}
+          isHover={isHover}
+          setIsHover={setIsHover}
+          setUpdate={setUpdate}
         />
       ))}
     </Container>
@@ -26,6 +33,6 @@ export default function BtnChamber() {
 }
 
 const Container = styled.div`
-  display:flex;
+  display: flex;
   cursor: pointer;
 `;

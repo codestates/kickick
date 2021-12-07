@@ -2,12 +2,14 @@ const {
   users,
   posts,
   kicks,
-  comments,
   likes,
   posts_tags,
+  favorites,
   tags,
+  logs,
 } = require("../../models");
 const sequelize = require("sequelize");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // TODO 게시글 정보(단독) 요청 구현
@@ -49,16 +51,6 @@ module.exports = async (req, res) => {
           model: kicks,
           attributes: [["id", "kick_id"], "thumbnail"],
         },
-        // {
-        //   model: comments,
-        //   attributes: ["id", "content", "created_at"],
-        //   include: [
-        //     {
-        //       model: users,
-        //       attributes: ["username", "profile"],
-        //     },
-        //   ],
-        // },
         {
           model: posts_tags,
           attributes: ["tag_id"],
@@ -72,6 +64,7 @@ module.exports = async (req, res) => {
       ],
     });
     data = data.get({ plain: true });
+
     // 조회수 증가
     await posts.update(
       {
@@ -83,6 +76,56 @@ module.exports = async (req, res) => {
         },
       }
     );
+    // log 기록 토큰부터 있는지 확인
+    if (req.cookies.token) {
+      const token = req.cookies.token.access_token;
+      let decoded;
+      try {
+        decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+      } catch (err) {
+        console.log(err);
+        decoded = null;
+      }
+      // 토큰이 있고 만료되지 않았다면
+      if (decoded) {
+        const { username } = decoded;
+
+        // user_id 구함
+        let user_info = await users.findOne({
+          attributes: [["id", "user_id"]],
+          where: {
+            username: username,
+          },
+          include: [
+            {
+              model: favorites,
+              where: {
+                post_id: post_id,
+              },
+              required: false,
+            },
+          ],
+        });
+        user_info = user_info.get({ plain: true });
+
+        // 즐겨찾기를 눌렀으면
+        if (user_info.favorites.length !== 0) {
+          data.favorite = "true";
+        } else {
+          data.favorite = "false";
+        }
+        const user_id = user_info.user_id;
+
+        // logs에 추가
+        await logs.create({
+          user_id: user_id,
+          type: "get_post",
+          content: JSON.stringify({
+            post_id: post_id,
+          }),
+        });
+      }
+    }
 
     // likes 가공
     let likes_obj = {
@@ -99,7 +142,11 @@ module.exports = async (req, res) => {
     data.likes = likes_obj;
 
     // tags 가공
-    data.tags = data.posts_tags.map((tag) => tag.tag.content);
+    data.tags = data.posts_tags.map((tag) => {
+      tag.content = tag.tag.content;
+      delete tag.tag;
+      return tag;
+    });
     delete data.user_id;
     delete data.posts_tags;
   } catch (err) {

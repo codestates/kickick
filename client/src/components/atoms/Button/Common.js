@@ -1,31 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export default function Common({
-  size = "lg",
-  label = "글쓰기",
-  btnType = "register",
-  handleClick,
-  backgroundColor = "#0c0c42",
-  color = "#ffffff",
-}) {
-  let multiple = 1;
-  if (btnType === "register") multiple = 1.5;
-  else if (btnType === "write") multiple = 0.5;
-  else if (btnType === "bigger") multiple = 2.5;
-
-  let scale = 1 * multiple;
-  if (size === "sm") scale = 0.75 * multiple;
-  else if (size === "lg") scale = 1.5 * multiple;
-
+export default function Common({ label, type, handleClick }) {
   return (
-    <Container
-      onClick={handleClick}
-      scale={scale}
-      backgroundColor={backgroundColor}
-      color={color}
-      btnType={btnType}
-    >
+    <Container onClick={handleClick} type={type}>
       {label}
     </Container>
   );
@@ -36,15 +14,48 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: ${({ btnType }) => (btnType === "bigger" ? "10rem" : null)};
-  height: ${(props) => props.scale * 1}rem;
-  padding: ${(props) => props.scale * 0.1}rem ${(props) => props.scale * 0.3}rem;
-  border-radius: 10px;
-  background-color: ${(props) => props.backgroundColor};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #0c0c42;
 
-  font-size: ${(props) => props.scale * 0.4}rem;
   font-weight: bold;
-  color: ${(props) => props.color};
-  line-height: 0.9;
+  color: #ffffff;
   cursor: pointer;
+
+  ${({ type }) =>
+    type === "imgedit" &&
+    css`
+      width: 6rem;
+      background-color: white;
+      color: black;
+      border: 1px solid #ddd;
+      box-shadow: 1px 1px 5px #eee;
+      &:hover {
+        background-color: #ddd;
+      }
+    `}
+
+  ${({ type }) =>
+    type === "register" &&
+    css`
+      margin-left: auto;
+      width: 5rem;
+      height: 2.5rem;
+      &:hover {
+        background-color: gray;
+      }
+    `}
+
+  ${({ type }) =>
+    type === "bigger" &&
+    css`
+      width: 10rem;
+    `}
+
+    ${({ type }) =>
+    type === "confirm" &&
+    css`
+      height: 4rem;
+      background-color: skyblue;
+    `}
 `;
