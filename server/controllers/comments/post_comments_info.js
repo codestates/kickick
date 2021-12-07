@@ -70,17 +70,20 @@ module.exports = async (req, res) => {
     });
     post_info = post_info.get({ plain: true });
 
-    await alarms.create({
-      user_id: post_info.user.user_id,
-      type: "comments",
-      reference: JSON.stringify({
-        table: "post",
-        id: post_id,
-      }),
-      content: `${username}님이 내 게시글에 댓글을 달았습니다.`,
-    });
+    // 내가 쓴 게시글이면 알람 x
+    if (post_info.user.user_id !== user_id) {
+      // 작성자 id로 alarms 테이블에 추가 type comment
 
-    // 작성자 id로 alarms 테이블에 추가 type comment
+      await alarms.create({
+        user_id: post_info.user.user_id,
+        type: "comments",
+        reference: JSON.stringify({
+          table: "post",
+          id: post_id,
+        }),
+        content: `${username}님이 내 게시글에 댓글을 달았습니다.`,
+      });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
