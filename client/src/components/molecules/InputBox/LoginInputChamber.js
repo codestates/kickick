@@ -28,6 +28,8 @@ export default function LoginInputChamber({
     { part: "id", type: "text", ref: null },
     { part: "password", type: "password", ref: passwordInput },
   ];
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
+  const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=${process.env.REACT_APP_NAVER_STATE}`;
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -47,9 +49,11 @@ export default function LoginInputChamber({
       setTimeout(() => {
         signIn(inputValue.id, inputValue.password)
           .then((res) => {
-            dispatch(isLoginAction(true));
+            const loginData = { ...res.data.data };
+            delete loginData.kick_money;
+            dispatch(isLoginAction(loginData));
             dispatch(isPointAction(res.data.data.kick_money));
-            if (todayLogin) dispatch(todayLoginAction(true));
+            if (!todayLogin) dispatch(todayLoginAction(true));
           })
           .then(() => navigate("/", { replace: true }))
           .catch(() => {
@@ -99,6 +103,12 @@ export default function LoginInputChamber({
         로그인
       </SubmitBtn>
       <Test onClick={tempoAuth}>이거 클릭하면 임시 로그인</Test>
+      <a href={kakaoURL}>
+        <Test>카카오 로그인</Test>
+      </a>
+      <a href={naverURL}>
+        <Test>네이버 로그인</Test>
+      </a>
     </Container>
   );
 }

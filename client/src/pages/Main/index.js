@@ -1,8 +1,12 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Main() {
-  return <Container>hello world!</Container>;
+  return <Container>
+    hello world!
+    <Outlet />
+  </Container>;
 }
 
 const Container = styled.div`
