@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
     // TODO 인증 메일 보내기
 
     const CLIENT_URL = process.env.CLIENT_URL;
-    const redirect = `${CLIENT_URL}/signup/${req.body.username}`;
+    const redirect = `${CLIENT_URL}/mailauth/${req.body.username}`;
 
     let email_template;
     ejs.renderFile(
