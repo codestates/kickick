@@ -3,10 +3,10 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // TODO 즐겨찾기 삭제 구현
-  if (!req.params.favorite_id) {
+  if (!req.params.post_id) {
     return res
       .status(400)
-      .json({ data: null, message: "favorite_id가 누락되었습니다." });
+      .json({ data: null, message: "post_id가 누락되었습니다." });
   }
 
   if (!req.cookies.token) {
@@ -27,10 +27,10 @@ module.exports = async (req, res) => {
   }
 
   const { username } = decoded;
-  const favorite_id = req.params.favorite_id;
+  const post_id = req.params.post_id;
 
   try {
-    // 토큰으로 user_id, forvorite_id 로 즐겨찾기 정보 구함
+    // 토큰으로 user_id, post_id 로 즐겨찾기 정보 구함
     let user_info = await users.findOne({
       attributes: ["id"],
       where: {
@@ -39,28 +39,11 @@ module.exports = async (req, res) => {
     });
     const user_id = user_info.get({ plain: true }).id;
 
-    let favorite_info = await favorites.findOne({
-      attributes: ["user_id"],
-      where: {
-        id: favorite_id,
-      },
-    });
-    if (!favorite_info) {
-      return res
-        .status(400)
-        .json({ data: null, message: "존재하지않는 즐겨찾기입니다." });
-    }
-    favorite_info = favorite_info.get({ plain: true });
-
-    // 즐겨찾기의 user_id와 일치하는지 확인
-    if (user_id !== favorite_info.user_id) {
-      return res.status(401).json({ data: null, message: "권한이 없습니다." });
-    }
-
     // 즐겨찾기 삭제
     await favorites.destroy({
       where: {
-        id: favorite_id,
+        post_id: post_id,
+        user_id: user_id,
       },
     });
   } catch (err) {

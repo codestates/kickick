@@ -131,11 +131,13 @@ module.exports = async (req, res) => {
   // 포함검색 구현 query 상황에 따라 where_obj 분기
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
-  let regexp = fuzzy_searcher(req.query.post_name);
-  if (req.query.post_name)
+
+  if (req.query.post_name) {
+    let regexp = fuzzy_searcher(req.query.post_name);
     where_obj.post_name = {
       [Op.regexp]: regexp,
     };
+  }
   if (req.query.content)
     where_obj.content = {
       [Op.like]: `%${req.query.content}%`,
