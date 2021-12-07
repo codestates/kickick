@@ -34,15 +34,13 @@ module.exports = async (req, res) => {
     // type이 "guest"면 인증메일 보내야 함
     if (type === "guest") {
       if (!(req.body.email && req.body.username && req.body.password)) {
-        return res
-          .status(400)
-          .json({
-            data: null,
-            message: "email, username, password 중 누락된 항목이 있습니다.",
-          });
+        return res.status(400).json({
+          data: null,
+          message: "email, username, password 중 누락된 항목이 있습니다.",
+        });
       }
       const CLIENT_URL = process.env.CLIENT_URL;
-      const redirect = `${CLIENT_URL}/signup/${req.body.username}`;
+      const redirect = `${CLIENT_URL}/mailauth/${req.body.username}`;
 
       let email_template;
       ejs.renderFile(

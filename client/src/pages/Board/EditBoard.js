@@ -10,7 +10,7 @@ import {
   IconText,
 } from "../../components";
 
-import { categoryName } from "../../features";
+import { categoryName } from "../../commons/utils/categoryName";
 import {
   getCategory,
   getPostName,

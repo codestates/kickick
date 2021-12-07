@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
 import { resetTag } from "../../store/actions/postadd";
-import { categoryName } from "../../features";
+import { categoryName } from "../../commons/utils/categoryName";
 
 import {
   TotalSearch,

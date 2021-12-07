@@ -58,7 +58,7 @@ export default function NavBtn({
         mylocation={mylocation}
         pathname={pathname}
       >
-        {list.map((el) => (
+        {list.map((el, idx) => (
           <SubBtnContainer
             size={size}
             isSubNav={isSubNav}
@@ -66,7 +66,8 @@ export default function NavBtn({
             mylocation={mylocation}
             pathname={pathname}
             key={el.pathname}
-            onClick={() => moveHandler(`${pathname}/${el}`, true)}
+            key={idx}
+            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`, true)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />
             <SubTitle size={size}>{el}</SubTitle>
@@ -94,6 +95,10 @@ const MainBtn = styled.div`
   border-radius: ${({ size }) => `${size.replace("rem", "") / 2}rem`};
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
 `;
 
 const SubNav = styled.div`

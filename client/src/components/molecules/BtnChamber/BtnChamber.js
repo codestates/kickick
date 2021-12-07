@@ -8,7 +8,7 @@ export default function BtnChamber({ setUpdate }) {
   const list = [
     { pathname: "intro", context: "소개", isSubNav: false },
     { pathname: "notice", context: "공지", isSubNav: false },
-    { pathname: "board", context: "게시판", isSubNav: true },
+    { pathname: "board/학습", context: "게시판", isSubNav: true },
     { pathname: "kickboard", context: "킥 배우기", isSubNav: true },
   ];
 
