@@ -1,7 +1,8 @@
-const { users, logs } = require("../../models");
+const { users, logs, alarms } = require("../../models");
 const sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const get_alarms_info = require("../alarms/get_alarms_info");
 
 module.exports = async (req, res) => {
   // TODO 로그인 로직 구현
@@ -67,6 +68,11 @@ module.exports = async (req, res) => {
           username: username,
         },
       });
+      if (!data) {
+        return res
+          .status(401)
+          .json({ data: null, message: "일치하는 닉네임이 없습니다." });
+      }
       data = data.get({ plain: true });
       const user_id = data.user_id;
 
@@ -124,6 +130,12 @@ module.exports = async (req, res) => {
           user_id: user_id,
           type: "kick_money",
           content: "100 킥머니를 받았습니다.",
+        });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: "로그인으로 100 킥머니를 받았습니다.",
         });
       }
     } catch (err) {
@@ -232,6 +244,12 @@ module.exports = async (req, res) => {
           type: "kick_money",
           content: "100 킥머니를 받았습니다.",
         });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: "로그인으로 100 킥머니를 받았습니다.",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -248,7 +266,7 @@ module.exports = async (req, res) => {
         expiresIn: "3d",
       }
     );
-    delete data.id;
+    delete data.user_id;
 
     return res
       .status(200)
