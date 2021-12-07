@@ -14,6 +14,6 @@ export default function PostStaticsList() {
 }
 const Container = styled.div`
   display: flex;
-  border-radius: 0.1rem;
-  box-shadow: 1px 1px 5px #eeeeee;
+  border-radius: 0.5rem;
+  border: 1px solid #d8d8d8;
 `;

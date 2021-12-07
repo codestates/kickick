@@ -1,10 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-import Pagination from "../../atoms/Pagination";
-import Common from "../../atoms/Button/Common";
-import PostList from "../../organisms/PostList";
+import { Pagination, Common, PostList } from "../../../components";
 
 export default function BoardBottom({
   freeCategory,

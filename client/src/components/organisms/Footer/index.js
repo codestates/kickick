@@ -64,7 +64,6 @@ const TreeImg = styled.img`
   position: relative;
   top: 0.01rem;
   width: 100vw;
-  z-index: -1;
   pointer-events: none;
 `;
 

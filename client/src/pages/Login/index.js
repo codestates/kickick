@@ -37,18 +37,20 @@ const Title = styled.p`
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
   color: ${({ theme }) => theme.color.font};
   pointer-events: none;
+  z-index: 2;
 `;
 
 const Fail = styled.p`
   position: absolute;
   top: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 9}rem`};
   left: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 8.5}rem`};
-  display:${({ isClicked }) => isClicked === "" ? "default":"none"};
+  display: ${({ isClicked }) => (isClicked === "" ? "default" : "none")};
   border-radius: 40%;
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 5}rem`};
   font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
   color: red;
   transform: rotate(-28deg);
+  z-index: 2;
 `;
 
 const Frame = styled.div`
@@ -86,13 +88,14 @@ const Frame = styled.div`
 const BackBoard = styled.img`
   position: absolute;
   width: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 50}rem`};
-  z-index: -1;
+  /* z-index: -1; */
 `;
 
 const Hand = styled.img`
   position: absolute;
   width: ${({ theme }) =>
-    `${theme.fontSizes.base.split("rem")[0] * 20}rem`};
+  `${theme.fontSizes.base.split("rem")[0] * 20}rem`};
+    z-index:2;
 `;
 
 const LeftHand = styled(Hand)`

@@ -1,7 +1,7 @@
-import BoardTodayKicks from "./";
+import BoardTodayKicks from ".";
 
 export default {
-  title: "Atoms/BoardTodayKicks",
+  title: "Organisms/BoardTodayKicks",
   component: BoardTodayKicks,
 };
 

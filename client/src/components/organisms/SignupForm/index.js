@@ -1,13 +1,15 @@
 
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SignupInputBox, DatePicker, ConditionChamber } from "../../../components";
-import { signUp } from "../../../apis/auth"
+import { signUp, tempoSignUp } from "../../../apis/auth";
 
 export default function SignupForm() {
   const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.login.isLogin);
   const width = 30;
   const height = 3;
   const inputRef1 = useRef();
@@ -159,18 +161,25 @@ export default function SignupForm() {
       if(Object.values(conditionCheck)[l]) countCondition--;
     }
     if (
+      isLogin !=="guest" &&
       countCondition === 0 &&
       countIsvalid === ArrInfo.length &&
       Object.keys(inputValue).join("").includes("birthday")
     ) {
       signUp(inputValue)
-        .then((res) => res.data.data)
+        .then(() => navigate("/", { replace: true }));
+    }
+    if (
+      isLogin === "guest" &&
+      countCondition === 0 &&
+      countIsvalid === ArrInfo.length &&
+      Object.keys(inputValue).join("").includes("birthday")
+    ) {
+      tempoSignUp(inputValue)
         .then(() => navigate("/", { replace: true }));
     }
   }
   
-
-  console.log("inputValue:", inputValue);
   return (
     <Container>
       {ArrInfo.map((el, idx) => (

@@ -23,6 +23,8 @@ import {
   getMyCommentAction,
 } from "../../store/actions/mypage";
 
+import { useMoveTop } from "../../hooks/useMoveTop";
+
 import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";
 import purchaselog from "../../assets/images/purchaselog.png";
@@ -37,23 +39,10 @@ const pageList = [
 ];
 
 export default function MyPage() {
-  const dispatch = useDispatch();
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
 
-  useEffect(() => {
-    getFavorites({})
-      .then((data) => dispatch(getFavoritesAction(data)))
-      .catch((err) => console.log(err));
-
-    getPostsList({})
-      .then((data) => dispatch(getMyPostAction(data)))
-      .catch((err) => console.log(err));
-
-    getComments({})
-      .then((data) => dispatch(getMyCommentAction(data)))
-      .catch((err) => console.log(err));
-  }, [dispatch]);
+  useMoveTop();
 
   return (
     <>
@@ -71,7 +60,7 @@ export default function MyPage() {
 
 export function Home() {
   return (
-    <>
+    <HomeWrapper>
       <ListContainer>
         <Subtitle>
           <img src={profileinfoicon} alt="" />
@@ -94,7 +83,7 @@ export function Home() {
         </Subtitle>
         <TabBox category="구매목록" />
       </ListContainer>
-    </>
+    </HomeWrapper>
   );
 }
 
@@ -107,12 +96,30 @@ export function Attendance() {
 }
 
 export function Favorites() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getFavorites({})
+      .then((data) => dispatch(getFavoritesAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagefavorites" />;
 }
 export function MyPost() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getPostsList({})
+      .then((data) => dispatch(getMyPostAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagemypost" />;
 }
 export function MyComment() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getComments({})
+      .then((data) => dispatch(getMyCommentAction(data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
   return <PostList type="mypagemycomment" />;
 }
 
@@ -177,12 +184,20 @@ const SubContainer = styled.div`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 4rem;
+`;
+
+const HomeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   row-gap: 3rem;
 `;
 
 const Subtitle = styled.div`
   display: flex;
   align-items: center;
+
   img {
     width: 3rem;
     height: 3rem;
