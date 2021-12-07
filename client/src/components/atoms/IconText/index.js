@@ -20,6 +20,7 @@ import {
   FaRegHeart,
   FaDollarSign,
   FaRegWindowClose,
+  FaBullhorn,
 } from "react-icons/fa";
 
 import { ImGift } from "react-icons/im";
@@ -46,6 +47,7 @@ export const iconList = [
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
   { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
+  { icon: <FaBullhorn />, label: "공지", category: "공지" },
 ];
 
 export default function IconText({ isActive, label, handleClick, board }) {
@@ -131,14 +133,11 @@ const Container = styled.div`
     ${({ category }) =>
     category === "이벤트" &&
     css`
-      font-size: 1.2rem;
-      color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
-      padding: 0 1rem;
-      cursor: pointer;
+      font-size: 0.7rem;
 
       svg {
         margin-right: 1rem;
-        font-size: 1.5rem;
+        font-size: 0.7rem;
       }
     `}
 `;

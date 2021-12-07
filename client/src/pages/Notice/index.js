@@ -9,6 +9,7 @@ import {
   NewsPost,
   Align,
   BoardTop,
+  IconText,
 } from "../../components";
 
 import event_sample from "../../assets/images/event_sample_landscape.png";
@@ -27,7 +28,9 @@ export default function Notice() {
       <BoardTop />
       <Container>
         <NavContainer>
-          <h3>공지</h3>
+          <h3>
+            <IconText category="공지" label="공지" />
+          </h3>
           <NavLink to="/notice/news">뉴스</NavLink>
           <NavLink to="/notice/event">이벤트</NavLink>
         </NavContainer>
