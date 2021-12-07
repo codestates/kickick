@@ -14,6 +14,7 @@ import {
   BoardTop,
   BoardTodayKicks,
 } from "../../components";
+import BoardSkeleton from "./BoardSkeleton";
 
 export default function Board({ setUpdate, update }) {
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
@@ -50,9 +51,9 @@ export default function Board({ setUpdate, update }) {
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
-  }, [update]);
-  if (list.indexOf(category) === -1) return "";
-  if (loading) return "";
+  }, [update, loading]);
+  if (list.indexOf(category) === -1) return <BoardSkeleton />;
+  if (loading) return <BoardSkeleton />;
   return (
     <>
       <BoardTop />
@@ -62,6 +63,7 @@ export default function Board({ setUpdate, update }) {
           <TotalSearch
             category={categoryName(category)}
             setSelectPage={setSelectPage}
+            setLoading={setLoading}
           />
           <BoardBottom
             category={categoryName(category)}

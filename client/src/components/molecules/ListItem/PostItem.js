@@ -48,6 +48,11 @@ export function Freepost({ data }) {
       </div>
       <div>
         <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+        {data.comments.length >= 1 && (
+          <span
+            style={{ fontSize: "0.6rem" }}
+          >{`[${data.comments.length}]`}</span>
+        )}
       </div>
       <div>{data.user.username}</div>
       <div>{data.created_at}</div>
