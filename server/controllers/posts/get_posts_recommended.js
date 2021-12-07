@@ -103,7 +103,7 @@ module.exports = async (req, res) => {
 
       // tag_id_obj 에서 제일 높은 수치를 가진 태그로 post 검색
       // 그 값은 obj 에서 지움
-      // 가져온 게 6개가 될 때까지 반복? 여기 수정 필요
+      //! 가져온 게 6개가 될 때까지 반복? 여기 수정 필요
 
       data = log_info;
     } catch (err) {
@@ -120,7 +120,7 @@ module.exports = async (req, res) => {
   // 조회수 기준으로 sort
 
   const today = new Date();
-  const prev_3days = today.setDate(today.getDate() - 3);
+  const prev_3days = new Date(today - 3600000 * 24 * 3);
 
   let data;
   try {

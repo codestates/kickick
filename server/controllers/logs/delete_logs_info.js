@@ -28,10 +28,11 @@ module.exports = async (req, res) => {
 
   const { type } = decoded;
   const log_id = req.params.log_id;
+  console.log(decoded);
 
   // 관리자가 아니면 권한 x
   if (type !== "admin") {
-    return res.status(401).json({ data: err, message: "권한이 없습니다." });
+    return res.status(401).json({ data: null, message: "권한이 없습니다." });
   }
 
   try {
