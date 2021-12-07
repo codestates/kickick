@@ -6,7 +6,7 @@ import api from "./";
 export const duplicationCheck = (email, password) =>
   api.post(`/auth/duplication-check`, { email, password });
   /**
- *
+ *  @param {boolean} todayLogin
  **/
 export const nowImLogin = (todayLogin) =>
   api.get(`/users/info?todayLogin=${todayLogin}`);
@@ -19,6 +19,11 @@ export const signIn = (username, password) =>
   /**
  *  @param {string} username
  **/
+export const tempoSignIn = (username) =>
+  api.post(`/auth/signin`, { username, type: "guest" });
+  /**
+ *  @param {string} username
+ **/
 export const mailCheck = (username) =>
   api.post(`/auth/email`, { username });
   /**
@@ -26,6 +31,11 @@ export const mailCheck = (username) =>
 **/
 export const signUp = ( data ) =>
   api.post(`/users/info`, data);
+  /**
+*  @param {object} data
+**/
+export const tempoSignUp = ( data ) =>
+  api.put(`/users/info`, data);
 /**
  *
  **/

@@ -68,6 +68,9 @@ const TypeBtn = styled(TextBox)`
 `;
 
 const BtnContext = styled(TextBox)`
+  position: absolute;
+  top: 3rem;
+  left: 8rem;
   width: 40rem;
   height: 40rem;
   cursor: pointer;
@@ -82,15 +85,10 @@ const BackImgContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 79vh;
-  z-index: -1;
+  z-index: 0;
 `;
 
 const BackImg = styled.img`
   width: ${({ size }) => `${size}rem`};
   height: ${({ size }) => `${size}rem`};
-
-  :hover {
-    width: ${({ size }) => `${size + 1}rem`};
-    height: ${({ size }) => `${size + 1}rem`};
-  }
 `;
