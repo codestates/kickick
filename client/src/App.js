@@ -18,11 +18,13 @@ import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
+import { getUserInfo } from "./apis/users";
 import {
   isLoginAction,
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
+import { userInfoAction } from "./store/actions/login/userInfo";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -57,6 +59,11 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
 
+  useEffect(() => {
+    getUserInfo()
+      .then((data) => dispatch(userInfoAction(data.data.data)))
+      .catch((err) => console.log(err.response));
+  }, []);
   return (
     <ThemeProvider theme={theme[0]}>
       <Router>

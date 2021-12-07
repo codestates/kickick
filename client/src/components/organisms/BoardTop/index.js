@@ -28,7 +28,7 @@ export default function BoardTop({ list, category }) {
   return (
     // <Container image={spacebackground}>
     <Container>
-      <img className="cloud" src={cloud1} alt="" />
+      <img className="cloud" src={cloud10} alt="" />
       <img className="cloud" src={cloud2} alt="" />
       <img className="cloud" src={cloud3} alt="" />
       <img className="cloud" src={cloud4} alt="" />
