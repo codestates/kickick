@@ -16,14 +16,19 @@ const list = [
   { label: "economy", src: economyplanet, category: "경제", color: "#DE5C8A" },
   { label: "travel", src: travelplanet, category: "여행", color: "#D04E3E" },
   { label: "art", src: artplanet, category: "예술", color: "#EED548" },
+  { label: "", src: "", category: "default", color: "#000000" },
 ];
 
-export default function BoardTop({ category }) {
+export default function BoardTop({ category = "default" }) {
   const { src, label, color } = list.find((el) => el.category === category);
   return (
     <Container image={spacebackground} color={color}>
-      <img src={src} alt="" />
-      <span>{label}</span>
+      {category !== "default" && (
+        <>
+          <img src={src} alt="" />
+          <span>{label}</span>
+        </>
+      )}
     </Container>
   );
 }

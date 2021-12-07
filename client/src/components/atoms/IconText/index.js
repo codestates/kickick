@@ -131,14 +131,14 @@ const Container = styled.div`
     ${({ category }) =>
     category === "이벤트" &&
     css`
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
       padding: 0 1rem;
       cursor: pointer;
 
       svg {
         margin-right: 1rem;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
       }
     `}
 `;

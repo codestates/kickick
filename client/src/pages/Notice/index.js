@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams, Outlet } from "react-router";
+import { NavLink } from "react-router-dom";
 
-import { CardBox, EventPost, Align } from "../../components";
+import {
+  CardBox,
+  EventPost,
+  NewsPost,
+  Align,
+  BoardTop,
+} from "../../components";
 
 import event_sample from "../../assets/images/event_sample_landscape.png";
 
@@ -16,31 +23,47 @@ export default function Notice() {
   const { component } = noticeList.find((el) => el.category === category);
 
   return (
-    <Container>
-      <Outlet />
-      {component}
-    </Container>
+    <>
+      <BoardTop />
+      <Container>
+        <NavContainer>
+          <h3>공지</h3>
+          <NavLink to="/notice/news">뉴스</NavLink>
+          <NavLink to="/notice/event">이벤트</NavLink>
+        </NavContainer>
+        <ContentContainer>
+          <Outlet />
+          {component}
+        </ContentContainer>
+      </Container>
+    </>
   );
 }
 
 export function News() {
-  return <div>d</div>;
+  return (
+    <NewsContainer>
+      <CardBox>
+        <NewsPost />
+      </CardBox>
+    </NewsContainer>
+  );
 }
 
 export function Event() {
-  const [highlight, setHighlight] = useState("진행중인 이벤트");
-  const handleAlign = (event) => {
-    const label = event.target.innerText;
-    setHighlight(label);
-  };
+  // const [highlight, setHighlight] = useState("진행중인 이벤트");
+  // const handleAlign = (event) => {
+  //   const label = event.target.innerText;
+  //   setHighlight(label);
+  // };
 
   return (
     <EventContainer>
-      <Align
+      {/* <Align
         category="이벤트"
         highlight={highlight}
         handleAlign={handleAlign}
-      />
+      /> */}
       <CardBox>
         <EventPost />
       </CardBox>
@@ -67,8 +90,10 @@ export function NoticeDetail() {
 }
 
 const Container = styled.div`
+  display: flex;
   width: 64rem;
-  margin: 15rem auto;
+  margin: 3rem auto;
+  gap: 1rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
     width: 48rem;
@@ -78,11 +103,47 @@ const Container = styled.div`
   }
 `;
 
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 48rem;
+`;
+
+const NavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 7rem;
+  height: 10rem;
+  gap: 1.5rem;
+
+  padding: 1rem;
+
+  h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: gray;
+  }
+
+  a {
+    font-size: 1.2rem;
+  }
+
+  .active {
+    color: purple;
+    font-weight: bold;
+  }
+`;
+
 const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  margin: 10rem 0;
+`;
+
+const NewsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const NoticeDetailContainer = styled.div`
@@ -90,7 +151,6 @@ const NoticeDetailContainer = styled.div`
   flex-direction: column;
   gap: 3rem;
   width: 48rem;
-  margin: 0 auto;
 
   h2 {
     font-size: 2rem;
@@ -112,7 +172,6 @@ const NoticeDetailContainer = styled.div`
 const NoticeDetailInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 `;
 
 const NoticeDetailContent = styled.div`

@@ -36,7 +36,7 @@ const Container = styled.div`
 
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 0.3s linear;
+  transition: box-shadow 0.25s ease-in;
 
   &:hover {
     box-shadow: none;
