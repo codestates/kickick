@@ -36,6 +36,7 @@ const Container = styled.aside`
 
   @media ${({ theme }) => theme.device.notebookS} {
     flex-direction: row;
+    width: 100%;
   }
 `;
 
@@ -48,10 +49,12 @@ const ProfileContainer = styled.div`
 
   padding: 2rem;
 
-  .username {
-    strong {
-      font-size: 1.25rem;
-    }
+  strong {
+    font-size: 1.25rem;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: row;
   }
 `;
 const StatusContainer = styled.div`
@@ -68,6 +71,7 @@ const StatusContainer = styled.div`
   @media ${({ theme }) => theme.device.notebookS} {
     border-left: 2px dashed #d8d8d8;
     border-top: none;
+    flex-direction: row;
   }
 `;
 

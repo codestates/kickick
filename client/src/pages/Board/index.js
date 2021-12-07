@@ -53,7 +53,7 @@ export default function Board() {
   if (loading) return "";
   return (
     <>
-      <BoardTop />
+      <BoardTop category={category} />
       <Container>
         <BoardTodayKicks />
         <BoardContainer>

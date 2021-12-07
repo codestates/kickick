@@ -15,7 +15,7 @@ import EditBoard from "./pages/EditBoard";
 import DetailBoard from "./pages/DetailBoard";
 import MyEditBoard from "./pages/MyEditBoard";
 import MyPage from "./pages/MyPage";
-import Notice from "./pages/Notice";
+import Notice, { NoticeDetail } from "./pages/Notice";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -62,7 +62,9 @@ export default function App() {
               element={<DetailBoard />}
             />
             <Route path="mypage/:category" element={<MyPage />} />
-            <Route path="notice/:category" element={<Notice />} />
+            <Route path="notice/:category" element={<Notice />}>
+              <Route path=":notice_id" element={<NoticeDetail />} />
+            </Route>
           </Routes>
           <Footer />
         </Container>

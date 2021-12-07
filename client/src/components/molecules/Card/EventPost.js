@@ -1,15 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-import kakaologo from "../../../assets/images/kakaologo.png";
+import { useNavigate } from "react-router";
+
+import event_sample from "../../../assets/images/event_sample.png";
 
 export default function EventPost() {
+  const navigate = useNavigate();
+
   return (
-    <Container>
-      <img src={kakaologo} alt="" />
+    /* 여기에 notice_id */
+    <Container onClick={() => navigate(`${2}`)}>
+      <img src={event_sample} alt="" />
       <Description>
         <h3 className="event_name">오늘 가입하시면 전원 킥머니 300 증정</h3>
-        <span>2022-12-05</span>
+        <div className="event_info">
+          <span>2022-12-05</span>
+          <span>운영자 석</span>
+        </div>
       </Description>
     </Container>
   );
@@ -24,7 +32,7 @@ const Container = styled.div`
   margin: 0.75rem;
 
   border-radius: 0.2rem;
-  box-shadow: 1px 1px 7px #dddddd;
+  box-shadow: 5px 5px 5px #ddd;
 
   overflow: hidden;
   cursor: pointer;
@@ -38,10 +46,17 @@ const Container = styled.div`
     background-color: yellow;
   }
 
-  h3 {
+  .event_name {
     font-size: 1rem;
     margin-bottom: 2rem;
     line-height: 1.5;
+  }
+
+  .event_info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: gray;
   }
 
   @media ${({ theme }) => theme.device.tablet} {

@@ -169,6 +169,7 @@ const Container = styled.div`
   @media ${({ theme }) => theme.device.notebookS} {
     width: 100%;
     flex-direction: column;
+    padding: 1rem;
   }
 `;
 

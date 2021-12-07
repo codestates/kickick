@@ -135,13 +135,10 @@ const Container = styled.div`
       color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
       padding: 0 1rem;
       cursor: pointer;
+
       svg {
         margin-right: 1rem;
         font-size: 1.8rem;
-      }
-
-      & + & {
-        border-left: 1px solid #dddddd;
       }
     `}
 `;

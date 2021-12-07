@@ -3,11 +3,7 @@ import styled from "styled-components";
 
 import IconText, { iconList } from "../../atoms/IconText";
 
-export default function PostAlign({
-  highlight,
-  handleAlign,
-  category = "정렬",
-}) {
+export default function Align({ highlight, handleAlign, category = "정렬" }) {
   return (
     <Container>
       {iconList
