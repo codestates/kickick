@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
 import { search, delSearch } from "../../../store/actions/postadd";
-import { PostAlign, Select, SearchInput, Tag } from "../../../components";
+import { Align, Select, SearchInput, Tag } from "../../../components";
 
 export default function TotalSearch({ category, setSelectPage }) {
   const state = useSelector((state) => state.board);
@@ -145,7 +145,7 @@ export default function TotalSearch({ category, setSelectPage }) {
   return (
     <>
       <Container>
-        <PostAlign highlight={highlight} handleAlign={handleAlign} />
+        <Align highlight={highlight} handleAlign={handleAlign} />
         <SearchContainer>
           <Select
             icon={icon}

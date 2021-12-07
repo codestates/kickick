@@ -28,7 +28,7 @@ export default function MyPageAside() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;

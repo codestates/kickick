@@ -22,7 +22,8 @@ export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
 export { default as AlarmBtn } from "./molecules/Dropdown/AlarmBtn";
 export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as PostStatics } from "./molecules/Card/PostStatics";
-export { default as PostAlign } from "./molecules/CheckBox/PostAlign";
+export { default as EventPost } from "./molecules/Card/EventPost";
+export { default as Align } from "./molecules/Align";
 export { default as InputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as SignupInputBox } from "./molecules/InputBox/SignupInputBox";
 export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInput";
@@ -39,7 +40,7 @@ export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamb
 export { default as Nav } from "./organisms/Nav";
 export { default as Footer } from "./organisms/Footer";
 export { default as InputForm } from "./organisms/SignupForm";
-export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
+export { default as CardBox } from "./organisms/CardBox";
 export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList";
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardBottom } from "./organisms/BoardBottom";

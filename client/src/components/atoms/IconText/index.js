@@ -19,7 +19,10 @@ import {
   FaRegClipboard,
   FaRegHeart,
   FaDollarSign,
+  FaRegWindowClose,
 } from "react-icons/fa";
+
+import { ImGift } from "react-icons/im";
 
 export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
@@ -40,6 +43,9 @@ export const iconList = [
   { icon: <FaRegComment />, label: "내가 쓴 댓글", category: "마이페이지" },
   { icon: <FaRegHeart />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
+  { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
 ];
 
 export default function IconText({ isActive, label, handleClick, board }) {
@@ -75,6 +81,7 @@ const Container = styled.div`
   ${({ category }) =>
     category === "정렬" &&
     css`
+      margin: 0 0.5rem;
       border-bottom: 3px solid
         ${({ isActive, color }) => (isActive ? color : "transparent")};
       font-size: 1.3rem;
@@ -91,6 +98,7 @@ const Container = styled.div`
     css`
       font-size: 1rem;
       cursor: pointer;
+
       svg {
         font-size: 1.1rem;
       }
@@ -116,6 +124,24 @@ const Container = styled.div`
         margin-right: 1rem;
         font-size: 1.5rem;
         color: #555;
+      }
+    `}
+
+
+    ${({ category }) =>
+    category === "이벤트" &&
+    css`
+      font-size: 1.5rem;
+      color: ${({ isActive, color }) => (isActive ? color : "#cccccc")};
+      padding: 0 1rem;
+      cursor: pointer;
+      svg {
+        margin-right: 1rem;
+        font-size: 1.8rem;
+      }
+
+      & + & {
+        border-left: 1px solid #dddddd;
       }
     `}
 `;
