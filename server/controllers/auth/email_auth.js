@@ -1,4 +1,5 @@
 const { users } = require("../../models");
+const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO 이메일 인증 구현
@@ -10,6 +11,7 @@ module.exports = async (req, res) => {
     await users.update(
       {
         type: "general",
+        kick_money: sequelize.literal(`kick_money + 1000`),
       },
       {
         where: {
