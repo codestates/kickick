@@ -51,6 +51,7 @@ export default function Board({ setUpdate, update }) {
         .catch((err) => console.log(err.response));
     }
   }, [update]);
+  if (list.indexOf(category) === -1) return "";
   if (loading) return "";
   return (
     <>

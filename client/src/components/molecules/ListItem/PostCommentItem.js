@@ -2,16 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 import Profile from "../../atoms/Img/Profile";
+import { dateConverter } from "../../../commons/utils/dateConverter";
 
-export default function PostCommentItem() {
+export default function PostCommentItem({ item }) {
   return (
     <Container scale={1.5}>
       <UserInfoContainer scale={1.5}>
         <Profile type="post" />
-        <div className="username">어쩔</div>
-        <div className="datetime">46분전</div>
+        <div className="username">{item.user.username}</div>
+        <div className="datetime">{dateConverter(item.created_at)}</div>
       </UserInfoContainer>
-      <div className="comment">삭제되었습니다.... 진짜로</div>
+      <div className="comment">{item.content}</div>
     </Container>
   );
 }

@@ -59,10 +59,7 @@ export default function App() {
               path="board/:category"
               element={<Board setUpdate={setUpdate} update={update} />}
             />
-            <Route
-              path="detailboard/:category/:post_id"
-              element={<DetailBoard />}
-            />
+            <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />

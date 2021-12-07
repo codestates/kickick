@@ -48,7 +48,7 @@ export default function MyEditBoard() {
       })
       .then(() => {
         createTags(post_id, [category, ...tagArr])
-          .then(() => navigate(`/detailboard/${category}/${post_id}`))
+          .then(() => navigate(`/detailboard/${post_id}`))
           .catch((err) => console.log(err.response));
       })
       .catch((err) => console.log(err.response));

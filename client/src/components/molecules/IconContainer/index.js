@@ -10,18 +10,23 @@ export default function IconContainer() {
   const [heart, setHeart] = useState(false);
   const params = useParams();
   const state = useSelector((state) => state.board);
+  const postInfo = useSelector((stateInfo) => stateInfo.postInfo);
+  const category = () => {
+    let idx = postInfo.data.category.indexOf("_");
+    return postInfo.data.category.slice(0, idx);
+  };
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = (label) => {
     if (label === "arrow") {
       if (!state.data) {
-        navigate(`/board/${params.category}`);
+        navigate(`/board/${category()}`);
       } else {
         dispatch(goBack(true));
-        navigate(`/board/${params.category}`);
+        navigate(`/board/${category()}`);
       }
     } else if (label === "edit") {
-      navigate(`/myeditboard/${params.category}/${params.post_id}`);
+      navigate(`/myeditboard/${category()}/${params.post_id}`);
     } else if (label === "heart") {
       setHeart(true);
     } else if (label === "red") {

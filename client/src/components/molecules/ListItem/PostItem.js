@@ -47,9 +47,7 @@ export function Freepost({ data }) {
               .map((tag) => <span> # {tag}</span>)}
       </div>
       <div>
-        <Link to={`/detailboard/${category}/${data.post_id}`}>
-          {data.post_name}
-        </Link>
+        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
       </div>
       <div>{data.user.username}</div>
       <div>{data.created_at}</div>
