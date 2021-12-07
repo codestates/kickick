@@ -105,18 +105,67 @@ module.exports = async (req, res) => {
       },
     });
     data = data.get({ plain: true });
+    const user_id = data.user_id;
 
     // today_login false면 로그에 기록
     if (req.query.today_login === "false") {
-      // await logs.create({
-      //   user_id: data.user_id,
-      //   type: "signin",
-      //   content: `${data.username}님이 로그인 하였습니다.`,
-      // });
-      // 수정 예정
-      // log 살펴보고 오늘 로그인한 기록이 있는지 확인
-      // 그에 따라 로그에 기록할지말지 결정
-      // 로그에 기록하게 되면 킥머니도 지급해야함
+      // 로그 정보중 제일 최근 로그인 기록 가져옴
+      let log_info = await logs.findAll({
+        where: {
+          user_id: user_id,
+          type: "signin",
+        },
+        order: [["id", "DESC"]],
+        offset: 0,
+        limit: 1,
+      });
+      let log_date;
+      if (log_info.length !== 0) {
+        log_info = log_info[0].get({ plain: true });
+        log_date = log_info.created_at;
+      }
+
+      const today = new Date();
+      // 생성날짜가 오늘이랑 다르면
+      if (
+        !log_date ||
+        !(
+          log_date.getDate() === today.getDate() &&
+          log_date.getMonth() === today.getMonth() &&
+          log_date.getFullYear() === today.getFullYear()
+        )
+      ) {
+        // 로그인 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "signin",
+          content: `${username}님이 로그인 하였습니다.`,
+        });
+        // 킥머니 지급
+        await users.update(
+          {
+            kick_money: sequelize.literal(`kick_money + 100`),
+          },
+          {
+            where: {
+              username: username,
+            },
+          }
+        );
+        data.kick_money += 100;
+        // 킥머니 지급 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "kick_money",
+          content: "100 킥머니를 받았습니다.",
+        });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: "로그인으로 100 킥머니를 받았습니다.",
+        });
+      }
     }
   } catch (err) {
     console.log(err);
