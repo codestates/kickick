@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import KickBoard from "./pages/KickBoard";
-import { Nav, Footer } from "./components";
+import { Nav, Footer, PageUp } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -61,6 +61,7 @@ export default function App() {
     <ThemeProvider theme={theme[0]}>
       <Router>
         <Container>
+          <PageUp />
           {themeMode === "light" ? (
             <LightChanger themeMode={themeMode}>
               <DarkBox />
