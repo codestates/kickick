@@ -54,14 +54,14 @@ export default function NavBtn({
         mylocation={mylocation}
         pathname={pathname}
       >
-        {list.map((el) => (
+        {list.map((el, idx) => (
           <SubBtnContainer
             size={size}
             isSubNav={isSubNav}
             isHover={isHover}
             mylocation={mylocation}
             pathname={pathname}
-            key={el.pathname}
+            key={idx}
             onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />

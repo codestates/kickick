@@ -78,7 +78,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignupSelect />} />
             <Route path="/signup/:type" element={<Signup />} />
-            <Route path="/signup/:username" element={<MailAuth />} />
+            <Route path="/mailauth/:username" element={<MailAuth />} />
             <Route path="editboard/:category" element={<EditBoard />} />
             <Route
               path="myeditboard/:category/:post_id"

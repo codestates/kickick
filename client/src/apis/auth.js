@@ -31,6 +31,11 @@ export const mailCheck = (username) =>
 **/
 export const signUp = ( data ) =>
   api.post(`/users/info`, data);
+  /**
+*  @param {object} data
+**/
+export const tempoSignUp = ( data ) =>
+  api.put(`/users/info`, data);
 /**
  *
  **/
