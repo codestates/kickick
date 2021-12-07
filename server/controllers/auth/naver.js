@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   if (!(req.body.code && req.body.state)) {
     return res.status(400).json({
       data: null,
-      message: "잘못된 요청입니다.",
+      message: "code, state 중 누락된 항목이 있습니다.",
     });
   }
 

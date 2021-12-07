@@ -3,15 +3,16 @@ const { users } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
-  // TODO kakao Oauth 구현
-  console.log("서버에 요청왔음");
+  // TODO kakao 소셜로그인 구현
   // req.body.code 에 담겨서 옴
   // 환경변수 받아옴
   const KAKAO_CLIENT_ID = process.env.KAKAO_CLIENT_ID;
   const KAKAO_REDIRECT_URI = process.env.KAKAO_REDIRECT_URI;
 
   if (!req.body.code) {
-    return res.status(400).json({ data: null, message: "잘못된 요청입니다." });
+    return res
+      .status(400)
+      .json({ data: null, message: "code가 누락되었습니다." });
   }
   // url 설정
   const url = new URL("https://kauth.kakao.com/oauth/token");
