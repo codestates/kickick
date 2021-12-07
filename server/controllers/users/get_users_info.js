@@ -159,6 +159,12 @@ module.exports = async (req, res) => {
           type: "kick_money",
           content: "100 킥머니를 받았습니다.",
         });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: "로그인으로 100 킥머니를 받았습니다.",
+        });
       }
     }
   } catch (err) {
