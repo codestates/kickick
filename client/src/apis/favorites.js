@@ -13,3 +13,17 @@ export const getFavorites = (user_id, limit, page_num) => {
 
   return api.get(`/favorites/info${query.slice(0, -1)}`);
 };
+
+/**
+ * @param {number} post_id
+ **/
+export const createFavorites = (post_id) => {
+  return api.post(`favorites/info`, { post_id });
+};
+
+/**
+ * @param {number} favorites_id
+ **/
+export const delFavorites = (favorite_id) => {
+  return api.delete(`favorites/info/${favorite_id}`);
+};

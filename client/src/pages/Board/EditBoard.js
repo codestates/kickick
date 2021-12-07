@@ -10,7 +10,7 @@ import {
   IconText,
 } from "../../components";
 
-import { categoryName } from "../../features";
+import { categoryName } from "../../commons/utils/categoryName";
 import {
   getCategory,
   getPostName,
@@ -23,7 +23,6 @@ export default function EditBoard() {
   const { category } = useParams();
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
-  const [Loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
@@ -62,7 +61,7 @@ export default function EditBoard() {
         setContent={setContent}
         handleQuill={handleQuill}
       />
-      <TagInput tagArr={tagArr} setTagArr={setTagArr} />
+      <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
       <BtnContainer>
         <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>

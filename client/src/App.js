@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,10 +10,10 @@ import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
-import Board from "./pages/Board";
-import EditBoard from "./pages/EditBoard";
-import DetailBoard from "./pages/DetailBoard";
-import MyEditBoard from "./pages/MyEditBoard";
+import Board from "./pages/Board/Board";
+import DetailBoard from "./pages/Board/DetailBoard";
+import EditBoard from "./pages/Board/EditBoard";
+import MyEditBoard from "./pages/Board/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
@@ -29,27 +29,27 @@ import darkToLight from "./assets/images/darkToLight.png";
 export default function App() {
   // NOTICE theme 테스트 중
   // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
-
+  const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
-  const [theme, setTheme] = useState([light,"light"]);
+  const [theme, setTheme] = useState([light, "light"]);
 
   useEffect(() => {
     setTimeout(() => {
       if (themeMode === "light") {
-        setTheme([light,"light"]);
-      } else setTheme([dark,"dark"]);
+        setTheme([light, "light"]);
+      } else setTheme([dark, "dark"]);
     }, 580);
 
     nowImLogin(todayLogin)
       .then((res) => {
-        if (res.data.message !== 'guest login') {
+        if (res.data.message !== "guest login") {
           dispatch(isLoginAction(true));
           dispatch(isPointAction(res.data.data.kick_money));
           if (todayLogin) dispatch(todayLoginAction(true));
-        } 
-        if (res.data.message === 'guest login') { 
+        }
+        if (res.data.message === "guest login") {
           dispatch(isLoginAction("guest"));
           dispatch(isPointAction(res.data.data.kick_money));
         }
@@ -72,7 +72,7 @@ export default function App() {
               <DarkBox />
             </DarkChanger>
           )}
-          <Nav themeCode={theme[1]} />
+          <Nav themeCode={theme[1]} setUpdate={setUpdate} />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
@@ -85,11 +85,11 @@ export default function App() {
               element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board/:category" element={<Board />} />
             <Route
-              path="detailboard/:category/:post_id"
-              element={<DetailBoard />}
+              path="board/:category"
+              element={<Board setUpdate={setUpdate} update={update} />}
             />
+            <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
           </Routes>
           <Footer />
@@ -114,9 +114,9 @@ const Theme = styled.img`
 `;
 
 const DarkBox = styled.div`
-  width:110vw;
+  width: 110vw;
   height: 100vh;
-  background-color:black;
+  background-color: black;
 `;
 
 const ModeChanger = styled.div`

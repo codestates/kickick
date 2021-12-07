@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-export default function Textarea({ handleClick, ...props }) {
-  const [value, setValue] = useState("");
-  const handleChange = (e) => {
-    if (e.target.value.length <= 200) {
-      setValue(e.target.value);
-    } else {
-      return;
-    }
-  };
+export default function Textarea({
+  handleClick,
+  value,
+  handleChange,
+  ...props
+}) {
+  const login = useSelector((state) => state.login);
+
   return (
     <Container>
       <TextArea
-        placeholder="로그인 후 사용가능합니다"
+        placeholder={
+          login.isLogin ? "댓글을 입력해 주세요." : "로그인 후 사용가능합니다."
+        }
         {...props}
         onChange={handleChange}
         value={value}
+        login={login.isLogin}
       />
       <p>{value.length} / 200</p>
     </Container>
@@ -42,6 +45,7 @@ const TextArea = styled.textarea`
   font-size: 1rem;
   resize: none;
 
+  pointer-events: ${({ login }) => (login ? null : "none")};
   &:focus {
     outline: none;
     border: 2px solid skyblue;

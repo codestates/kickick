@@ -14,7 +14,7 @@ import { getPostInfo } from "../../store/actions/postadd";
 import { getPostsInfo, putPost } from "../../apis/posts";
 import { delTags, createTags } from "../../apis/tags";
 
-export default function EditBoard() {
+export default function MyEditBoard() {
   const navigate = useNavigate();
   const state = useSelector((state) => state.postInfo);
 
@@ -40,15 +40,15 @@ export default function EditBoard() {
   const handleClick = () => {
     putPost(`${category}_자유`, title, content, null, post_id)
       .then(() => {
-        state.data.tags.map((tag) => {
-          delTags(post_id, tag.tag_id).catch((err) =>
-            console.log(err.response)
-          );
-        });
+        state.data.tags
+          .filter((el) => el.content !== category)
+          .map((tag) => {
+            delTags(post_id, tag.tag_id).catch((err) => err.response);
+          });
       })
       .then(() => {
         createTags(post_id, [category, ...tagArr])
-          .then(() => navigate(`/detailboard/${category}/${post_id}`))
+          .then(() => navigate(`/detailboard/${post_id}`))
           .catch((err) => console.log(err.response));
       })
       .catch((err) => console.log(err.response));

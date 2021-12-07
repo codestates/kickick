@@ -69,3 +69,7 @@ export const putPost = (category, post_name, content, cost, post_id) => {
 export const delPost = (post_id) => {
   return api.delete(`/posts/info/${post_id}`);
 };
+
+export const recommendedPost = () => {
+  return api.get("/posts/recommended");
+};

@@ -7,10 +7,10 @@ import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
-import sun from "../../../assets/images/sun.png"
+import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
-export default function Nav({ themeCode }) {
+export default function Nav({ themeCode, setUpdate }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
@@ -43,7 +43,7 @@ export default function Nav({ themeCode }) {
             fontFamily={`'Luckiest Guy', cursive`}
             pathname="/"
           />
-          <BtnChamber />
+          <BtnChamber setUpdate={setUpdate} />
         </Separation>
         <Separation>
           <ThemeBtn
@@ -118,18 +118,17 @@ const LoginChanger = styled.div`
   display: ${({ isLogin }) => (isLogin ? "flex" : "none")};
 `;
 
-
 const ThemeBtn = styled.img`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  width: 3rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
   height: 3rem;
   margin-right: 0.3rem;
   border-radius: 3rem;
   cursor: pointer;
 
   :hover {
-    opacity:0.8;
+    opacity: 0.8;
   }
 `;

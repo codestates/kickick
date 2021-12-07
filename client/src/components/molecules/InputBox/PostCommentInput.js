@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { Common, Textarea } from "../../";
 
-export default function PostCommentInput() {
+export default function PostCommentInput({ handleClick, value, handleChange }) {
   return (
     <Container>
-      <Textarea />
+      <Textarea value={value} handleChange={handleChange} />
       <CommentButtons>
-        <Common label="댓글등록" type="comment" />
+        <Common label="댓글등록" type="comment" handleClick={handleClick} />
       </CommentButtons>
     </Container>
   );
