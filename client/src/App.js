@@ -10,10 +10,10 @@ import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
-import Board from "./pages/Board";
-import EditBoard from "./pages/EditBoard";
-import DetailBoard from "./pages/DetailBoard";
-import MyEditBoard from "./pages/MyEditBoard";
+import Board from "./pages/Board/Board";
+import DetailBoard from "./pages/Board/DetailBoard";
+import EditBoard from "./pages/Board/EditBoard";
+import MyEditBoard from "./pages/Board/MyEditBoard";
 import MyPage from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";

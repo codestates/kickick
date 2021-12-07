@@ -11,6 +11,7 @@ import {
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
+  FaHeart,
 } from "react-icons/fa";
 
 const iconList = [
@@ -20,6 +21,7 @@ const iconList = [
     color: "#c4c4c4",
     category: "postNav",
   },
+  { label: "red", icon: <FaHeart />, color: "red", category: "postNav" },
   {
     label: "heart",
     icon: <FaRegHeart />,

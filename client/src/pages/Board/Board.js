@@ -16,6 +16,7 @@ import {
 } from "../../components";
 
 export default function Board({ setUpdate, update }) {
+  const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
   const { category } = useParams();
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);
@@ -50,7 +51,6 @@ export default function Board({ setUpdate, update }) {
         .catch((err) => console.log(err.response));
     }
   }, [update]);
-
   if (loading) return "";
   return (
     <>

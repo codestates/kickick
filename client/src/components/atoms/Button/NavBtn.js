@@ -27,9 +27,11 @@ export default function NavBtn({
   const mylocation = pathname === location.pathname.split("/")[1];
 
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
-  const moveHandler = (path) => {
+  const moveHandler = (path, isSub) => {
     navigate(path);
-    setUpdate(true);
+    if (isSub) {
+      setUpdate(true);
+    }
   };
   return (
     <Container
@@ -64,7 +66,7 @@ export default function NavBtn({
             mylocation={mylocation}
             pathname={pathname}
             key={el.pathname}
-            onClick={() => moveHandler(`${pathname}/${el}`)}
+            onClick={() => moveHandler(`${pathname}/${el}`, true)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />
             <SubTitle size={size}>{el}</SubTitle>
