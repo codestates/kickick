@@ -10,6 +10,8 @@ module.exports = {
   signin: require("./auth/signin"),
   signout: require("./auth/signout"),
   email_auth: require("./auth/email_auth"),
+  naver: require("./auth/naver"),
+  kakao: require("./auth/kakao"),
   // posts
   get_posts_info: require("./posts/get_posts_info"),
   get_posts_list: require("./posts/get_posts_list"),

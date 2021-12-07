@@ -8,6 +8,8 @@ module.exports = async (req, res) => {
   }
 
   try {
+    // req.body.username 으로 users 검색해서
+    // 존재하지 않으면 400 보내기 구현 필
     await users.update(
       {
         type: "general",

@@ -2,7 +2,6 @@ const { users, logs, alarms } = require("../../models");
 const sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const get_alarms_info = require("../alarms/get_alarms_info");
 
 module.exports = async (req, res) => {
   // TODO 로그인 로직 구현
