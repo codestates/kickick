@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
 import { resetTag } from "../../store/actions/postadd";
-import { categoryName } from "../../features";
+import { categoryName } from "../../commons/utils/categoryName";
 
 import {
   TotalSearch,
@@ -14,8 +14,10 @@ import {
   BoardTop,
   BoardTodayKicks,
 } from "../../components";
+import BoardSkeleton from "./BoardSkeleton";
 
-export default function Board() {
+export default function Board({ setUpdate, update }) {
+  const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
   const { category } = useParams();
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);
@@ -25,6 +27,7 @@ export default function Board() {
     stateOnoff.goback ? (state.page ? state.page : 1) : 1
   );
   useEffect(() => {
+    setUpdate(false);
     if (stateOnoff.goback) {
       getPostsList({
         category: categoryName(category),
@@ -48,9 +51,9 @@ export default function Board() {
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
-  }, []);
-
-  if (loading) return "";
+  }, [update, loading]);
+  if (list.indexOf(category) === -1) return <BoardSkeleton />;
+  if (loading) return <BoardSkeleton />;
   return (
     <>
       <BoardTop category={category} />
@@ -60,6 +63,7 @@ export default function Board() {
           <TotalSearch
             category={categoryName(category)}
             setSelectPage={setSelectPage}
+            setLoading={setLoading}
           />
           <BoardBottom
             category={categoryName(category)}

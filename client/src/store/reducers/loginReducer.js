@@ -1,6 +1,6 @@
-import { IS_LOGIN, TODAY_LOGIN } from "../actions/login";
+import { IS_LOGIN, TODAY_LOGIN, IS_POINT } from "../actions/login";
 
-const initialState = { isLogin: false, todayLogin: false };
+const initialState = { isLogin: false, todayLogin: false, isPoint:false };
 
 export default function loginReducer(state = initialState, action) {
   switch (action.type) {
@@ -8,6 +8,8 @@ export default function loginReducer(state = initialState, action) {
       return { ...state, isLogin: action.payload };
     case TODAY_LOGIN:
       return { ...state, todayLogin: action.payload };
+    case IS_POINT:
+      return { ...state, isPoint: action.payload };
     default:
       return state;
   }

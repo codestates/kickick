@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
 import { IconBox } from "../../";
-import { useSelector, useDispatch } from "react-redux";
-import { getPostsInfo } from "../../../apis/posts";
-import { getPostInfo } from "../../../store/actions/postadd";
 
-export default function DetailBoardTop() {
-  const state = useSelector((state) => state.postInfo);
-  const dispatch = useDispatch();
-  const { post_id } = useParams();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getPostsInfo(post_id)
-      .then((data) => {
-        dispatch(getPostInfo(data.data));
-      })
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
-  }, []);
-
-  if (loading) return "";
+export default function DetailBoardTop({ state }) {
   return (
     <Container>
       <TopContainer>

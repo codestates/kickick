@@ -4,6 +4,7 @@ const {
   kicks,
   likes,
   posts_tags,
+  favorites,
   tags,
   logs,
 } = require("../../models");
@@ -95,9 +96,24 @@ module.exports = async (req, res) => {
           where: {
             username: username,
           },
+          include: [
+            {
+              model: favorites,
+              where: {
+                post_id: post_id,
+              },
+              required: false,
+            },
+          ],
         });
         user_info = user_info.get({ plain: true });
-        console.log(user_info);
+
+        // 즐겨찾기를 눌렀으면
+        if (user_info.favorites.length !== 0) {
+          data.favorite = "true";
+        } else {
+          data.favorite = "false";
+        }
         const user_id = user_info.user_id;
 
         // logs에 추가

@@ -7,7 +7,7 @@ import { getList } from "../../../store/actions/postadd/boardList";
 import { search, delSearch } from "../../../store/actions/postadd";
 import { Align, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ category, setSelectPage }) {
+export default function TotalSearch({ category, setSelectPage, setLoading }) {
   const state = useSelector((state) => state.board);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
@@ -18,6 +18,9 @@ export default function TotalSearch({ category, setSelectPage }) {
   const handleAlign = (event) => {
     const label = event.target.innerText;
     setHighlight(label);
+    if (label === "최신") {
+      setLoading(true);
+    }
   };
   const handleIcon = (label) => {
     setIcon(label);

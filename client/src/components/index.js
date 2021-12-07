@@ -55,3 +55,7 @@ export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
 export { default as Chart } from "./organisms/Chart";
 export { default as MyPagination } from "./organisms/Pagination";
 export { default as BoardTodayKicks } from "./organisms/BoardTodayKicks";
+export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
+export { default as S_BoardTodayKicks } from "./organisms/BoardTodayKicks/S_BoardTodayKicks";
+export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";
+export { default as S_TotalSearch } from "./organisms/TotalSearch/S_TotalSearch";

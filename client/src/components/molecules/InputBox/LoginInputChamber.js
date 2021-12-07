@@ -4,8 +4,12 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
-import { signIn } from "../../../apis/auth"
-import { isLoginAction, todayLoginAction } from "../../../store/actions/login";
+import { signIn, signUp, tempoSignIn } from "../../../apis/auth";
+import {
+  isLoginAction,
+  todayLoginAction,
+  isPointAction,
+} from "../../../store/actions/login";
 
 export default function LoginInputChamber({
   width = 30,
@@ -42,19 +46,34 @@ export default function LoginInputChamber({
       setIsClicked(true);
       setTimeout(() => {
         signIn(inputValue.id, inputValue.password)
-          .then(() => {
+          .then((res) => {
             dispatch(isLoginAction(true));
+            dispatch(isPointAction(res.data.data.kick_money));
             if (todayLogin) dispatch(todayLoginAction(true));
           })
           .then(() => navigate("/", { replace: true }))
           .catch(() => {
             setIsClicked("");
           });
-      },1000)
+      }, 1000);
     }
   };
-
-  console.log("inputValue:", inputValue, "isValid:", isValid);
+  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  const tempoAuth = () => {
+    signUp({ type: "guest" }).then((res) => {
+      if (res.data.message === "guest 회원가입") {
+        tempoSignIn(res.data.data.username)
+          .then((res) => {
+            dispatch(isLoginAction("guest"));
+            dispatch(isPointAction(res.data.data.kick_money));
+          })
+          .then(() => navigate("/", { replace: true }))
+          .catch((err) => console.log(err));
+      }
+    });
+  };
+  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  
   return (
     <Container width={width} height={height}>
       {inputlist.map((el, idx) => (
@@ -79,9 +98,17 @@ export default function LoginInputChamber({
       >
         로그인
       </SubmitBtn>
+      <Test onClick={tempoAuth}>이거 클릭하면 임시 로그인</Test>
     </Container>
   );
 }
+
+const Test = styled.div`
+margin-top:1rem;
+border:1px solid black;
+cursor:pointer;
+:hover{color:red;}
+`
 
 const Container = styled.div`
   display: flex;
@@ -89,6 +116,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
+  z-index: 2;
 `;
 
 const SubmitBtn = styled.button`
