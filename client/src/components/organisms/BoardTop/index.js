@@ -1,40 +1,91 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 
+import cloud1 from "../../../assets/images/cloud/cloud1.png";
+import cloud2 from "../../../assets/images/cloud/cloud2.png";
+import cloud3 from "../../../assets/images/cloud/cloud3.png";
+import cloud4 from "../../../assets/images/cloud/cloud4.png";
+import cloud10 from "../../../assets/images/cloud/cloud10.png";
+import study from "../../../assets/images/planet/studyplanet.png";
+import leisure from "../../../assets/images/planet/leisure.png";
+import life from "../../../assets/images/planet/life.png";
+import economy from "../../../assets/images/planet/economy.png";
+import trip from "../../../assets/images/planet/trip.png";
+import art from "../../../assets/images/planet/art.png";
 import spacebackground from "../../../assets/images/space_background.jpg";
-import study from "../../../assets/images/studyplanet.png";
 
-export default function BoardTop() {
-  const state = useSelector((state) => state.board);
+export default function BoardTop({ list, category }) {
+  const titleArr = [
+    { label: "study", image: study, color: "#4aa6c1" },
+    { label: "leisure", image: leisure, color: "#4369b0" },
+    { label: "life", image: life, color: "#d04d36" },
+    { label: "economy", image: economy, color: "#eed548" },
+    { label: "trip", image: trip, color: "#f29049" },
+    { label: "art", image: art, color: "#deb462" },
+  ];
+  const idx = list.findIndex((el) => el === category);
+  const title = titleArr[idx];
   return (
-    <Container image={spacebackground}>
-      <img src={study} alt="" />
-      <span>study</span>
+    // <Container image={spacebackground}>
+    <Container>
+      <img className="cloud" src={cloud1} alt="" />
+      <img className="cloud" src={cloud2} alt="" />
+      <img className="cloud" src={cloud3} alt="" />
+      <img className="cloud" src={cloud4} alt="" />
+      <img className="cloud" src={cloud10} alt="" />
+      <img className="icon" src={title.image} alt="" />
+      <Category c={title.color}>{title.label}</Category>
     </Container>
   );
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
-  background-image: url(${({ image }) => image});
+  /* background-image: url(${({ image }) => image}); */
   height: 8rem;
   object-fit: cover;
-
   font-size: 4rem;
 
-  img {
+  pointer-events: none !important;
+
+  > :nth-child(1) {
+    left: 2rem;
+    top: 1rem;
+  }
+  > :nth-child(2) {
+    left: 20rem;
+    top: 1.5rem;
+  }
+  > :nth-child(3) {
+    right: 30rem;
+  }
+  > :nth-child(4) {
+    right: 10rem;
+    top: 1rem;
+  }
+  > :nth-child(5) {
+    bottom: 0;
+    z-index: 1;
+  }
+  .cloud {
+    position: absolute;
+    height: 4.5rem;
+  }
+  .icon {
     width: 4.5rem;
     height: 4.5rem;
-    pointer-events: none;
+    z-index: 5;
   }
-  span {
-    color: #4aa6c1;
-    margin-top: 1rem;
-    font-family: "Luckiest Guy", cursive;
-  }
+`;
+
+const Category = styled.span`
+  color: ${({ c }) => c};
+  margin-top: 1rem;
+  font-family: "Luckiest Guy", cursive;
+  z-index: 5;
 `;

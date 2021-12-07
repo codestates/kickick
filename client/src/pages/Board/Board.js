@@ -56,7 +56,7 @@ export default function Board({ setUpdate, update }) {
   if (loading) return <BoardSkeleton />;
   return (
     <>
-      <BoardTop />
+      <BoardTop list={list} category={category} />
       <Container>
         <BoardTodayKicks />
         <BoardContainer>
