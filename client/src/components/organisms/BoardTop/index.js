@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import cloud1 from "../../../assets/images/cloud/cloud1.png";
 import cloud2 from "../../../assets/images/cloud/cloud2.png";
 import cloud3 from "../../../assets/images/cloud/cloud3.png";
 import cloud4 from "../../../assets/images/cloud/cloud4.png";
@@ -54,12 +53,12 @@ const Container = styled.div`
   pointer-events: none !important;
 
   > :nth-child(1) {
-    left: 2rem;
-    top: 1rem;
+    left: 5rem;
+    bottom: 1rem;
   }
   > :nth-child(2) {
-    left: 20rem;
-    top: 1.5rem;
+    left: 27rem;
+    top: 1rem;
   }
   > :nth-child(3) {
     right: 30rem;
@@ -79,13 +78,15 @@ const Container = styled.div`
   .icon {
     width: 4.5rem;
     height: 4.5rem;
+    filter: drop-shadow(0.5rem 0.5rem 0.3rem gray);
     z-index: 5;
   }
 `;
 
 const Category = styled.span`
-  color: ${({ c }) => c};
   margin-top: 1rem;
   font-family: "Luckiest Guy", cursive;
+  text-shadow: 0.4rem 0.4rem 0.3rem gray;
+  color: ${({ c }) => c};
   z-index: 5;
 `;
