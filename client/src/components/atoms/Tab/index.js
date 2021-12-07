@@ -41,4 +41,8 @@ const Container = styled(Link)`
     margin-right: 1rem;
     color: #cccccc;
   }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: calc(100%);
+  }
 `;

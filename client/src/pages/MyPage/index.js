@@ -155,15 +155,21 @@ const NavContainer = styled.div`
 `;
 const Container = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
-  top: -15rem;
+  top: -10rem;
   z-index: 3;
 
-  width: 77rem;
+  width: 64rem;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 3rem 1rem;
   background-color: white;
+  border-radius: 0.5rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const SubContainer = styled.div`
@@ -178,6 +184,14 @@ const SubContainer = styled.div`
   h2 {
     font-size: 1.5rem;
     font-weight: bold;
+  }
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+    border-top: 2px dashed #dddddd;
+    border-left: none;
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
   }
 `;
 
