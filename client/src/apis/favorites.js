@@ -22,8 +22,8 @@ export const createFavorites = (post_id) => {
 };
 
 /**
- * @param {number} favorites_id
+ * @param {number} post_id
  **/
-export const delFavorites = (favorite_id) => {
-  return api.delete(`favorites/info/${favorite_id}`);
+export const delFavorites = (post_id) => {
+  return api.delete(`favorites/info/${post_id}`);
 };
