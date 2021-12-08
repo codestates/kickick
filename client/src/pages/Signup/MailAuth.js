@@ -5,12 +5,14 @@ import styled from "styled-components";
 import { mailCheck } from "../../apis/auth"
 import mailSuccess from "../../assets/images/mailSuccess.png"
 import stamp from "../../assets/images/stamp.png";
+import pushHand from "../../assets/images/pushHand.png";
 
 export default function MailAuth() {
   const navigate = useNavigate();
   const params = useParams();
 
   const [isSuccess, setIsSuccess] = useState(null)
+  const [isClick, setIsClick] = useState(false)
 
   useEffect(() => { 
     mailCheck(params.username)
@@ -26,19 +28,27 @@ export default function MailAuth() {
   console.log("params: ", params.username)
   return (
     <Container isSuccess={isSuccess}>
-      <BackImg src={mailSuccess} alt="appointment letter" />
-      <Frame onClick={() => navigate("/", { replace: true })}>
-        <Title>임명장</Title>
-        <Name>성명 : {params.username}</Name>
-        <Context>상기 인물은 이메일 테스트를 성공적으로 수행한 바</Context>
-        <Context>차후 임무를 수행함에 있어 부족함이 없다고 판단하여</Context>
-        <Context>정식 우주비행사로 임명함.</Context>
-        <Stamp src={stamp} alt="stamp" />
-        <Contribute>INOVATION & GEEK</Contribute>
-        <ContributeName>
-          <Contribute>인사담당</Contribute> 한 태 규
-        </ContributeName>
-      </Frame>
+      <PushHand src={pushHand} alt="hand" isClick={isClick} />
+      <LetterContainer isClick={isClick}>
+        <BackImg src={mailSuccess} alt="appointment letter" />
+        <Frame
+          onClick={() => {
+            setTimeout(() => navigate("/login"),3000);
+            setIsClick(true);
+          }}
+        >
+          <Title>임명장</Title>
+          <Name>성명 : {params.username}</Name>
+          <Context>상기 인물은 이메일 테스트를 성공적으로 수행한 바</Context>
+          <Context>차후 임무를 수행함에 있어 부족함이 없다고 판단하여</Context>
+          <Context>정식 우주비행사로 임명함.</Context>
+          <Stamp src={stamp} alt="stamp" />
+          <Contribute>INOVATION & GEEK</Contribute>
+          <ContributeName>
+            <Contribute>인사담당</Contribute> 한 태 규
+          </ContributeName>
+        </Frame>
+      </LetterContainer>
     </Container>
   );
 }
@@ -52,6 +62,30 @@ const Container = styled.div`
   width:100vw;
   min-height: 79vh;
   visibility: ${({ isSuccess }) => (isSuccess ? "visible" : "hidden")};
+`;
+
+const LetterContainer = styled.div`
+  position: relative;
+  bottom: ${({ isClick }) => (isClick ? "100vw" : 0)};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation-name: ${({ isClick }) => (isClick ? "pushedUp" : "")};
+  animation-duration: 1.7s;
+  animation-direction: normal;
+
+  @keyframes pushedUp {
+    0% {
+      bottom: 0;
+    }
+    22% {
+      bottom: 0;
+    }
+    100% {
+      bottom: 60vw;
+    }
+  } ;
 `;
 
 const Frame = styled.div`
@@ -111,4 +145,26 @@ const Stamp = styled.img`
   width: 7vw;
   opacity: 0.9;
   z-index: 3;
+`;
+
+const PushHand = styled.img`
+  position: absolute;
+  bottom: -38vw;
+  display: ${({ isClick }) => (isClick ? "default" : "none")};
+  z-index: 5;
+  animation-name: ${({ isClick }) => (isClick ? "pushUp" : "")};
+  animation-duration: 3s;
+  animation-direction: normal;
+
+  @keyframes pushUp {
+    0% {
+      bottom: -38vw;
+    }
+    50% {
+      bottom: 30vw;
+    }
+    100% {
+      bottom: -38vw;
+    }
+  } ;
 `;
