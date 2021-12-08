@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 });
 const HTTP_PORT = process.env.HTTP_PORT || 80;
 
-require("./controllers/test")(io);
+require("./controllers/socket")(io);
 
 // const server = app.listen(HTTP_PORT, () => console.log(HTTP_PORT));
 

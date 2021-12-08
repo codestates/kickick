@@ -24,12 +24,40 @@ module.exports = (io) => {
       clients.push(client_info);
       console.log(clients);
     });
-    socket.on("alarms", (data) => {
+    socket.on("alarms", async (data) => {
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].username === data.username) {
+          const username = data.username;
           // alarms 테이블 검색 추가
+          data = await users.findOne({
+            attributes: ["id"],
+            where: {
+              username: username,
+            },
+            include: [
+              {
+                model: alarms,
+                attributes: [
+                  ["id", "alarm_id"],
+                  "type",
+                  "reference",
+                  "content",
+                  "is_checked",
+                  "created_at",
+                ],
+                offset: 0,
+                limit: 5,
+              },
+            ],
+          });
+          data = data.get({ plain: true });
+          // data 가공
+          data = data.alarms.map((el) => {
+            el.reference = JSON.parse(el.reference);
+            return el;
+          });
 
-          io.to(clients[i].id).emit("alarms");
+          io.to(clients[i].id).emit("alarms", data);
         }
       }
       data.username;
