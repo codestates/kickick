@@ -23,6 +23,8 @@ import {
   getMyCommentAction,
 } from "../../store/actions/mypage";
 
+import { selectPageAction } from "../../store/actions/pagination";
+
 import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";
 import purchaselog from "../../assets/images/purchaselog.png";
@@ -103,7 +105,10 @@ export function Favorites() {
   const dispatch = useDispatch();
   useEffect(() => {
     getFavorites()
-      .then((data) => dispatch(getFavoritesAction(data)))
+      .then((data) => {
+        dispatch(selectPageAction(1));
+        dispatch(getFavoritesAction(data));
+      })
       .catch((err) => console.log(err));
   }, [dispatch]);
   return <PostList type="mypagefavorites" />;
@@ -112,7 +117,10 @@ export function MyPost() {
   const dispatch = useDispatch();
   useEffect(() => {
     getPostsList({})
-      .then((data) => dispatch(getMyPostAction(data)))
+      .then((data) => {
+        dispatch(selectPageAction(1));
+        dispatch(getMyPostAction(data));
+      })
       .catch((err) => console.log(err));
   }, [dispatch]);
   return <PostList type="mypagemypost" />;
@@ -122,6 +130,7 @@ export function MyComment() {
   useEffect(() => {
     getComments()
       .then((data) => {
+        dispatch(selectPageAction(1));
         dispatch(getMyCommentAction(data));
       })
       .catch((err) => console.log(err));

@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
+import { selectPageAction } from "../../../store/actions/pagination";
 import { search, delSearch } from "../../../store/actions/postadd";
 import { Align, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ setSelectPage, setLoading }) {
+export default function TotalSearch({ setLoading }) {
   const state = useSelector((state) => state.board);
   const apiCategory = useSelector((state) => state.postAdd.category);
   const stateTag = useSelector((state) => state.tag);
@@ -24,8 +25,9 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
     if (label === "최신") {
       setLoading(true);
     } else if (label === "인기") {
-      getPostsList({ category, favorite_count: 1, limit: 20 })
+      getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
         .then((data) => {
+          dispatch(selectPageAction(1));
           dispatch(getList(data.data));
         })
         .catch((err) => console.log(err.response));
@@ -58,7 +60,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             )
           );
         })
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
       getPostsList({
@@ -78,7 +80,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             )
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
       getPostsList({
@@ -96,7 +98,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             })
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     }
   };
@@ -119,7 +121,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             getList(data.data, { type: "", word: "" }, state.writer, state.tag)
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
       getPostsList({
@@ -133,7 +135,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             getList(data.data, state.title, { type: "", word: "" }, state.tag)
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
       getPostsList({
@@ -150,7 +152,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
             })
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     }
   };
