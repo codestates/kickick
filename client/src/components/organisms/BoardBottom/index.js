@@ -6,7 +6,11 @@ import { Pagination, PostList } from "../../../components";
 export default function BoardBottom({ selectPage, setSelectPage }) {
   return (
     <Container>
-      <PostList type="freepost" />
+      <PostList
+        type="freepost"
+        selectPage={selectPage}
+        setSelectPage={setSelectPage}
+      />
       {/* <Pagination selectPage={selectPage} setSelectPage={setSelectPage} /> */}
     </Container>
   );

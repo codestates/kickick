@@ -5,7 +5,7 @@ export const getList = (
   title = { type: "", word: "" },
   writer = { type: "", word: "" },
   tag = { type: "", word: "" },
-  page
+  page = 1
 ) => {
   return {
     type: GET_LIST,

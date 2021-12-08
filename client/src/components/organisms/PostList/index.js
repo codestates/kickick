@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
@@ -31,6 +31,8 @@ const postList = [
 export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
   const { category } = useParams();
+
+  const [selectPage, setSelectPage] = useState(1);
 
   let data;
   let count;
@@ -68,7 +70,13 @@ export default function PostList({ type }) {
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && <MyPagination count={count} />}
+      {data.length !== 0 && (
+        <MyPagination
+          count={count}
+          selectPage={selectPage}
+          setSelectPage={setSelectPage}
+        />
+      )}
     </Container>
   );
 }
