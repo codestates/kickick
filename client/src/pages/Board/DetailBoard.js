@@ -37,9 +37,10 @@ export default function DetailBoard() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 48rem;
   margin: 0 auto;
+  gap: 1rem;
 `;
 
 const RigthContainer = styled.div``;

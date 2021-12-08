@@ -16,7 +16,7 @@ export default function RectLoading() {
 const Spinner = styled.div`
   width: 10rem;
   height: 50vh;
-  margin: 10rem auto;
+  margin: 1rem auto;
   text-align: center;
   font-size: 1rem;
   div {

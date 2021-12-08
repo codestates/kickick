@@ -42,7 +42,10 @@ export default function Board({ setUpdate, update }) {
     } else {
       dispatch(resetTag());
       getPostsList({ category: categoryName(category), limit: 20 })
-        .then((data) => dispatch(getList(data.data)))
+        .then((data) => {
+          setSelectPage(1);
+          dispatch(getList(data.data));
+        })
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
