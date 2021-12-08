@@ -12,11 +12,6 @@ const {
   logs,
   notices,
 } = require("./../models");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-const jwt = require("jsonwebtoken");
-const escapeRegExp = require("lodash").escapeRegExp;
-const fuzzy_searcher = require("../functions/fuzzy_searcher");
 
 module.exports = (io) => {
   let clients = [];
@@ -29,11 +24,12 @@ module.exports = (io) => {
       clients.push(client_info);
       console.log(clients);
     });
-    socket.on("alarm", (data) => {
+    socket.on("alarms", (data) => {
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].username === data.username) {
           // alarms 테이블 검색 추가
-          io.to(clients[i].id).emit("message", { msg: data.msg });
+
+          io.to(clients[i].id).emit("alarms");
         }
       }
       data.username;
