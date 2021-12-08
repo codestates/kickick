@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     await users.update(
       {
         type: "general",
-        kick_money: sequelize.literal(`kick_money + 1000`),
+        kick_money: sequelize.literal(`kick_money + 1500`),
       },
       {
         where: {

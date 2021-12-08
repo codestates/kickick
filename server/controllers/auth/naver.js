@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { users } = require("../../models");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // TODO 네이버 소셜로그인 구현
