@@ -20,7 +20,7 @@ export const signIn = (username, password) =>
  *  @param {string} code
  **/
 export const kakaoSignIn = (code) =>
-  api.post(`/auth/naver`, { code });
+  api.post(`/auth/kakao`, { code });
   /**
  *  @param {string} code
  *  @param {string} state
