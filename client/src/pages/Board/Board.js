@@ -8,12 +8,7 @@ import { getList } from "../../store/actions/postadd/boardList";
 import { resetTag } from "../../store/actions/postadd";
 import { categoryName } from "../../commons/utils/categoryName";
 
-import {
-  TotalSearch,
-  BoardBottom,
-  BoardTop,
-  BoardTodayKicks,
-} from "../../components";
+import { TotalSearch, BoardBottom, BoardTop } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
 
 export default function Board({ setUpdate, update }) {
@@ -58,7 +53,6 @@ export default function Board({ setUpdate, update }) {
     <>
       <BoardTop list={list} category={category} />
       <Container>
-        <BoardTodayKicks />
         <BoardContainer>
           <TotalSearch
             category={categoryName(category)}

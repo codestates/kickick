@@ -10,7 +10,6 @@ import {
   mypageReducer,
   onoffReducer,
   tagReducer,
-  userInfoReducer,
 } from "./reducers";
 
 export const store = configureStore({
@@ -24,6 +23,5 @@ export const store = configureStore({
     login: loginReducer,
     themeMode: themeReducer,
     mypage: mypageReducer,
-    userInfo: userInfoReducer,
   },
 });

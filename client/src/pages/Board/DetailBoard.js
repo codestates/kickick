@@ -3,12 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import {
-  DetailBoardTop,
-  PostComment,
-  IconContainer,
-  RectLoading,
-} from "../../components";
+import { DetailBoardTop, PostComment, IconContainer } from "../../components";
 import { getPostsInfo } from "../../apis/posts";
 import { getPostInfo } from "../../store/actions/postadd";
 

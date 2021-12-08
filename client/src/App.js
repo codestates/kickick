@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import KickBoard from "./pages/KickBoard";
-import { Nav, Footer } from "./components";
+import { Nav, Footer, PageUp } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -15,6 +15,8 @@ import DetailBoard from "./pages/Board/DetailBoard";
 import EditBoard from "./pages/Board/EditBoard";
 import MyEditBoard from "./pages/Board/MyEditBoard";
 import MyPage from "./pages/MyPage";
+import KakaoAuth from "./pages/Login/KakaoAuth";
+import NaverAuth from "./pages/Login/NaverAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -24,7 +26,6 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { userInfoAction } from "./store/actions/login/userInfo";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -46,28 +47,19 @@ export default function App() {
 
     nowImLogin(todayLogin)
       .then((res) => {
-        if (res.data.message !== "guest login") {
-          dispatch(isLoginAction(true));
-          dispatch(isPointAction(res.data.data.kick_money));
-          if (todayLogin) dispatch(todayLoginAction(true));
-        }
-        if (res.data.message === "guest login") {
-          dispatch(isLoginAction("guest"));
-          dispatch(isPointAction(res.data.data.kick_money));
-        }
+        const loginData = { ...res.data.data };
+        delete loginData.kick_money;
+        dispatch(isLoginAction(loginData));
+        dispatch(isPointAction(res.data.data.kick_money));
+        if (!todayLogin) dispatch(todayLoginAction(true));
       })
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
-
-  useEffect(() => {
-    getUserInfo()
-      .then((data) => dispatch(userInfoAction(data.data.data)))
-      .catch((err) => console.log(err.response));
-  }, []);
   return (
     <ThemeProvider theme={theme[0]}>
       <Router>
         <Container>
+          <PageUp />
           {themeMode === "light" ? (
             <LightChanger themeMode={themeMode}>
               <DarkBox />
@@ -81,11 +73,14 @@ export default function App() {
           )}
           <Nav themeCode={theme[1]} setUpdate={setUpdate} />
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignupSelect />} />
-            <Route path="/signup/:type" element={<Signup />} />
-            <Route path="/mailauth/:username" element={<MailAuth />} />
+            <Route path="/" element={<Main />}>
+              <Route path="kakao" element={<KakaoAuth />} />
+              <Route path="naver" element={<NaverAuth />} />
+            </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignupSelect />} />
+            <Route path="signup/:type" element={<Signup />} />
+            <Route path="mailauth/:username" element={<MailAuth />} />
             <Route path="editboard/:category" element={<EditBoard />} />
             <Route
               path="myeditboard/:category/:post_id"

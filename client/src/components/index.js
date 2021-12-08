@@ -1,5 +1,6 @@
 //atoms
 export { default as Common } from "./atoms/Button/Common";
+export { default as PageUp} from "./atoms/PageUp"
 export { default as NavBtn } from "./atoms/Button/NavBtn";
 export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";

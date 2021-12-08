@@ -9,7 +9,7 @@ import { IconBox } from "../../";
 
 export default function IconContainer() {
   const { post_id } = useParams();
-  const { board, postInfo, userInfo } = useSelector((state) => state);
+  const { board, postInfo, login } = useSelector((state) => state);
   const [heart, setHeart] = useState(
     postInfo.data.favorite === "true" ? true : false
   );
@@ -48,7 +48,7 @@ export default function IconContainer() {
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
-      {postInfo.data.user.username === userInfo.username ? (
+      {postInfo.data.user.username === login.isLogin.username ? (
         <IconBox label="edit" handleClick={handleClick} />
       ) : heart ? (
         <IconBox label="red" handleClick={handleClick} />
