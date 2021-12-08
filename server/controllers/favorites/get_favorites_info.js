@@ -39,6 +39,8 @@ module.exports = async (req, res) => {
       offset: limit * (page_num - 1),
       limit: limit,
       distinct: true,
+      order: [["id", "DESC"]],
+      where: {},
       include: [
         {
           model: posts,
@@ -49,6 +51,7 @@ module.exports = async (req, res) => {
             "post_name",
             "view_count",
           ],
+          required: true,
           include: [
             {
               model: users,
