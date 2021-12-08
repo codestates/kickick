@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import KickBoard from "./pages/KickBoard";
@@ -61,6 +66,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme[0]}>
       <Router>
+        <ScrollToTop />
         <Container>
           {themeMode === "light" ? (
             <LightChanger themeMode={themeMode}>
@@ -103,6 +109,15 @@ export default function App() {
   );
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 const Container = styled.div`
   position: relative;
   width: 100vw;
