@@ -50,10 +50,13 @@ module.exports = async (req, res) => {
     delete data.user_id;
     delete data.postId;
     delete data.userId;
+    delete data.updated_at;
 
     // id 명시적으로
     data.comment_id = data.id;
     delete data.id;
+    // data 에 username 추가
+    data.username = username;
 
     // 게시글 작성자에 알림
     // req.body.post_id 로 작성자 id 구함

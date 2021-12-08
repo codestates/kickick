@@ -76,7 +76,7 @@ module.exports = async (req, res) => {
       });
 
       // 최근 20개 로그에 post_id가 중복되는 경우는 없다고 가정
-      const tag_id_obj = [];
+      const tag_id_obj = {};
 
       for (let el of log_info) {
         // post_id로 게시글에 달린 tag_id 구함
@@ -86,14 +86,13 @@ module.exports = async (req, res) => {
           where: {
             post_id: post_id,
           },
+          raw: true,
         });
+        // tag_id_obj 에 정보 정리
         posts_tags_info.forEach((el) => {
-          // tag_id_obj.push(el.tag_id);
           tag_id_obj[el.tag_id] = tag_id_obj[el.tag_id] + 1 || 1;
         });
       }
-      console.log(tag_id_obj);
-
       // tag_id_obj 에서 제일 높은 수치를 가진 태그로 post 검색
       // 그 값은 obj 에서 지움
       //! 가져온 게 6개가 될 때까지 반복? 여기 수정 필요
