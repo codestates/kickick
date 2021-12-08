@@ -90,6 +90,7 @@ const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 64rem;
+  margin: 0 auto;
 
   @media ${({ theme }) => theme.device.notebookS} {
     flex-direction: column;
