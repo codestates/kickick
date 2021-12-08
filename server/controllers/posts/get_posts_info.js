@@ -131,7 +131,7 @@ module.exports = async (req, res) => {
 
         let is_watched = false;
         for (let el of log_info) {
-          el = JSON.stringify(el.content);
+          el = JSON.parse(el.content);
           if (post_id === el.post_id) {
             is_watched = true;
             break;
