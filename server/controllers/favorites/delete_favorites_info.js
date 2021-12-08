@@ -1,5 +1,6 @@
 const { users, posts, favorites } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO 즐겨찾기 삭제 구현
@@ -39,24 +40,33 @@ module.exports = async (req, res) => {
     });
     const user_id = user_info.get({ plain: true }).id;
 
-    // 즐겨찾기 삭제
-    await favorites.destroy({
+    let favorite_info = await favorites.findOne({
       where: {
-        post_id: post_id,
         user_id: user_id,
+        post_id: post_id,
       },
+      raw: true,
     });
-    // posts 테이블에 favorite_count 1 감소
-    await posts.update(
-      {
-        favorite_count: sequelize.literal(`favorite_count + 1`),
-      },
-      {
+    if (favorite_info) {
+      // 즐겨찾기 삭제
+      await favorites.destroy({
         where: {
           post_id: post_id,
+          user_id: user_id,
         },
-      }
-    );
+      });
+      // posts 테이블에 favorite_count 1 감소
+      await posts.update(
+        {
+          favorite_count: sequelize.literal(`favorite_count - 1`),
+        },
+        {
+          where: {
+            id: post_id,
+          },
+        }
+      );
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
   }
 
   const { username } = decoded;
-  const post_id = req.body.post_id;
+  const post_id = Number(req.body.post_id);
   let data;
 
   try {
@@ -50,6 +50,20 @@ module.exports = async (req, res) => {
         post_id: post_id,
       },
     });
+    if (data[1]) {
+      // post 테이블에 favorite_count 증가
+      await posts.update(
+        {
+          favorite_count: sequelize.literal(`favorite_count + 1`),
+        },
+        {
+          where: {
+            id: post_id,
+          },
+        }
+      );
+    }
+
     if (Array.isArray(data)) data = data[0];
     data = data.get({ plain: true });
     delete data.postId;
@@ -57,13 +71,6 @@ module.exports = async (req, res) => {
     // id 명시적으로
     data.favorite_id = data.id;
     delete data.id;
-    // post 테이블에 favorite_count 증가
-    await posts.update(
-      {
-        favorite_count: sequelize.literal(`favorite_count + 1`),
-      },
-      { where: post_id }
-    );
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

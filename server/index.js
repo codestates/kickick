@@ -3,6 +3,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server);
+const socket = require("./socket");
 
 const test_router = require("./routers/test_router");
 const users_router = require("./routers/users_router");
@@ -46,6 +50,14 @@ app.get("/", (req, res) => {
 });
 const HTTP_PORT = process.env.HTTP_PORT || 80;
 
-const server = app.listen(HTTP_PORT, () => console.log(HTTP_PORT));
+// io.on("connection", (socket) => {
+//   console.log("connect");
+//   socket.on("disconnect", () => {
+//     console.log("disconnect");
+//   });
+// });
 
-module.exports = server;
+// const server = app.listen(HTTP_PORT, () => console.log(HTTP_PORT));
+socket();
+
+module.exports = server.listen(HTTP_PORT, () => console.log(HTTP_PORT));
