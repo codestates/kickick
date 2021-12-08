@@ -24,7 +24,9 @@ export default function NavBtn({
   const navigate = useNavigate();
   const location = useLocation();
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
-  const mylocation = pathname === location.pathname.split("/")[1];
+  const noticeList = ["소식","이벤트"]
+  const mylocation =
+    pathname.split("/")[0] === location.pathname.split("/")[1];
 
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
   const moveHandler = (path, isSub) => {
@@ -51,7 +53,7 @@ export default function NavBtn({
       >
         {context}
       </MainBtn>
-      <SubNav
+      <NotNotice
         isSubNav={isSubNav}
         isHover={isHover}
         size={size}
@@ -61,11 +63,7 @@ export default function NavBtn({
         {list.map((el, idx) => (
           <SubBtnContainer
             size={size}
-            isSubNav={isSubNav}
-            isHover={isHover}
-            mylocation={mylocation}
             pathname={pathname}
-            key={el.pathname}
             key={idx}
             onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`, true)}
           >
@@ -73,7 +71,26 @@ export default function NavBtn({
             <SubTitle size={size}>{el}</SubTitle>
           </SubBtnContainer>
         ))}
-      </SubNav>
+      </NotNotice>
+      <NowNotice
+        isSubNav={isSubNav}
+        isHover={isHover}
+        size={size}
+        mylocation={mylocation}
+        pathname={pathname}
+      >
+        {noticeList.map((el, idx) => (
+          <SubBtnContainer
+            size={size}
+            pathname={pathname}
+            key={idx}
+            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`, true)}
+          >
+            <SubBtn src={ufo} size={size} alt="ufo" />
+            <SubTitle size={size} name={el}>{el}</SubTitle>
+          </SubBtnContainer>
+        ))}
+      </NowNotice>
     </Container>
   );
 }
@@ -104,12 +121,25 @@ const MainBtn = styled.div`
 const SubNav = styled.div`
   position: absolute;
   top: ${({ size }) => `${size.split("rem")[0] * 1.5}rem`};
+  align-items: center;
+`;
+
+const NotNotice = styled(SubNav)`
   left: ${({ size }) => `-${size.split("rem")[0] * 6}rem`};
   display: ${({ isSubNav, isHover, mylocation, pathname }) =>
-    (isSubNav && mylocation && !isHover) || (isSubNav && isHover === pathname)
+    (isSubNav && mylocation && !isHover && pathname !== "notice") ||
+    (isSubNav && isHover === pathname && pathname !== "notice")
       ? "flex"
       : "none"};
-  align-items: center;
+`;
+
+const NowNotice = styled(SubNav)`
+  left: ${({ size }) => `-${size.split("rem")[0] * 1.5}rem`};
+  display: ${({ isSubNav, isHover, mylocation, pathname }) =>
+    (isSubNav && mylocation && !isHover && pathname === "notice") ||
+    (isSubNav && isHover === pathname && pathname === "notice")
+      ? "flex"
+      : "none"};
 `;
 
 const SubBtnContainer = styled.div`
@@ -134,7 +164,7 @@ const SubBtnContainer = styled.div`
   :nth-child(5) {
     animation-duration: 1.1s;
   }
-  :last-child {
+  :nth-child(6) {
     animation-duration: 1.3s;
   }
 
@@ -157,6 +187,10 @@ const SubBtn = styled.img`
 const SubTitle = styled.span`
   position: absolute;
   top: ${({ size }) => `${size.split("rem")[0] * 0.7}rem`};
-  left: ${({ size }) => `${size.split("rem")[0] * 0.85}rem`};
+  left: ${({ size, name }) =>
+    name === "이벤트"
+      ? `${size.split("rem")[0] * 0.6}rem`
+      : `${size.split("rem")[0] * 0.85}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  white-space:nowrap;
 `;
