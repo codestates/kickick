@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ import { signUp, tempoSignUp } from "../../../apis/auth";
 
 export default function SignupForm() {
   const navigate = useNavigate();
+  const params = useParams();
   const isLogin = useSelector((state) => state.login.isLogin);
   const width = 30;
   const height = 3;
@@ -60,7 +61,7 @@ export default function SignupForm() {
   ];
 
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({ type: params.type });
   const [isvalid, setIsVaild] = useState([]);
   const [conditionCheck,setConditionCheck] = useState({})
 
@@ -179,7 +180,7 @@ export default function SignupForm() {
         .then(() => navigate("/", { replace: true }));
     }
   }
-  
+  console.log(inputValue)
   return (
     <Container>
       {ArrInfo.map((el, idx) => (
