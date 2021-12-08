@@ -24,7 +24,7 @@ export default function TotalSearch({ setSelectPage, setLoading }) {
     if (label === "최신") {
       setLoading(true);
     } else if (label === "인기") {
-      getPostsList({ category, favorite_count: 1, limit: 20 })
+      getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
         .then((data) => {
           dispatch(getList(data.data));
         })
