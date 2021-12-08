@@ -88,7 +88,6 @@ const Frame = styled.div`
 const BackBoard = styled.img`
   position: absolute;
   width: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 50}rem`};
-  /* z-index: -1; */
 `;
 
 const Hand = styled.img`

@@ -99,7 +99,6 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
 const Container = styled.div`
   position: relative;
   width: 100vw;
