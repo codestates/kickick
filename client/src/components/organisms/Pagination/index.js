@@ -78,7 +78,7 @@ export default function MyPagination({ count }) {
         })
         .catch((err) => console.log(err));
     } else if (pathname === "/mypage/mycomment") {
-      getComments({ page_num: selectPage })
+      getComments(null, null, selectPage)
         .then((data) => dispatch(getMyCommentAction(data)))
         .catch((err) => console.log(err));
     }

@@ -62,6 +62,9 @@ const Container = styled.div`
   @media ${({ theme }) => theme.device.tablet} {
     width: calc(50% - 1.5rem);
   }
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: calc(100% - 1.5rem);
+  }
 `;
 
 const Description = styled.div`

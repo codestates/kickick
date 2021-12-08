@@ -1,19 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 
-import Tab from "../../atoms/Tab";
+import { Tab } from "../../../components";
+
+import {
+  PROFILE,
+  ATTENDANCE,
+  FAVORITES,
+  MY_POST,
+  MY_COMMENT,
+} from "../../../commons/constants/mypage";
 
 const generalTabList = [
-  { label: "프로필 수정", to: "/mypage/profile", category: "회원정보" },
-  { label: "출석", to: "/mypage/attendance", category: "회원정보" },
+  { label: PROFILE, to: "/mypage/profile", category: "회원정보" },
+  { label: ATTENDANCE, to: "/mypage/attendance", category: "회원정보" },
   {
-    label: "스크랩 한 글",
+    label: FAVORITES,
     to: "/mypage/favorites",
     category: "나의활동",
   },
-  { label: "내가 쓴 글", to: "/mypage/mypost", category: "나의활동" },
+  { label: MY_POST, to: "/mypage/mypost", category: "나의활동" },
   {
-    label: "내가 쓴 댓글",
+    label: MY_COMMENT,
     to: "/mypage/mycomment",
     category: "나의활동",
   },

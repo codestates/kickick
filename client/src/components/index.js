@@ -12,6 +12,7 @@ export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
+export { default as Tab } from "./atoms/Tab";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as IconBox } from "./atoms/IconBox";

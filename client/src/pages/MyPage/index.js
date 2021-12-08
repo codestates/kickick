@@ -27,13 +27,21 @@ import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";
 import purchaselog from "../../assets/images/purchaselog.png";
 
+import {
+  PROFILE,
+  ATTENDANCE,
+  FAVORITES,
+  MY_POST,
+  MY_COMMENT,
+} from "../../commons/constants/mypage";
+
 const pageList = [
   { category: "home", component: <Home /> },
-  { category: "profile", component: <Profile />, title: "프로필" },
-  { category: "attendance", component: <Attendance />, title: "출석" },
-  { category: "favorites", component: <Favorites />, title: "스크랩 한 글" },
-  { category: "mypost", component: <MyPost />, title: "내가 쓴 글" },
-  { category: "mycomment", component: <MyComment />, title: "내가 단 댓글" },
+  { category: "profile", component: <Profile />, title: PROFILE },
+  { category: "attendance", component: <Attendance />, title: ATTENDANCE },
+  { category: "favorites", component: <Favorites />, title: FAVORITES },
+  { category: "mypost", component: <MyPost />, title: MY_POST },
+  { category: "mycomment", component: <MyComment />, title: MY_COMMENT },
 ];
 
 export default function MyPage() {
@@ -94,7 +102,7 @@ export function Attendance() {
 export function Favorites() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getFavorites({})
+    getFavorites()
       .then((data) => dispatch(getFavoritesAction(data)))
       .catch((err) => console.log(err));
   }, [dispatch]);
@@ -112,7 +120,7 @@ export function MyPost() {
 export function MyComment() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getComments({})
+    getComments()
       .then((data) => dispatch(getMyCommentAction(data)))
       .catch((err) => console.log(err));
   }, [dispatch]);

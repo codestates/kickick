@@ -20,10 +20,11 @@ import {
   FaRegHeart,
   FaDollarSign,
   FaRegWindowClose,
-  FaBullhorn,
 } from "react-icons/fa";
 
 import { ImGift } from "react-icons/im";
+
+import { VscMegaphone } from "react-icons/vsc";
 
 export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
@@ -39,15 +40,16 @@ export const iconList = [
   { icon: <FaHelicopter />, label: "여행", category: "게시판" },
   { icon: <FaRegEdit />, label: "프로필 수정", category: "마이페이지" },
   { icon: <FaRegCalendarAlt />, label: "출석", category: "마이페이지" },
-  { icon: <FaRegBookmark />, label: "스크랩 한 글", category: "마이페이지" },
+  { icon: <FaRegHeart />, label: "좋아요 한 글", category: "마이페이지" },
   { icon: <FaRegClipboard />, label: "내가 쓴 글", category: "마이페이지" },
-  { icon: <FaRegComment />, label: "내가 쓴 댓글", category: "마이페이지" },
-  { icon: <FaRegHeart />, label: "내가 산 킥", category: "마이페이지" },
+  { icon: <FaRegComment />, label: "내가 단 댓글", category: "마이페이지" },
+  { icon: <FaRegBookmark />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
   { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
-  { icon: <FaBullhorn />, label: "공지", category: "공지" },
+  { icon: <VscMegaphone />, label: "뉴스", category: "공지" },
+  { icon: <ImGift />, label: "이벤트", category: "공지" },
 ];
 
 export default function IconText({ isActive, label, handleClick, board }) {
@@ -61,8 +63,17 @@ export default function IconText({ isActive, label, handleClick, board }) {
       category={category}
       board={board}
     >
-      {icon}
-      {label}
+      {category === "공지" ? (
+        <>
+          {label}
+          {icon}
+        </>
+      ) : (
+        <>
+          {icon}
+          {label}
+        </>
+      )}
     </Container>
   );
 }
@@ -131,13 +142,13 @@ const Container = styled.div`
 
 
     ${({ category }) =>
-    category === "이벤트" &&
+    category === "공지" &&
     css`
-      font-size: 0.7rem;
+      font-size: 1.2rem;
 
       svg {
-        margin-right: 1rem;
-        font-size: 0.7rem;
+        margin-left: 0.3rem;
+        font-size: 1rem;
       }
     `}
 `;

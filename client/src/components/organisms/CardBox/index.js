@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export default function CardBox({ children }) {
-  const arr = Array(20).fill(0);
+  const arr = Array(5).fill(0);
   return (
     <Container>
       {arr.map((el, idx) => (

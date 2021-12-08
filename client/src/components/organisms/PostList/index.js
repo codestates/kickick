@@ -19,7 +19,7 @@ const postList = [
   {
     reducer: ["mypage", "mycomment"],
     type: "mypagemycomment",
-    label: ["게시판", "댓글", "좋아요", "날짜"],
+    label: ["글 제목", "댓글", "날짜"],
   },
   {
     reducer: ["board", "data"],
@@ -141,15 +141,12 @@ const PostListContainer = styled.div`
       type === "mypagemycomment" &&
       css`
         > div:nth-of-type(1) {
-          flex: 2;
+          flex: 3;
         }
         > div:nth-of-type(2) {
           flex: 5;
         }
         > div:nth-of-type(3) {
-          flex: 1;
-        }
-        > div:nth-of-type(4) {
           flex: 2;
         }
       `}

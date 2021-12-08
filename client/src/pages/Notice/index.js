@@ -28,11 +28,13 @@ export default function Notice() {
       <BoardTop />
       <Container>
         <NavContainer>
-          <h3>
-            <IconText category="공지" label="공지" />
-          </h3>
-          <NavLink to="/notice/news">뉴스</NavLink>
-          <NavLink to="/notice/event">이벤트</NavLink>
+          <h3>공지</h3>
+          <NavLink to="/notice/news">
+            <IconText label="뉴스" />
+          </NavLink>
+          <NavLink to="/notice/event">
+            <IconText label="이벤트" />
+          </NavLink>
         </NavContainer>
         <ContentContainer>
           <Outlet />
@@ -94,14 +96,20 @@ export function NoticeDetail() {
 
 const Container = styled.div`
   display: flex;
-  width: 64rem;
+  width: 90rem;
   margin: 3rem auto;
   gap: 1rem;
 
+  @media ${({ theme }) => theme.device.notebookL} {
+    width: 64rem;
+  }
   @media ${({ theme }) => theme.device.notebookS} {
     width: 48rem;
   }
   @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
+  @media ${({ theme }) => theme.device.mobileL} {
     width: 100%;
   }
 `;
@@ -109,21 +117,28 @@ const Container = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 48rem;
+  width: 64rem;
+
+  gap: 3rem;
+
+  @media ${({ theme }) => theme.device.notebookL} {
+    width: 100%;
+  }
 `;
 
 const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 7rem;
+  width: 12rem;
   height: 10rem;
-  gap: 1.5rem;
+  gap: 0.5rem;
 
   padding: 1rem;
 
   h3 {
     font-size: 0.8rem;
+    padding: 0.5rem;
     margin-bottom: 0.5rem;
     color: gray;
   }
@@ -136,6 +151,10 @@ const NavContainer = styled.div`
     color: purple;
     font-weight: bold;
   }
+
+  @media ${({ theme }) => theme.device.notebookL} {
+    display: none;
+  }
 `;
 
 const EventContainer = styled.div`
@@ -147,6 +166,8 @@ const EventContainer = styled.div`
 const NewsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 48rem;
+  margin: 0 auto;
 `;
 
 const NoticeDetailContainer = styled.div`
@@ -154,6 +175,7 @@ const NoticeDetailContainer = styled.div`
   flex-direction: column;
   gap: 3rem;
   width: 48rem;
+  margin: 0 auto;
 
   h2 {
     font-size: 2rem;
@@ -175,6 +197,7 @@ const NoticeDetailContainer = styled.div`
 const NoticeDetailInfo = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 `;
 
 const NoticeDetailContent = styled.div`

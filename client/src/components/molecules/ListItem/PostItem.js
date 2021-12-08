@@ -83,15 +83,9 @@ export function MyPageMyPost({ data }) {
 export function MyPageMyComment({ data }) {
   return (
     <Container>
+      <div>{data.post.post_name}</div>
       <div>
-        {/* {data.tags.map((el) => (
-          <span># {el.content}</span>
-        ))} */}
-        <span>#어질어질</span>
-        <span>#어질어질</span>
-      </div>
-      <div>
-        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+        <Link to={`/detailboard/${data.post_id}`}>{data.content}</Link>
       </div>
       <div>{data.created_at}</div>
       <div>{data.view_count}</div>
@@ -100,6 +94,7 @@ export function MyPageMyComment({ data }) {
 }
 
 export function MyPageFavorites({ data }) {
+  if (!data.post) return null;
   return (
     <Container>
       <div>
