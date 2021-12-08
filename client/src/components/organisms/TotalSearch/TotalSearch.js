@@ -20,6 +20,12 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
     setHighlight(label);
     if (label === "최신") {
       setLoading(true);
+    } else if (label === "인기") {
+      getPostsList({ category, favorite_count: 1, limit: 20 })
+        .then((data) => {
+          dispatch(getList(data.data));
+        })
+        .catch((err) => console.log(err.response));
     }
   };
   const handleIcon = (label) => {
@@ -29,6 +35,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
   const handleSearch = () => {
     dispatch(search(icon.label, word));
     setWord("");
+    setHighlight("최신");
 
     if (icon.label === "제목") {
       getPostsList({

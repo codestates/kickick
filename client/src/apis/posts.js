@@ -10,6 +10,7 @@ export const getPostsInfo = (post_id) =>
  *  @param {string} username option
  *  @param {string} tag option
  *  @param {string} content option
+ *  @param {number} favorite_count option
  *  @param {number} limit option
  *  @param {number} page_num option
  **/
@@ -19,6 +20,7 @@ export const getPostsList = ({
   username,
   tag,
   content,
+  favorite_count,
   limit,
   page_num,
 }) => {
@@ -29,6 +31,7 @@ export const getPostsList = ({
   if (username) query += `username=${username}&`;
   if (tag) query += `tag=${tag}&`;
   if (content) query += `content=${content}&`;
+  if (favorite_count) query += `favorite_count=${favorite_count}&`;
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 

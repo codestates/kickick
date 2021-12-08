@@ -8,7 +8,6 @@ import { getPostsInfo } from "../../apis/posts";
 import { getPostInfo } from "../../store/actions/postadd";
 
 export default function DetailBoard() {
-  // 이거 화면 이동시에 최상단으로 이동시켜주는 함수 함 넣어봄
   const state = useSelector((state) => state.postInfo);
   const dispatch = useDispatch();
   const { post_id } = useParams();
@@ -23,7 +22,7 @@ export default function DetailBoard() {
       .catch((err) => console.log(err.response));
   }, []);
 
-  if (loading) return "";
+  if (loading) return <Temporary />;
 
   return (
     <Container>
@@ -38,9 +37,13 @@ export default function DetailBoard() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 48rem;
   margin: 0 auto;
+  gap: 1rem;
 `;
 
 const RigthContainer = styled.div``;
+const Temporary = styled.div`
+  height: 100vh;
+`;

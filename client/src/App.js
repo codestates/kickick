@@ -15,11 +15,12 @@ import DetailBoard from "./pages/Board/DetailBoard";
 import EditBoard from "./pages/Board/EditBoard";
 import MyEditBoard from "./pages/Board/MyEditBoard";
 import MyPage from "./pages/MyPage";
-import KakaoAuth from "./pages/Login/KakaoAuth"
+import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
+import { getUserInfo } from "./apis/users";
 import {
   isLoginAction,
   todayLoginAction,

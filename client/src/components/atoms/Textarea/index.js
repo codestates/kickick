@@ -29,9 +29,10 @@ export default function Textarea({
 const Container = styled.div`
   position: relative;
   p {
+    color: #c8c8c8;
     position: absolute;
-    right: 0.5rem;
-    bottom: 0.5rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 `;
 const TextArea = styled.textarea`

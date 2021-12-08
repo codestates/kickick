@@ -8,12 +8,7 @@ import { getList } from "../../store/actions/postadd/boardList";
 import { resetTag } from "../../store/actions/postadd";
 import { categoryName } from "../../commons/utils/categoryName";
 
-import {
-  TotalSearch,
-  BoardBottom,
-  BoardTop,
-  BoardTodayKicks,
-} from "../../components";
+import { TotalSearch, BoardBottom, BoardTop } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
 
 export default function Board({ setUpdate, update }) {
@@ -47,7 +42,10 @@ export default function Board({ setUpdate, update }) {
     } else {
       dispatch(resetTag());
       getPostsList({ category: categoryName(category), limit: 20 })
-        .then((data) => dispatch(getList(data.data)))
+        .then((data) => {
+          setSelectPage(1);
+          dispatch(getList(data.data));
+        })
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
@@ -56,9 +54,8 @@ export default function Board({ setUpdate, update }) {
   if (loading) return <BoardSkeleton />;
   return (
     <>
-      <BoardTop />
+      <BoardTop list={list} category={category} />
       <Container>
-        <BoardTodayKicks />
         <BoardContainer>
           <TotalSearch
             category={categoryName(category)}
@@ -96,6 +93,7 @@ const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 64rem;
+  margin: 0 auto;
 
   @media ${({ theme }) => theme.device.notebookS} {
     flex-direction: column;
