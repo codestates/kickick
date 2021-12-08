@@ -18,7 +18,9 @@ export default function TagInput({ tagArr, setTagArr, category }) {
     }
   };
   const handleChange = (e) => {
-    setValue(e.target.value);
+    if (e.target.value.length <= 10) {
+      setValue(e.target.value);
+    } else return;
   };
 
   const handleDel = (idx) => {

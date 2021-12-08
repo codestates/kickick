@@ -46,7 +46,10 @@ export default function Board() {
     } else {
       dispatch(resetTag());
       getPostsList({ category: apiCategory, limit: 20 })
-        .then((data) => dispatch(getList(data.data)))
+        .then((data) => {
+          setSelectPage(1);
+          dispatch(getList(data.data));
+        })
         .then(() => setLoading(false))
         .catch((err) => console.log(err.response));
     }
@@ -79,6 +82,7 @@ const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 64rem;
+  margin: 0 auto;
 
   @media ${({ theme }) => theme.device.notebookS} {
     flex-direction: column;

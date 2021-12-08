@@ -21,6 +21,7 @@ import NaverAuth from "./pages/Login/NaverAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
+import { getUserInfo } from "./apis/users";
 import {
   isLoginAction,
   todayLoginAction,
@@ -69,7 +70,7 @@ export default function App() {
               <DarkBox />
             </DarkChanger>
           )}
-          <Nav themeCode={theme[1]} setUpdate={setUpdate} />
+          <Nav themeCode={theme[1]} />
           <Routes>
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
