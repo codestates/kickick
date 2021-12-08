@@ -11,11 +11,11 @@ export default function IconContainer() {
   const { post_id } = useParams();
   const { board, postInfo, login } = useSelector((state) => state);
   const [heart, setHeart] = useState(
-    postInfo.data.favorite === "true" ? true : false
+    postInfo.favorite === "true" ? true : false
   );
   const category = () => {
-    let idx = postInfo.data.category.indexOf("_");
-    return postInfo.data.category.slice(0, idx);
+    let idx = postInfo.category.indexOf("_");
+    return postInfo.category.slice(0, idx);
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,11 +44,11 @@ export default function IconContainer() {
     }
   };
 
-  console.log(typeof postInfo.data.favorite);
+  console.log(typeof postInfo.favorite);
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
-      {postInfo.data.user.username === login.isLogin.username ? (
+      {postInfo.user.username === login.isLogin.username ? (
         <IconBox label="edit" handleClick={handleClick} />
       ) : heart ? (
         <IconBox label="red" handleClick={handleClick} />

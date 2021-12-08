@@ -32,8 +32,6 @@ export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
   const { category } = useParams();
 
-  const [selectPage, setSelectPage] = useState(1);
-
   let data;
   let count;
   const freepost = useSelector((state) => state[`${reducer[0]}`]);
@@ -64,19 +62,13 @@ export default function PostList({ type }) {
         {data.length === 0 ? (
           <NoPostContainer>등록된 것이 없습니다</NoPostContainer>
         ) : (
-          data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
+          data.map((el, idx) => <PostItem key={idx} data={el} type={type} />)
         )}
       </PostListContainer>
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && (
-        <MyPagination
-          count={count}
-          selectPage={selectPage}
-          setSelectPage={setSelectPage}
-        />
-      )}
+      {data.length !== 0 && <MyPagination count={count} />}
     </Container>
   );
 }

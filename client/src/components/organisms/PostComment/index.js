@@ -66,7 +66,7 @@ export default function PostComment({ post_id }) {
   });
 
   useEffect(async () => {
-    await getComments(postInfo.data.post_id)
+    await getComments(postInfo.post_id)
       .then((data) => {
         setCmt(data.data);
       })

@@ -27,9 +27,9 @@ export default function TotalSearch({ setLoading }) {
     } else if (label === "인기") {
       getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
         .then((data) => {
-          dispatch(selectPageAction(1));
           dispatch(getList(data.data));
         })
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => console.log(err.response));
     }
   };

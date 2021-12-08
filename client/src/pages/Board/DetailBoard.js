@@ -16,7 +16,7 @@ export default function DetailBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfo(data.data));
+        dispatch(getPostInfo(data.data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));

@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPostsList } from "../../apis/posts";
 import { getList } from "../../store/actions/postadd/boardList";
 import { getCategoryAction, resetTag } from "../../store/actions/postadd";
-import { selectPageAction } from "../../store/actions/pagination";
-import { TotalSearch, BoardTop, PostList } from "../../components";
+
+import { TotalSearch, BoardBottom, BoardTop } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
 
 export default function Board() {
@@ -18,6 +18,9 @@ export default function Board() {
   const stateOnoff = useSelector((state) => state.onoff);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [selectPage, setSelectPage] = useState(
+    stateOnoff.goback ? (state.page ? state.page : 1) : 1
+  );
 
   useEffect(() => {
     dispatch(getCategoryAction(category));
@@ -44,11 +47,6 @@ export default function Board() {
       dispatch(resetTag());
       getPostsList({ category: apiCategory, limit: 20 })
         .then((data) => {
-          dispatch(
-            selectPageAction(
-              stateOnoff.goback ? (state.page ? state.page : 1) : 1
-            )
-          );
           dispatch(getList(data.data));
         })
         .then(() => setLoading(false))
@@ -63,7 +61,7 @@ export default function Board() {
       <Container>
         <BoardContainer>
           <TotalSearch setLoading={setLoading} />
-          <PostList type="freepost" />
+          <BoardBottom />
         </BoardContainer>
       </Container>
     </>

@@ -29,7 +29,6 @@ export default function MyPagination({ count }) {
 
   const limitPage = 10;
   const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
-  // const [selectPage, dispatch(selectPageAction] = useState(boardState.page);
   const dividPage = Math.ceil(totalPage / limitPage);
   const [selectDividPage, setSelectDividPage] = useState(0);
   const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
