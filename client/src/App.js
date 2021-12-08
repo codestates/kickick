@@ -102,7 +102,7 @@ export default function App() {
 const Container = styled.div`
   position: relative;
   width: 100vw;
-  max-width: 100%;
+  /* max-width: 100%; */
   min-height: calc(100vh - 4rem);
   margin-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};

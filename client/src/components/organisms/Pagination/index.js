@@ -20,7 +20,7 @@ import { goBack } from "../../../store/actions/postadd";
 
 export default function MyPagination({ count }) {
   const { pathname } = useLocation();
-  const state = useSelector((state) => state.board);
+  const boardState = useSelector((state) => state.board);
   const apiCategory = useSelector((state) => state.postAdd.category);
   const dispatch = useDispatch();
 
@@ -92,15 +92,21 @@ export default function MyPagination({ count }) {
     } else {
       getPostsList({
         category: apiCategory,
-        post_name: state.title.word,
-        username: state.writer.word,
-        tag: state.tag.word,
+        post_name: boardState.title.word,
+        username: boardState.writer.word,
+        tag: boardState.tag.word,
         limit: 20,
         page_num: selectPage,
       })
         .then((data) =>
           dispatch(
-            getList(data.data, state.title, state.writer, state.tag, selectPage)
+            getList(
+              data.data,
+              boardState.title,
+              boardState.writer,
+              boardState.tag,
+              selectPage
+            )
           )
         )
         .then(() => dispatch(goBack()))

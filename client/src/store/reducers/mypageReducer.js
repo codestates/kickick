@@ -13,7 +13,12 @@ export default function mypageReducer(state = initialState, action) {
     case GET_MY_POST:
       return { ...state, ...action.payload };
     case GET_MY_COMMENT:
-      return { ...state, ...action.payload };
+      return {
+        mycomment: {
+          count: action.payload.mycomment.count,
+          data: [...action.payload.mycomment.data],
+        },
+      };
     default:
       return state;
   }

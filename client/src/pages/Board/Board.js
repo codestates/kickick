@@ -27,29 +27,29 @@ export default function Board() {
   }, [category, dispatch]);
 
   useEffect(() => {
-    // if (stateOnoff.goback) {
-    getPostsList({
-      category: apiCategory,
-      post_name: state.title.word,
-      username: state.writer.word,
-      tag: state.tag.word,
-      limit: 20,
-      page_num: state.page,
-    })
-      .then((data) =>
-        dispatch(
-          getList(data.data, state.title, state.writer, state.tag, state.page)
+    if (stateOnoff.goback) {
+      getPostsList({
+        category: apiCategory,
+        post_name: state.title.word,
+        username: state.writer.word,
+        tag: state.tag.word,
+        limit: 20,
+        page_num: state.page,
+      })
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, state.page)
+          )
         )
-      )
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
-    // } else {
-    //   dispatch(resetTag());
-    //   getPostsList({ category: apiCategory, limit: 20 })
-    //     .then((data) => dispatch(getList(data.data)))
-    //     .then(() => setLoading(false))
-    //     .catch((err) => console.log(err.response));
-    // }
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    } else {
+      dispatch(resetTag());
+      getPostsList({ category: apiCategory, limit: 20 })
+        .then((data) => dispatch(getList(data.data)))
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    }
   }, [apiCategory, loading]);
 
   if (loading) return <BoardSkeleton />;
