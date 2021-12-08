@@ -40,7 +40,6 @@ module.exports = async (req, res) => {
       limit: limit,
       distinct: true,
       order: [["id", "DESC"]],
-      where: {},
       include: [
         {
           model: posts,
