@@ -33,7 +33,7 @@ export default function MailAuth() {
         <BackImg src={mailSuccess} alt="appointment letter" />
         <Frame
           onClick={() => {
-            setTimeout(() => navigate("/login"),3000);
+            setTimeout(() => navigate("/login", { replace: true }), 3000);
             setIsClick(true);
           }}
         >
