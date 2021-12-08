@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+// import { io } from "socket.io-client";
 
 import KickBoard from "./pages/KickBoard";
 import { Nav, Footer, PageUp } from "./components";
@@ -21,7 +22,6 @@ import NaverAuth from "./pages/Login/NaverAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
-import { getUserInfo } from "./apis/users";
 import {
   isLoginAction,
   todayLoginAction,
@@ -31,11 +31,19 @@ import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
-  const [update, setUpdate] = useState(false);
+
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
   const [theme, setTheme] = useState([light, "light"]);
+  // const socketClient = io("http://localhost:4000/");
+  // socketClient.on("connect", () => {
+  //   console.log("connection server");
+  //   socketClient.emit("signin", { username: "한태규" })
+  // });
+  // socketClient.emit("alarms", { username: "demouser" });
+
+  // console.log(io("http://localhost:4000/"));
 
   useEffect(() => {
     setTimeout(() => {
