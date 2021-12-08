@@ -141,6 +141,12 @@ module.exports = async (req, res) => {
     where_obj.content = {
       [Op.like]: `%${req.query.content}%`,
     };
+  // 즐겨찾기 일정 개수 이상 검색 추가
+  if (req.query.favorite_count) {
+    where_obj.favorite_count = {
+      [Op.gte]: Number(req.query.favorite_count),
+    };
+  }
 
   // 글쓴이 태그 검색 추가 필요
   let users_where_obj = {};
@@ -161,9 +167,9 @@ module.exports = async (req, res) => {
         ["id", "post_id"],
         "category",
         "post_name",
-        // "content",
         "cost",
         "view_count",
+        "favorite_count",
         "created_at",
       ],
       distinct: true,

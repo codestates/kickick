@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
         "content",
         "cost",
         "view_count",
+        "favorite_count",
         "created_at",
       ],
       where: {
