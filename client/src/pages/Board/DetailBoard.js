@@ -20,7 +20,7 @@ export default function DetailBoard() {
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [dispatch, post_id]);
 
   if (loading) return <Temporary />;
 
@@ -38,12 +38,15 @@ export default function DetailBoard() {
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  gap: 1rem;
   width: 48rem;
   margin: 0 auto;
-  gap: 1rem;
 `;
 
-const RigthContainer = styled.div``;
+const RigthContainer = styled.div`
+  width: 40.5rem;
+`;
+
 const Temporary = styled.div`
   height: 100vh;
 `;

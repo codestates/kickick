@@ -46,6 +46,25 @@ const Container = styled.div`
       }
     `}
 
+    ${({ type }) =>
+    type === "mypage" &&
+    css`
+      height: 2.5rem;
+    `}
+
+    ${({ type }) =>
+    type === "new" &&
+    css`
+      width: 10rem;
+      height: 2.5rem;
+      background-color: white;
+      border: 1px solid #d8d8d8;
+      color: #aaa;
+      &:hover {
+        background-color: #0c0c42;
+      }
+    `}
+
   ${({ type }) =>
     type === "bigger" &&
     css`

@@ -10,7 +10,7 @@ import { themeModeAction } from "../../../store/actions/nav";
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
-export default function Nav({ themeCode, setUpdate }) {
+export default function Nav({ themeCode }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
@@ -30,7 +30,7 @@ export default function Nav({ themeCode, setUpdate }) {
     if (themeMode === "light") dispatch(themeModeAction("dark"));
     else dispatch(themeModeAction("light"));
   };
-  
+
   return (
     <Container
       onMouseOver={() => setIsHover(true)}
@@ -44,7 +44,7 @@ export default function Nav({ themeCode, setUpdate }) {
             fontFamily={`'Luckiest Guy', cursive`}
             pathname="/"
           />
-          <BtnChamber setUpdate={setUpdate} />
+          <BtnChamber />
         </Separation>
         <Separation>
           <ThemeBtn

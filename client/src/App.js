@@ -15,6 +15,7 @@ import DetailBoard from "./pages/Board/DetailBoard";
 import EditBoard from "./pages/Board/EditBoard";
 import MyEditBoard from "./pages/Board/MyEditBoard";
 import MyPage from "./pages/MyPage";
+import Notice, { NoticeDetail } from "./pages/Notice";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 
@@ -30,8 +31,6 @@ import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
-  // NOTICE theme 테스트 중
-  // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
   const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
@@ -71,7 +70,7 @@ export default function App() {
               <DarkBox />
             </DarkChanger>
           )}
-          <Nav themeCode={theme[1]} setUpdate={setUpdate} />
+          <Nav themeCode={theme[1]} />
           <Routes>
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
@@ -87,12 +86,12 @@ export default function App() {
               element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route
-              path="board/:category"
-              element={<Board setUpdate={setUpdate} update={update} />}
-            />
+            <Route path="board/:category" element={<Board />} />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
+            <Route path="notice/:category" element={<Notice />}>
+              <Route path=":notice_id" element={<NoticeDetail />} />
+            </Route>
           </Routes>
           <Footer />
         </Container>
@@ -104,7 +103,7 @@ export default function App() {
 const Container = styled.div`
   position: relative;
   width: 100vw;
-  max-width: 100%;
+  /* max-width: 100%; */
   min-height: calc(100vh - 4rem);
   margin-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};

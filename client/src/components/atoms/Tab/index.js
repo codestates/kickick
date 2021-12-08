@@ -5,9 +5,9 @@ import { FaAngleRight } from "react-icons/fa";
 
 import IconText from "../IconText";
 
-export default function Tab({ label, to }) {
+export default function Tab({ label, pathname }) {
   return (
-    <Container to={to}>
+    <Container to={pathname}>
       <IconText label={label} />
       <FaAngleRight />
     </Container>
@@ -40,5 +40,9 @@ const Container = styled(Link)`
     margin-left: auto;
     margin-right: 1rem;
     color: #cccccc;
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: calc(100%);
   }
 `;

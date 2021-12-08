@@ -11,11 +11,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
-import { goBack } from "../../../store/actions/postadd/";
+import { goBack } from "../../../store/actions/postadd";
 
-export default function Pagination({ category, selectPage, setSelectPage }) {
+export default function Pagination({ selectPage, setSelectPage }) {
   const state = useSelector((state) => state.board);
-
+  const apiCategory = useSelector((state) => state.postAdd.category);
+  // console.log(state);
   const dispatch = useDispatch();
 
   const limitPage = 10;
@@ -70,7 +71,7 @@ export default function Pagination({ category, selectPage, setSelectPage }) {
 
   useEffect(() => {
     getPostsList({
-      category: category,
+      category: apiCategory,
       post_name: state.title.word,
       username: state.writer.word,
       tag: state.tag.word,

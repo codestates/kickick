@@ -27,19 +27,26 @@ import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";
 import purchaselog from "../../assets/images/purchaselog.png";
 
+import {
+  PROFILE,
+  ATTENDANCE,
+  FAVORITES,
+  MY_POST,
+  MY_COMMENT,
+} from "../../commons/constants/mypage";
+
 const pageList = [
   { category: "home", component: <Home /> },
-  { category: "profile", component: <Profile />, title: "프로필" },
-  { category: "attendance", component: <Attendance />, title: "출석" },
-  { category: "favorites", component: <Favorites />, title: "스크랩 한 글" },
-  { category: "mypost", component: <MyPost />, title: "내가 쓴 글" },
-  { category: "mycomment", component: <MyComment />, title: "내가 단 댓글" },
+  { category: "profile", component: <Profile />, title: PROFILE },
+  { category: "attendance", component: <Attendance />, title: ATTENDANCE },
+  { category: "favorites", component: <Favorites />, title: FAVORITES },
+  { category: "mypost", component: <MyPost />, title: MY_POST },
+  { category: "mycomment", component: <MyComment />, title: MY_COMMENT },
 ];
 
 export default function MyPage() {
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
-
 
   return (
     <>
@@ -95,7 +102,7 @@ export function Attendance() {
 export function Favorites() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getFavorites({})
+    getFavorites()
       .then((data) => dispatch(getFavoritesAction(data)))
       .catch((err) => console.log(err));
   }, [dispatch]);
@@ -113,8 +120,10 @@ export function MyPost() {
 export function MyComment() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getComments({})
-      .then((data) => dispatch(getMyCommentAction(data)))
+    getComments()
+      .then((data) => {
+        dispatch(getMyCommentAction(data));
+      })
       .catch((err) => console.log(err));
   }, [dispatch]);
   return <PostList type="mypagemycomment" />;
@@ -152,15 +161,22 @@ const NavContainer = styled.div`
 `;
 const Container = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
-  top: -15rem;
+  top: -10rem;
   z-index: 3;
 
-  width: 77rem;
+  width: 64rem;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 3rem 1rem;
   background-color: white;
+  border-radius: 0.5rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+    flex-direction: column;
+    padding: 1rem;
+  }
 `;
 
 const SubContainer = styled.div`
@@ -175,6 +191,14 @@ const SubContainer = styled.div`
   h2 {
     font-size: 1.5rem;
     font-weight: bold;
+  }
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+    border-top: 2px dashed #dddddd;
+    border-left: none;
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
   }
 `;
 

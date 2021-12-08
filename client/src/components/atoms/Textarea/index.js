@@ -47,8 +47,8 @@ const TextArea = styled.textarea`
   resize: none;
 
   pointer-events: ${({ login }) => (login ? null : "none")};
+
   &:focus {
-    outline: none;
     border: 2px solid skyblue;
   }
 `;

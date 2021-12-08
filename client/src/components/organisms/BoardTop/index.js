@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useParams } from "react-router";
+
 import cloud2 from "../../../assets/images/cloud/cloud2.png";
 import cloud3 from "../../../assets/images/cloud/cloud3.png";
 import cloud4 from "../../../assets/images/cloud/cloud4.png";
@@ -13,29 +15,39 @@ import trip from "../../../assets/images/planet/trip.png";
 import art from "../../../assets/images/planet/art.png";
 import spacebackground from "../../../assets/images/space_background.jpg";
 
-export default function BoardTop({ list, category }) {
-  const titleArr = [
-    { label: "study", image: study, color: "#4aa6c1" },
-    { label: "leisure", image: leisure, color: "#4369b0" },
-    { label: "life", image: life, color: "#d04d36" },
-    { label: "economy", image: economy, color: "#eed548" },
-    { label: "trip", image: trip, color: "#f29049" },
-    { label: "art", image: art, color: "#deb462" },
-  ];
-  const idx = list.findIndex((el) => el === category);
-  const title = titleArr[idx];
+const list = [
+  { label: "study", src: study, category: "학습", color: "#4aa6c1" },
+  { label: "leisure", src: leisure, category: "여가", color: "#DDB362" },
+  { label: "life", src: life, category: "생활", color: "#5070B6" },
+  { label: "economy", src: economy, category: "경제", color: "#DE5C8A" },
+  { label: "travel", src: trip, category: "여행", color: "#D04E3E" },
+  { label: "art", src: art, category: "예술", color: "#EED548" },
+  { label: "", src: "", category: "default", color: "#000000" },
+];
+
+export default function BoardTop() {
+  const { category } = useParams();
+  const { src, label, color } = list.find((el) => el.category === category);
+
   return (
-    // <Container image={spacebackground}>
-    <Container>
-      <img className="cloud" src={cloud10} alt="" />
-      <img className="cloud" src={cloud2} alt="" />
-      <img className="cloud" src={cloud3} alt="" />
-      <img className="cloud" src={cloud4} alt="" />
-      <img className="cloud" src={cloud10} alt="" />
-      <img className="icon" src={title.image} alt="" />
-      <Category c={title.color}>{title.label}</Category>
+    <Container image={spacebackground} color={color}>
+      {category && (
+        <>
+          <img src={src} alt="" />
+          <span>{label}</span>
+        </>
+      )}
     </Container>
   );
+  // <Container>
+  //   <img className="cloud" src={cloud10} alt="" />
+  //   <img className="cloud" src={cloud2} alt="" />
+  //   <img className="cloud" src={cloud3} alt="" />
+  //   <img className="cloud" src={cloud4} alt="" />
+  //   <img className="cloud" src={cloud10} alt="" />
+  //   <img className="icon" src={title.image} alt="" />
+  //   <Category c={title.color}>{title.label}</Category>
+  // </Container>
 }
 
 const Container = styled.div`
@@ -75,18 +87,16 @@ const Container = styled.div`
     position: absolute;
     height: 4.5rem;
   }
-  .icon {
+  span {
+    color: #ddd;
+    margin-top: 1rem;
+    font-family: "Luckiest Guy", cursive;
+    text-shadow: 0.4rem 0.4rem 0.3rem gray;
+  }
+  img {
     width: 4.5rem;
     height: 4.5rem;
     filter: drop-shadow(0.5rem 0.5rem 0.3rem gray);
     z-index: 5;
   }
-`;
-
-const Category = styled.span`
-  margin-top: 1rem;
-  font-family: "Luckiest Guy", cursive;
-  text-shadow: 0.4rem 0.4rem 0.3rem gray;
-  color: ${({ c }) => c};
-  z-index: 5;
 `;

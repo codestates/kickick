@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Profile from "../../atoms/Img/Profile";
 import Common from "../../atoms/Button/Common";
 
+import kakaologo from "../../../assets/images/kakaologo.png";
+
 export default function MyPageAside() {
   return (
     <Container>
@@ -12,18 +14,30 @@ export default function MyPageAside() {
         <div className="username">
           <strong>석창환</strong>님
         </div>
-        <div className="userrole">일반유저</div>
-        <Common type="register" label="로그아웃" />
       </ProfileContainer>
+      <StatusContainer>
+        <LoginStatusContainer>
+          <LoginLogo>
+            <img className="logo" src={kakaologo} alt="" />
+          </LoginLogo>
+          카카오 유저
+        </LoginStatusContainer>
+        <Common label="로그아웃" type="new" />
+      </StatusContainer>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.aside`
   display: flex;
   flex-direction: column;
-
+  align-items: center;
   width: 20%;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: row;
+    width: 100%;
+  }
 `;
 
 const ProfileContainer = styled.div`
@@ -31,23 +45,51 @@ const ProfileContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 
-  padding: 2rem 0;
+  padding: 2rem;
 
-  border-bottom: 1px solid #eeeeee;
-
-  .username {
-    margin-top: 2rem;
-
-    strong {
-      font-weight: bold;
-      font-size: 1.25rem;
-    }
+  strong {
+    font-size: 1.25rem;
   }
 
-  .userrole {
-    margin: 1rem 0;
-    font-size: 0.8rem;
-    color: gray;
+  @media ${({ theme }) => theme.device.notebookS} {
+    flex-direction: row;
+  }
+`;
+const StatusContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px dashed #d8d8d8;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: gray;
+  gap: 1rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    border-left: 2px dashed #d8d8d8;
+    border-top: none;
+    flex-direction: row;
+  }
+`;
+
+const LoginStatusContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const LoginLogo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: #fee500;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+
+  img {
+    width: 1.8rem;
   }
 `;
