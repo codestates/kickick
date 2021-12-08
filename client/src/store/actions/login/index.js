@@ -2,10 +2,10 @@ export const IS_LOGIN = "IS_LOGIN";
 export const TODAY_LOGIN = "TODAY_LOGIN";
 export const IS_POINT = "IS_POINT";
 
-export const isLoginAction = (boolean) => {
+export const isLoginAction = (obj) => {
   return {
     type: IS_LOGIN,
-    payload: boolean,
+    payload: obj,
   };
 };
 

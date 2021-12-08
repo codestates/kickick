@@ -16,6 +16,17 @@ export const nowImLogin = (todayLogin) =>
  **/
 export const signIn = (username, password) =>
   api.post(`/auth/signin`, { username, password });
+    /**
+ *  @param {string} code
+ **/
+export const kakaoSignIn = (code) =>
+  api.post(`/auth/kakao`, { code });
+  /**
+ *  @param {string} code
+ *  @param {string} state
+ **/
+export const naverSignIn = (code, state) =>
+  api.post(`/auth/naver`, { code, state });
   /**
  *  @param {string} username
  **/
