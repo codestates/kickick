@@ -30,6 +30,7 @@ export default function Nav({ themeCode, setUpdate }) {
     if (themeMode === "light") dispatch(themeModeAction("dark"));
     else dispatch(themeModeAction("light"));
   };
+  
   return (
     <Container
       onMouseOver={() => setIsHover(true)}
@@ -54,7 +55,7 @@ export default function Nav({ themeCode, setUpdate }) {
           <LoginChanger isLogin={userPoint !== false}>
             <Point>{`${userPoint} P`}</Point>
           </LoginChanger>
-          <LoginChanger isLogin={isLogin === false || isLogin === "guest"}>
+          <LoginChanger isLogin={isLogin === false || isLogin.type === "guest"}>
             <NavBtn context="로그인" pathname="/login" />
             <NavBtn
               context="회원가입"
@@ -63,7 +64,7 @@ export default function Nav({ themeCode, setUpdate }) {
               backgroundColor="#350480"
             />
           </LoginChanger>
-          <LoginChanger isLogin={isLogin === true}>
+          <LoginChanger isLogin={isLogin && isLogin.type !== "guest"}>
             <AlarmBtn />
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
