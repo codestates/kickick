@@ -30,8 +30,6 @@ import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
-  // NOTICE theme 테스트 중
-  // ! theme 자체를 바꾸는 것은 nav에서 redux로 처리 하고 App.js 에서는 theme state를 store에서 받아와서 보여준다.
   const [update, setUpdate] = useState(false);
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);

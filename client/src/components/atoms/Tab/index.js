@@ -5,9 +5,9 @@ import { FaAngleRight } from "react-icons/fa";
 
 import IconText from "../IconText";
 
-export default function Tab({ label, to }) {
+export default function Tab({ label, pathname }) {
   return (
-    <Container to={to}>
+    <Container to={pathname}>
       <IconText label={label} />
       <FaAngleRight />
     </Container>
