@@ -65,9 +65,9 @@ export default function PostList({ type }) {
           data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
         )}
       </PostListContainer>
-      {type === "freepost" && (
+      {/* {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
-      )}
+      )} */}
       {data.length !== 0 && type !== "freepost" && (
         <MyPagination count={count} />
       )}

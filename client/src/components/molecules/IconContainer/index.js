@@ -31,15 +31,13 @@ export default function IconContainer() {
       navigate(`/myeditboard/${category()}/${post_id}`);
     } else if (label === "heart") {
       createFavorites(post_id)
-        .then((data) => {
-          console.log(data.data);
+        .then(() => {
           setHeart(true);
         })
         .catch((err) => console.log(err.response));
     } else if (label === "red") {
       delFavorites(post_id)
-        .then((data) => {
-          console.log(data.data);
+        .then(() => {
           setHeart(false);
         })
         .catch((err) => console.log(err.response));

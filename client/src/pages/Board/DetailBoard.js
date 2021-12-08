@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { DetailBoardTop, PostComment, IconContainer } from "../../components";
+import {
+  DetailBoardTop,
+  PostComment,
+  IconContainer,
+  RectLoading,
+} from "../../components";
 import { getPostsInfo } from "../../apis/posts";
 import { getPostInfo } from "../../store/actions/postadd";
 
@@ -22,7 +27,7 @@ export default function DetailBoard() {
       .catch((err) => console.log(err.response));
   }, []);
 
-  if (loading) return "";
+  if (loading) return <Temporary />;
 
   return (
     <Container>
@@ -43,3 +48,6 @@ const Container = styled.div`
 `;
 
 const RigthContainer = styled.div``;
+const Temporary = styled.div`
+  height: 100vh;
+`;
