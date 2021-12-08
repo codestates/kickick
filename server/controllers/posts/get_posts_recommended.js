@@ -81,20 +81,13 @@ module.exports = async (req, res) => {
       for (let el of log_info) {
         // post_id로 게시글에 달린 tag_id 구함
         const post_id = el;
-        let post_info = await posts.findOne({
-          attributes: [["id", "post_id"]],
+        let posts_tags_info = await posts_tags.findAll({
+          attributes: ["tag_id"],
           where: {
-            id: post_id,
+            post_id: post_id,
           },
-          include: [
-            {
-              model: posts_tags,
-              attributes: ["tag_id"],
-            },
-          ],
         });
-        post_info = post_info.get({ plain: true });
-        post_info.posts_tags.forEach((el) => {
+        posts_tags_info.forEach((el) => {
           // tag_id_obj.push(el.tag_id);
           tag_id_obj[el.tag_id] = tag_id_obj[el.tag_id] + 1 || 1;
         });

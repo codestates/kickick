@@ -116,15 +116,38 @@ module.exports = async (req, res) => {
           data.favorite = "false";
         }
         const user_id = user_info.user_id;
+        // logs 추가하기전에 최근 20개 가져와서 post_id가 동일한게 있는지 확인
+        let log_info = await logs.findAll({
+          attributes: ["content"],
+          where: {
+            user_id: user_id,
+            type: "get_post",
+          },
+          offset: 0,
+          limit: 20,
+          order: [["id", "DESC"]],
+          raw: true,
+        });
+
+        let is_watched = false;
+        for (let el of log_info) {
+          el = JSON.stringify(el.content);
+          if (post_id === el.post_id) {
+            is_watched = true;
+            break;
+          }
+        }
 
         // logs에 추가
-        await logs.create({
-          user_id: user_id,
-          type: "get_post",
-          content: JSON.stringify({
-            post_id: post_id,
-          }),
-        });
+        if (!is_watched) {
+          await logs.create({
+            user_id: user_id,
+            type: "get_post",
+            content: JSON.stringify({
+              post_id: post_id,
+            }),
+          });
+        }
       }
     }
 

@@ -136,6 +136,7 @@ module.exports = async (req, res) => {
     where_obj.post_name = {
       [Op.regexp]: regexp,
     };
+    console.log(regexp);
   }
   if (req.query.content)
     where_obj.content = {
