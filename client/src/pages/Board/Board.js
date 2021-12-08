@@ -58,7 +58,6 @@ export default function Board({ setUpdate, update }) {
     <>
       <BoardTop category={category} />
       <Container>
-        <BoardTodayKicks />
         <BoardContainer>
           <TotalSearch
             category={categoryName(category)}
@@ -79,15 +78,9 @@ export default function Board({ setUpdate, update }) {
 const Container = styled.div`
   display: flex;
   margin: 0 auto;
-  width: 90rem;
-
-  @media ${({ theme }) => theme.device.notebookL} {
-    flex-direction: column-reverse;
-    width: 64rem;
-  }
+  width: 64rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
-    flex-direction: column-reverse;
     width: 100%;
   }
 `;
