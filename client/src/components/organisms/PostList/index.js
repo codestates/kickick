@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { PostItem, MyPagination, Common } from "../../../components";
 
@@ -30,6 +30,7 @@ const postList = [
 
 export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
+  const { category } = useParams();
 
   let data;
   let count;
@@ -48,9 +49,8 @@ export default function PostList({ type }) {
 
   const navigate = useNavigate();
   const handleMovePage = () => {
-    navigate("/editboard");
+    navigate(`/editboard/${category}`);
   };
-
   return (
     <Container>
       <PostListContainer type={type}>
@@ -65,12 +65,10 @@ export default function PostList({ type }) {
           data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
         )}
       </PostListContainer>
-      {/* {type === "freepost" && (
+      {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
-      )} */}
-      {data.length !== 0 && type !== "freepost" && (
-        <MyPagination count={count} />
       )}
+      {data.length !== 0 && <MyPagination count={count} />}
     </Container>
   );
 }

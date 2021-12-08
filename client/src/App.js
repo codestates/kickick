@@ -85,10 +85,7 @@ export default function App() {
               element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route
-              path="board/:category"
-              element={<Board setUpdate={setUpdate} update={update} />}
-            />
+            <Route path="board/:category" element={<Board />} />
             <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route path="notice/:category" element={<Notice />}>

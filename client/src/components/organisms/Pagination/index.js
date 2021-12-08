@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { IconBox } from "../..";
@@ -15,9 +15,13 @@ import {
   getMyCommentAction,
 } from "../../../store/actions/mypage";
 
+import { getList } from "../../../store/actions/postadd/boardList";
+import { goBack } from "../../../store/actions/postadd";
+
 export default function MyPagination({ count }) {
   const { pathname } = useLocation();
-
+  const state = useSelector((state) => state.board);
+  const apiCategory = useSelector((state) => state.postAdd.category);
   const dispatch = useDispatch();
 
   const limitPage = 10;
@@ -81,6 +85,26 @@ export default function MyPagination({ count }) {
       getComments(null, null, selectPage)
         .then((data) => dispatch(getMyCommentAction(data)))
         .catch((err) => console.log(err));
+    } else if (pathname === "/mypage/favorites") {
+      getFavorites(null, null, selectPage)
+        .then((data) => dispatch(getFavoritesAction(data)))
+        .catch((err) => console.log(err));
+    } else {
+      getPostsList({
+        category: apiCategory,
+        post_name: state.title.word,
+        username: state.writer.word,
+        tag: state.tag.word,
+        limit: 20,
+        page_num: selectPage,
+      })
+        .then((data) =>
+          dispatch(
+            getList(data.data, state.title, state.writer, state.tag, selectPage)
+          )
+        )
+        .then(() => dispatch(goBack()))
+        .catch((err) => console.log(err.response));
     }
   }, [selectPage]);
 

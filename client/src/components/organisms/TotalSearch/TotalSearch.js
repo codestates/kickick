@@ -7,14 +7,17 @@ import { getList } from "../../../store/actions/postadd/boardList";
 import { search, delSearch } from "../../../store/actions/postadd";
 import { Align, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ category, setSelectPage, setLoading }) {
+export default function TotalSearch({ setSelectPage, setLoading }) {
   const state = useSelector((state) => state.board);
+  const apiCategory = useSelector((state) => state.postAdd.category);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
+
   const [isSelect, setIsSelect] = useState(false);
   const [icon, setIcon] = useState({ label: "제목" });
   const [word, setWord] = useState("");
   const [highlight, setHighlight] = useState("최신");
+
   const handleAlign = (event) => {
     const label = event.target.innerText;
     setHighlight(label);
@@ -32,7 +35,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
 
     if (icon.label === "제목") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: word,
         username: state.writer.word,
         tag: state.tag.word,
@@ -52,7 +55,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: word,
         tag: state.tag.word,
@@ -72,7 +75,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: state.writer.word,
         tag: word,
@@ -99,7 +102,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
 
     if (state.title.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         username: state.writer.word,
         tag: state.tag.word,
         limit: 20,
@@ -113,7 +116,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         tag: state.tag.word,
         limit: 20,
@@ -127,7 +130,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: state.writer.word,
         limit: 20,

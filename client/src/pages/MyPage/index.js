@@ -121,7 +121,9 @@ export function MyComment() {
   const dispatch = useDispatch();
   useEffect(() => {
     getComments()
-      .then((data) => dispatch(getMyCommentAction(data)))
+      .then((data) => {
+        dispatch(getMyCommentAction(data));
+      })
       .catch((err) => console.log(err));
   }, [dispatch]);
   return <PostList type="mypagemycomment" />;

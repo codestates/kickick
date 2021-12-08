@@ -94,7 +94,6 @@ export function MyPageMyComment({ data }) {
 }
 
 export function MyPageFavorites({ data }) {
-  if (!data.post) return null;
   return (
     <Container>
       <div>

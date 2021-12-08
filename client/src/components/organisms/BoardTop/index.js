@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useParams } from "react-router";
+
 import spacebackground from "../../../assets/images/space_background.jpg";
 import studyplanet from "../../../assets/images/studyplanet.png";
 import leisureplanet from "../../../assets/images/leisureplanet.png";
@@ -19,11 +21,13 @@ const list = [
   { label: "", src: "", category: "default", color: "#000000" },
 ];
 
-export default function BoardTop({ category = "default" }) {
+export default function BoardTop() {
+  const { category } = useParams();
   const { src, label, color } = list.find((el) => el.category === category);
+
   return (
     <Container image={spacebackground} color={color}>
-      {category !== "default" && (
+      {category && (
         <>
           <img src={src} alt="" />
           <span>{label}</span>

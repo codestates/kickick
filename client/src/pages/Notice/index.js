@@ -15,8 +15,8 @@ import {
 import event_sample from "../../assets/images/event_sample_landscape.png";
 
 const noticeList = [
-  { category: "news", component: <News /> },
-  { category: "event", component: <Event /> },
+  { category: "소식", component: <News /> },
+  { category: "이벤트", component: <Event /> },
 ];
 
 export default function Notice() {
@@ -29,10 +29,10 @@ export default function Notice() {
       <Container>
         <NavContainer>
           <h3>공지</h3>
-          <NavLink to="/notice/news">
+          <NavLink to="/notice/소식">
             <IconText label="뉴스" />
           </NavLink>
-          <NavLink to="/notice/event">
+          <NavLink to="/notice/이벤트">
             <IconText label="이벤트" />
           </NavLink>
         </NavContainer>

@@ -21,7 +21,7 @@ export default function DetailBoard() {
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [dispatch, post_id]);
 
   if (loading) return "";
 

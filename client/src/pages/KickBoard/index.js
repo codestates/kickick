@@ -21,7 +21,7 @@ export default function KickBoard() {
 }
 
 const Container = styled.div`
-  margin: 15rem auto;
+  margin: 10rem auto;
 
   @media ${({ theme }) => theme.device.desktop} {
     width: 88rem;
