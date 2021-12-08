@@ -1,6 +1,6 @@
 //atoms
 export { default as Common } from "./atoms/Button/Common";
-export { default as PageUp} from "./atoms/PageUp"
+export { default as PageUp } from "./atoms/PageUp";
 export { default as NavBtn } from "./atoms/Button/NavBtn";
 export { default as IconText } from "./atoms/IconText";
 export { default as LoginInput } from "./atoms/Input/LoginInput";
@@ -13,17 +13,21 @@ export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
+export { default as Tab } from "./atoms/Tab";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as IconBox } from "./atoms/IconBox";
 export { default as Pagination } from "./atoms/Pagination";
+export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
 export { default as AlarmBtn } from "./molecules/Dropdown/AlarmBtn";
 export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as PostStatics } from "./molecules/Card/PostStatics";
-export { default as PostAlign } from "./molecules/CheckBox/PostAlign";
+export { default as EventPost } from "./molecules/Card/EventPost";
+export { default as NewsPost } from "./molecules/Card/NewsPost";
+export { default as Align } from "./molecules/Align";
 export { default as InputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as SignupInputBox } from "./molecules/InputBox/SignupInputBox";
 export { default as PostCommentInput } from "./molecules/InputBox/PostCommentInput";
@@ -40,7 +44,7 @@ export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamb
 export { default as Nav } from "./organisms/Nav";
 export { default as Footer } from "./organisms/Footer";
 export { default as InputForm } from "./organisms/SignupForm";
-export { default as KickBoardPostList } from "./organisms/CardBox/KickBoardPostList";
+export { default as CardBox } from "./organisms/CardBox";
 export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList";
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardBottom } from "./organisms/BoardBottom";
@@ -53,8 +57,6 @@ export { default as PostList } from "./organisms/PostList";
 export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
 export { default as Chart } from "./organisms/Chart";
 export { default as MyPagination } from "./organisms/Pagination";
-export { default as BoardTodayKicks } from "./organisms/BoardTodayKicks";
 export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
-export { default as S_BoardTodayKicks } from "./organisms/BoardTodayKicks/S_BoardTodayKicks";
 export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";
 export { default as S_TotalSearch } from "./organisms/TotalSearch/S_TotalSearch";

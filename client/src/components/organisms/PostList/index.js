@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { PostItem, MyPagination, Common } from "../../../components";
 
@@ -19,7 +19,7 @@ const postList = [
   {
     reducer: ["mypage", "mycomment"],
     type: "mypagemycomment",
-    label: ["게시판", "댓글", "좋아요", "날짜"],
+    label: ["글 제목", "댓글", "날짜"],
   },
   {
     reducer: ["board", "data"],
@@ -30,6 +30,9 @@ const postList = [
 
 export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
+  const { category } = useParams();
+
+  const [selectPage, setSelectPage] = useState(1);
 
   let data;
   let count;
@@ -48,9 +51,8 @@ export default function PostList({ type }) {
 
   const navigate = useNavigate();
   const handleMovePage = () => {
-    navigate("/editboard");
+    navigate(`/editboard/${category}`);
   };
-
   return (
     <Container>
       <PostListContainer type={type}>
@@ -68,8 +70,12 @@ export default function PostList({ type }) {
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && type !== "freepost" && (
-        <MyPagination count={count} />
+      {data.length !== 0 && (
+        <MyPagination
+          count={count}
+          selectPage={selectPage}
+          setSelectPage={setSelectPage}
+        />
       )}
     </Container>
   );
@@ -141,15 +147,12 @@ const PostListContainer = styled.div`
       type === "mypagemycomment" &&
       css`
         > div:nth-of-type(1) {
-          flex: 2;
+          flex: 3;
         }
         > div:nth-of-type(2) {
           flex: 5;
         }
         > div:nth-of-type(3) {
-          flex: 1;
-        }
-        > div:nth-of-type(4) {
           flex: 2;
         }
       `}

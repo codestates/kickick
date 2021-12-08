@@ -4,22 +4,33 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getPostsList } from "../../../apis/posts";
 import { getList } from "../../../store/actions/postadd/boardList";
+import { selectPageAction } from "../../../store/actions/pagination";
 import { search, delSearch } from "../../../store/actions/postadd";
-import { PostAlign, Select, SearchInput, Tag } from "../../../components";
+import { Align, Select, SearchInput, Tag } from "../../../components";
 
-export default function TotalSearch({ category, setSelectPage, setLoading }) {
+export default function TotalSearch({ setLoading }) {
   const state = useSelector((state) => state.board);
+  const apiCategory = useSelector((state) => state.postAdd.category);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
+
   const [isSelect, setIsSelect] = useState(false);
   const [icon, setIcon] = useState({ label: "제목" });
   const [word, setWord] = useState("");
   const [highlight, setHighlight] = useState("최신");
+
   const handleAlign = (event) => {
     const label = event.target.innerText;
     setHighlight(label);
     if (label === "최신") {
       setLoading(true);
+    } else if (label === "인기") {
+      getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
+        .then((data) => {
+          dispatch(selectPageAction(1));
+          dispatch(getList(data.data));
+        })
+        .catch((err) => console.log(err.response));
     }
   };
   const handleIcon = (label) => {
@@ -29,10 +40,11 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
   const handleSearch = () => {
     dispatch(search(icon.label, word));
     setWord("");
+    setHighlight("최신");
 
     if (icon.label === "제목") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: word,
         username: state.writer.word,
         tag: state.tag.word,
@@ -48,11 +60,11 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             )
           );
         })
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (icon.label === "글쓴이") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: word,
         tag: state.tag.word,
@@ -68,11 +80,11 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             )
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (icon.label === "태그") {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: state.writer.word,
         tag: word,
@@ -86,7 +98,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             })
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     }
   };
@@ -99,7 +111,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
 
     if (state.title.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         username: state.writer.word,
         tag: state.tag.word,
         limit: 20,
@@ -109,11 +121,11 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             getList(data.data, { type: "", word: "" }, state.writer, state.tag)
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (state.writer.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         tag: state.tag.word,
         limit: 20,
@@ -123,11 +135,11 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             getList(data.data, state.title, { type: "", word: "" }, state.tag)
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     } else if (state.tag.type === label) {
       getPostsList({
-        category,
+        category: apiCategory,
         post_name: state.title.word,
         username: state.writer.word,
         limit: 20,
@@ -140,7 +152,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
             })
           )
         )
-        .then(() => setSelectPage(1))
+        .then(() => dispatch(selectPageAction(1)))
         .catch((err) => err.response);
     }
   };
@@ -148,7 +160,7 @@ export default function TotalSearch({ category, setSelectPage, setLoading }) {
   return (
     <>
       <Container>
-        <PostAlign highlight={highlight} handleAlign={handleAlign} />
+        <Align highlight={highlight} handleAlign={handleAlign} />
         <SearchContainer>
           <Select
             icon={icon}

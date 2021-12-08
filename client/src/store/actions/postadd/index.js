@@ -8,21 +8,22 @@ export const SEARCH = "SEARCH";
 export const DEL_SEARCH = "DEL_SEARCH";
 export const RESET_TAG = "RESET_TAG";
 
-export const getCategory = (category) => {
+export const getCategoryAction = (category) => {
+  category += "_자유";
   return {
     type: GET_CATEGORY,
     payload: { category },
   };
 };
 
-export const getPostName = (post_name) => {
+export const getPostNameAction = (post_name) => {
   return {
     type: GET_POST_NAME,
     payload: { post_name },
   };
 };
 
-export const getContent = (content) => {
+export const getContentAction = (content) => {
   return {
     type: GET_CONTENT,
     payload: { content },

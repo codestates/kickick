@@ -19,21 +19,16 @@ export default function NavBtn({
   setIsHover = () => {
     return null;
   },
-  setUpdate,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
-  const noticeList = ["소식","이벤트"]
-  const mylocation =
-    pathname.split("/")[0] === location.pathname.split("/")[1];
+  const noticeList = ["소식", "이벤트"];
+  const mylocation = pathname.split("/")[0] === location.pathname.split("/")[1];
 
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼
-  const moveHandler = (path, isSub) => {
+  const moveHandler = (path) => {
     navigate(path);
-    if (isSub) {
-      setUpdate(true);
-    }
   };
   return (
     <Container
@@ -65,7 +60,7 @@ export default function NavBtn({
             size={size}
             pathname={pathname}
             key={idx}
-            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`, true)}
+            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />
             <SubTitle size={size}>{el}</SubTitle>
@@ -84,10 +79,12 @@ export default function NavBtn({
             size={size}
             pathname={pathname}
             key={idx}
-            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`, true)}
+            onClick={() => moveHandler(`${pathname.split("/")[0]}/${el}`)}
           >
             <SubBtn src={ufo} size={size} alt="ufo" />
-            <SubTitle size={size} name={el}>{el}</SubTitle>
+            <SubTitle size={size} name={el}>
+              {el}
+            </SubTitle>
           </SubBtnContainer>
         ))}
       </NowNotice>
@@ -192,5 +189,5 @@ const SubTitle = styled.span`
       ? `${size.split("rem")[0] * 0.6}rem`
       : `${size.split("rem")[0] * 0.85}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
-  white-space:nowrap;
+  white-space: nowrap;
 `;
