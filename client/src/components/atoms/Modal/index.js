@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-export default function Modal() {
+export default function Modal({ handleModal, handleModalFunc }) {
   return (
-    <Container>
-      <Alarm>
+    <Container onClick={handleModal}>
+      <Alarm onClick={(e) => e.stopPropagation()}>
         <div>
           <h2>정말로 삭제하시겠습니까?</h2>
         </div>
         <ButtonContainer>
-          <button>Yes</button>
-          <button>No</button>
+          <button onClick={handleModalFunc}>Yes</button>
+          <button onClick={handleModal}>No</button>
         </ButtonContainer>
       </Alarm>
     </Container>
@@ -22,21 +22,23 @@ const Container = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-
-  display: grid;
-  place-items: center;
 `;
 
 const Alarm = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 20rem;
   height: 10rem;
   gap: 2rem;
+  font-size: 1.3rem;
+  background-color: white;
+  transform: translate(-50%, -150%);
   border: 2px solid black;
 
-  font-size: 1.3rem;
   div {
     text-align: center;
   }

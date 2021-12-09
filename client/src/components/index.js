@@ -19,6 +19,7 @@ export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as IconBox } from "./atoms/IconBox";
 export { default as Pagination } from "./atoms/Pagination";
 export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
+export { default as Modal } from "./atoms/Modal";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
