@@ -53,7 +53,6 @@ module.exports = async (req, res) => {
           ["id", "post_id"],
           "category",
           "post_name",
-          // "content",
           "cost",
           "view_count",
           "created_at",
@@ -136,7 +135,6 @@ module.exports = async (req, res) => {
     where_obj.post_name = {
       [Op.regexp]: regexp,
     };
-    console.log(regexp);
   }
   if (req.query.content)
     where_obj.content = {
