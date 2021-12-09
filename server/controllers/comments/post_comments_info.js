@@ -50,10 +50,13 @@ module.exports = async (req, res) => {
     delete data.user_id;
     delete data.postId;
     delete data.userId;
+    delete data.updated_at;
 
     // id 명시적으로
     data.comment_id = data.id;
     delete data.id;
+    // data 에 username 추가
+    data.username = username;
 
     // 게시글 작성자에 알림
     // req.body.post_id 로 작성자 id 구함
@@ -70,17 +73,20 @@ module.exports = async (req, res) => {
     });
     post_info = post_info.get({ plain: true });
 
-    await alarms.create({
-      user_id: post_info.user.user_id,
-      type: "comments",
-      reference: JSON.stringify({
-        table: "post",
-        id: post_id,
-      }),
-      content: `${username}님이 내 게시글에 댓글을 달았습니다.`,
-    });
+    // 내가 쓴 게시글이면 알람 x
+    if (post_info.user.user_id !== user_id) {
+      // 작성자 id로 alarms 테이블에 추가 type comment
 
-    // 작성자 id로 alarms 테이블에 추가 type comment
+      await alarms.create({
+        user_id: post_info.user.user_id,
+        type: "comments",
+        reference: JSON.stringify({
+          table: "posts",
+          id: post_id,
+        }),
+        content: `${username}님이 내 게시글에 댓글을 달았습니다.`,
+      });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

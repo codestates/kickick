@@ -1,4 +1,4 @@
-const { users, notices } = require("../../models");
+const { users, notices, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
@@ -58,6 +58,12 @@ module.exports = async (req, res) => {
     // id 명시적으로
     data.notice_id = data.id;
     delete data.id;
+
+    // alarms 테이블에 추가
+    await alarms.create({
+      type: "notices",
+      reference: JSON.stringify({ table: "notices", id: data.notice_id }),
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
