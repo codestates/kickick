@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { FaBell } from "react-icons/fa";
 import { getAlarm } from "../../../apis/alarm"
 import { dateConverter } from "../../../commons/utils/dateConverter"
+import { useSocket } from "../../../hooks/useSocket";
 
 export default function AlarmBtn({ fontSize = "xl" }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function AlarmBtn({ fontSize = "xl" }) {
   const [isOver, setIsOver] = useState(false);
   const [alarmArr, setAlarmArr] = useState([]);
   const [pagenation, setPagenation] = useState({ limit: 5, page_num: 1 });
+  const socket = useSocket();
 
   useEffect(() => {
     getAlarm(pagenation.limit, pagenation.page_num)
@@ -20,16 +22,24 @@ export default function AlarmBtn({ fontSize = "xl" }) {
         setAlarmArr(res.data.data);
       })
       .then(() => console.log("alarmArr:", alarmArr));
-  },[])
+  }, [])
+  
+  useEffect(() => {
+    console.log("socketAlarm",socket[1]);
+    setAlarmArr([...socket[1]]);
+  }, [socket[1]]);
   
   const alarmOpner = () => {
     if (alarmOpen) {
       return setAlarmOpen(false);
+    } else {
+      // return getAlarm(pagenation.limit, pagenation.page_num).then((res) => {
+      //   setAlarmArr(res.data.data);
+      //   setAlarmOpen(true);
+      // }).then(()=>console.log("alarmArr:", alarmArr));
+      socket[0]();
+      return setAlarmOpen(true);
     }
-    return getAlarm(pagenation.limit, pagenation.page_num).then((res) => {
-      setAlarmArr(res.data.data);
-      setAlarmOpen(true);
-    }).then(()=>console.log("alarmArr:", alarmArr));
   }
 
   const moveRefer = (obj) => {

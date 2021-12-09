@@ -19,9 +19,11 @@ export default function SignupInput({
   const [inputValue, setInputValue] = useState("");
 
   const contextHandler = (e) => {
+    console.log("여기", validation(e.target.value).isValid);
+    console.log("저기", validation(e.target.value).message);
     setIsChange(true);
     setInputValue(e.target.value);
-    vaildHanlder(idx, validation(e.target.value)[0]);
+    vaildHanlder(idx, validation(e.target.value).isValid);
     inputHandler(part, e.target.value);
   };
 
@@ -57,7 +59,9 @@ export default function SignupInput({
         validation={validation}
         inputValue={inputValue}
       >
-        {validation(inputValue)[1]}
+        {validation(inputValue).message === "pass"
+          ? ""
+          : validation(inputValue).message}
       </Warning>
     </>
   );
@@ -74,9 +78,9 @@ const Container = styled.div`
   padding: ${({ height }) => `${height * 0.08}rem`};
   border: 0.12rem solid;
   border-color: ${({ isChange, validation, inputValue, theme }) =>
-    isChange && validation(inputValue)[0]
+    isChange && validation(inputValue).isValid
       ? "blue"
-      : isChange && !validation(inputValue)[0]
+      : isChange && !validation(inputValue).isValid
       ? "red"
       : theme.color.font};
   border-radius: ${({ height }) => `${height * 0.04}rem`};
@@ -99,7 +103,7 @@ const Input = styled.input`
 const Warning = styled.div`
   padding-left: ${({ height }) => `${height / 15}rem`};
   visibility: ${({ isChange, validation, inputValue }) =>
-    !isChange || validation(inputValue)[0] ? "hidden" : "visible"};
+    !isChange || validation(inputValue).isValid ? "hidden" : "visible"};
   font-family: ${({ theme }) => theme.fontFamily.jua};
   color: red;
 `;

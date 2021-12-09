@@ -1,14 +1,16 @@
 
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SignupInputBox, DatePicker, ConditionChamber } from "../../../components";
 import { signUp, tempoSignUp } from "../../../apis/auth";
+import { validation } from "../../../commons/utils/validation"
 
 export default function SignupForm() {
   const navigate = useNavigate();
+  const params = useParams();
   const isLogin = useSelector((state) => state.login.isLogin);
   const width = 30;
   const height = 3;
@@ -22,7 +24,7 @@ export default function SignupForm() {
       part: "username",
       placeholder: "username1234",
       inputRef: inputRef1,
-      validation: validUsername,
+      validation: (value) => validation("username", value),
     },
     {
       title: "이메일",
@@ -30,7 +32,7 @@ export default function SignupForm() {
       part: "email",
       placeholder: "email@gmail.com",
       inputRef: inputRef2,
-      validation: validEmail,
+      validation: (value) => validation("email", value),
     },
     {
       title: "비밀번호",
@@ -38,7 +40,7 @@ export default function SignupForm() {
       part: "password",
       placeholder: "1q2w3e4r!1",
       inputRef: inputRef3,
-      validation: validpassword,
+      validation: (value) => validation("password", value),
     },
   ];
   const conditionArr = [
@@ -60,7 +62,7 @@ export default function SignupForm() {
   ];
 
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({ type: params.type });
   const [isvalid, setIsVaild] = useState([]);
   const [conditionCheck,setConditionCheck] = useState({})
 
@@ -81,69 +83,10 @@ export default function SignupForm() {
     if (idx < ArrInfo.length) ArrInfo[idx].inputRef.current.focus();
   }
   
-  function validUsername(value) {
-    if (value.length <= 4) {
-      return [false, "닉네임은 5글자 이상이어야 합니다"];
-    }
-    if (value.length >= 11) {
-      return [false, "닉네임은 10글자보다 짧아야 합니다"];
-    }
-      return [value.length > 4 && value.length < 11, "통과"];
-  }
-
-  function validEmail(value) {
-    if (value.search(/\s/) !== -1) {
-      return [false,"공백을 지워주세요"]
-    }
-    if (!value.includes("@")) {
-      return [false, "@가 존재하지 않습니다"];
-    }
-    if (
-      !(value.split("@")[1].includes(".") &&
-      value.split("@")[1].split(".")[0].length > 0 &&
-      value.split("@")[1].split(".")[1].length > 0)
-    ) {
-      return [false, "형식이 올바르지 않습니다."]
-    }
-    return [
-      value.search(/\s/) === -1 &&
-      value.includes("@") &&
-      value.split("@")[0] &&
-      value.split("@")[1].includes(".") &&
-      value.split("@")[1].split(".")[0].length > 0 &&
-      value.split("@")[1].split(".")[1].length > 0, "통과"
-    ];
-  }
-
-  function validpassword (value) { 
-    let num = value.search(/[0-9]/g);
-    let eng = value.search(/[a-z]/gi);
-    let spe = value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    
-    if (value.length < 8) {
-      return [false, "비밀번호는 8자 이상이어야합니다"]
-    }
-    if (value.length >= 20) {
-      return [false, "비밀번호는 20자보다 짧아야 합니다"];
-    }
-    if (value.search(/\s/) !== -1) {
-      return [false, "공백이 존재해서는 안됩니다"];
-    }
-    if (num === -1 || eng === -1 || spe === -1) {
-      return [false, "숫자, 알파벳, 특수문자가 포함되어 있어야 합니다"];
-    }
-      return [
-        value.length >= 8 &&
-        value.length < 20 &&
-        value.search(/\s/) === -1 &&
-        num !== -1 &&
-        eng !== -1 &&
-        spe !== -1, "통과"
-      ];
-  }
   const vaildHanlder = (idx,validation) => {
     const newArr = [...isvalid];
     newArr[idx] = validation;
+    console.log(validation);
     setIsVaild([...newArr]);
   }
 
@@ -161,7 +104,7 @@ export default function SignupForm() {
       if(Object.values(conditionCheck)[l]) countCondition--;
     }
     if (
-      isLogin !=="guest" &&
+      isLogin === false &&
       countCondition === 0 &&
       countIsvalid === ArrInfo.length &&
       Object.keys(inputValue).join("").includes("birthday")
@@ -170,16 +113,14 @@ export default function SignupForm() {
         .then(() => navigate("/", { replace: true }));
     }
     if (
-      isLogin === "guest" &&
+      isLogin&& isLogin.type === "guest" &&
       countCondition === 0 &&
       countIsvalid === ArrInfo.length &&
       Object.keys(inputValue).join("").includes("birthday")
     ) {
-      tempoSignUp(inputValue)
-        .then(() => navigate("/", { replace: true }));
+      tempoSignUp(inputValue).then(() => navigate("/", { replace: true }));
     }
   }
-  
   return (
     <Container>
       {ArrInfo.map((el, idx) => (
