@@ -68,7 +68,7 @@ export default function LoginInputChamber({
       if (res.data.message === "guest 회원가입") {
         tempoSignIn(res.data.data.username)
           .then((res) => {
-            dispatch(isLoginAction("guest"));
+            dispatch(isLoginAction(res.data.data));
             dispatch(isPointAction(res.data.data.kick_money));
           })
           .then(() => navigate("/", { replace: true }))

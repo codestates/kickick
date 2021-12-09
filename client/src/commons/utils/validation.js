@@ -4,12 +4,18 @@ export const validation = (part, value) => {
   let spe = value.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
   let emailValid =
+    value.search(/\s/) === -1 &&
     value.includes("@") &&
-      value.split("@")[0] &&
-      value.split("@")[1].includes(".") &&
-      value.split("@")[1].split(".")[0] &&
-      value.split("@")[1].split(".")[1] ? 1 :
-      !value.includes("@") ? 2 : 3;
+    value.split("@")[0] &&
+    value.split("@")[1].includes(".") &&
+    value.split("@")[1].split(".")[0] &&
+    value.split("@")[1].split(".")[1]
+      ? "pass"
+      : value.search(/\s/) !== -1
+      ? "blank check"
+      : !value.includes("@")
+      ? "check @"
+      : 3;
   
   let passwordVaild =
     value.length > 7 &&
@@ -18,34 +24,44 @@ export const validation = (part, value) => {
     num !== -1 &&
     eng !== -1 &&
     spe !== -1
-      ? 1
+      ? "pass"
       : value.length <= 7 || value.length > 20
-      ? 2
-      : value.search(/\s/) === -1
-      ? 3
-      : num !== -1 && eng !== -1 && spe !== -1 ? 4 : 5;
+      ? "length check"
+      : value.search(/\s/) !== -1
+      ? "blank check"
+      : num === -1 || eng === -1 || spe === -1 ? 4 : 5;
   
-  let vaild = value.length >= 4 && value.length <= 10 ? 1 : 2;
+  let vaild =
+    value.search(/\s/) === -1 && value.length >= 4 && value.length <= 15
+      ? "pass"
+      : value.search(/\s/) !== -1
+      ? "blank check"
+      : value.length < 4 || value.length > 15
+      ? "length check"
+      : "fail";
   
   if (part === "email") {
     switch (emailValid) {
-      case 1:
+      case "pass":
         return { message: "pass", isValid: true };
-      case 2:
+      case "blank check":
+        return { message: "공백이 존재해서는 안됩니다", isValid: false };
+      case "check @":
         return { message: "@가 포함되어있지 않습니다", isValid: false };
-      default: return { message: "email형식이 올바르지 않습니다", isValid: false };
+      default:
+        return { message: "email형식이 올바르지 않습니다", isValid: false };
     }
   }
   if (part === "password") {
     switch (passwordVaild) {
-      case 1:
+      case "pass":
         return { message: "pass", isValid: true };
-      case 2:
+      case "length check":
         return {
           message: "비밀번호의 길이는 8자리이상 20자리이하 입니다",
           isValid: false,
         };
-      case 3:
+      case "blank check":
         return { message: "공백이 존재해서는 안됩니다", isValid: false };
       case 4:
         return {
@@ -58,13 +74,15 @@ export const validation = (part, value) => {
   }
   if (part === "username") {
     switch (vaild) {
-      case 1:
+      case "pass":
         return { message: "pass", isValid: true };
-      case 2: 
+      case "length check":
         return {
-          message: "ID의 길이는 4자리이상 10자리 이하입니다",
+          message: "ID의 길이는 4자리이상 15자리 이하입니다",
           isValid: false,
         };
+      case "blank check":
+        return { message: "공백이 존재해서는 안됩니다", isValid: false };
       default:
         return { message: "양식이 올바르지 않습니다", isValid: false };
     }
