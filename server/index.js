@@ -3,6 +3,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: true,
+    methods: ["GET", "POST"],
+  },
+});
 
 const test_router = require("./routers/test_router");
 const users_router = require("./routers/users_router");
@@ -16,6 +24,7 @@ const likes_router = require("./routers/likes_router");
 const favorites_router = require("./routers/favorites_router");
 const alarms_router = require("./routers/alarms_router");
 const logs_router = require("./routers/logs_router");
+const upload_router = require("./routers/upload_router");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,6 +36,7 @@ app.use(
   })
 );
 app.use(cookieParser());
+
 // 라우팅
 app.use("/test", test_router);
 app.use("/users", users_router);
@@ -40,12 +50,14 @@ app.use("/likes", likes_router);
 app.use("/favorites", favorites_router);
 app.use("/alarms", alarms_router);
 app.use("/logs", logs_router);
+app.use("/upload", upload_router);
 
 app.get("/", (req, res) => {
   res.status(201).send("Hello World");
 });
+
 const HTTP_PORT = process.env.HTTP_PORT || 80;
 
-const server = app.listen(HTTP_PORT, () => console.log(HTTP_PORT));
+require("./controllers/socket")(io);
 
-module.exports = server;
+module.exports = server.listen(HTTP_PORT, () => console.log(HTTP_PORT));
