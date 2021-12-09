@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
   // type이 get_post 인것들만 받아옴
   // 받아온 게시글 정보로 게시글들의 태그 확인하고 태그 개수 구함
   // 많이 중복된 태그 위주로
-  let data_by_tags = null;
+  let data_by_tags = [];
 
   if (req.cookies.token) {
     const token = req.cookies.token.access_token;
@@ -276,7 +276,85 @@ module.exports = async (req, res) => {
     console.log(err);
     return res.status(400).json({ data: err, message: "데이터베이스 에러" });
   }
-  data = { data_by_3days, data_by_tags };
+  let data_by_time;
+
+  try {
+    data_by_time = await posts.findAll({
+      attributes: [
+        ["id", "post_id"],
+        "category",
+        "post_name",
+        "cost",
+        "view_count",
+        "favorite_count",
+        "created_at",
+      ],
+      where: {
+        category: { [Op.like]: `%_킥%` },
+      },
+      distinct: true,
+      limit: 6,
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: users,
+          attributes: ["username", "profile"],
+        },
+        {
+          model: likes,
+          attributes: ["agreement"],
+        },
+        {
+          model: kicks,
+          attributes: ["id", "thumbnail"],
+        },
+        {
+          model: comments,
+          attributes: [["id", "comment_id"], "content"],
+          order: [["id", "DESC"]],
+          include: [
+            {
+              model: users,
+              attributes: ["username", "profile", "created_at"],
+            },
+          ],
+        },
+        {
+          model: posts_tags,
+          attributes: ["tag_id"],
+          include: {
+            model: tags,
+            attributes: ["content"],
+          },
+        },
+      ],
+    });
+    // 각 게시물에 접근
+    data_by_time.forEach((post) => {
+      // likes 가공
+      let likes_obj = {
+        true: 0,
+        false: 0,
+      };
+      post.likes.forEach((like) => {
+        if (like.agreement) {
+          likes_obj.true += 1;
+        } else {
+          likes_obj.false += 1;
+        }
+      });
+      post.likes = likes_obj;
+
+      // tags 가공
+      post.tags = post.posts_tags.map((tag) => tag.tag.content);
+      delete post.posts_tags;
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ data: err, message: "데이터베이스 에러" });
+  }
+
+  data = { data_by_3days, data_by_tags, data_by_time };
 
   return res.status(200).json({ data: data, message: "ok" });
 };
