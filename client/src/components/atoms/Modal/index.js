@@ -22,8 +22,8 @@ const Container = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
+  z-index: 10;
 `;
-
 const Alarm = styled.div`
   position: absolute;
   top: 50%;

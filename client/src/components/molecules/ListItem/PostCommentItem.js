@@ -31,9 +31,8 @@ export default function PostCommentItem({ item, handleDelComment }) {
         <Profile type="post" />
         <div className="username">{item.user.username}</div>
         {userInfo.username === item.user.username && (
-          // handleDelComment(item.comment_id)
           <Del>
-            <IconBox label="delete" handleClick={handleModalOn}></IconBox>
+            <IconBox label="cmtDel" handleClick={handleModalOn}></IconBox>
           </Del>
         )}
         {modal ? (
@@ -84,5 +83,5 @@ const Del = styled.div`
   width: 2rem;
   height: 2rem;
   line-height: 1.45rem;
-  color: red;
+  color: #a8a8a8;
 `;

@@ -55,6 +55,7 @@ export default function PostComment({ post_id }) {
       .catch((err) => console.log(err.response));
   };
 
+  //무한스크롤
   const cmtFetch = (page) => {
     if (cmt.count === cmt.data.length) return;
     getComments(post_id, page)
@@ -74,9 +75,11 @@ export default function PostComment({ post_id }) {
         const scrollTop = document.documentElement.scrollTop;
         const clientHeight = document.documentElement.clientHeight;
         if (scrollTop + clientHeight >= scrollHeight) {
+          setLoading(true);
           cmtFetch(10 * limit);
         }
-      }, 500),
+        setLoading(false);
+      }, 300),
     [limit]
   );
 
@@ -94,22 +97,8 @@ export default function PostComment({ post_id }) {
       })
       .catch((err) => console.error(err.response));
     setLoading(false);
-  }, [loading]);
+  }, []);
 
-  if (loading)
-    return (
-      <Container>
-        <PostCommentInput
-          handleClick={handleClick}
-          value={value}
-          handleChange={handleChange}
-        />
-        <H3>
-          댓글 <strong></strong>
-        </H3>
-        <RectLoading />
-      </Container>
-    );
   return (
     <Container>
       <H3>댓글달기</H3>
@@ -128,6 +117,7 @@ export default function PostComment({ post_id }) {
           handleDelComment={handleDelComment}
         />
       ))}
+      {loading && <RectLoading />}
     </Container>
   );
 }

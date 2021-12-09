@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import disableScroll from "disable-scroll";
 
+import { delPost } from "../../../apis/posts";
 import { createFavorites, delFavorites } from "../../../apis/favorites";
 import { goBack } from "../../../store/actions/postadd";
-import { IconBox } from "../../";
+import { IconBox, Modal } from "../../";
 
 export default function IconContainer() {
+  const [modal, setModal] = useState(false);
   const { post_id } = useParams();
   const { board, postInfo, login } = useSelector((state) => state);
   const [heart, setHeart] = useState(
@@ -44,16 +47,41 @@ export default function IconContainer() {
     }
   };
 
+  const handleModalOn = () => {
+    setModal(true);
+    disableScroll.on();
+  };
+
+  const handleModalOff = () => {
+    setModal(false);
+    disableScroll.off();
+  };
+
+  const handleDelPost = () => {
+    setModal(false);
+    disableScroll.off();
+    delPost(post_id)
+      .then((data) => {
+        navigate(`/board/${category()}`);
+      })
+      .catch((err) => console.log(err.response));
+  };
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
       {postInfo.user.username === login.isLogin.username ? (
-        <IconBox label="edit" handleClick={handleClick} />
+        <>
+          <IconBox label="edit" handleClick={handleClick} />
+          <IconBox label="postDel" handleClick={handleModalOn} />
+        </>
       ) : heart ? (
         <IconBox label="red" handleClick={handleClick} />
       ) : (
         <IconBox label="heart" handleClick={handleClick} />
       )}
+      {modal ? (
+        <Modal handleModal={handleModalOff} handleModalFunc={handleDelPost} />
+      ) : null}
     </Container>
   );
 }

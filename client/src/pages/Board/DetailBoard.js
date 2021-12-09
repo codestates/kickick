@@ -45,6 +45,7 @@ const Container = styled.div`
 
 const RigthContainer = styled.div`
   width: 40.5rem;
+  z-index: 1;
 `;
 
 const Temporary = styled.div`
