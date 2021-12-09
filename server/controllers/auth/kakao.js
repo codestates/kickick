@@ -41,6 +41,7 @@ module.exports = async (req, res) => {
     user_info = user_info.data.kakao_account;
     data = await users.findOrCreate({
       attributes: [
+        ["id", "user_id"],
         "type",
         "username",
         "email",

@@ -38,11 +38,12 @@ module.exports = async (req, res) => {
       where: {
         username: username,
       },
+
       include: [
         {
           model: logs,
           attributes: [["id", "log_id"], "type", "content", "created_at"],
-
+          order: [["id", "DESC"]],
           offset: limit * (page_num - 1),
           limit: limit,
         },
