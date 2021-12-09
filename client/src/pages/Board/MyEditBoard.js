@@ -10,7 +10,7 @@ import {
   IconText,
 } from "../../components";
 
-import { getPostInfo } from "../../store/actions/postadd";
+import { getPostInfoAction } from "../../store/actions/postadd";
 import { getPostsInfo, putPost } from "../../apis/posts";
 import { delTags, createTags } from "../../apis/tags";
 
@@ -57,7 +57,7 @@ export default function MyEditBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfo(data.data));
+        dispatch(getPostInfoAction(data.data));
       })
       .then(setLoading(false))
       .catch((err) => console.log(err.response));
