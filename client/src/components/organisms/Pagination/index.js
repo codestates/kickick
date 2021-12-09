@@ -18,7 +18,7 @@ import {
 import {
   selectPageAction,
   selectDivPageAction,
-} from "../../../store/actions/pagination";
+} from "../../../store/actions/postsearch";
 import { getList } from "../../../store/actions/postadd/boardList";
 import { goBack } from "../../../store/actions/postadd";
 
@@ -28,8 +28,8 @@ export default function Pagination({ count }) {
   const boardState = useSelector((state) => state.board);
   const apiCategory = useSelector((state) => state.postAdd.category);
 
-  const { selectPage, selectDivPage, limitPage } = useSelector(
-    (state) => state.pagination
+  const { selectPage, selectDivPage, limitPage, align } = useSelector(
+    (state) => state.postsearch
   );
 
   const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
@@ -102,6 +102,7 @@ export default function Pagination({ count }) {
         post_name: boardState.title.word,
         username: boardState.writer.word,
         tag: boardState.tag.word,
+        favorite_count: align === "최신" ? null : 1,
         limit: 20,
         page_num: selectPage,
       })

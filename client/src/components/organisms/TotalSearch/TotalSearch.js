@@ -7,7 +7,10 @@ import { Align, Select, SearchInput, Tag } from "../../../components";
 import { getPostsList } from "../../../apis/posts";
 
 import { getList } from "../../../store/actions/postadd/boardList";
-import { resetPaginationAction } from "../../../store/actions/pagination";
+import {
+  boardAlignAction,
+  resetPaginationAction,
+} from "../../../store/actions/postsearch";
 import { search, delSearch } from "../../../store/actions/postadd";
 
 export default function TotalSearch({ setLoading }) {
@@ -19,18 +22,18 @@ export default function TotalSearch({ setLoading }) {
   const [isSelect, setIsSelect] = useState(false);
   const [icon, setIcon] = useState({ label: "제목" });
   const [word, setWord] = useState("");
-  const [highlight, setHighlight] = useState("최신");
 
   const handleAlign = (event) => {
     const label = event.target.innerText;
-    setHighlight(label);
+
+    dispatch(boardAlignAction(label));
     if (label === "최신") {
       setLoading(true);
     } else if (label === "인기") {
       getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
         .then((data) => {
-          dispatch(getList(data.data));
           dispatch(resetPaginationAction());
+          dispatch(getList(data.data));
         })
         .catch((err) => console.log(err.response));
     }
@@ -42,7 +45,6 @@ export default function TotalSearch({ setLoading }) {
   const handleSearch = () => {
     dispatch(search(icon.label, word));
     setWord("");
-    setHighlight("최신");
 
     if (icon.label === "제목") {
       getPostsList({
@@ -162,7 +164,7 @@ export default function TotalSearch({ setLoading }) {
   return (
     <>
       <Container>
-        <Align highlight={highlight} handleAlign={handleAlign} />
+        <Align handleAlign={handleAlign} />
         <SearchContainer>
           <Select
             icon={icon}

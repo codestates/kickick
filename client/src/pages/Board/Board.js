@@ -10,7 +10,7 @@ import { getPostsList } from "../../apis/posts";
 
 import { getList } from "../../store/actions/postadd/boardList";
 import { getCategoryAction, resetTag } from "../../store/actions/postadd";
-import { selectPageAction } from "../../store/actions/pagination";
+import { selectPageAction } from "../../store/actions/postsearch";
 
 export default function Board() {
   const { category } = useParams();
