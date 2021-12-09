@@ -31,21 +31,13 @@ import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
-
   const dispatch = useDispatch();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
   const [theme, setTheme] = useState([light, "light"]);
-  // const socketClient = io("http://localhost:4000/");
-  // socketClient.on("connect", () => {
-  //   console.log("connection server");
-  //   socketClient.emit("signin", { username: "한태규" })
-  // });
-  // socketClient.emit("alarms", { username: "demouser" });
-
-  // console.log(io("http://localhost:4000/"));
 
   useEffect(() => {
+
     setTimeout(() => {
       if (themeMode === "light") {
         setTheme([light, "light"]);
@@ -62,6 +54,21 @@ export default function App() {
       })
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
+
+  // const socketClient = io("http://localhost:4000");
+  //   socketClient.on("connect", () => {
+  //     console.log("connection server");
+  //     socketClient.emit("signin", { username: "demouser" });
+  //   });
+  
+  // socketClient.on("alarms", (data) => {
+  //   console.log("난 1이야",data);
+  // });
+  
+  // socketClient.on("disconnect", () => {
+  //   console.log("disconnection");
+  // });
+
   return (
     <ThemeProvider theme={theme[0]}>
       <Router>
