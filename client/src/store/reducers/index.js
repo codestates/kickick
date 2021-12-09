@@ -7,4 +7,6 @@ export { default as kickboardReducer } from "./kickboardReducer";
 export { default as mypageReducer } from "./mypageReducer";
 export { default as onoffReducer } from "./onoffReducer";
 export { default as tagReducer } from "./tagReducer";
+export { default as socketReducer } from "./socketReducer";
+export { default as alarmListReducer } from "./alarmListReducer";
 export { default as paginationReducer } from "./paginationReducer";

@@ -1,50 +1,30 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 
 import { FaBell } from "react-icons/fa";
-import { getAlarm } from "../../../apis/alarm"
 import { dateConverter } from "../../../commons/utils/dateConverter"
-import { useSocket } from "../../../hooks/useSocket";
 
 export default function AlarmBtn({ fontSize = "xl" }) {
   const navigate = useNavigate();
+  const alarmList = useSelector((state) => state.alarmList);
 
   const [alarmOpen, setAlarmOpen] = useState(false);
   const [isOver, setIsOver] = useState(false);
-  const [alarmArr, setAlarmArr] = useState([]);
-  const [pagenation, setPagenation] = useState({ limit: 5, page_num: 1 });
-  const socket = useSocket();
 
-  useEffect(() => {
-    getAlarm(pagenation.limit, pagenation.page_num)
-      .then((res) => {
-        setAlarmArr(res.data.data);
-      })
-      .then(() => console.log("alarmArr:", alarmArr));
-  }, [])
-  
-  useEffect(() => {
-    console.log("socketAlarm",socket[1]);
-    setAlarmArr([...socket[1]]);
-  }, [socket[1]]);
   
   const alarmOpner = () => {
-    if (alarmOpen) {
-      return setAlarmOpen(false);
-    } else {
-      // return getAlarm(pagenation.limit, pagenation.page_num).then((res) => {
-      //   setAlarmArr(res.data.data);
-      //   setAlarmOpen(true);
-      // }).then(()=>console.log("alarmArr:", alarmArr));
-      socket[0]();
-      return setAlarmOpen(true);
-    }
+      return setAlarmOpen(!alarmOpen);
   }
 
   const moveRefer = (obj) => {
-    if (obj.reference.table === "post") {
-      navigate(`/detailboard/${obj.reference.id}`);
+    const middleLink = obj.reference.table === "post" ? "detailboard"
+      : obj.reference.table === "notice" ? "notice"
+      : "event";
+
+    if (obj.reference) {
+      navigate(`/${middleLink}/${obj.reference.id}`);
       setAlarmOpen(false);
     }
   }
@@ -59,25 +39,32 @@ export default function AlarmBtn({ fontSize = "xl" }) {
       >
         <AlarmFrame fontSize={fontSize}>
           <AlarmCounter
-            alarmLength={alarmArr.length}
+            alarmLength={alarmList.length}
             isOver={isOver}
             fontSize={fontSize}
           >
-            {alarmArr.length > 9 ? "+9" : alarmArr.length}
+            {alarmList.length > 9 ? "+9" : alarmList.length}
           </AlarmCounter>
           <FaBell />
         </AlarmFrame>
       </AlarmContainer>
       <Dropdown dropdownOpen={alarmOpen} fontSize={fontSize} top="2.3rem">
-        {alarmArr.map((el) => (
-          <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
-            <DropdownContext>{el.content}</DropdownContext>
-            {dateConverter(el.created_at).includes("전") ? (
-              <DropdownCreated>{dateConverter(el.created_at)}</DropdownCreated>
-            ) : null}
-            {/* <DropdownCreated>3시간 전</DropdownCreated> */}
+        {alarmList.length ? (
+          alarmList.map((el) => (
+            <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
+              <DropdownContext>{el.content}</DropdownContext>
+              {dateConverter(el.created_at).includes("전") ? (
+                <DropdownCreated>
+                  {dateConverter(el.created_at)}
+                </DropdownCreated>
+              ) : null}
+            </DropdownList>
+          ))
+        ) : (
+          <DropdownList>
+            <DropdownContext>알림이 없습니다.</DropdownContext>
           </DropdownList>
-        ))}
+        )}
       </Dropdown>
     </Container>
   );
@@ -174,8 +161,10 @@ const DropdownList = styled.li`
 
 const DropdownContext = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.small};
+  pointer-events:none;
 `;
 
 const DropdownCreated = styled(DropdownContext)`
   font-size: ${({ theme }) => theme.fontSizes.xs};
+  pointer-events: none;
 `;
