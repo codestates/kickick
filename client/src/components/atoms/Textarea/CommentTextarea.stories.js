@@ -1,9 +1,9 @@
 import React from "react";
-import Textarea from "./";
+import CommentTextarea from "./CommentTextarea";
 
 export default {
-  title: "atoms/Textarea",
-  component: Textarea,
+  title: "atoms/CommentTextarea",
+  component: CommentTextarea,
   argTypes: {
     size: {
       description: "인풋 크기",
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-const Template = (args) => <Textarea {...args} />;
+const Template = (args) => <CommentTextarea {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {

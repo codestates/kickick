@@ -23,7 +23,7 @@ import {
   getMyCommentAction,
 } from "../../store/actions/mypage";
 
-import { selectPageAction } from "../../store/actions/pagination";
+import { selectPageAction } from "../../store/actions/postsearch";
 
 import profileinfoicon from "../../assets/images/profileinfoicon.png";
 import activityicon from "../../assets/images/activityicon.png";

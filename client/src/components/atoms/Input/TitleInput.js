@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 export default function TitleInput({
   holder = "제목을 입력하세요",
-  width = "30rem",
-  padding = "none",
   handleKeyon,
   handleChange,
   handleBlur,
@@ -14,25 +12,22 @@ export default function TitleInput({
     <Title
       type="text"
       placeholder={holder}
-      width={width}
       onBlur={handleBlur}
       onKeyPress={handleKeyon}
       onChange={handleChange}
-      padding={padding}
       value={val}
       defaultValue={title ? title : null}
     />
   );
 }
 const Title = styled.input`
-  padding: ${({ padding }) => padding};
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.2);
   outline: none;
-  width: ${({ width }) => width};
-  height: 100%;
-  font-size: 1rem;
+  width: 40rem;
+  height: 3rem;
+  font-size: 1.2rem;
   &:focus {
-    border-bottom: 3px solid rgba(0, 0, 0, 0.6);
+    border-bottom: 3px solid skyblue;
   }
 `;
