@@ -26,10 +26,10 @@ module.exports = async (req, res) => {
   }
 
   const { username } = decoded;
-  let data;
+  let data = new Object();
 
   try {
-    data = await users.findOne({
+    let user_info = await users.findOne({
       attributes: ["id"],
       where: {
         username: username,
@@ -50,12 +50,43 @@ module.exports = async (req, res) => {
         },
       ],
     });
-    data = data.get({ plain: true });
-    // data 가공
-    data = data.alarms.map((el) => {
-      el.reference = JSON.parse(el.reference);
-      return el;
+    user_info = user_info.get({ plain: true });
+    // user_info 가공
+    data.alarms = [];
+    if (user_info.length !== 0) {
+      user_info = user_info.alarms.map((el) => {
+        el.reference = JSON.parse(el.reference);
+        return el;
+      });
+      data.alarms = user_info;
+    }
+
+    // 공지 알림 구함
+    let notice_alarms = await alarms.findAll({
+      attributes: [
+        ["id", "alarm_id"],
+        "type",
+        "reference",
+        "content",
+        "is_checked",
+        "created_at",
+      ],
+      offset: limit * (page_num - 1),
+      limit: limit,
+      where: {
+        type: "notices",
+      },
     });
+
+    // notice_alarms 가공
+    data.notices = [];
+    if (notice_alarms.length !== 0) {
+      notice_alarms = notice_alarms.alarms.map((el) => {
+        el.reference = JSON.parse(el.reference);
+        return el;
+      });
+      data.notices = notice_alarms;
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
