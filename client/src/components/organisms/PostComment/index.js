@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { throttle } from "lodash";
 
 import { getComments, createComments } from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
@@ -39,6 +40,7 @@ export default function PostComment({ post_id }) {
   };
 
   const cmtFetch = (page) => {
+    if (cmt.count === cmt.data.length) return;
     getComments(post_id, page)
       .then((data) => {
         let mergeCmt = data.data;
@@ -49,14 +51,18 @@ export default function PostComment({ post_id }) {
       .catch((err) => console.log(err.response));
   };
 
-  const handleScroll = (e) => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight >= scrollHeight && loading === false) {
-      cmtFetch(10 * limit);
-    }
-  };
+  const handleScroll = useMemo(
+    () =>
+      throttle(() => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+        if (scrollTop + clientHeight >= scrollHeight) {
+          cmtFetch(10 * limit);
+        }
+      }, 500),
+    [limit]
+  );
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -66,6 +72,7 @@ export default function PostComment({ post_id }) {
   });
 
   useEffect(async () => {
+    console.log("dd");
     await getComments(postInfo.post_id)
       .then((data) => {
         setCmt(data.data);

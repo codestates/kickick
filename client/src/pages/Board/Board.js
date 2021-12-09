@@ -12,7 +12,6 @@ import BoardSkeleton from "./BoardSkeleton";
 
 export default function Board() {
   const { category } = useParams();
-
   const apiCategory = useSelector((state) => state.postAdd.category);
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);

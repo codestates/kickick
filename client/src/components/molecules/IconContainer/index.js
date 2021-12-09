@@ -44,7 +44,6 @@ export default function IconContainer() {
     }
   };
 
-  console.log(typeof postInfo.favorite);
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
