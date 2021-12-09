@@ -25,7 +25,7 @@ export default function Notice() {
 
   return (
     <>
-      <BoardTop />
+      {/* <BoardTop /> */}
       <Container>
         <NavContainer>
           <h3>공지</h3>
