@@ -17,7 +17,6 @@ export { default as Tab } from "./atoms/Tab";
 export { default as Textarea } from "./atoms/Textarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
 export { default as IconBox } from "./atoms/IconBox";
-export { default as Pagination } from "./atoms/Pagination";
 export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 
 // molecules
@@ -56,7 +55,7 @@ export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
 export { default as PostList } from "./organisms/PostList";
 export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
 export { default as Chart } from "./organisms/Chart";
-export { default as MyPagination } from "./organisms/Pagination";
+export { default as Pagination } from "./organisms/Pagination";
 export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
 export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";
 export { default as S_TotalSearch } from "./organisms/TotalSearch/S_TotalSearch";

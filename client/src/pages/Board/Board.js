@@ -3,21 +3,23 @@ import styled from "styled-components";
 import { useParams, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getPostsList } from "../../apis/posts";
-import { getList } from "../../store/actions/postadd/boardList";
-import { getCategoryAction, resetTag } from "../../store/actions/postadd";
-import { selectPageAction } from "../../store/actions/pagination";
 import { TotalSearch, BoardTop, PostList } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
 
+import { getPostsList } from "../../apis/posts";
+
+import { getList } from "../../store/actions/postadd/boardList";
+import { getCategoryAction, resetTag } from "../../store/actions/postadd";
+import { selectPageAction } from "../../store/actions/pagination";
+
 export default function Board() {
   const { category } = useParams();
+  const dispatch = useDispatch();
 
   const apiCategory = useSelector((state) => state.postAdd.category);
   const state = useSelector((state) => state.board);
   const stateOnoff = useSelector((state) => state.onoff);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryAction(category));

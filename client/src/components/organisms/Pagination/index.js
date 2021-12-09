@@ -15,33 +15,35 @@ import {
   getMyCommentAction,
 } from "../../../store/actions/mypage";
 
-import { selectPageAction } from "../../../store/actions/pagination";
+import {
+  selectPageAction,
+  selectDivPageAction,
+} from "../../../store/actions/pagination";
 import { getList } from "../../../store/actions/postadd/boardList";
 import { goBack } from "../../../store/actions/postadd";
 
-export default function MyPagination({ count }) {
+export default function Pagination({ count }) {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const boardState = useSelector((state) => state.board);
   const apiCategory = useSelector((state) => state.postAdd.category);
-  const dispatch = useDispatch();
 
-  const selectPage = useSelector((state) => state.pagination);
+  const { selectPage, selectDivPage, limitPage } = useSelector(
+    (state) => state.pagination
+  );
 
-  const limitPage = 10;
   const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
-  // const [selectPage, dispatch(selectPageAction] = useState(boardState.page);
   const dividPage = Math.ceil(totalPage / limitPage);
-  const [selectDividPage, setSelectDividPage] = useState(0);
-  const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
+  const firstPage = limitPage * (selectDivPage + 1) - (limitPage - 1);
 
-  let lastPage = limitPage * (selectDividPage + 1);
+  let lastPage = limitPage * (selectDivPage + 1);
   if (totalPage < lastPage) {
     lastPage = totalPage;
   }
   const handleLeftIdx = () => {
     if (selectPage === 1) return;
     if (selectPage === firstPage) {
-      setSelectDividPage(selectDividPage - 1);
+      dispatch(selectDivPageAction(selectDivPage - 1));
     }
     dispatch(selectPageAction(selectPage - 1));
   };
@@ -50,20 +52,20 @@ export default function MyPagination({ count }) {
     if (
       selectPage === lastPage &&
       selectPage < totalPage &&
-      selectDividPage < dividPage
+      selectDivPage < dividPage
     ) {
-      setSelectDividPage(selectDividPage + 1);
+      dispatch(selectDivPageAction(selectDivPage + 1));
     }
     dispatch(selectPageAction(selectPage + 1));
   };
   const handleDubleLeft = () => {
-    if (selectDividPage === 0) return;
-    setSelectDividPage(selectDividPage - 1);
+    if (selectDivPage === 0) return;
+    dispatch(selectDivPageAction(selectDivPage - 1));
     dispatch(selectPageAction(selectPage - limitPage));
   };
   const handleDubleRight = () => {
-    if (selectDividPage + 1 >= dividPage) return;
-    setSelectDividPage(selectDividPage + 1);
+    if (selectDivPage + 1 >= dividPage) return;
+    dispatch(selectDivPageAction(selectDivPage + 1));
     dispatch(
       selectPageAction(() => {
         if (selectPage + limitPage > totalPage) {
@@ -76,7 +78,7 @@ export default function MyPagination({ count }) {
   };
 
   const handleClickNum = (idx) => {
-    dispatch(selectPageAction(idx + 1 + selectDividPage * limitPage));
+    dispatch(selectPageAction(idx + 1 + selectDivPage * limitPage));
   };
 
   useEffect(() => {
@@ -130,9 +132,9 @@ export default function MyPagination({ count }) {
             <PageNum
               key={idx}
               onClick={() => handleClickNum(idx)}
-              isActive={idx + 1 + selectDividPage * limitPage === selectPage}
+              isActive={idx + 1 + selectDivPage * limitPage === selectPage}
             >
-              {idx + 1 + selectDividPage * limitPage}
+              {idx + 1 + selectDivPage * limitPage}
             </PageNum>
           );
         })}
