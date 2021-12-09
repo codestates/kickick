@@ -14,7 +14,7 @@ const upload = multer(
       bucket: "YourBucketName",
       acl: "public-read",
       key: function (req, file, cb) {
-        cb(null, Date.now() + "." + file.originalname.split(".").pop()); // 이름 설정
+        cb(null, Date.now() + "." + file.originalname.split(".").pop());
       },
     }),
   },

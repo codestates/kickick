@@ -1,6 +1,5 @@
 const { users, posts, comments, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
-const { io } = require("socket.io-client");
 
 module.exports = async (req, res) => {
   // TODO 댓글 생성 구현
@@ -52,8 +51,6 @@ module.exports = async (req, res) => {
     delete data.postId;
     delete data.userId;
     delete data.updated_at;
-
-    io;
 
     // id 명시적으로
     data.comment_id = data.id;
