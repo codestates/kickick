@@ -1,5 +1,6 @@
-const { users, favorites } = require("../../models");
+const { users, posts, favorites } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO 즐겨찾기 생성 구현
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
   }
 
   const { username } = decoded;
-  const post_id = req.body.post_id;
+  const post_id = Number(req.body.post_id);
   let data;
 
   try {
@@ -49,6 +50,20 @@ module.exports = async (req, res) => {
         post_id: post_id,
       },
     });
+    if (data[1]) {
+      // post 테이블에 favorite_count 증가
+      await posts.update(
+        {
+          favorite_count: sequelize.literal(`favorite_count + 1`),
+        },
+        {
+          where: {
+            id: post_id,
+          },
+        }
+      );
+    }
+
     if (Array.isArray(data)) data = data[0];
     data = data.get({ plain: true });
     delete data.postId;

@@ -1,5 +1,6 @@
 module.exports = {
   test: require("./test"),
+  upload: require("./multer"),
   // users
   get_users_info: require("./users/get_users_info"),
   post_users_info: require("./users/post_users_info"),

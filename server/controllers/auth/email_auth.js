@@ -9,11 +9,22 @@ module.exports = async (req, res) => {
 
   try {
     // req.body.username 으로 users 검색해서
-    // 존재하지 않으면 400 보내기 구현 필
+    // 존재하지 않으면 400
+    let user_info = await users.findOne({
+      where: {
+        username: username,
+      },
+    });
+    if (!user_info) {
+      return res
+        .status(400)
+        .json({ data: null, message: "존재하지 않는 닉네임입니다." });
+    }
+    // 유저정보 수정
     await users.update(
       {
         type: "general",
-        kick_money: sequelize.literal(`kick_money + 1000`),
+        kick_money: sequelize.literal(`kick_money + 1500`),
       },
       {
         where: {
