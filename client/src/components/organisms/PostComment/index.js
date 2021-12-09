@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { set, throttle } from "lodash";
+import { throttle } from "lodash";
 
 import {
   getComments,

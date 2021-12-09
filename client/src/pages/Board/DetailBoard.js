@@ -19,7 +19,6 @@ export default function DetailBoard() {
     getPostsInfo(post_id)
       .then((data) => {
         dispatch(getPostInfoAction(data.data.data));
-        // dispatch(getPostInfoAction(data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));

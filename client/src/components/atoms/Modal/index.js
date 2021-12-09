@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-export default function Modal({ handleModal, handleModalFunc }) {
+export default function Modal({ handleModal, handleModalFunc, type }) {
+  const sentence = {
+    del: "정말로 삭제하시겠습니까?",
+    login: "로그인 하시겠습니까?",
+  };
   return (
     <Container onClick={handleModal}>
       <Alarm onClick={(e) => e.stopPropagation()}>
         <div>
-          <h2>정말로 삭제하시겠습니까?</h2>
+          <h2>{sentence[type]}</h2>
         </div>
         <ButtonContainer>
           <button onClick={handleModalFunc}>Yes</button>
@@ -42,11 +46,15 @@ const Alarm = styled.div`
   div {
     text-align: center;
   }
+  h2 {
+    margin-top: 1.5rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2rem;
   button {
     width: 5rem;
     height: 2rem;

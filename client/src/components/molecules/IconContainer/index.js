@@ -81,7 +81,11 @@ export default function IconContainer() {
         <IconBox label="heart" handleClick={handleClick} />
       )}
       {modal ? (
-        <Modal handleModal={handleModalOff} handleModalFunc={handleDelPost} />
+        <Modal
+          handleModal={handleModalOff}
+          handleModalFunc={handleDelPost}
+          type="del"
+        />
       ) : null}
     </Container>
   );

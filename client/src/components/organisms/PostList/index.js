@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import disableScroll from "disable-scroll";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 
-import { PostItem, Pagination, Common } from "../../../components";
+import { PostItem, Pagination, Common, Modal } from "../../../components";
 
 const postList = [
   {
@@ -29,11 +30,11 @@ const postList = [
 ];
 
 export default function PostList({ type }) {
+  const { isLogin } = useSelector((state) => state.login);
   const { label, reducer } = postList.find((el) => el.type === type);
-
   const { pathname } = useLocation();
-
   const [page, category] = decodeURI(pathname).slice(1).split("/");
+  const [modal, setModal] = useState(false);
   // const { data, count } = useSelector(
   //   (state) => state[`${page}`][`${category}`]
   // );
@@ -51,10 +52,26 @@ export default function PostList({ type }) {
     data = mypage.data;
     count = mypage.count;
   }
-
   const navigate = useNavigate();
+
   const handleMovePage = () => {
-    navigate(`/editboard/${category}`);
+    if (!isLogin) {
+      setModal(true);
+      disableScroll.on();
+    } else {
+      navigate(`/editboard/${category}`);
+    }
+  };
+
+  const handleModalOff = () => {
+    setModal(false);
+    disableScroll.off();
+  };
+
+  const handleModalFunc = () => {
+    setModal(false);
+    disableScroll.off();
+    navigate("/login");
   };
 
   return (
@@ -75,6 +92,13 @@ export default function PostList({ type }) {
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
       {data.length !== 0 && <Pagination count={count} />}
+      {modal ? (
+        <Modal
+          handleModal={handleModalOff}
+          handleModalFunc={handleModalFunc}
+          type="login"
+        />
+      ) : null}
     </Container>
   );
 }

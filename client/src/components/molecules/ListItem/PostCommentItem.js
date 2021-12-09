@@ -42,6 +42,7 @@ export default function PostCommentItem({ item, handleDelComment }) {
           <Modal
             handleModal={handleModalOff}
             handleModalFunc={hadleModalFunc}
+            type="del"
           />
         ) : null}
         <div className="datetime">{dateConverter(item.created_at)}</div>
