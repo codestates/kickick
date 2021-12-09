@@ -64,7 +64,7 @@ export default function PostList({ type }) {
         {data.length === 0 ? (
           <NoPostContainer>등록된 것이 없습니다</NoPostContainer>
         ) : (
-          data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
+          data.map((el,idx) => <PostItem key={idx} data={el} type={type} />)
         )}
       </PostListContainer>
       {type === "freepost" && (
