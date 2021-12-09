@@ -3,18 +3,13 @@ import styled from "styled-components";
 
 import IconText, { iconList } from "../../atoms/IconText";
 
-export default function Align({ highlight, handleAlign, category = "정렬" }) {
+export default function Align({ handleAlign, category = "정렬" }) {
   return (
     <Container>
       {iconList
         .filter((el) => el.category === category)
         .map((el) => (
-          <IconText
-            key={el.label}
-            isActive={highlight === el.label}
-            label={el.label}
-            handleClick={handleAlign}
-          />
+          <IconText key={el.label} label={el.label} handleClick={handleAlign} />
         ))}
     </Container>
   );

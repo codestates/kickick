@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 import {
   FaHashtag,
   FaUserAstronaut,
@@ -52,13 +53,14 @@ export const iconList = [
   { icon: <ImGift />, label: "이벤트", category: "공지" },
 ];
 
-export default function IconText({ isActive, label, handleClick, board }) {
+export default function IconText({ label, handleClick, board }) {
   const { icon, color, category } = iconList.find((i) => i.label === label);
-
+  const { align } = useSelector((state) => state.postsearch);
+  console.log(align);
   return (
     <Container
       onClick={handleClick}
-      isActive={isActive}
+      isActive={align === label}
       color={color}
       category={category}
       board={board}
