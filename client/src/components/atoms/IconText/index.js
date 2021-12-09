@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 import {
   FaHashtag,
   FaUserAstronaut,
@@ -19,7 +20,12 @@ import {
   FaRegClipboard,
   FaRegHeart,
   FaDollarSign,
+  FaRegWindowClose,
 } from "react-icons/fa";
+
+import { ImGift } from "react-icons/im";
+
+import { VscMegaphone } from "react-icons/vsc";
 
 export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
@@ -35,26 +41,41 @@ export const iconList = [
   { icon: <FaHelicopter />, label: "여행", category: "게시판" },
   { icon: <FaRegEdit />, label: "프로필 수정", category: "마이페이지" },
   { icon: <FaRegCalendarAlt />, label: "출석", category: "마이페이지" },
-  { icon: <FaRegBookmark />, label: "스크랩 한 글", category: "마이페이지" },
+  { icon: <FaRegHeart />, label: "좋아요 한 글", category: "마이페이지" },
   { icon: <FaRegClipboard />, label: "내가 쓴 글", category: "마이페이지" },
-  { icon: <FaRegComment />, label: "내가 쓴 댓글", category: "마이페이지" },
-  { icon: <FaRegHeart />, label: "내가 산 킥", category: "마이페이지" },
+  { icon: <FaRegComment />, label: "내가 단 댓글", category: "마이페이지" },
+  { icon: <FaRegBookmark />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
+  { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
+  { icon: <VscMegaphone />, label: "뉴스", category: "공지" },
+  { icon: <ImGift />, label: "이벤트", category: "공지" },
 ];
 
-export default function IconText({ isActive, label, handleClick, board }) {
+export default function IconText({ label, handleClick, board }) {
   const { icon, color, category } = iconList.find((i) => i.label === label);
-
+  const { align } = useSelector((state) => state.postsearch);
+  console.log(align);
   return (
     <Container
       onClick={handleClick}
-      isActive={isActive}
+      isActive={align === label}
       color={color}
       category={category}
       board={board}
     >
-      {icon}
-      {label}
+      {category === "공지" ? (
+        <>
+          {label}
+          {icon}
+        </>
+      ) : (
+        <>
+          {icon}
+          {label}
+        </>
+      )}
     </Container>
   );
 }
@@ -75,6 +96,7 @@ const Container = styled.div`
   ${({ category }) =>
     category === "정렬" &&
     css`
+      margin: 0 0.5rem;
       border-bottom: 3px solid
         ${({ isActive, color }) => (isActive ? color : "transparent")};
       font-size: 1.3rem;
@@ -91,6 +113,7 @@ const Container = styled.div`
     css`
       font-size: 1rem;
       cursor: pointer;
+
       svg {
         font-size: 1.1rem;
       }
@@ -116,6 +139,18 @@ const Container = styled.div`
         margin-right: 1rem;
         font-size: 1.5rem;
         color: #555;
+      }
+    `}
+
+
+    ${({ category }) =>
+    category === "공지" &&
+    css`
+      font-size: 1.2rem;
+
+      svg {
+        margin-left: 0.3rem;
+        font-size: 1rem;
       }
     `}
 `;

@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { DetailBoardTop, PostComment, IconContainer } from "../../components";
+
 import { getPostsInfo } from "../../apis/posts";
-import { getPostInfo } from "../../store/actions/postadd";
+
+import { getPostInfoAction } from "../../store/actions/postadd";
 
 export default function DetailBoard() {
-  // 이거 화면 이동시에 최상단으로 이동시켜주는 함수 함 넣어봄
   const state = useSelector((state) => state.postInfo);
   const dispatch = useDispatch();
   const { post_id } = useParams();
@@ -17,13 +18,13 @@ export default function DetailBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfo(data.data));
+        dispatch(getPostInfoAction(data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [dispatch, post_id]);
 
-  if (loading) return "";
+  if (loading) return <Temporary />;
 
   return (
     <Container>
@@ -38,9 +39,16 @@ export default function DetailBoard() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 1rem;
   width: 48rem;
   margin: 0 auto;
 `;
 
-const RigthContainer = styled.div``;
+const RigthContainer = styled.div`
+  width: 40.5rem;
+`;
+
+const Temporary = styled.div`
+  height: 100vh;
+`;

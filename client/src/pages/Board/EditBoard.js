@@ -2,19 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  EditQuill,
-  TitleInput,
-  Common,
-  TagInput,
-  IconText,
-} from "../../components";
+import { EditQuill, TitleInput, Common, TagInput } from "../../components";
 
-import { categoryName } from "../../commons/utils/categoryName";
 import {
-  getCategory,
-  getPostName,
-  getContent,
+  getCategoryAction,
+  getPostNameAction,
+  getContentAction,
   reset,
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
@@ -27,12 +20,12 @@ export default function EditBoard() {
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
 
-  const handleBlur = (e) => {
-    dispatch(getPostName(e.target.value));
+  const handlePostName = (e) => {
+    dispatch(getPostNameAction(e.target.value));
   };
 
-  const handleQuill = () => {
-    dispatch(getContent(content));
+  const handleContent = () => {
+    dispatch(getContentAction(content));
   };
 
   const handleClick = () => {
@@ -47,19 +40,19 @@ export default function EditBoard() {
 
   useEffect(() => {
     dispatch(reset());
-    dispatch(getCategory(categoryName(category)));
-  }, []);
+    dispatch(getCategoryAction(category));
+  }, [category, dispatch]);
+
   return (
     <Container>
       <TitleContainer>
-        <IconText label={category} />
-        <TitleInput padding="0.3rem" handleBlur={handleBlur} />
+        <TitleInput handlePostName={handlePostName} />
       </TitleContainer>
       <EditQuill
         image={false}
         content={content}
         setContent={setContent}
-        handleQuill={handleQuill}
+        handleContent={handleContent}
       />
       <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
       <BtnContainer>
@@ -71,7 +64,7 @@ export default function EditBoard() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 88rem;
+  width: 64rem;
   margin: 0 auto;
   gap: 1rem;
 `;

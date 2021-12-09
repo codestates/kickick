@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { FaGithub } from "react-icons/fa";
-import tree from "../../../assets/images/FooterTree.png"
+import tree from "../../../assets/images/FooterTree.png";
 
 export default function Footer() {
   const member = [
@@ -80,12 +80,12 @@ const ContextContainer = styled.div`
 
 const Frame = styled.div`
   display: flex;
-  flex-direction: column; 
-  justify-content:center;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Untouchable = styled.div`
-  pointer-events:none;
+  pointer-events: none;
 `;
 
 const Logo = styled.p`
@@ -111,8 +111,8 @@ const CopyRight = styled.p`
 `;
 
 const MemberBox = styled.a`
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 2}rem`};
   color: ${({ theme }) => theme.color.main};
 `;

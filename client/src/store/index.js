@@ -10,6 +10,7 @@ import {
   mypageReducer,
   onoffReducer,
   tagReducer,
+  postsearchReducer,
 } from "./reducers";
 
 export const store = configureStore({
@@ -23,5 +24,6 @@ export const store = configureStore({
     login: loginReducer,
     themeMode: themeReducer,
     mypage: mypageReducer,
+    postsearch: postsearchReducer,
   },
 });

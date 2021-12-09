@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-import { PostItem, MyPagination, Common } from "../../../components";
+import { PostItem, Pagination, Common } from "../../../components";
 
 const postList = [
   {
@@ -19,10 +19,10 @@ const postList = [
   {
     reducer: ["mypage", "mycomment"],
     type: "mypagemycomment",
-    label: ["게시판", "댓글", "좋아요", "날짜"],
+    label: ["글 제목", "댓글", "날짜"],
   },
   {
-    reducer: ["board", "data"],
+    reducer: ["board"],
     type: "freepost",
     label: ["태그", "제목", "글쓴이", "날짜", "조회수"],
   },
@@ -30,7 +30,12 @@ const postList = [
 
 export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
+  const { pathname } = useLocation();
 
+  const [page, category] = decodeURI(pathname).slice(1).split("/");
+  // const { data, count } = useSelector(
+  //   (state) => state[`${page}`][`${category}`]
+  // );
   let data;
   let count;
   const freepost = useSelector((state) => state[`${reducer[0]}`]);
@@ -48,7 +53,7 @@ export default function PostList({ type }) {
 
   const navigate = useNavigate();
   const handleMovePage = () => {
-    navigate("/editboard");
+    navigate(`/editboard/${category}`);
   };
 
   return (
@@ -62,15 +67,13 @@ export default function PostList({ type }) {
         {data.length === 0 ? (
           <NoPostContainer>등록된 것이 없습니다</NoPostContainer>
         ) : (
-          data.map((el) => <PostItem key={el.post_id} data={el} type={type} />)
+          data.map((el, idx) => <PostItem key={idx} data={el} type={type} />)
         )}
       </PostListContainer>
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && type !== "freepost" && (
-        <MyPagination count={count} />
-      )}
+      {data.length !== 0 && <Pagination count={count} />}
     </Container>
   );
 }
@@ -141,15 +144,12 @@ const PostListContainer = styled.div`
       type === "mypagemycomment" &&
       css`
         > div:nth-of-type(1) {
-          flex: 2;
+          flex: 3;
         }
         > div:nth-of-type(2) {
           flex: 5;
         }
         > div:nth-of-type(3) {
-          flex: 1;
-        }
-        > div:nth-of-type(4) {
           flex: 2;
         }
       `}

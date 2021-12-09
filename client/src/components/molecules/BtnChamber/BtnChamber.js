@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { NavBtn } from "../../../components";
 
-export default function BtnChamber({ setUpdate }) {
+export default function BtnChamber() {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼들의 모음집
   const list = [
     { pathname: "intro", context: "소개", isSubNav: false },
@@ -25,7 +25,6 @@ export default function BtnChamber({ setUpdate }) {
           isSubNav={el.isSubNav}
           isHover={isHover}
           setIsHover={setIsHover}
-          setUpdate={setUpdate}
         />
       ))}
     </Container>

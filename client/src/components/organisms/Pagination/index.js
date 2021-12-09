@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { IconBox } from "../..";
@@ -15,59 +15,70 @@ import {
   getMyCommentAction,
 } from "../../../store/actions/mypage";
 
-export default function MyPagination({ count }) {
-  const { pathname } = useLocation();
+import {
+  selectPageAction,
+  selectDivPageAction,
+} from "../../../store/actions/postsearch";
+import { getList } from "../../../store/actions/postadd/boardList";
+import { goBack } from "../../../store/actions/postadd";
 
+export default function Pagination({ count }) {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const boardState = useSelector((state) => state.board);
+  const apiCategory = useSelector((state) => state.postAdd.category);
 
-  const limitPage = 10;
+  const { selectPage, selectDivPage, limitPage, align } = useSelector(
+    (state) => state.postsearch
+  );
+
   const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
-  const [selectPage, setSelectPage] = useState(1);
   const dividPage = Math.ceil(totalPage / limitPage);
-  const [selectDividPage, setSelectDividPage] = useState(0);
-  const firstPage = limitPage * (selectDividPage + 1) - (limitPage - 1);
+  const firstPage = limitPage * (selectDivPage + 1) - (limitPage - 1);
 
-  let lastPage = limitPage * (selectDividPage + 1);
+  let lastPage = limitPage * (selectDivPage + 1);
   if (totalPage < lastPage) {
     lastPage = totalPage;
   }
   const handleLeftIdx = () => {
     if (selectPage === 1) return;
     if (selectPage === firstPage) {
-      setSelectDividPage(selectDividPage - 1);
+      dispatch(selectDivPageAction(selectDivPage - 1));
     }
-    setSelectPage(selectPage - 1);
+    dispatch(selectPageAction(selectPage - 1));
   };
   const handleRightIdx = () => {
     if (selectPage === totalPage) return;
     if (
       selectPage === lastPage &&
       selectPage < totalPage &&
-      selectDividPage < dividPage
+      selectDivPage < dividPage
     ) {
-      setSelectDividPage(selectDividPage + 1);
+      dispatch(selectDivPageAction(selectDivPage + 1));
     }
-    setSelectPage(selectPage + 1);
+    dispatch(selectPageAction(selectPage + 1));
   };
   const handleDubleLeft = () => {
-    if (selectDividPage === 0) return;
-    setSelectDividPage(selectDividPage - 1);
-    setSelectPage(selectPage - limitPage);
+    if (selectDivPage === 0) return;
+    dispatch(selectDivPageAction(selectDivPage - 1));
+    dispatch(selectPageAction(selectPage - limitPage));
   };
   const handleDubleRight = () => {
-    if (selectDividPage + 1 >= dividPage) return;
-    setSelectDividPage(selectDividPage + 1);
-    setSelectPage(() => {
-      if (selectPage + limitPage > totalPage) {
-        return totalPage;
-      } else {
-        return selectPage + limitPage;
-      }
-    });
+    if (selectDivPage + 1 >= dividPage) return;
+    dispatch(selectDivPageAction(selectDivPage + 1));
+    dispatch(
+      selectPageAction(() => {
+        if (selectPage + limitPage > totalPage) {
+          return totalPage;
+        } else {
+          return selectPage + limitPage;
+        }
+      })
+    );
   };
 
   const handleClickNum = (idx) => {
-    setSelectPage(idx + 1 + selectDividPage * limitPage);
+    dispatch(selectPageAction(idx + 1 + selectDivPage * limitPage));
   };
 
   useEffect(() => {
@@ -78,11 +89,38 @@ export default function MyPagination({ count }) {
         })
         .catch((err) => console.log(err));
     } else if (pathname === "/mypage/mycomment") {
-      getComments({ page_num: selectPage })
+      getComments(null, null, selectPage)
         .then((data) => dispatch(getMyCommentAction(data)))
         .catch((err) => console.log(err));
+    } else if (pathname === "/mypage/favorites") {
+      getFavorites(null, null, selectPage)
+        .then((data) => dispatch(getFavoritesAction(data)))
+        .catch((err) => console.log(err));
+    } else {
+      getPostsList({
+        category: apiCategory,
+        post_name: boardState.title.word,
+        username: boardState.writer.word,
+        tag: boardState.tag.word,
+        favorite_count: align === "최신" ? null : 1,
+        limit: 20,
+        page_num: selectPage,
+      })
+        .then((data) =>
+          dispatch(
+            getList(
+              data.data,
+              boardState.title,
+              boardState.writer,
+              boardState.tag,
+              selectPage
+            )
+          )
+        )
+        .then(() => dispatch(goBack()))
+        .catch((err) => console.log(err.response));
     }
-  }, [selectPage]);
+  }, [apiCategory, selectPage]);
 
   return (
     <Container>
@@ -95,9 +133,9 @@ export default function MyPagination({ count }) {
             <PageNum
               key={idx}
               onClick={() => handleClickNum(idx)}
-              isActive={idx + 1 + selectDividPage * limitPage === selectPage}
+              isActive={idx + 1 + selectDivPage * limitPage === selectPage}
             >
-              {idx + 1 + selectDividPage * limitPage}
+              {idx + 1 + selectDivPage * limitPage}
             </PageNum>
           );
         })}

@@ -25,7 +25,7 @@ export default function ProfileEditForm() {
           ))}
         </ListContainer>
       </Container>
-      <Common type="register" label="프로필 수정" />
+      <Common type="mypage" label="프로필 수정" />
     </>
   );
 }

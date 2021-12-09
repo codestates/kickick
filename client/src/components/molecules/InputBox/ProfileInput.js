@@ -50,7 +50,7 @@ const Container = styled.div`
     font-size: 1.1rem;
     ::placeholder {
       font-style: italic;
-      font-size: 1rem;
+      font-size: 0.85rem;
     }
     &:focus {
       border: 3px solid rgba(0, 0, 255, 0.3);
@@ -59,7 +59,7 @@ const Container = styled.div`
 
   label {
     position: relative;
-    left: 4.5rem;
+    left: 2.2rem;
     top: -0.5rem;
   }
   img {

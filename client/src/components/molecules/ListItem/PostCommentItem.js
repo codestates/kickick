@@ -19,14 +19,8 @@ export default function PostCommentItem({ item }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
-  /* width: ${(props) => props.scale * 27}rem; */
-  width: 95%;
   margin: 0.5rem auto;
-  /* margin-bottom: ${(props) => props.scale * 0.5}rem; */
   border-bottom: 1px solid #eeeeee;
-
-  /* font-size: ${(props) => props.scale * 0.5}rem; */
   font-size: 1rem;
 
   .comment {
