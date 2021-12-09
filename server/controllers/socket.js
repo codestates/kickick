@@ -21,7 +21,15 @@ module.exports = (io) => {
       let client_info = new Object();
       client_info.username = data.username;
       client_info.id = socket.id;
-      clients.push(client_info);
+      let is_signed = false;
+      for (let el of clients) {
+        if (el.username === client_info.username) {
+          el.id = client_info.id;
+          is_signed = true;
+          break;
+        }
+      }
+      if (!is_signed) clients.push(client_info);
       console.log(clients);
     });
     socket.on("alarms", async (data) => {
