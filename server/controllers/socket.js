@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("./../models");
+const { users, alarms } = require("./../models");
 
 module.exports = (io) => {
   let clients = [];
