@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { DetailBoardTop, PostComment, IconContainer } from "../../components";
+
 import { getPostsInfo } from "../../apis/posts";
-import { getPostInfo } from "../../store/actions/postadd";
+
+import { getPostInfoAction } from "../../store/actions/postadd";
 
 export default function DetailBoard() {
   const state = useSelector((state) => state.postInfo);
@@ -16,7 +18,8 @@ export default function DetailBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfo(data.data.data));
+        dispatch(getPostInfoAction(data.data.data));
+        // dispatch(getPostInfoAction(data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));

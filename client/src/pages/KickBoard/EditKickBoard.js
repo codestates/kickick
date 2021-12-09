@@ -2,59 +2,68 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { EditQuill, TitleInput, Common, TagInput } from "../../components";
+import { EditQuill, TitleInput, Common, IntroTextarea } from "../../components";
 
 import {
   getCategoryAction,
   getPostNameAction,
   getContentAction,
+  getKickContentAction,
   reset,
 } from "../../store/actions/postadd";
-import { createPost, createTag } from "../../apis/posts";
 
-export default function EditBoard() {
+import { createPost } from "../../apis/posts";
+
+export default function EditKickBoard() {
   const { category } = useParams();
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  const [tagArr, setTagArr] = useState([]);
 
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
 
+  const handleIntro = (e) => {
+    dispatch(getContentAction(e.target.value));
+  };
+
   const handleContent = () => {
-    dispatch(getContentAction(content));
+    dispatch(getKickContentAction(content));
   };
 
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        createTag(data.data.data.post_id, [category, ...tagArr])
-          .then(() => navigate(`/board/${category}`))
-          .catch((err) => console.log(err.response));
+        navigate(`/kickboard/${category}`);
       })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
     dispatch(reset());
-    dispatch(getCategoryAction(category));
-  }, [category, dispatch]);
+    dispatch(getCategoryAction(category, "킥"));
+  }, [dispatch, category]);
 
   return (
     <Container>
-      <TitleContainer>
+      <InfoContainer>
+        <h3>제목</h3>
         <TitleInput handlePostName={handlePostName} />
-      </TitleContainer>
-      <EditQuill
-        image={false}
-        content={content}
-        setContent={setContent}
-        handleContent={handleContent}
-      />
-      <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
+      </InfoContainer>
+      <InfoContainer>
+        <h3>소개</h3>
+        <IntroTextarea handleTextarea={handleIntro} />
+      </InfoContainer>
+      <InfoContainer>
+        <h3>본문</h3>
+        <EditQuill
+          content={content}
+          setContent={setContent}
+          handleContent={handleContent}
+        />
+      </InfoContainer>
       <BtnContainer>
         <Common label="등 록" type="bigger" handleClick={handleClick} />
       </BtnContainer>
@@ -68,9 +77,16 @@ const Container = styled.div`
   margin: 0 auto;
   gap: 1rem;
 `;
-const TitleContainer = styled.div`
+const InfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 2rem;
+  gap: 2rem;
+
+  h3 {
+    font-size: 1.5rem;
+    color: gray;
+  }
 `;
 const BtnContainer = styled.div`
   text-align: center;

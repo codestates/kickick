@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-import { PostItem, MyPagination, Common } from "../../../components";
+import { PostItem, Pagination, Common } from "../../../components";
 
 const postList = [
   {
@@ -22,7 +22,7 @@ const postList = [
     label: ["글 제목", "댓글", "날짜"],
   },
   {
-    reducer: ["board", "data"],
+    reducer: ["board"],
     type: "freepost",
     label: ["태그", "제목", "글쓴이", "날짜", "조회수"],
   },
@@ -30,8 +30,13 @@ const postList = [
 
 export default function PostList({ type }) {
   const { label, reducer } = postList.find((el) => el.type === type);
-  const { category } = useParams();
 
+  const { pathname } = useLocation();
+
+  const [page, category] = decodeURI(pathname).slice(1).split("/");
+  // const { data, count } = useSelector(
+  //   (state) => state[`${page}`][`${category}`]
+  // );
   let data;
   let count;
   const freepost = useSelector((state) => state[`${reducer[0]}`]);
@@ -51,6 +56,7 @@ export default function PostList({ type }) {
   const handleMovePage = () => {
     navigate(`/editboard/${category}`);
   };
+
   return (
     <Container>
       <PostListContainer type={type}>
@@ -68,7 +74,7 @@ export default function PostList({ type }) {
       {type === "freepost" && (
         <Common type="register" label="글쓰기" handleClick={handleMovePage} />
       )}
-      {data.length !== 0 && <MyPagination count={count} />}
+      {data.length !== 0 && <Pagination count={count} />}
     </Container>
   );
 }
