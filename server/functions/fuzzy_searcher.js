@@ -4,7 +4,8 @@ module.exports = (word) => {
   // (자음번호 * 588 + 모음번호 * 28 + 종성번호) + 44032('가'코드)
 
   function pattern_maker(character) {
-    const offset = "가".charCodeAt;
+    const offset = "가".charCodeAt(0);
+    // 한글 모음이 있는 경우
 
     // 한글 초성만 있는 경우
     if (/[ㄱ-ㅎ]/.test(character)) {
@@ -31,7 +32,6 @@ module.exports = (word) => {
       const end = start + 587;
       return `[${character}\\u${start.toString(16)}-\\u${end.toString(16)}]`;
     }
-    // 한글 모음이 있는 경우
     if (/[가-힣]/.test(character)) {
       const code = character.charCodeAt(0) - offset;
       // 종성이 있으면 바리에이션 x
@@ -43,12 +43,13 @@ module.exports = (word) => {
       const end = start + 27;
       return `[\\u${start.toString(16)}-\\u${end.toString(16)}]`;
     }
+
     return escapeRegExp(character);
   }
   // 정규식에 사용할 문자열 패턴 만듦 음절 단위 -> 단어 단위
   const pattern = word
     .split("")
     .map((character) => pattern_maker(character))
-    .join(".*?");
+    .join("");
   return pattern;
 };
