@@ -19,11 +19,14 @@ export default function AlarmBtn({ fontSize = "xl" }) {
   }
 
   const moveRefer = (obj) => {
-    const middleLink = obj.reference.table === "post" ? "detailboard"
-      : obj.reference.table === "notice" ? "notice"
-      : "event";
-
     if (obj.reference) {
+      const middleLink =
+        obj.reference.table === "post"
+          ? "detailboard"
+          : obj.reference.table === "notice"
+          ? "notice"
+            : "event";
+      
       navigate(`/${middleLink}/${obj.reference.id}`);
       setAlarmOpen(false);
     }
