@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { throttle } from "lodash";
+import { set, throttle } from "lodash";
 
-import { getComments, createComments } from "../../../apis/comments";
+import {
+  getComments,
+  createComments,
+  delComments,
+} from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 
 export default function PostComment({ post_id }) {
@@ -39,6 +43,18 @@ export default function PostComment({ post_id }) {
     setValue("");
   };
 
+  //comment 지우기
+  const handleDelComment = (id) => {
+    delComments(id)
+      .then(() => {
+        const idx = cmt.data.findIndex((el) => el.comment_id === id);
+        const newData = [...cmt.data.slice(0, idx), ...cmt.data.slice(idx + 1)];
+        setCmt({ ...cmt, data: newData });
+        setPlusCmt(plusCmt - 1);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
   const cmtFetch = (page) => {
     if (cmt.count === cmt.data.length) return;
     getComments(post_id, page)
@@ -72,7 +88,6 @@ export default function PostComment({ post_id }) {
   });
 
   useEffect(async () => {
-    console.log("dd");
     await getComments(postInfo.post_id)
       .then((data) => {
         setCmt(data.data);
@@ -107,7 +122,11 @@ export default function PostComment({ post_id }) {
         댓글 <strong>{cmt.count + plusCmt}</strong>
       </H3>
       {cmt.data.map((el, idx) => (
-        <PostCommentItem key={idx} item={el} />
+        <PostCommentItem
+          key={idx}
+          item={el}
+          handleDelComment={handleDelComment}
+        />
       ))}
     </Container>
   );

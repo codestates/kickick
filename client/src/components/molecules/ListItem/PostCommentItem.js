@@ -1,15 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import Profile from "../../atoms/Img/Profile";
+import { IconBox } from "../../";
 import { dateConverter } from "../../../commons/utils/dateConverter";
 
-export default function PostCommentItem({ item }) {
+export default function PostCommentItem({ item, handleDelComment }) {
+  const userInfo = useSelector((state) => state.login.isLogin);
+
   return (
     <Container scale={1.5}>
       <UserInfoContainer scale={1.5}>
         <Profile type="post" />
         <div className="username">{item.user.username}</div>
+        {userInfo.username === item.user.username && (
+          <Del>
+            <IconBox
+              label="delete"
+              handleClick={() => handleDelComment(item.comment_id)}
+            ></IconBox>
+          </Del>
+        )}
         <div className="datetime">{dateConverter(item.created_at)}</div>
       </UserInfoContainer>
       <div className="comment">{item.content}</div>
@@ -46,4 +58,11 @@ const UserInfoContainer = styled.div`
     color: gray;
     margin-left: auto;
   }
+`;
+
+const Del = styled.div`
+  width: 2rem;
+  height: 2rem;
+  line-height: 1.45rem;
+  color: red;
 `;
