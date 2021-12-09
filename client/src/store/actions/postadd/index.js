@@ -30,7 +30,7 @@ export const getContentAction = (content) => {
   };
 };
 
-export const getPostInfo = (data) => {
+export const getPostInfoAction = (data) => {
   return {
     type: GET_POST_INFO,
     payload: data,
