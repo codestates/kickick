@@ -25,16 +25,19 @@ export default function PostCommentItem({ item, handleDelComment }) {
     disableScroll.off();
     handleDelComment(item.comment_id);
   };
+
   return (
     <Container scale={1.5}>
       <UserInfoContainer scale={1.5}>
         <Profile type="post" />
         <div className="username">{item.user.username}</div>
-        {userInfo.username === item.user.username && (
+
+        {userInfo.username === item.user.username ||
+        userInfo.type === "admin" ? (
           <Del>
             <IconBox label="cmtDel" handleClick={handleModalOn}></IconBox>
           </Del>
-        )}
+        ) : null}
         {modal ? (
           <Modal
             handleModal={handleModalOff}

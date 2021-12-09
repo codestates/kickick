@@ -69,7 +69,8 @@ export default function IconContainer() {
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
-      {postInfo.user.username === login.isLogin.username ? (
+      {postInfo.user.username === login.isLogin.username ||
+      login.isLogin.type === "admin" ? (
         <>
           <IconBox label="edit" handleClick={handleClick} />
           <IconBox label="postDel" handleClick={handleModalOn} />
