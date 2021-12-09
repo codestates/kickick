@@ -14,8 +14,9 @@ export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
 export { default as Tag } from "./atoms/Tag";
 export { default as Tab } from "./atoms/Tab";
-export { default as Textarea } from "./atoms/Textarea";
+export { default as Textarea } from "./atoms/Textarea/CommentTextarea";
 export { default as EditQuill } from "./atoms/Textarea/EditQuill";
+export { default as IntroTextarea } from "./atoms/Textarea/IntroTextarea";
 export { default as IconBox } from "./atoms/IconBox";
 export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 

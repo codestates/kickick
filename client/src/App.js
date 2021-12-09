@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import KickBoard from "./pages/KickBoard";
 import { Nav, Footer, PageUp } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
@@ -14,6 +13,9 @@ import Board from "./pages/Board/Board";
 import DetailBoard from "./pages/Board/DetailBoard";
 import EditBoard from "./pages/Board/EditBoard";
 import MyEditBoard from "./pages/Board/MyEditBoard";
+import KickBoard from "./pages/KickBoard";
+import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
+import EditKickBoard from "./pages/KickBoard/EditKickBoard";
 import MyPage from "./pages/MyPage";
 import Notice, { NoticeDetail } from "./pages/Notice";
 import KakaoAuth from "./pages/Login/KakaoAuth";
@@ -80,14 +82,16 @@ export default function App() {
             <Route path="signup" element={<SignupSelect />} />
             <Route path="signup/:type" element={<Signup />} />
             <Route path="mailauth/:username" element={<MailAuth />} />
+            <Route path="board/:category" element={<Board />} />
+            <Route path="detailboard/:post_id" element={<DetailBoard />} />
             <Route path="editboard/:category" element={<EditBoard />} />
             <Route
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard />}
             />
             <Route path="kickboard" element={<KickBoard />} />
-            <Route path="board/:category" element={<Board />} />
-            <Route path="detailboard/:post_id" element={<DetailBoard />} />
+            <Route path="detailkick" element={<DetailKickBoard />} />
+            <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route path="notice/:category" element={<Notice />}>
               <Route path=":notice_id" element={<NoticeDetail />} />
