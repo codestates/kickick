@@ -63,6 +63,7 @@ module.exports = async (req, res) => {
     await alarms.create({
       type: "notices",
       reference: JSON.stringify({ table: "notices", id: data.notice_id }),
+      content: req.body.notice_name,
     });
   } catch (err) {
     console.log(err);
