@@ -53,6 +53,7 @@ const ButtonContainer = styled.div`
     border: 1px solid black;
     cursor: pointer;
     :hover {
+      font-weight: bold;
       background-color: #0c0c42;
       color: white;
     }
