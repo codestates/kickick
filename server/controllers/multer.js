@@ -1,23 +1,28 @@
+const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-const aws = require("aws-sdk");
+const path = require("path");
 
-const s3 = new aws.S3({
+aws.config.update({
   accessKeyId: process.env.MULTER_KEY_ID,
   secretAccessKey: process.env.MULTER_ACCESS_KEY,
   region: process.env.MULTER_REGION,
 });
-const upload = multer(
-  {
-    storage: multerS3({
-      s3: s3,
-      bucket: "YourBucketName",
-      acl: "public-read",
-      key: function (req, file, cb) {
-        cb(null, Date.now() + "." + file.originalname.split(".").pop());
-      },
-    }),
-  },
-  "NONE"
-);
+
+const s3 = new aws.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "kickick-post-image",
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      let extension = path.extname(file.originalname);
+      cb(null, "images/" + "post/" + Date.now().toString() + extension);
+    },
+  }),
+});
+
 module.exports = upload;

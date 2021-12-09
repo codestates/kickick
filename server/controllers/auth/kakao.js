@@ -1,7 +1,6 @@
 const axios = require("axios");
 const { users } = require("../../models");
 const jwt = require("jsonwebtoken");
-const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO kakao 소셜로그인 구현

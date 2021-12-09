@@ -4,13 +4,9 @@ const {
   kicks,
   comments,
   likes,
-  favorites,
-  users_kicks,
   posts_tags,
   tags,
-  alarms,
   logs,
-  notices,
 } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
@@ -91,9 +87,8 @@ module.exports = async (req, res) => {
             tag_id_obj[el.tag_id] = tag_id_obj[el.tag_id] + 1 || 1;
           });
         }
-        // tag_id_obj 에서 제일 높은 수치를 가진 태그로 post 검색
-        // 그 값은 obj 에서 지움
-        //! 가져온 게 6개가 될 때까지 반복? 여기 수정 필요
+
+        // 여기까지 태그 정보 구함
 
         // 태그 id 정보가 존재한다면
         if (Object.keys(tag_id_obj).length !== 0) {
