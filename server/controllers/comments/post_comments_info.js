@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
         user_id: post_info.user.user_id,
         type: "comments",
         reference: JSON.stringify({
-          table: "post",
+          table: "posts",
           id: post_id,
         }),
         content: `${username}님이 내 게시글에 댓글을 달았습니다.`,

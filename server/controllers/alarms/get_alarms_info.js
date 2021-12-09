@@ -80,8 +80,10 @@ module.exports = async (req, res) => {
 
     // notice_alarms 가공
     data.notices = [];
+    console.log(notice_alarms);
     if (notice_alarms.length !== 0) {
-      notice_alarms = notice_alarms.alarms.map((el) => {
+      notice_alarms = notice_alarms.map((el) => {
+        el = el.get({ plain: true });
         el.reference = JSON.parse(el.reference);
         return el;
       });
