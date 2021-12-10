@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { throttle } from "lodash";
+import { set, throttle } from "lodash";
 
 import {
   getComments,
@@ -11,11 +11,12 @@ import {
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 
 export default function PostComment({ post_id }) {
+  const test = useRef();
   const postInfo = useSelector((state) => state.postInfo);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
   const [plusCmt, setPlusCmt] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(1);
   //textarea
   const [value, setValue] = useState("");
   const handleChange = (e) => {
@@ -55,49 +56,77 @@ export default function PostComment({ post_id }) {
       .catch((err) => console.log(err.response));
   };
 
-  //무한스크롤
-  const cmtFetch = (page) => {
-    if (cmt.count === cmt.data.length) return;
-    getComments(post_id, page)
-      .then((data) => {
-        let mergeCmt = data.data;
-        mergeCmt = { ...cmt, ...mergeCmt };
-        setCmt(mergeCmt);
-        setLimit(limit + 1);
-      })
-      .catch((err) => console.log(err.response));
-  };
+  //무한스크롤 스크롤 버전
+  // const cmtFetch = (page) => {
+  //   if (cmt.count === cmt.data.length) return;
+  //   getComments(post_id, page)
+  //     .then((data) => {
+  //       let mergeCmt = data.data;
+  //       mergeCmt = { ...cmt, ...mergeCmt };
+  //       setCmt(mergeCmt);
+  //       setLimit(limit + 1);
+  //     })
+  //     .catch((err) => console.log(err.response));
+  // };
 
-  const handleScroll = useMemo(
-    () =>
-      throttle(() => {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.documentElement.clientHeight;
-        if (scrollTop + clientHeight >= scrollHeight) {
-          setLoading(true);
-          cmtFetch(10 * limit);
-        }
-        setLoading(false);
-      }, 300),
-    [limit]
-  );
+  // const handleScroll = useMemo(
+  //   () =>
+  //     throttle(() => {
+  //       const scrollHeight = document.documentElement.scrollHeight;
+  //       const scrollTop = document.documentElement.scrollTop;
+  //       const clientHeight = document.documentElement.clientHeight;
+  //       if (scrollTop + clientHeight >= scrollHeight) {
+  //         setLoading(true);
+  //         cmtFetch(10 * limit);
+  //       }
+  //       setLoading(false);
+  //     }, 300),
+  //   [limit]
+  // );
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // });
 
+  //IntersectionObserver API
   useEffect(async () => {
-    await getComments(postInfo.post_id)
+    setLoading(true);
+    await getComments(postInfo.post_id, limit * 10)
       .then((data) => {
         setCmt(data.data);
       })
       .catch((err) => console.error(err.response));
     setLoading(false);
-  }, []);
+  }, [limit]);
+
+  useEffect(() => {
+    console.log("observer");
+    const options = {
+      root: null,
+      rootMargin: "-130px",
+      threshold: 1,
+    };
+    let observer;
+
+    if (test.current) {
+      observer = new IntersectionObserver(handleTest, options);
+      observer.observe(test.current);
+    }
+    return () => observer.disconnect(test.current);
+  }, [loading]);
+
+  const testFunc = () => {
+    if (cmt.count === cmt.data.length) return;
+    else {
+      setLimit(limit + 1);
+    }
+  };
+  const handleTest = (entry) => {
+    if (entry[0].isIntersecting) testFunc();
+  };
 
   return (
     <Container>
@@ -118,6 +147,7 @@ export default function PostComment({ post_id }) {
         />
       ))}
       {loading && <RectLoading />}
+      <div ref={test}></div>
     </Container>
   );
 }
