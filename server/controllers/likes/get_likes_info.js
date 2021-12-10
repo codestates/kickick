@@ -48,6 +48,44 @@ module.exports = async (req, res) => {
       likes_obj.true_count = true_arr.length;
       likes_obj.false_count = false_arr.length;
       data = likes_obj;
+      // 이게시글에 투표를 했는지 안했는지 확인
+      if (data) {
+        const token = req.cookies.token.access_token;
+        let decoded;
+        try {
+          decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+        } catch (err) {
+          console.log(err);
+          return res
+            .status(401)
+            .json({ data: err, message: "토큰이 만료되었습니다." });
+        }
+
+        const { username } = decoded;
+
+        let user_info = await users.findOne({
+          attributes:[["id","user_id"]],
+          where: {
+            username:username
+          },
+          raw:true
+        })
+        const user_id = user_info.user_id;
+
+        let like_info = await likes.findOne({
+          where: {
+            user_id: user_id,
+            post_id : post_id
+          }
+        })
+
+        data.is_liked = false;
+
+        if (like_info) {
+          data.is_liked = true;
+        }
+      }
+
     } catch (err) {
       console.log(err);
       return res.status(500).json({ data: null, message: "데이터베이스 에러" });
