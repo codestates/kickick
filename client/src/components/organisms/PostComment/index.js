@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { set, throttle } from "lodash";
 
-import { getComments, createComments } from "../../../apis/comments";
+import {
+  getComments,
+  createComments,
+  delComments,
+} from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 
 export default function PostComment({ post_id }) {
+  const test = useRef();
   const postInfo = useSelector((state) => state.postInfo);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
   const [plusCmt, setPlusCmt] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(1);
   //textarea
   const [value, setValue] = useState("");
   const handleChange = (e) => {
@@ -38,56 +44,90 @@ export default function PostComment({ post_id }) {
     setValue("");
   };
 
-  const cmtFetch = (page) => {
-    getComments(post_id, page)
-      .then((data) => {
-        let mergeCmt = data.data;
-        mergeCmt = { ...cmt, ...mergeCmt };
-        setCmt(mergeCmt);
-        setLimit(limit + 1);
+  //comment 지우기
+  const handleDelComment = (id) => {
+    delComments(id)
+      .then(() => {
+        const idx = cmt.data.findIndex((el) => el.comment_id === id);
+        const newData = [...cmt.data.slice(0, idx), ...cmt.data.slice(idx + 1)];
+        setCmt({ ...cmt, data: newData });
+        setPlusCmt(plusCmt - 1);
       })
       .catch((err) => console.log(err.response));
   };
 
-  const handleScroll = (e) => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-    if (scrollTop + clientHeight >= scrollHeight && loading === false) {
-      cmtFetch(10 * limit);
-    }
-  };
+  //무한스크롤 스크롤 버전
+  // const cmtFetch = (page) => {
+  //   if (cmt.count === cmt.data.length) return;
+  //   getComments(post_id, page)
+  //     .then((data) => {
+  //       let mergeCmt = data.data;
+  //       mergeCmt = { ...cmt, ...mergeCmt };
+  //       setCmt(mergeCmt);
+  //       setLimit(limit + 1);
+  //     })
+  //     .catch((err) => console.log(err.response));
+  // };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  });
+  // const handleScroll = useMemo(
+  //   () =>
+  //     throttle(() => {
+  //       const scrollHeight = document.documentElement.scrollHeight;
+  //       const scrollTop = document.documentElement.scrollTop;
+  //       const clientHeight = document.documentElement.clientHeight;
+  //       if (scrollTop + clientHeight >= scrollHeight) {
+  //         setLoading(true);
+  //         cmtFetch(10 * limit);
+  //       }
+  //       setLoading(false);
+  //     }, 300),
+  //   [limit]
+  // );
 
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // });
+
+  //IntersectionObserver API
   useEffect(async () => {
-    await getComments(postInfo.data.post_id)
+    setLoading(true);
+    await getComments(postInfo.post_id, limit * 10)
       .then((data) => {
         setCmt(data.data);
       })
       .catch((err) => console.error(err.response));
     setLoading(false);
+  }, [limit]);
+
+  useEffect(() => {
+    console.log("observer");
+    const options = {
+      root: null,
+      rootMargin: "-130px",
+      threshold: 1,
+    };
+    let observer;
+
+    if (test.current) {
+      observer = new IntersectionObserver(handleTest, options);
+      observer.observe(test.current);
+    }
+    return () => observer.disconnect(test.current);
   }, [loading]);
 
-  if (loading)
-    return (
-      <Container>
-        <PostCommentInput
-          handleClick={handleClick}
-          value={value}
-          handleChange={handleChange}
-        />
-        <H3>
-          댓글 <strong></strong>
-        </H3>
-        <RectLoading />
-      </Container>
-    );
+  const testFunc = () => {
+    if (cmt.count === cmt.data.length) return;
+    else {
+      setLimit(limit + 1);
+    }
+  };
+  const handleTest = (entry) => {
+    if (entry[0].isIntersecting) testFunc();
+  };
+
   return (
     <Container>
       <H3>댓글달기</H3>
@@ -100,8 +140,14 @@ export default function PostComment({ post_id }) {
         댓글 <strong>{cmt.count + plusCmt}</strong>
       </H3>
       {cmt.data.map((el, idx) => (
-        <PostCommentItem key={idx} item={el} />
+        <PostCommentItem
+          key={idx}
+          item={el}
+          handleDelComment={handleDelComment}
+        />
       ))}
+      {loading && <RectLoading />}
+      <div ref={test}></div>
     </Container>
   );
 }

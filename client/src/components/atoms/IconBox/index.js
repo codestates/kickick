@@ -12,9 +12,18 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaHeart,
+  FaTimes,
+  FaTrashAlt,
 } from "react-icons/fa";
 
 const iconList = [
+  {
+    label: "cmtDel",
+    icon: <FaTrashAlt />,
+    color: "#a8a8a8",
+    category: "comments",
+  },
+  { label: "postDel", icon: <FaTimes />, color: "red", category: "postNav" },
   {
     label: "arrow",
     icon: <FaArrowLeft />,

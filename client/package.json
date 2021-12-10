@@ -12,6 +12,7 @@
     "axios": "^0.24.0",
     "chart.js": "^3.6.1",
     "disable-scroll": "^0.6.0",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.0",
     "react-datepicker": "^4.4.0",

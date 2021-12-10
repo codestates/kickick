@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import { TotalSearch, BoardTop, PostList } from "../../components";
@@ -9,54 +9,54 @@ import BoardSkeleton from "./BoardSkeleton";
 import { getPostsList } from "../../apis/posts";
 
 import { getList } from "../../store/actions/postadd/boardList";
-import { getCategoryAction, resetTag } from "../../store/actions/postadd";
-import { selectPageAction } from "../../store/actions/postsearch";
+import {
+  getCategoryAction,
+  resetTag,
+  goBack,
+} from "../../store/actions/postadd";
+import { resetSearchReducerAction } from "../../store/actions/postsearch";
 
 export default function Board() {
   const { category } = useParams();
   const dispatch = useDispatch();
 
   const apiCategory = useSelector((state) => state.postAdd.category);
-  const state = useSelector((state) => state.board);
-  const stateOnoff = useSelector((state) => state.onoff);
+  const { postsearch, onoff } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(getCategoryAction(category));
-  }, [category, dispatch]);
+    if (!onoff) {
+      dispatch(resetSearchReducerAction());
+      dispatch(resetTag());
+    }
+    dispatch(goBack(false));
+  }, [category]);
 
   useEffect(() => {
-    if (stateOnoff.goback) {
-      getPostsList({
-        category: apiCategory,
-        post_name: state.title.word,
-        username: state.writer.word,
-        tag: state.tag.word,
-        limit: 20,
-        page_num: state.page,
+    getPostsList({
+      category: apiCategory,
+      post_name: postsearch.title,
+      username: postsearch.writer,
+      tag: postsearch.tag,
+      limit: 20,
+      favorite_count: postsearch.align === "인기" ? 1 : null,
+      page_num: postsearch.selectPage,
+    })
+      .then((data) => {
+        dispatch(getList(data.data));
       })
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, state.writer, state.tag, state.page)
-          )
-        )
-        .then(() => setLoading(false))
-        .catch((err) => console.log(err.response));
-    } else {
-      dispatch(resetTag());
-      getPostsList({ category: apiCategory, limit: 20 })
-        .then((data) => {
-          dispatch(
-            selectPageAction(
-              stateOnoff.goback ? (state.page ? state.page : 1) : 1
-            )
-          );
-          dispatch(getList(data.data));
-        })
-        .then(() => setLoading(false))
-        .catch((err) => console.log(err.response));
-    }
-  }, [apiCategory, loading]);
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err.response));
+  }, [
+    apiCategory,
+    loading,
+    postsearch.selectPage,
+    postsearch.title,
+    postsearch.tag,
+    postsearch.writer,
+    postsearch.align,
+  ]);
 
   if (loading) return <BoardSkeleton />;
   return (
