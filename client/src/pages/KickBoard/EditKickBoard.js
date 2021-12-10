@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { EditQuill, TitleInput, Common, IntroTextarea } from "../../components";
+import {
+  EditQuill,
+  TitleInput,
+  Common,
+  IntroTextarea,
+  DragDrop,
+} from "../../components";
 
 import {
   getCategoryAction,
@@ -12,7 +18,14 @@ import {
   reset,
 } from "../../store/actions/postadd";
 
-import { createPost } from "../../apis/posts";
+import introductionicon from "../../assets/images/introductionicon.png";
+import contenticon from "../../assets/images/contenticon.png";
+import titileicon from "../../assets/images/titleicon.png";
+import thumbnailicon from "../../assets/images/thumbnailicon.png";
+
+import { createPost, createTag } from "../../apis/posts";
+import { createKicks } from "../../apis/kicks";
+import { uploadSingleImage } from "../../apis/upload";
 
 export default function EditKickBoard() {
   const { category } = useParams();
@@ -20,6 +33,7 @@ export default function EditKickBoard() {
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
+  const [thumbnail, setThumbnail] = useState();
 
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
@@ -29,6 +43,10 @@ export default function EditKickBoard() {
     dispatch(getContentAction(e.target.value));
   };
 
+  // const handleThumbnail = (thumbnail) => {
+  //   dispatch(getThumbnailAction(thumbnail));
+  // };
+
   const handleContent = () => {
     dispatch(getKickContentAction(content));
   };
@@ -36,7 +54,23 @@ export default function EditKickBoard() {
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
       .then((data) => {
-        navigate(`/kickboard/${category}`);
+        const post_id = data.data.data.post_id;
+        if (thumbnail) {
+          const formData = new FormData();
+          formData.append("img", thumbnail);
+          uploadSingleImage(formData, "post").then((data) => {
+            const location = data.data.data.location;
+            createKicks(post_id, location, state.kick_content).then(() => {
+              navigate(`/kickboard/${category}`);
+            });
+          });
+        } else {
+          createKicks(post_id, null, state.kick_content).then(() => {
+            navigate(`/kickboard/${category}`);
+          });
+        }
+
+        createTag(post_id, [category]).catch((err) => console.log(err));
       })
       .catch((err) => console.log(err.response));
   };
@@ -48,16 +82,33 @@ export default function EditKickBoard() {
 
   return (
     <Container>
+      <h1>나만의 킥 작성 </h1>
       <InfoContainer>
-        <h3>제목</h3>
+        <HeadlineContainer>
+          <img src={titileicon} alt="" />
+          <h3>제목</h3>
+        </HeadlineContainer>
         <TitleInput handlePostName={handlePostName} />
       </InfoContainer>
       <InfoContainer>
-        <h3>소개</h3>
+        <HeadlineContainer>
+          <img src={thumbnailicon} alt="" />
+          <h3>썸네일</h3>
+        </HeadlineContainer>
+        <DragDrop setThumbnail={setThumbnail} />
+      </InfoContainer>
+      <InfoContainer>
+        <HeadlineContainer>
+          <img src={introductionicon} alt="" />
+          <h3>소개</h3>
+        </HeadlineContainer>
         <IntroTextarea handleTextarea={handleIntro} />
       </InfoContainer>
       <InfoContainer>
-        <h3>본문</h3>
+        <HeadlineContainer>
+          <img src={contenticon} alt="" />
+          <h3>본문</h3>
+        </HeadlineContainer>
         <EditQuill
           content={content}
           setContent={setContent}
@@ -73,21 +124,38 @@ export default function EditKickBoard() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 64rem;
-  margin: 0 auto;
+  width: 48rem;
+  margin: 8rem auto;
   gap: 1rem;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: skyblue;
+  }
 `;
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  gap: 2rem;
+  gap: 1rem;
 
   h3 {
     font-size: 1.5rem;
     color: gray;
   }
 `;
+
+const HeadlineContainer = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+  }
+`;
 const BtnContainer = styled.div`
+  margin-top: 2rem;
   text-align: center;
 `;

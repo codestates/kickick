@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useSelector } from "react-redux";
+import { KickBoardPost } from "../..";
 export default function CardBox({ children }) {
-  const arr = Array(5).fill(0);
+  const list = useSelector((state) => state.board.data);
+
   return (
     <Container>
-      {arr.map((el, idx) => (
-        <>{children}</>
+      {list.map((el, idx) => (
+        <KickBoardPost data={el} />
       ))}
     </Container>
   );

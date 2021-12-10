@@ -10,6 +10,8 @@ import {
   mypageReducer,
   onoffReducer,
   tagReducer,
+  socketReducer,
+  alarmListReducer,
   postsearchReducer,
 } from "./reducers";
 
@@ -24,6 +26,8 @@ export const store = configureStore({
     login: loginReducer,
     themeMode: themeReducer,
     mypage: mypageReducer,
+    socket: socketReducer,
+    alarmList: alarmListReducer,
     postsearch: postsearchReducer,
   },
 });

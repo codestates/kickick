@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import { Nav, Footer, PageUp } from "./components";
 import Main from "./pages/Main";
@@ -29,13 +29,17 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
+import { alarmListAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
   const dispatch = useDispatch();
+  const socketClient = io("http://localhost:4000");
+  const isLogin = useSelector((state) => state.login.isLogin);
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const themeMode = useSelector((state) => state.themeMode);
+  const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
 
   useEffect(() => {
@@ -56,19 +60,23 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
 
-  // const socketClient = io("http://localhost:4000");
-  //   socketClient.on("connect", () => {
-  //     console.log("connection server");
-  //     socketClient.emit("signin", { username: "demouser" });
-  //   });
+  socketClient.on("connect", () => {
+    console.log("connection server");
 
-  // socketClient.on("alarms", (data) => {
-  //   console.log("난 1이야",data);
-  // });
+    socketClient.emit("signin", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
+    });
 
-  // socketClient.on("disconnect", () => {
-  //   console.log("disconnection");
-  // });
+    socketClient.on("alarms", (data) => {
+      console.log("난 1이야", data);
+      dispatch(alarmListAction(data));
+    });
+
+    socketClient.on("disconnect", () => {
+      console.log("disconnection");
+    });
+  });
 
   return (
     <ThemeProvider theme={theme[0]}>
@@ -86,7 +94,7 @@ export default function App() {
               <DarkBox />
             </DarkChanger>
           )}
-          <Nav themeCode={theme[1]} />
+          <Nav themeCode={theme[1]} socketClient={socketClient} />
           <Routes>
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
@@ -103,7 +111,7 @@ export default function App() {
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard />}
             />
-            <Route path="kickboard" element={<KickBoard />} />
+            <Route path="kickboard/:category" element={<KickBoard />} />
             <Route path="detailkick" element={<DetailKickBoard />} />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
