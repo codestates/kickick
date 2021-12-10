@@ -9,7 +9,7 @@ import { getPostsInfo } from "../../apis/posts";
 
 import { getPostInfoAction } from "../../store/actions/postadd";
 
-export default function DetailBoard() {
+export default function DetailBoard({ type }) {
   const state = useSelector((state) => state.postInfo);
   const dispatch = useDispatch();
   const { post_id } = useParams();
@@ -28,9 +28,9 @@ export default function DetailBoard() {
 
   return (
     <Container>
-      <IconContainer />
+      {type === "kick" ? null : <IconContainer />}
       <RigthContainer>
-        <DetailBoardTop state={state} />
+        <DetailBoardTop state={state} type={type} />
         <PostComment post_id={post_id} />
       </RigthContainer>
     </Container>

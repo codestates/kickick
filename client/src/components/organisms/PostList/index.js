@@ -183,7 +183,7 @@ const PostListContainer = styled.div`
       type === "freepost" &&
       css`
         > div:nth-of-type(1) {
-          flex: 3;
+          flex: 2;
         }
         > div:nth-of-type(2) {
           flex: 4;

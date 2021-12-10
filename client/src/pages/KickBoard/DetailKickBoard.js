@@ -1,5 +1,6 @@
 import React from "react";
+import DetailBoard from "../Board/DetailBoard";
 
 export default function DetailKickBoard() {
-  return <div>d</div>;
+  return <DetailBoard type="kick" />;
 }

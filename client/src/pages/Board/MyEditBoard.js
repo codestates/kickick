@@ -21,12 +21,10 @@ export default function MyEditBoard() {
   const { post_id, category } = useParams();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState(state.data.post_name);
-  const [content, setContent] = useState(state.data.content);
+  const [title, setTitle] = useState(state.post_name);
+  const [content, setContent] = useState(state.content);
   const [tagArr, setTagArr] = useState(
-    state.data.tags
-      .filter((el) => el.content !== category)
-      .map((el) => el.content)
+    state.tags.filter((el) => el.content !== category).map((el) => el.content)
   );
 
   const handleBlur = (e) => {
@@ -40,7 +38,7 @@ export default function MyEditBoard() {
   const handleClick = () => {
     putPost(`${category}_자유`, title, content, null, post_id)
       .then(() => {
-        state.data.tags
+        state.tags
           .filter((el) => el.content !== category)
           .map((tag) => {
             delTags(post_id, tag.tag_id).catch((err) => err.response);

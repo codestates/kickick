@@ -103,7 +103,6 @@ export default function PostComment({ post_id }) {
   }, [limit]);
 
   useEffect(() => {
-    console.log("observer");
     const options = {
       root: null,
       rootMargin: "-130px",
@@ -119,7 +118,7 @@ export default function PostComment({ post_id }) {
   }, [loading]);
 
   const testFunc = () => {
-    if (cmt.count === cmt.data.length) return;
+    if (cmt.count === cmt.data.length || !cmt.count) return;
     else {
       setLimit(limit + 1);
     }
