@@ -1,4 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage";
 
 import {
   kickboardReducer,
@@ -15,19 +18,29 @@ import {
   postsearchReducer,
 } from "./reducers";
 
-export const store = configureStore({
-  reducer: {
-    kickboard: kickboardReducer,
-    board: boardReducer,
-    postAdd: postAddReducer,
-    postInfo: postInfoReducer,
-    onoff: onoffReducer,
-    tag: tagReducer,
-    login: loginReducer,
-    themeMode: themeReducer,
-    mypage: mypageReducer,
-    socket: socketReducer,
-    alarmList: alarmListReducer,
-    postsearch: postsearchReducer,
-  },
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const reducers = combineReducers({
+  kickboard: kickboardReducer,
+  board: boardReducer,
+  postAdd: postAddReducer,
+  postInfo: postInfoReducer,
+  onoff: onoffReducer,
+  tag: tagReducer,
+  login: loginReducer,
+  themeMode: themeReducer,
+  mypage: mypageReducer,
+  socket: socketReducer,
+  alarmList: alarmListReducer,
+  postsearch: postsearchReducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export default store;
