@@ -29,7 +29,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction } from "./store/actions/nav"
+import { alarmListAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -41,7 +41,6 @@ export default function App() {
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
-
 
   useEffect(() => {
     setTimeout(() => {
@@ -61,25 +60,23 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
 
-    socketClient.on("connect", () => {
-      console.log("connection server");
+  socketClient.on("connect", () => {
+    console.log("connection server");
 
-      socketClient.emit("signin", {
-        username: isLogin.username,
-        ...socketChange.alarmPage
-      });
-
-      socketClient.on("alarms", (data) => {
-        console.log("난 1이야", data);
-        dispatch(alarmListAction(data));
-      });
-
-      socketClient.on("disconnect", () => {
-        console.log("disconnection");
-      });
+    socketClient.emit("signin", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
     });
-  
-  
+
+    socketClient.on("alarms", (data) => {
+      console.log("난 1이야", data);
+      dispatch(alarmListAction(data));
+    });
+
+    socketClient.on("disconnect", () => {
+      console.log("disconnection");
+    });
+  });
 
   return (
     <ThemeProvider theme={theme[0]}>
@@ -114,7 +111,7 @@ export default function App() {
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard />}
             />
-            <Route path="kickboard" element={<KickBoard />} />
+            <Route path="kickboard/:category" element={<KickBoard />} />
             <Route path="detailkick" element={<DetailKickBoard />} />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />

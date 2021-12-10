@@ -1,9 +1,12 @@
 import { ALARM_LIST } from "../actions/nav";
 
-export default function alarmListReducer (state = [], action) {
+export default function alarmListReducer(
+  state = { count: 0, data: [] },
+  action
+) {
   switch (action.type) {
     case ALARM_LIST:
-      return [...action.payload];
+      return { ...state, ...action.payload };
     default:
       return state;
   }

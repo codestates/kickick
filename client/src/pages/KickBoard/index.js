@@ -1,16 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+
+import { getPostsList } from "../../apis/posts";
 
 import {
   CardBox,
   TotalSearch,
   KickConfirm,
   KickBoardPost,
+  Common,
 } from "../../components";
 
+import {
+  getCategoryAction,
+  resetTag,
+  goBack,
+} from "../../store/actions/postadd";
+import { getListAction } from "../../store/actions/postadd/boardList";
+import { resetSearchReducerAction } from "../../store/actions/postsearch";
+
 export default function KickBoard() {
+  const { category } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const apiCategory = useSelector((state) => state.postAdd.category);
+  const { postsearch, onoff } = useSelector((state) => state);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getCategoryAction(category, "킥"));
+    if (!onoff) {
+      dispatch(resetSearchReducerAction());
+      dispatch(resetTag());
+    }
+    dispatch(goBack(false));
+  }, [category]);
+
+  useEffect(() => {
+    getPostsList({
+      category: apiCategory,
+      post_name: postsearch.title,
+      username: postsearch.writer,
+      tag: postsearch.tag,
+      limit: 20,
+      favorite_count: postsearch.align === "인기" ? 1 : null,
+      page_num: 1,
+    })
+      .then((data) => {
+        console.log(data);
+        dispatch(getListAction(data.data));
+      })
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err.response));
+  }, [
+    dispatch,
+    apiCategory,
+    loading,
+    postsearch.selectPage,
+    postsearch.title,
+    postsearch.tag,
+    postsearch.writer,
+    postsearch.align,
+  ]);
+  if (loading) return <div>d</div>;
   return (
     <Container>
+      <Common handleClick={() => navigate(`/editkick/${category}`)} />
       <TotalSearch />
       <CardBox>
         <KickBoardPost />

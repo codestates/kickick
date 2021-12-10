@@ -23,8 +23,7 @@ export default function TitleInput({
 const Title = styled.input`
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.2);
-  outline: none;
-  width: 40rem;
+  width: 30rem;
   height: 3rem;
   font-size: 1.2rem;
   &:focus {
