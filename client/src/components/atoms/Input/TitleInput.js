@@ -4,7 +4,7 @@ export default function TitleInput({
   holder = "제목을 입력하세요",
   handleKeyon,
   handleChange,
-  handleBlur,
+  handlePostName,
   val,
   title,
 }) {
@@ -12,7 +12,7 @@ export default function TitleInput({
     <Title
       type="text"
       placeholder={holder}
-      onBlur={handleBlur}
+      onBlur={handlePostName}
       onKeyPress={handleKeyon}
       onChange={handleChange}
       value={val}
@@ -23,8 +23,7 @@ export default function TitleInput({
 const Title = styled.input`
   border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.2);
-  outline: none;
-  width: 40rem;
+  width: 30rem;
   height: 3rem;
   font-size: 1.2rem;
   &:focus {
