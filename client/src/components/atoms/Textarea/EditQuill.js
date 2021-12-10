@@ -1,9 +1,10 @@
-import React, { useMemo } from "react";
-import { useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import styled from "styled-components";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { uploadSingleImage, destroyImage } from "../../../apis/upload";
 import ImageResize from "@looop/quill-image-resize-module-react";
+
 Quill.register("modules/ImageResize", ImageResize);
 
 export default function EditQuill({
@@ -13,7 +14,7 @@ export default function EditQuill({
   handleContent,
 }) {
   const quill = useRef(null);
-  //quill.current.state.value
+  const tempImage = useRef([]);
 
   const handleImage = () => {
     const input = document.createElement("input");
@@ -24,48 +25,26 @@ export default function EditQuill({
     input.addEventListener("change", async () => {
       const file = input.files[0];
 
-      console.log(file);
+      const formData = new FormData();
+      formData.append("img", file);
 
-      const reader = new FileReader();
+      try {
+        const result = await uploadSingleImage(formData, "post");
 
-      if (file) {
-        reader.readAsDataURL(file);
-        reader.onloadend = (finishedEvent) => {
-          const {
-            currentTarget: { result },
-          } = finishedEvent;
+        const { location, version_id } = result.data.data;
+        const editor = quill.current.getEditor();
+        const range = editor.getSelection();
 
-          const editor = quill.current.getEditor();
-          const range = editor.getSelection()?.index;
+        editor.insertEmbed(range, "image", location);
+        const url = new URL(location);
 
-          if (typeof range !== "number") return;
-          /*range는 0이 될 수도 있으므로 null만 생각하고 !range로 체크하면 잘못 작동할 수 있다.
-            따라서 타입이 숫자이지 않을 경우를 체크해 리턴해주었다.*/
-
-          editor.setSelection(range, 1);
-          /* 사용자 선택을 지정된 범위로 설정하여 에디터에 포커싱할 수 있다. 
-               위치 인덱스와 길이를 넣어주면 된다.*/
-
-          editor.clipboard.dangerouslyPasteHTML(
-            range,
-            `<img src=${result} alt="image" />`
-          );
-        };
+        tempImage.current.push({
+          Key: url.pathname.slice(1),
+          VersionId: version_id,
+        });
+      } catch (error) {
+        console.log(error);
       }
-
-      // const formData = new FormData();
-      // formData.append('img', file);
-
-      // try {
-      //   const result = await axios.post('http://localhost:4050/img', formData);
-      //   const IMG_URL = result.data.url;
-      //   const editor = quill.current.getEditor();
-      //   const range = editor.getSelection();
-
-      //   editor.insertEmbed(range, 'image', IMG_URL);
-      // } catch (error) {
-      //   console.log('실패했어요ㅠ');
-      // }
     });
   };
 
@@ -113,6 +92,28 @@ export default function EditQuill({
     "code-block",
     "align",
   ];
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser, false);
+
+    return () => {
+      window.removeEventListener("beforeunload", alertUser, false);
+    };
+  }, []);
+
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const result = window.confirm("변경사항이 저장되지 않았습니다. 가시게요?");
+    if (tempImage.current.length !== 0) {
+      destroyImage(tempImage.current)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <Container>
       <ReactQuill

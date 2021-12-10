@@ -14,7 +14,6 @@ import {
   getCategoryAction,
   getPostNameAction,
   getContentAction,
-  getThumbnailAction,
   getKickContentAction,
   reset,
 } from "../../store/actions/postadd";
@@ -24,7 +23,7 @@ import contenticon from "../../assets/images/contenticon.png";
 import titileicon from "../../assets/images/titleicon.png";
 import thumbnailicon from "../../assets/images/thumbnailicon.png";
 
-import { createPost } from "../../apis/posts";
+import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
 import { uploadSingleImage } from "../../apis/upload";
 
@@ -34,7 +33,8 @@ export default function EditKickBoard() {
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  console.log(state);
+  const [thumbnail, setThumbnail] = useState();
+
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
@@ -43,10 +43,9 @@ export default function EditKickBoard() {
     dispatch(getContentAction(e.target.value));
   };
 
-  const handleThumbnail = (thumbnail) => {
-    console.log("d");
-    dispatch(getThumbnailAction(thumbnail));
-  };
+  // const handleThumbnail = (thumbnail) => {
+  //   dispatch(getThumbnailAction(thumbnail));
+  // };
 
   const handleContent = () => {
     dispatch(getKickContentAction(content));
@@ -54,15 +53,24 @@ export default function EditKickBoard() {
 
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
-      .then(({ data: { post_id } }) => {
-        const formData = new FormData();
-        formData.append("img", state.thumbnail);
-        uploadSingleImage(state.thumbnail, "post").then(
-          ({ data: { location, version_id } }) => {
-            createKicks(post_id, location, state.kick_content);
+      .then((data) => {
+        const post_id = data.data.data.post_id;
+        if (thumbnail) {
+          const formData = new FormData();
+          formData.append("img", thumbnail);
+          uploadSingleImage(formData, "post").then((data) => {
+            const location = data.data.data.location;
+            createKicks(post_id, location, state.kick_content).then(() => {
+              navigate(`/kickboard/${category}`);
+            });
+          });
+        } else {
+          createKicks(post_id, null, state.kick_content).then(() => {
             navigate(`/kickboard/${category}`);
-          }
-        );
+          });
+        }
+
+        createTag(post_id, [category]).catch((err) => console.log(err));
       })
       .catch((err) => console.log(err.response));
   };
@@ -87,7 +95,7 @@ export default function EditKickBoard() {
           <img src={thumbnailicon} alt="" />
           <h3>썸네일</h3>
         </HeadlineContainer>
-        <DragDrop handleThumbnail={handleThumbnail} />
+        <DragDrop setThumbnail={setThumbnail} />
       </InfoContainer>
       <InfoContainer>
         <HeadlineContainer>

@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 
 import { modalOnAction } from "../../../store/actions/kickboard";
 
-import Thumbnail from "../../atoms/Img/Thumbnail";
-import Profile from "../../atoms/Img/Profile";
+import { Thumbnail, Profile } from "../../../components";
+
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
 
-export default function KickBoardPost() {
+export default function KickBoardPost({ data }) {
   const dispatch = useDispatch();
 
   return (
@@ -17,14 +17,14 @@ export default function KickBoardPost() {
       <Thumbnail />
       <PostDescription>
         <PostSummary>
-          <h3>자바스크립트 개 잘하는법</h3>
+          <h3>{data.post_name}</h3>
           <p>1. 코드스테이츠 부트캠프를 등록한다</p>
           <p>2. 공부한다</p>
         </PostSummary>
         <PostUser>
           <Profile type="post" />
-          <div className="username">석창환</div>
-          <div className="datetime">46분전</div>
+          <div className="username">{data.user.username}</div>
+          <div className="datetime">{data.user.created_at}</div>
           <div className="seperator">·</div>
           <div className="commentCount">{5} 개의 댓글</div>
         </PostUser>

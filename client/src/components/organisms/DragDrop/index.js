@@ -3,16 +3,13 @@ import styled from "styled-components";
 
 import { FaPlusSquare, FaTimes } from "react-icons/fa";
 
-export default function DragDrop({ handleThumbnail }) {
+export default function DragDrop({ setThumbnail }) {
   const [file, setFile] = useState();
-  const [formFile, setFormFile] = useState();
   const dragRef = useRef();
 
   const fileChange = useCallback((e) => {
     const theImageFile = e.target.files[0];
 
-    setFormFile(theImageFile);
-
     const reader = new FileReader();
     if (theImageFile) {
       reader.readAsDataURL(theImageFile);
@@ -23,11 +20,11 @@ export default function DragDrop({ handleThumbnail }) {
         setFile(result);
       };
     }
+    setThumbnail(theImageFile);
   }, []);
 
   const dragFileChange = useCallback((e) => {
     const theImageFile = e.dataTransfer.files[0];
-    setFormFile(theImageFile);
 
     const reader = new FileReader();
     if (theImageFile) {
@@ -39,6 +36,7 @@ export default function DragDrop({ handleThumbnail }) {
         setFile(result);
       };
     }
+    setThumbnail(theImageFile);
   }, []);
 
   const handleDragIn = useCallback((e) => {
@@ -102,7 +100,7 @@ export default function DragDrop({ handleThumbnail }) {
   }, [initDragEvents, resetDragEvents]);
 
   return (
-    <ThumbnailDropZone ref={dragRef} onChange={() => handleThumbnail(formFile)}>
+    <ThumbnailDropZone ref={dragRef}>
       <FaPlusSquare />
       <h2>이미지를 끌어다가 놓으세요</h2>
       <form>

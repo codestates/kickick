@@ -39,7 +39,6 @@ export default function App() {
   const [theme, setTheme] = useState([light, "light"]);
 
   useEffect(() => {
-
     setTimeout(() => {
       if (themeMode === "light") {
         setTheme([light, "light"]);
@@ -62,11 +61,11 @@ export default function App() {
   //     console.log("connection server");
   //     socketClient.emit("signin", { username: "demouser" });
   //   });
-  
+
   // socketClient.on("alarms", (data) => {
   //   console.log("난 1이야",data);
   // });
-  
+
   // socketClient.on("disconnect", () => {
   //   console.log("disconnection");
   // });
@@ -104,7 +103,7 @@ export default function App() {
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard />}
             />
-            <Route path="kickboard" element={<KickBoard />} />
+            <Route path="kickboard/:category" element={<KickBoard />} />
             <Route path="detailkick" element={<DetailKickBoard />} />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import sampleImg from "../../../assets/images/KickBoardPostThumbnail.png";
+import default_thumbnail from "../../../assets/images/default_thumbnail.jpg";
 
 const thumbnailList = [
   { type: "post", size: 20 },
@@ -11,8 +11,7 @@ const thumbnailList = [
 
 export default function Profile({ type = "post", src }) {
   const { size } = thumbnailList.find((el) => el.type === type);
-
-  return <Container size={size} src={sampleImg} alt="" />;
+  return <Container size={size} src={!src && default_thumbnail} alt="" />;
 }
 
 const Container = styled.img`

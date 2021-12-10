@@ -11,7 +11,7 @@ const initialState = {
   category: "",
   post_name: "",
   content: "",
-  thumbnail: "",
+  // thumbnail: {},
   kick_content: "",
 };
 export default function postAddReducer(state = initialState, action) {
@@ -20,8 +20,8 @@ export default function postAddReducer(state = initialState, action) {
       return { ...state, ...action.payload };
     case GET_POST_NAME:
       return { ...state, ...action.payload };
-    case GET_THUMBNAIL:
-      return { ...state, ...action.payload };
+    // case GET_THUMBNAIL:
+    //   return { ...state, ...action.payload };
     case GET_CONTENT:
       return { ...state, ...action.payload };
     case GET_KICK_CONTENT:
