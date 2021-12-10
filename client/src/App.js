@@ -29,7 +29,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction } from "./store/actions/nav"
+import { alarmListAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -42,10 +42,6 @@ export default function App() {
   const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9c08505c37b1caebbe34f9cb78ce7d170cf892e8
   useEffect(() => {
     setTimeout(() => {
       if (themeMode === "light") {
@@ -63,26 +59,24 @@ export default function App() {
       })
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
-  
-    socketClient.on("connect", () => {
-      console.log("connection server");
 
-      socketClient.emit("signin", {
-        username: isLogin.username,
-        ...socketChange.alarmPage
-      });
+  socketClient.on("connect", () => {
+    console.log("connection server");
 
-      socketClient.on("alarms", (data) => {
-        console.log("난 1이야", data);
-        dispatch(alarmListAction(data));
-      });
-
-      socketClient.on("disconnect", () => {
-        console.log("disconnection");
-      });
+    socketClient.emit("signin", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
     });
-  
-  
+
+    socketClient.on("alarms", (data) => {
+      console.log("난 1이야", data);
+      dispatch(alarmListAction(data));
+    });
+
+    socketClient.on("disconnect", () => {
+      console.log("disconnection");
+    });
+  });
 
   return (
     <ThemeProvider theme={theme[0]}>
