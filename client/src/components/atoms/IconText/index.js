@@ -46,7 +46,6 @@ export const iconList = [
   { icon: <FaRegComment />, label: "내가 단 댓글", category: "마이페이지" },
   { icon: <FaRegBookmark />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
-  { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
   { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
   { icon: <VscMegaphone />, label: "뉴스", category: "공지" },
@@ -56,7 +55,7 @@ export const iconList = [
 export default function IconText({ label, handleClick, board }) {
   const { icon, color, category } = iconList.find((i) => i.label === label);
   const { align } = useSelector((state) => state.postsearch);
-  console.log(align);
+
   return (
     <Container
       onClick={handleClick}

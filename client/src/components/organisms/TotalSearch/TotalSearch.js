@@ -4,18 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Align, Select, SearchInput, Tag } from "../../../components";
 
-import { getPostsList } from "../../../apis/posts";
-
-import { getList } from "../../../store/actions/postadd/boardList";
 import {
   boardAlignAction,
+  titleSearchAction,
+  writerSearchAction,
+  tagSearchAction,
   resetPaginationAction,
 } from "../../../store/actions/postsearch";
+
 import { search, delSearch } from "../../../store/actions/postadd";
 
 export default function TotalSearch({ setLoading }) {
-  const state = useSelector((state) => state.board);
-  const apiCategory = useSelector((state) => state.postAdd.category);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
 
@@ -25,18 +24,8 @@ export default function TotalSearch({ setLoading }) {
 
   const handleAlign = (event) => {
     const label = event.target.innerText;
-
     dispatch(boardAlignAction(label));
-    if (label === "최신") {
-      setLoading(true);
-    } else if (label === "인기") {
-      getPostsList({ category: apiCategory, favorite_count: 1, limit: 20 })
-        .then((data) => {
-          dispatch(resetPaginationAction());
-          dispatch(getList(data.data));
-        })
-        .catch((err) => console.log(err.response));
-    }
+    dispatch(resetPaginationAction());
   };
   const handleIcon = (label) => {
     setIcon(label);
@@ -47,63 +36,11 @@ export default function TotalSearch({ setLoading }) {
     setWord("");
 
     if (icon.label === "제목") {
-      getPostsList({
-        category: apiCategory,
-        post_name: word,
-        username: state.writer.word,
-        tag: state.tag.word,
-        limit: 20,
-      })
-        .then((data) => {
-          dispatch(
-            getList(
-              data.data,
-              { type: icon.label, word },
-              state.writer,
-              state.tag
-            )
-          );
-        })
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
+      dispatch(titleSearchAction(word));
     } else if (icon.label === "글쓴이") {
-      getPostsList({
-        category: apiCategory,
-        post_name: state.title.word,
-        username: word,
-        tag: state.tag.word,
-        limit: 20,
-      })
-        .then((data) =>
-          dispatch(
-            getList(
-              data.data,
-              state.title,
-              { type: icon.label, word },
-              state.tag
-            )
-          )
-        )
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
+      dispatch(writerSearchAction(word));
     } else if (icon.label === "태그") {
-      getPostsList({
-        category: apiCategory,
-        post_name: state.title.word,
-        username: state.writer.word,
-        tag: word,
-        limit: 20,
-      })
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, state.writer, {
-              type: icon.label,
-              word,
-            })
-          )
-        )
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
+      dispatch(tagSearchAction(word));
     }
   };
 
@@ -113,51 +50,12 @@ export default function TotalSearch({ setLoading }) {
   const handleClick = (idx, label) => {
     dispatch(delSearch(idx));
 
-    if (state.title.type === label) {
-      getPostsList({
-        category: apiCategory,
-        username: state.writer.word,
-        tag: state.tag.word,
-        limit: 20,
-      })
-        .then((data) =>
-          dispatch(
-            getList(data.data, { type: "", word: "" }, state.writer, state.tag)
-          )
-        )
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
-    } else if (state.writer.type === label) {
-      getPostsList({
-        category: apiCategory,
-        post_name: state.title.word,
-        tag: state.tag.word,
-        limit: 20,
-      })
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, { type: "", word: "" }, state.tag)
-          )
-        )
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
-    } else if (state.tag.type === label) {
-      getPostsList({
-        category: apiCategory,
-        post_name: state.title.word,
-        username: state.writer.word,
-        limit: 20,
-      })
-        .then((data) =>
-          dispatch(
-            getList(data.data, state.title, state.writer, {
-              type: "",
-              word: "",
-            })
-          )
-        )
-        .then(() => dispatch(resetPaginationAction()))
-        .catch((err) => err.response);
+    if ("제목" === label) {
+      dispatch(titleSearchAction());
+    } else if ("글쓴이" === label) {
+      dispatch(writerSearchAction());
+    } else if ("태그" === label) {
+      dispatch(tagSearchAction());
     }
   };
 

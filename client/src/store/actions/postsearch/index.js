@@ -1,4 +1,3 @@
-export const GET_CATEGORY = "GET_CATEGORY";
 export const BOARD_ALIGN = "BOARD_ALIGN";
 export const TITLE_SEARCH = "TITLE_SEARCH";
 export const TAG_SEARCH = "TAG_SEARCH";
@@ -6,6 +5,7 @@ export const WRITER_SEARCH = "WRITER_SEARCH";
 export const SELECT_PAGE = "SELECT_PAGE";
 export const SELECT_DIV_PAGE = "SELECT_DIV_PAGE";
 export const RESET_PAGINATION = "RESET_PAGINATION";
+export const RESET_SEARCH_REDUCER = "RESET_SEARCH_REDUCER";
 
 export const boardAlignAction = (align) => {
   return {
@@ -49,6 +49,12 @@ export const selectDivPageAction = (num) => {
 export const resetPaginationAction = () => {
   return {
     type: RESET_PAGINATION,
-    payload: { selectPage: 1, selectDivPage: 0, limitPage: 10 },
+    payload: { selectPage: 1, limitPage: 10 },
+  };
+};
+
+export const resetSearchReducerAction = () => {
+  return {
+    type: RESET_SEARCH_REDUCER,
   };
 };

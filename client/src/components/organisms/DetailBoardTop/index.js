@@ -9,20 +9,20 @@ export default function DetailBoardTop({ state }) {
   return (
     <Container>
       <TopContainer>
-        <Title>{state.data.post_name}</Title>
+        <Title>{state.post_name}</Title>
         <UserAndCountContainer>
           <UserContainer>
             <IconBox label="user" />
-            {state.data.user.username}
+            {state.user.username}
           </UserContainer>
           <UserContainer>
             <IconBox label="count" />
-            {state.data.view_count}
+            {state.view_count}
           </UserContainer>
         </UserAndCountContainer>
         <TagContainer>
           <span>태그</span>
-          {state.data.tags.map((tag) => (
+          {state.tags.map((tag) => (
             <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
               # {tag.content}
             </span>
@@ -30,11 +30,7 @@ export default function DetailBoardTop({ state }) {
         </TagContainer>
       </TopContainer>
       <Content>
-        <ReactQuill
-          value={state.data.content}
-          readOnly={true}
-          theme={"bubble"}
-        />
+        <ReactQuill value={state.content} readOnly={true} theme={"bubble"} />
       </Content>
     </Container>
   );

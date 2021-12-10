@@ -1,13 +1,13 @@
 import React from "react";
-import PostAlign from "./PostAlign";
+import Align from "./";
 
 export default {
-  title: "molecules/CheckBox/PostAlign",
-  component: PostAlign,
+  title: "molecules/Align",
+  component: Align,
   argTypes: {},
 };
 
-const Template = (args) => <PostAlign {...args} />;
+const Template = (args) => <Align {...args} />;
 
 export const Control = Template.bind({});
 Control.args = {};
