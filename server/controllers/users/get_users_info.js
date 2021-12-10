@@ -109,24 +109,22 @@ module.exports = async (req, res) => {
 
     // today_login false면 로그에 기록
     if (req.query.today_login === "false") {
-      // 로그 정보중 제일 최근 로그인 기록 가져옴
+      // 로그에 기록
       let log_info = await logs.findAll({
         where: {
           user_id: user_id,
           type: "signin",
         },
         order: [["id", "DESC"]],
-        offset: 0,
-        limit: 1,
+        raw: true,
       });
+      // 로그 살펴 봄
       let log_date;
-      if (log_info.length !== 0) {
-        log_info = log_info[0].get({ plain: true });
-        log_date = log_info.created_at;
-      }
-
       const today = new Date();
-      // 생성날짜가 오늘이랑 다르면
+      if (log_info.length !== 0) {
+        log_date = log_info[0].created_at;
+      }
+      // 오늘 로그인한 로그가 있는지 확인
       if (
         !log_date ||
         !(
@@ -135,75 +133,51 @@ module.exports = async (req, res) => {
           log_date.getFullYear() === today.getFullYear()
         )
       ) {
-        // 로그에 기록
-        let log_info = await logs.findAll({
-          where: {
-            user_id: user_id,
-            type: "signin",
-          },
-          order: [["id", "DESC"]],
-          raw: true,
+        // 로그인 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "signin",
+          content: `${username}님이 로그인 하였습니다.`,
         });
-        console.log(log_info);
-        let log_date;
-        const today = new Date();
-        if (log_info.length !== 0) {
-          log_date = log_info[0].created_at;
-        }
-        if (
-          !log_date ||
-          !(
-            log_date.getDate() === today.getDate() &&
+        // 킥머니 지급
+        let change = 100;
+        // 3일간 로그인 기록이 있다면
+
+        if (log_info.length >= 2) {
+          log_date = log_info[1].created_at;
+          const prev_3days = new Date(today - 3600000 * 24 * 3);
+          if (
+            log_date.getDate() === prev_3days.getDate &&
             log_date.getMonth() === today.getMonth() &&
             log_date.getFullYear() === today.getFullYear()
-          )
-        ) {
-          // 로그인 로그 추가
-          await logs.create({
-            user_id: user_id,
-            type: "signin",
-            content: `${username}님이 로그인 하였습니다.`,
-          });
-          // 킥머니 지급
-          let change = 100;
-          // 3일간 로그인 기록이 있다면
-
-          if (log_info.length >= 2) {
-            log_date = log_info[1].created_at;
-            const prev_3days = new Date(today - 3600000 * 24 * 3);
-            if (
-              log_date.getDate() === prev_3days.getDate &&
-              log_date.getMonth() === today.getMonth() &&
-              log_date.getFullYear() === today.getFullYear()
-            ) {
-              change = 200;
-            }
+          ) {
+            change = 200;
           }
-
-          await users.update(
-            {
-              kick_money: sequelize.literal(`kick_money + ${change}`),
-            },
-            {
-              where: {
-                username: username,
-              },
-            }
-          );
-          data.kick_money += change;
-          // 킥머니 지급 로그 추가
-          await logs.create({
-            user_id: user_id,
-            type: "kick_money",
-            content: `${change} 킥머니를 받았습니다.`,
-          });
-          // 킥머니 지급 알림 추가
-          await alarms.create({
-            user_id: user_id,
-            type: "alarms",
-            content: `로그인으로 ${change} 킥머니를 받았습니다.`,
-          });
         }
+
+        await users.update(
+          {
+            kick_money: sequelize.literal(`kick_money + ${change}`),
+          },
+          {
+            where: {
+              username: username,
+            },
+          }
+        );
+        data.kick_money += change;
+        // 킥머니 지급 로그 추가
+        await logs.create({
+          user_id: user_id,
+          type: "kick_money",
+          content: `${change} 킥머니를 받았습니다.`,
+        });
+        // 킥머니 지급 알림 추가
+        await alarms.create({
+          user_id: user_id,
+          type: "alarms",
+          content: `로그인으로 ${change} 킥머니를 받았습니다.`,
+        });
       }
     }
   } catch (err) {

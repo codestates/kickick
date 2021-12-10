@@ -94,12 +94,13 @@ module.exports = async (req, res) => {
         order: [["id", "DESC"]],
         raw: true,
       });
-      console.log(log_info);
+      // 로그 살펴 봄
       let log_date;
       const today = new Date();
       if (log_info.length !== 0) {
         log_date = log_info[0].created_at;
       }
+      // 오늘 로그인한 로그가 있는지 확인
       if (
         !log_date ||
         !(
@@ -224,12 +225,13 @@ module.exports = async (req, res) => {
         order: [["id", "DESC"]],
         raw: true,
       });
-      console.log(log_info);
+      // 로그 살펴 봄
       let log_date;
       const today = new Date();
       if (log_info.length !== 0) {
         log_date = log_info[0].created_at;
       }
+      // 오늘 로그인한 로그가 있는지 확인
       if (
         !log_date ||
         !(
