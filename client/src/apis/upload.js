@@ -1,12 +1,15 @@
 import api from "./";
 /**
  * @param {formData} formData requried
+ * @param {string} folder required
  */
-
-export const uploadSingleImage = (formData) => {
-  return api.post(`/upload/single`, formData);
+export const uploadSingleImage = (formData, folder) => {
+  return api.post(`/upload/single/${folder}`, formData);
 };
-
-export const uploadArrayImage = (formData) => {
-  return api.post(`/upload/single`, formData);
+/**
+ * @param {formData} formData requried
+ * @param {string} folder required
+ */
+export const uploadArrayImage = (formData, folder) => {
+  return api.post(`/upload/array/${folder}`, formData);
 };

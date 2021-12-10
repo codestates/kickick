@@ -14,6 +14,7 @@ import {
   getCategoryAction,
   getPostNameAction,
   getContentAction,
+  getThumbnailAction,
   getKickContentAction,
   reset,
 } from "../../store/actions/postadd";
@@ -24,6 +25,8 @@ import titileicon from "../../assets/images/titleicon.png";
 import thumbnailicon from "../../assets/images/thumbnailicon.png";
 
 import { createPost } from "../../apis/posts";
+import { createKicks } from "../../apis/kicks";
+import { uploadSingleImage } from "../../apis/upload";
 
 export default function EditKickBoard() {
   const { category } = useParams();
@@ -31,7 +34,7 @@ export default function EditKickBoard() {
   const state = useSelector((state) => state.postAdd);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-
+  console.log(state);
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
@@ -40,8 +43,9 @@ export default function EditKickBoard() {
     dispatch(getContentAction(e.target.value));
   };
 
-  const handleThumbnail = () => {
-    dispatch(getKickContentAction(content));
+  const handleThumbnail = (thumbnail) => {
+    console.log("d");
+    dispatch(getThumbnailAction(thumbnail));
   };
 
   const handleContent = () => {
@@ -50,8 +54,15 @@ export default function EditKickBoard() {
 
   const handleClick = () => {
     createPost(state.category, state.post_name, state.content)
-      .then((data) => {
-        navigate(`/kickboard/${category}`);
+      .then(({ data: { post_id } }) => {
+        const formData = new FormData();
+        formData.append("img", state.thumbnail);
+        uploadSingleImage(state.thumbnail, "post").then(
+          ({ data: { location, version_id } }) => {
+            createKicks(post_id, location, state.kick_content);
+            navigate(`/kickboard/${category}`);
+          }
+        );
       })
       .catch((err) => console.log(err.response));
   };
@@ -76,7 +87,7 @@ export default function EditKickBoard() {
           <img src={thumbnailicon} alt="" />
           <h3>썸네일</h3>
         </HeadlineContainer>
-        <DragDrop />
+        <DragDrop handleThumbnail={handleThumbnail} />
       </InfoContainer>
       <InfoContainer>
         <HeadlineContainer>
