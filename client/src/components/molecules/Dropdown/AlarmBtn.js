@@ -42,18 +42,18 @@ export default function AlarmBtn({ fontSize = "xl" }) {
       >
         <AlarmFrame fontSize={fontSize}>
           <AlarmCounter
-            alarmLength={alarmList.length}
+            alarmLength={alarmList.count}
             isOver={isOver}
             fontSize={fontSize}
           >
-            {alarmList.length > 9 ? "+9" : alarmList.length}
+            {alarmList.count > 9 ? "+9" : alarmList.count}
           </AlarmCounter>
           <FaBell />
         </AlarmFrame>
       </AlarmContainer>
       <Dropdown dropdownOpen={alarmOpen} fontSize={fontSize} top="2.3rem">
-        {alarmList.length ? (
-          alarmList.map((el) => (
+        {alarmList.count ? (
+          alarmList.data.map((el) => (
             <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
               <DropdownContext>{el.content}</DropdownContext>
               {dateConverter(el.created_at).includes("전") ? (

@@ -42,24 +42,6 @@ export default function App() {
   const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (themeMode === "light") {
-        setTheme([light, "light"]);
-      } else setTheme([dark, "dark"]);
-    }, 580);
-
-    nowImLogin(todayLogin)
-      .then((res) => {
-        const loginData = { ...res.data.data };
-        delete loginData.kick_money;
-        dispatch(isLoginAction(loginData));
-        dispatch(isPointAction(res.data.data.kick_money));
-        if (!todayLogin) dispatch(todayLoginAction(true));
-      })
-      .catch(() => dispatch(isLoginAction(false)));
-  }, [themeMode]);
-
   socketClient.on("connect", () => {
     console.log("connection server");
 
@@ -77,6 +59,29 @@ export default function App() {
       console.log("disconnection");
     });
   });
+
+  socketClient.emit("alarms", {
+    username: isLogin.username,
+    ...socketChange.alarmPage,
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (themeMode === "light") {
+        setTheme([light, "light"]);
+      } else setTheme([dark, "dark"]);
+    }, 580);
+
+    nowImLogin(todayLogin)
+      .then((res) => {
+        const loginData = { ...res.data.data };
+        delete loginData.kick_money;
+        dispatch(isLoginAction(loginData));
+        dispatch(isPointAction(res.data.data.kick_money));
+        if (!todayLogin) dispatch(todayLoginAction(true));
+      })
+      .catch(() => dispatch(isLoginAction(false)));
+  }, [themeMode]);
 
   return (
     <ThemeProvider theme={theme[0]}>
