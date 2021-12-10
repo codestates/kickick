@@ -1,7 +1,7 @@
 module.exports = {
   test: require("./test"),
-  upload: require("./multer").upload,
-  destroy: require("./multer").destroy,
+  upload: require("./bucket").upload,
+  destroy: require("./bucket").destroy,
   // users
   get_users_info: require("./users/get_users_info"),
   post_users_info: require("./users/post_users_info"),
