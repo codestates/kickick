@@ -27,11 +27,15 @@ module.exports = async (req, res) => {
       .status(401)
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
-
+  const type = req.query.type;
   const { username } = decoded;
   let data;
 
   try {
+    let where_obj = {};
+    if (type) {
+      where_obj = { type };
+    }
     // 토큰으로 log정보 구함
     data = await users.findOne({
       attributes: ["id", "username", "profile"],
@@ -43,6 +47,7 @@ module.exports = async (req, res) => {
         {
           model: logs,
           attributes: [["id", "log_id"], "type", "content", "created_at"],
+          where: where_obj,
           order: [["id", "DESC"]],
           offset: limit * (page_num - 1),
           limit: limit,
