@@ -91,6 +91,7 @@ module.exports = async (req, res) => {
           user_id: user_id,
           type: "signin",
         },
+        order: [["id", "DESC"]],
       });
       let log_date;
       const today = new Date();
