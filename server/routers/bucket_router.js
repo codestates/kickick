@@ -17,7 +17,12 @@ router.post(
   "/upload/array/:folder_name",
   upload.array("img"),
   function (req, res, next) {
-    let data = req.files.map((el) => el.location);
+    let data = req.files.map((el) => {
+      return {
+        location: el.location,
+        version_id: el.versionId,
+      };
+    });
     res.json({ data: data, message: "ok" });
   }
 );
