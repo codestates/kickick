@@ -4,7 +4,7 @@ export default function TitleInput({
   holder = "제목을 입력하세요",
   handleKeyon,
   handleChange,
-  handleBlur,
+  handlePostName,
   val,
   title,
 }) {
@@ -12,7 +12,7 @@ export default function TitleInput({
     <Title
       type="text"
       placeholder={holder}
-      onBlur={handleBlur}
+      onBlur={handlePostName}
       onKeyPress={handleKeyon}
       onChange={handleChange}
       value={val}

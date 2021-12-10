@@ -1,36 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { IconBox } from "../..";
 
-import { getPostsList } from "../../../apis/posts";
-import { getComments } from "../../../apis/comments";
-import { getFavorites } from "../../../apis/favorites";
-
-import {
-  getFavoritesAction,
-  getMyPostAction,
-  getMyCommentAction,
-} from "../../../store/actions/mypage";
-
-import {
-  selectPageAction,
-  selectDivPageAction,
-} from "../../../store/actions/postsearch";
-import { getList } from "../../../store/actions/postadd/boardList";
-import { goBack } from "../../../store/actions/postadd";
+import { selectPageAction } from "../../../store/actions/postsearch";
 
 export default function Pagination({ count }) {
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
-  const boardState = useSelector((state) => state.board);
-  const apiCategory = useSelector((state) => state.postAdd.category);
-
-  const { selectPage, selectDivPage, limitPage, align } = useSelector(
-    (state) => state.postsearch
-  );
+  const [selectDivPage, setSelectDivPage] = useState(0);
+  const { selectPage, limitPage } = useSelector((state) => state.postsearch);
 
   const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
   const dividPage = Math.ceil(totalPage / limitPage);
@@ -43,7 +22,7 @@ export default function Pagination({ count }) {
   const handleLeftIdx = () => {
     if (selectPage === 1) return;
     if (selectPage === firstPage) {
-      dispatch(selectDivPageAction(selectDivPage - 1));
+      setSelectDivPage(selectDivPage - 1);
     }
     dispatch(selectPageAction(selectPage - 1));
   };
@@ -54,18 +33,18 @@ export default function Pagination({ count }) {
       selectPage < totalPage &&
       selectDivPage < dividPage
     ) {
-      dispatch(selectDivPageAction(selectDivPage + 1));
+      setSelectDivPage(selectDivPage + 1);
     }
     dispatch(selectPageAction(selectPage + 1));
   };
   const handleDubleLeft = () => {
     if (selectDivPage === 0) return;
-    dispatch(selectDivPageAction(selectDivPage - 1));
+    setSelectDivPage(selectDivPage - 1);
     dispatch(selectPageAction(selectPage - limitPage));
   };
   const handleDubleRight = () => {
     if (selectDivPage + 1 >= dividPage) return;
-    dispatch(selectDivPageAction(selectDivPage + 1));
+    setSelectDivPage(selectDivPage + 1);
     dispatch(
       selectPageAction(() => {
         if (selectPage + limitPage > totalPage) {
@@ -80,47 +59,6 @@ export default function Pagination({ count }) {
   const handleClickNum = (idx) => {
     dispatch(selectPageAction(idx + 1 + selectDivPage * limitPage));
   };
-
-  useEffect(() => {
-    if (pathname === "/mypage/mypost") {
-      getPostsList({ page_num: selectPage })
-        .then((data) => {
-          dispatch(getMyPostAction(data));
-        })
-        .catch((err) => console.log(err));
-    } else if (pathname === "/mypage/mycomment") {
-      getComments(null, null, selectPage)
-        .then((data) => dispatch(getMyCommentAction(data)))
-        .catch((err) => console.log(err));
-    } else if (pathname === "/mypage/favorites") {
-      getFavorites(null, null, selectPage)
-        .then((data) => dispatch(getFavoritesAction(data)))
-        .catch((err) => console.log(err));
-    } else {
-      getPostsList({
-        category: apiCategory,
-        post_name: boardState.title.word,
-        username: boardState.writer.word,
-        tag: boardState.tag.word,
-        favorite_count: align === "최신" ? null : 1,
-        limit: 20,
-        page_num: selectPage,
-      })
-        .then((data) =>
-          dispatch(
-            getList(
-              data.data,
-              boardState.title,
-              boardState.writer,
-              boardState.tag,
-              selectPage
-            )
-          )
-        )
-        .then(() => dispatch(goBack()))
-        .catch((err) => console.log(err.response));
-    }
-  }, [apiCategory, selectPage]);
 
   return (
     <Container>

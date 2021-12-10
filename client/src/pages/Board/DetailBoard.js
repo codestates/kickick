@@ -18,7 +18,7 @@ export default function DetailBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfoAction(data.data));
+        dispatch(getPostInfoAction(data.data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
@@ -47,6 +47,7 @@ const Container = styled.div`
 
 const RigthContainer = styled.div`
   width: 40.5rem;
+  z-index: 1;
 `;
 
 const Temporary = styled.div`

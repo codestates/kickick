@@ -3,14 +3,10 @@ import styled from "styled-components";
 
 import { Pagination, PostList } from "../../../components";
 
-export default function BoardBottom({ selectPage, setSelectPage }) {
+export default function BoardBottom() {
   return (
     <Container>
-      <PostList
-        type="freepost"
-        selectPage={selectPage}
-        setSelectPage={setSelectPage}
-      />
+      <PostList type="freepost" />
       {/* <Pagination selectPage={selectPage} setSelectPage={setSelectPage} /> */}
     </Container>
   );
