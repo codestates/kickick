@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MyPageAside,
   Landscape,
@@ -49,7 +49,28 @@ const pageList = [
 export default function MyPage() {
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
+  const dispatch = useDispatch();
+  const postsearch = useSelector((state) => state.postsearch);
 
+  useEffect(() => {
+    getFavorites(null, null, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getFavoritesAction(data));
+      })
+      .catch((err) => console.log(err));
+
+    getPostsList({ page_num: postsearch.selectPage })
+      .then((data) => {
+        dispatch(getMyPostAction(data));
+      })
+      .catch((err) => console.log(err));
+
+    getComments(null, null, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getMyCommentAction(data));
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch, postsearch.selectPage]);
   return (
     <>
       <Landscape />
@@ -102,39 +123,12 @@ export function Attendance() {
 }
 
 export function Favorites() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getFavorites()
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getFavoritesAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagefavorites" />;
 }
 export function MyPost() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getPostsList({})
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getMyPostAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagemypost" />;
 }
 export function MyComment() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getComments()
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getMyCommentAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagemycomment" />;
 }
 

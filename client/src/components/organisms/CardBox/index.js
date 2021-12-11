@@ -2,14 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
-import { KickBoardPost } from "../..";
-export default function CardBox({ children }) {
+import { KickBoardPost } from "../../../components";
+
+export default function CardBox() {
   const list = useSelector((state) => state.board.data);
 
   return (
     <Container>
-      {list.map((el, idx) => (
-        <KickBoardPost data={el} />
+      {list.map((el) => (
+        <KickBoardPost key={el.post_id} data={el} />
       ))}
     </Container>
   );

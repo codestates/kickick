@@ -102,9 +102,10 @@ export default function EditQuill({
   }, []);
 
   const alertUser = (e) => {
+    console.log("성공");
     e.preventDefault();
     e.stopPropagation();
-    const result = window.confirm("변경사항이 저장되지 않았습니다. 가시게요?");
+    window.confirm("변경사항이 저장되지 않았습니다. 가시게요?");
     if (tempImage.current.length !== 0) {
       destroyImage(tempImage.current)
         .then((data) => {
@@ -123,7 +124,7 @@ export default function EditQuill({
         onBlur={handleContent}
         theme="snow"
         style={{
-          height: "50rem",
+          height: "30rem",
           display: "flex",
           flexDirection: "column",
         }}

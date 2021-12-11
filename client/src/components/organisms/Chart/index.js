@@ -34,8 +34,6 @@ export default function Chart() {
           },
         },
         scales: {
-          display: false,
-
           x: {
             grid: { display: false },
             ticks: { display: false },

@@ -1,8 +1,8 @@
 export const GET_LIST = "GET_LIST";
 
-export const getListAction = (data) => {
+export const getListAction = ({ data, count }) => {
   return {
     type: GET_LIST,
-    payload: data,
+    payload: { data, count },
   };
 };

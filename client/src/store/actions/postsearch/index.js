@@ -32,17 +32,17 @@ export const writerSearchAction = (writer) => {
   };
 };
 
-export const selectPageAction = (num) => {
+export const selectPageAction = (selectPage) => {
   return {
     type: SELECT_PAGE,
-    payload: { selectPage: num },
+    payload: { selectPage },
   };
 };
 
-export const selectDivPageAction = (num) => {
+export const selectDivPageAction = (selectDivPage) => {
   return {
     type: SELECT_DIV_PAGE,
-    payload: { selectDivPage: num },
+    payload: { selectDivPage },
   };
 };
 

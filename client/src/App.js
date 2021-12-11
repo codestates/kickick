@@ -61,7 +61,7 @@ export default function App() {
   }, [themeMode]);
 
   socketClient.on("connect", () => {
-    console.log("connection server");
+    // console.log("connection server");
 
     socketClient.emit("signin", {
       username: isLogin.username,
@@ -69,7 +69,7 @@ export default function App() {
     });
 
     socketClient.on("alarms", (data) => {
-      console.log("난 1이야", data);
+      // console.log("난 1이야", data);
       dispatch(alarmListAction(data));
     });
 

@@ -1,19 +1,19 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import default_thumbnail from "../../../assets/images/default_thumbnail.jpg";
 
-const thumbnailList = [
-  { type: "post", size: 20 },
-  { type: "notice", size: 12 },
-  { type: "confirm", size: 12 },
-];
-
-export default function Profile({ type = "post", src }) {
-  const { size } = thumbnailList.find((el) => el.type === type);
-  return <Container size={size} src={!src && default_thumbnail} alt="" />;
+export default function Thumbnail({ type = "post", src }) {
+  return <Container type={type} src={src ? src : default_thumbnail} alt="" />;
 }
 
 const Container = styled.img`
-  min-width: ${({ size }) => size}rem;
+  ${({ type }) =>
+    type === "post" &&
+    css`
+      object-fit: cover;
+      object-position: center top;
+      height: 13.5rem;
+      opacity: 0.8;
+    `}
 `;

@@ -5,13 +5,7 @@ import styled from "styled-components";
 
 import { getPostsList } from "../../apis/posts";
 
-import {
-  CardBox,
-  TotalSearch,
-  KickConfirm,
-  KickBoardPost,
-  Common,
-} from "../../components";
+import { CardBox, TotalSearch, KickConfirm, Common } from "../../components";
 
 import {
   getCategoryAction,
@@ -30,13 +24,13 @@ export default function KickBoard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getCategoryAction(category, "킥"));
     if (!onoff) {
       dispatch(resetSearchReducerAction());
       dispatch(resetTag());
     }
+    dispatch(getCategoryAction(category, "킥"));
     dispatch(goBack(false));
-  }, [category]);
+  }, [category, dispatch, onoff]);
 
   useEffect(() => {
     getPostsList({
@@ -46,10 +40,9 @@ export default function KickBoard() {
       tag: postsearch.tag,
       limit: 20,
       favorite_count: postsearch.align === "인기" ? 1 : null,
-      page_num: 1,
+      page_num: postsearch.selectPage,
     })
       .then((data) => {
-        console.log(data);
         dispatch(getListAction(data.data));
       })
       .then(() => setLoading(false))
@@ -69,9 +62,7 @@ export default function KickBoard() {
     <Container>
       <Common handleClick={() => navigate(`/editkick/${category}`)} />
       <TotalSearch />
-      <CardBox>
-        <KickBoardPost />
-      </CardBox>
+      <CardBox />
       <KickConfirm />
     </Container>
   );

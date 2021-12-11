@@ -14,7 +14,7 @@ export default function KickBoardPost({ data }) {
 
   return (
     <Container onClick={() => dispatch(modalOnAction())}>
-      <Thumbnail />
+      <Thumbnail src={data.kick?.thumbnail} />
       <PostDescription>
         <PostSummary>
           <h3>{data.post_name}</h3>
@@ -24,9 +24,9 @@ export default function KickBoardPost({ data }) {
         <PostUser>
           <Profile type="post" />
           <div className="username">{data.user.username}</div>
-          <div className="datetime">{data.user.created_at}</div>
+          <div className="datetime">{data.created_at}</div>
           <div className="seperator">·</div>
-          <div className="commentCount">{5} 개의 댓글</div>
+          <div className="commentCount">{data.comments.length} 개의 댓글</div>
         </PostUser>
       </PostDescription>
       <Interest>
