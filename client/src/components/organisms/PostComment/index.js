@@ -98,6 +98,7 @@ export default function PostComment({ post_id }) {
     await getComments(postInfo.post_id, limit * 10)
       .then((data) => {
         setCmt(data.data);
+        setPlusCmt(0);
       })
       .catch((err) => console.error(err.response));
     setLoading(false);
