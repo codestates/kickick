@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import default_thumbnail from "../../../assets/images/default_thumbnail.jpg";
+import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
 
 export default function Thumbnail({ type = "post", src }) {
   return <Container type={type} src={src ? src : default_thumbnail} alt="" />;

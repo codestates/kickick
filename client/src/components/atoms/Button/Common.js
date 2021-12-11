@@ -74,7 +74,7 @@ const Container = styled.div`
     ${({ type }) =>
     type === "confirm" &&
     css`
-      height: 4rem;
+      height: 2.5rem;
       background-color: skyblue;
     `}
 `;

@@ -10,6 +10,7 @@ export default function TitleInput({
 }) {
   return (
     <Title
+      maxLength="30"
       type="text"
       placeholder={holder}
       onBlur={handlePostName}
@@ -21,7 +22,6 @@ export default function TitleInput({
   );
 }
 const Title = styled.input`
-  border: none;
   border-bottom: 3px solid rgba(0, 0, 0, 0.2);
   width: 30rem;
   height: 3rem;

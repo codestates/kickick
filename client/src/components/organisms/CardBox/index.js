@@ -9,8 +9,8 @@ export default function CardBox() {
 
   return (
     <Container>
-      {list.map((el) => (
-        <KickBoardPost key={el.post_id} data={el} />
+      {list.map((el, idx) => (
+        <KickBoardPost key={idx} data={el} />
       ))}
     </Container>
   );

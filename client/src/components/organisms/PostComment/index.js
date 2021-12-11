@@ -92,30 +92,32 @@ export default function PostComment({ post_id }) {
   // });
 
   //IntersectionObserver API
-  useEffect(async () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      await getComments(postInfo.post_id, limit * 10)
+        .then((data) => {
+          setCmt(data.data);
+        })
+        .catch((err) => console.error(err.response));
+    };
     setLoading(true);
-    await getComments(postInfo.post_id, limit * 10)
-      .then((data) => {
-        setCmt(data.data);
-      })
-      .catch((err) => console.error(err.response));
+    fetchData();
     setLoading(false);
   }, [limit]);
 
   useEffect(() => {
-    console.log("observer");
     const options = {
       root: null,
       rootMargin: "-130px",
       threshold: 1,
     };
     let observer;
-
-    if (test.current) {
+    const fetchelement = test.current;
+    if (fetchelement) {
       observer = new IntersectionObserver(handleTest, options);
-      observer.observe(test.current);
+      observer.observe(fetchelement);
     }
-    return () => observer.disconnect(test.current);
+    return () => observer.disconnect(fetchelement);
   }, [loading]);
 
   const testFunc = () => {

@@ -134,12 +134,14 @@ export function MyComment() {
 
 export function Navigator({ title }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <NavContainer>
       <FaArrowLeft
         onClick={() => {
           navigate(-1);
+          dispatch(selectPageAction(1));
         }}
       />
       <h2>{title}</h2>

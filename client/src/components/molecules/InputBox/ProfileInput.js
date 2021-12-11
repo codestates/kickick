@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Common, Profile } from "../..";
+import { Common, Profile } from "../../../components";
+
 import { fileReader } from "../../../commons/utils/fileReader";
 
 export default function ProfileInput({ head, type, placeholder }) {

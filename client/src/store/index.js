@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 
 import {
   kickboardReducer,
-  boardReducer,
+  postlistReducer,
   postAddReducer,
   postInfoReducer,
   loginReducer,
@@ -18,7 +19,7 @@ import {
 export const store = configureStore({
   reducer: {
     kickboard: kickboardReducer,
-    board: boardReducer,
+    board: postlistReducer,
     postAdd: postAddReducer,
     postInfo: postInfoReducer,
     onoff: onoffReducer,
@@ -30,4 +31,5 @@ export const store = configureStore({
     alarmList: alarmListReducer,
     postsearch: postsearchReducer,
   },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

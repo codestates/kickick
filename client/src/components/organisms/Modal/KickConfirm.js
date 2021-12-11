@@ -3,65 +3,64 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Profile, Common, Chart } from "../../../components";
+
 import { modalOffAction } from "../../../store/actions/kickboard";
 
-import kickmoney from "../../../assets/images/kickmoney.png";
-import reviewicon from "../../../assets/images/reviewicon.png";
-import introicon from "../../../assets/images/introicon.png";
-import staticsicon from "../../../assets/images/staticsicon.png";
+import kickmoney from "../../../assets/images/icon/kickmoney.png";
+import reviewicon from "../../../assets/images/icon/reviewicon.png";
+import introicon from "../../../assets/images/icon/introicon.png";
+import staticsicon from "../../../assets/images/icon/staticsicon.png";
 
 export default function KickConfirm() {
   const dispatch = useDispatch();
-  const { modal } = useSelector((state) => state.kickboard);
+  const { modalState, modalInfo } = useSelector((state) => state.kickboard);
 
   return (
     <>
-      <ModalOverlay visible={modal} />
+      <ModalOverlay visible={modalState} />
       <ModalWrapper
-        visible={modal}
+        visible={modalState}
         onClick={(e) => {
           dispatch(modalOffAction());
         }}
       >
         <ModalInner onClick={(e) => e.stopPropagation()}>
           <KickConfirmSummary>
-            <h2>자바스크립트 개 잘하는법</h2>
+            <h2>{modalInfo.post_name}</h2>
             <KickSubtitle>
               <img src={introicon} alt="" />
               <h3>소개</h3>
             </KickSubtitle>
             <KickConfirmIntroduction>
-              <p>자바스크립트를 마스터하는 방법을 알려드리겠습니다</p>
+              <p>{modalInfo.content}</p>
             </KickConfirmIntroduction>
             <KickSubtitle>
               <img src={staticsicon} alt="" />
               <h3>통계</h3>
             </KickSubtitle>
-            <Chart />
+            <Chart data={modalInfo.likes} />
             <KickSubtitle>
               <img src={reviewicon} alt="" />
               <h3>댓글</h3>
             </KickSubtitle>
             <KickConfirmReview>
-              <KickConfirmUser>
-                <Profile type="confirm" />
-                <span className="username">석창환</span>
-                <p className="comment">와 ㅋㅋㅋㅋ</p>
-              </KickConfirmUser>
-              <KickConfirmUser>
-                <Profile type="confirm" />
-                <span className="username">석창환야야야야</span>
-                <p className="comment">이거 보고 자바스크립트 마스터함요</p>
-              </KickConfirmUser>
-              <KickConfirmUser>
-                <Profile type="confirm" />
-                <span className="username">석창환</span>
-                <p className="comment">와 ㅋㅋㅋㅋ</p>
-              </KickConfirmUser>
+              {modalInfo.comments.length === 0 ? (
+                <NoCommentContainer>
+                  <h3>댓글이 없습니다</h3>
+                </NoCommentContainer>
+              ) : (
+                modalInfo.comments.map((el) => (
+                  <KickConfirmUser key={el.comment_id}>
+                    <Profile type="confirm" src={el.user.profile} />
+                    <span className="username">{el.user.username}</span>
+                    <p className="comment">{el.content}</p>
+                  </KickConfirmUser>
+                ))
+              )}
             </KickConfirmReview>
             <KickConfirmKickMoney>
               <img src={kickmoney} alt="" />
-              <h3>300</h3>
+              <h3>{modalInfo.cost}</h3>
             </KickConfirmKickMoney>
             <Common type="confirm" label="보기" />
           </KickConfirmSummary>
@@ -107,7 +106,11 @@ const ModalInner = styled.div`
 
   h2 {
     font-size: 1.5rem;
+    height: 1.5rem;
     margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   h3 {
@@ -124,7 +127,7 @@ const ModalInner = styled.div`
 const KickConfirmSummary = styled.div`
   display: flex;
   flex-direction: column;
-  height: 8rem;
+
   gap: 0.75rem;
 `;
 const KickConfirmUser = styled.div`
@@ -155,10 +158,17 @@ const KickConfirmIntroduction = styled.div`
   background-color: #faffff;
   border: 1px solid #eee;
   border-radius: 0.5rem;
+  min-height: 5rem;
 
   p {
-    line-height: 1.5;
     font-size: 0.9rem;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
   }
 `;
 const KickConfirmReview = styled.div`
@@ -169,6 +179,8 @@ const KickConfirmReview = styled.div`
   background-color: #faffff;
   border: 1px solid #eee;
   border-radius: 0.5rem;
+  min-height: 14.5rem;
+  overflow-y: auto;
 
   .username {
     width: 80%;
@@ -194,4 +206,11 @@ const KickSubtitle = styled.div`
   img {
     margin-right: 0.5rem;
   }
+`;
+
+const NoCommentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: auto 0;
+  font-size: 2rem;
 `;

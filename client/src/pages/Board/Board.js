@@ -8,7 +8,8 @@ import BoardSkeleton from "./BoardSkeleton";
 
 import { getPostsList } from "../../apis/posts";
 
-import { getListAction } from "../../store/actions/postadd/boardList";
+import { getListAction } from "../../store/actions/postlist";
+
 import {
   getCategoryAction,
   resetTag,
