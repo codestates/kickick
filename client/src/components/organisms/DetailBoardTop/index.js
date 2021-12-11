@@ -2,48 +2,43 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
+
 import astronautImg from "../../../assets/images/astronaut2.png";
 import alienImg from "../../../assets/images/alien1.png";
+import thumbnail from "../../../assets/images/default_thumbnail.jpg";
+import star from "../../../assets/images/contenticon.png";
 
+import { createLikes } from "../../../apis/likes";
 import { IconBox } from "../../";
 
 export default function DetailBoardTop({ state, type }) {
   const [astronaut, setAstronaut] = useState(0);
   const [alien, setAlien] = useState(0);
-  const [like, setLike] = useState();
-  const handleAstronaut = () => {
-    if (astronaut === 1) {
-      setLike(null);
+
+  const handleLike = (item) => {
+    if (item === "true" && alien === 1) return;
+    if (item === "false" && astronaut === 1) return;
+
+    if (item === "true") {
       setAstronaut(0);
+      setAlien(1);
     } else {
-      if (alien === 1) {
-        setAlien(0);
-      }
       setAstronaut(1);
-      setLike(false);
+      setAlien(0);
     }
+
+    // createLikes(state.post_id, item)
+    //   .then((data) => console.log(data.data))
+    //   .catch((err) => console.log(err.response));
   };
 
-  const handleAlien = () => {
-    if (alien === 1) {
-      setLike(null);
-      setAlien(0);
-    } else {
-      if (astronaut === 1) {
-        setAstronaut(0);
-      }
-      setAlien(1);
-      setLike(true);
-    }
-  };
-  console.log(like);
   return (
     <Container>
       <TopContainer>
         <Title>{state.post_name}</Title>
         {type === "kick" ? (
           <Thumbnail>
-            <img />
+            <img src={thumbnail} />
           </Thumbnail>
         ) : null}
         <UserAndCountContainer>
@@ -73,14 +68,20 @@ export default function DetailBoardTop({ state, type }) {
       {type === "kick" ? (
         <VotesContainer>
           <Astronaut>
-            <img src={astronautImg} onClick={handleAstronaut} />
-            <span>{astronaut}</span>
+            {astronaut ? <img className="star" src={star} /> : null}
+            <img
+              className="astronaut"
+              src={astronautImg}
+              onClick={() => handleLike("false")}
+            />
+            <span>{state.likes.false + astronaut}</span>
           </Astronaut>
           <span>vs</span>
-          <Astronaut>
-            <span>{alien}</span>
-            <img src={alienImg} onClick={handleAlien} />
-          </Astronaut>
+          <Alien>
+            <span>{state.likes.true + alien}</span>
+            <img src={alienImg} onClick={() => handleLike("true")} />
+            {alien ? <img className="star" src={star} /> : null}
+          </Alien>
         </VotesContainer>
       ) : null}
     </Container>
@@ -156,9 +157,30 @@ const VotesContainer = styled.div`
 `;
 
 const Astronaut = styled.div`
+    position: relative;
   display: flex;
   gap: 0.5rem;
-  img {
+  > .star {
+    position: absolute;
+    left: -1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+  > .astronaut {
+    cursor: pointer;
+`;
+
+const Alien = styled.div`
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  > .star {
+    position: absolute;
+    right: -1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+  > :nth-child(2) {
     cursor: pointer;
   }
 `;

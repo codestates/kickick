@@ -187,6 +187,7 @@ const PostListContainer = styled.div`
         }
         > div:nth-of-type(2) {
           flex: 4;
+          padding-left: 4rem;
           color: black;
         }
         > div:nth-of-type(3) {
