@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css, keyframes } from "styled-components";
 
-export default function Common({ label, type, handleClick }) {
+export default function Common({ label, type, handleClick, disabled }) {
   return (
-    <Container onClick={handleClick} type={type}>
+    <Container onClick={handleClick} type={type} disabled={disabled}>
       {label}
     </Container>
   );
@@ -17,7 +17,7 @@ const shake = keyframes`
   100% { margin: 0; } 
 `;
 
-const Container = styled.div`
+const Container = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -29,6 +29,12 @@ const Container = styled.div`
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: gray;
+    `}
 
   ${({ type }) =>
     type === "imgedit" &&

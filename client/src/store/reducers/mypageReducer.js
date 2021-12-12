@@ -6,7 +6,7 @@ import {
   GET_KICKMONEY_LOG,
 } from "../actions/mypage";
 
-import { dateConverter } from "../../commons/utils/dateConverter";
+import { logDateConverter } from "../../commons/utils/dateConverter";
 
 const initialState = {
   favorites: { count: 0, data: [] },
@@ -27,6 +27,9 @@ export default function mypageReducer(state = initialState, action) {
     case GET_PURCHASED_KICK:
       return { ...state, ...action.payload };
     case GET_KICKMONEY_LOG:
+      action.payload.log.data.forEach((el) => {
+        el.created_at = logDateConverter(el.created_at);
+      });
       return { ...state, ...action.payload };
     default:
       return state;

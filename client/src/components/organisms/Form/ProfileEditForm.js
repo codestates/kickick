@@ -10,22 +10,41 @@ import { uploadSingleImage } from "../../../apis/upload";
 
 import { isLoginAction } from "../../../store/actions/login";
 
+import { validation } from "../../../commons/utils/validation";
+
 export default function ProfileEditForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
 
+  const [disabled, setDisabled] = useState(false);
   const [username, setUsername] = useState(isLogin.username);
   const [profile, setProfile] = useState(isLogin.profile);
   const [rawProfile, setRawProfile] = useState();
   const [email, setEmail] = useState(isLogin.email);
   const [birthday, setBirthday] = useState(isLogin.birthday);
+  const [errEmailMsg, setErrEmailMsg] = useState("");
+  const [errNameMsg, setErrNameMsg] = useState(null);
 
   const handleUsername = (e) => {
+    const { message, isValid } = validation("username", e.target.value);
+    if (!isValid) {
+      setErrNameMsg(message);
+      setDisabled(true);
+    } else {
+      setErrNameMsg(null);
+      setDisabled(false);
+    }
     setUsername(e.target.value);
   };
 
   const handleEmail = (e) => {
+    const { message, isValid } = validation("email", e.target.value);
+    if (!isValid) {
+      setErrEmailMsg(message);
+    } else {
+      setErrEmailMsg(null);
+    }
     setEmail(e.target.value);
   };
 
@@ -44,6 +63,7 @@ export default function ProfileEditForm() {
       placeholder: "닉네임을 입력해주세요",
       value: username,
       handler: handleUsername,
+      err: errNameMsg,
     },
     {
       head: "이메일",
@@ -51,6 +71,7 @@ export default function ProfileEditForm() {
       placeholder: "이메일을 입력해주세요",
       value: email,
       handler: handleEmail,
+      err: errEmailMsg,
     },
     {
       head: "생일",
@@ -109,18 +130,26 @@ export default function ProfileEditForm() {
       <Container>
         <ListContainer>
           {profileInputList.map((el) => (
-            <ProfileInput
-              key={el.head}
-              head={el.head}
-              type={el.type}
-              placeholder={el.placeholder}
-              value={el.value}
-              handler={el.handler}
-            />
+            <>
+              <ProfileInput
+                key={el.head}
+                head={el.head}
+                type={el.type}
+                placeholder={el.placeholder}
+                value={el.value}
+                handler={el.handler}
+                err={el.err}
+              />
+            </>
           ))}
         </ListContainer>
       </Container>
-      <Common type="mypage" label="프로필 수정" handleClick={handleUserInfo} />
+      <Common
+        type="mypage"
+        label="프로필 수정"
+        handleClick={handleUserInfo}
+        disabled={disabled}
+      />
     </>
   );
 }
@@ -133,7 +162,7 @@ const Container = styled.div`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  height: 22rem;
+  height: 25rem;
 `;

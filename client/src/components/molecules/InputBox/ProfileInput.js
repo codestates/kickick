@@ -11,6 +11,7 @@ export default function ProfileInput({
   placeholder,
   handler,
   value,
+  err,
 }) {
   if (type === "file")
     return (
@@ -41,6 +42,7 @@ export default function ProfileInput({
         type={type}
         placeholder={placeholder}
       />
+      <ErrorBox>{err}</ErrorBox>
     </Container>
   );
 }
@@ -77,4 +79,12 @@ const Container = styled.div`
   img {
     margin: 2rem;
   }
+`;
+
+const ErrorBox = styled.div`
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  height: 1.5rem;
+  font-size: 0.9rem;
+  color: red;
 `;
