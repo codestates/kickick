@@ -36,11 +36,11 @@ export default function DetailBoardTop({ state, type }) {
     <Container>
       <TopContainer>
         <Title>{state.post_name}</Title>
-        {type === "kick" ? (
+        {/* {type === "kick" ? (
           <Thumbnail>
             <img src={thumbnail} />
           </Thumbnail>
-        ) : null}
+        ) : null} */}
         <UserAndCountContainer>
           <UserContainer>
             <IconBox label="user" />

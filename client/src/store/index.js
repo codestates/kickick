@@ -24,23 +24,27 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  kickboard: kickboardReducer,
-  board: boardReducer,
   postAdd: postAddReducer,
-  postInfo: postInfoReducer,
-  onoff: onoffReducer,
-  tag: tagReducer,
-  login: loginReducer,
-  themeMode: themeReducer,
-  mypage: mypageReducer,
-  socket: socketReducer,
-  alarmList: alarmListReducer,
-  postsearch: postsearchReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
+
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    persist: persistedReducer,
+    kickboard: kickboardReducer,
+    board: boardReducer,
+    postAdd: postAddReducer,
+    postInfo: postInfoReducer,
+    onoff: onoffReducer,
+    tag: tagReducer,
+    login: loginReducer,
+    themeMode: themeReducer,
+    mypage: mypageReducer,
+    socket: socketReducer,
+    alarmList: alarmListReducer,
+    postsearch: postsearchReducer,
+  },
 });
 
 export default store;

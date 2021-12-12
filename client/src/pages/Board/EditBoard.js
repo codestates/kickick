@@ -121,6 +121,10 @@ const BtnContainer = styled.div`
 const QullContainer = styled.div`
   display: flex;
   gap: 2rem;
+  > :nth-child(2) {
+    border-left: 0.2rem solid #c8c8c8;
+    padding-left: 3rem;
+  }
 `;
 
 const DividBox = styled.div``;

@@ -93,15 +93,15 @@ export default function PostComment({ post_id }) {
   // });
 
   //IntersectionObserver API
-  useEffect(async () => {
+  useEffect(() => {
     setLoading(true);
-    await getComments(postInfo.post_id, limit * 10)
+    getComments(postInfo.post_id, limit * 10)
       .then((data) => {
         setCmt(data.data);
         setPlusCmt(0);
+        setLoading(false);
       })
       .catch((err) => console.error(err.response));
-    setLoading(false);
   }, [limit]);
 
   useEffect(() => {
