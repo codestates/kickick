@@ -12,7 +12,8 @@ import { IconBox, Modal } from "../../";
 export default function IconContainer() {
   const [modal, setModal] = useState(false);
   const { post_id } = useParams();
-  const { board, postInfo, login } = useSelector((state) => state);
+  const { board, login } = useSelector((state) => state);
+  const { postInfo } = useSelector((state) => state.persist);
   const [heart, setHeart] = useState(
     postInfo.favorite === "true" ? true : false
   );
