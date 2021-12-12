@@ -27,11 +27,11 @@ export default function Board() {
   useEffect(() => {
     dispatch(getCategoryAction(category));
     if (!onoff) {
-      dispatch(resetSearchReducerAction());
+      dispatch(resetSearchReducerAction(postsearch.align));
       dispatch(resetTag());
     }
     dispatch(goBack(false));
-  }, [category]);
+  }, [category, postsearch.align]);
 
   useEffect(() => {
     getPostsList({

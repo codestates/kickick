@@ -32,7 +32,7 @@ export default function postserachReducer(state = initialState, action) {
     case WRITER_SEARCH:
       return { ...state, ...action.payload };
     case RESET_SEARCH_REDUCER:
-      return initialState;
+      return { ...initialState, ...action.payload };
     default:
       return state;
   }
