@@ -7,6 +7,10 @@ export default function TagInput({ tagArr, setTagArr, category }) {
   const [value, setValue] = useState("");
 
   const handleKeyon = (e) => {
+    if (e.code === "Backspace" && value.length === 0 && tagArr.length) {
+      let newTag = tagArr.slice(0, -1);
+      setTagArr(newTag);
+    }
     if ((e.code === "Enter" && value) || (e.code === "NumpadEnter" && value)) {
       let dummy = [...tagArr];
       if (value === category) return;
@@ -30,14 +34,6 @@ export default function TagInput({ tagArr, setTagArr, category }) {
   };
   return (
     <Container>
-      <TitleInput
-        holder="태그를 입력하세요."
-        width="10rem"
-        padding="0.3rem"
-        handleKeyon={handleKeyon}
-        handleChange={handleChange}
-        val={value}
-      />
       {tagArr.map((inputValue, idx) => {
         return (
           <TagContainer key={idx} onClick={() => handleDel(idx)}>
@@ -46,6 +42,14 @@ export default function TagInput({ tagArr, setTagArr, category }) {
           </TagContainer>
         );
       })}
+      <TitleInput
+        holder="태그를 입력하세요."
+        handleKeyon={handleKeyon}
+        handleChange={handleChange}
+        val={value}
+        type="tag"
+      />
+      <Alarm tag={tagArr}>태그는 2개까지 입력 가능합니다.</Alarm>
     </Container>
   );
 }
@@ -56,15 +60,24 @@ const Container = styled.div`
   gap: 1rem;
 `;
 const TagContainer = styled.div`
-  padding: 0.5rem;
+  padding: 0.37rem;
   font-weight: bold;
-  color: #f15f5f;
-  border: 2px solid #f15f5f;
+  color: #66a14b;
+  /* border: 2px solid #f15f5f; */
+  background-color: #ececec;
   border-radius: 10px;
 
   cursor: pointer;
+
   svg {
     height: 0.8rem;
-    color: #f15f5f;
   }
+`;
+
+const Alarm = styled.span`
+  padding: 0.5rem;
+  font-weight: bold;
+  color: #e02401;
+  opacity: ${({ tag }) => (tag.length === 2 ? 1 : 0)};
+  transition: all 0.3s linear;
 `;

@@ -12,7 +12,8 @@ import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 
 export default function PostComment({ post_id }) {
   const test = useRef();
-  const postInfo = useSelector((state) => state.postInfo);
+  const { login } = useSelector((state) => state);
+  const { postInfo } = useSelector((state) => state.persist);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
   const [plusCmt, setPlusCmt] = useState(0);
@@ -28,6 +29,7 @@ export default function PostComment({ post_id }) {
   };
 
   const handleClick = () => {
+    if (!login.isLogin) return;
     createComments(post_id, value)
       .then((data) => {
         let dummy = cmt.data.slice();
@@ -93,16 +95,14 @@ export default function PostComment({ post_id }) {
 
   //IntersectionObserver API
   useEffect(() => {
-    const fetchData = async () => {
-      await getComments(postInfo.post_id, limit * 10)
-        .then((data) => {
-          setCmt(data.data);
-        })
-        .catch((err) => console.error(err.response));
-    };
     setLoading(true);
-    fetchData();
-    setLoading(false);
+    getComments(postInfo.post_id, limit * 10)
+      .then((data) => {
+        setCmt(data.data);
+        setPlusCmt(0);
+        setLoading(false);
+      })
+      .catch((err) => console.error(err.response));
   }, [limit]);
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function PostComment({ post_id }) {
   }, [loading]);
 
   const testFunc = () => {
-    if (cmt.count === cmt.data.length) return;
+    if (cmt.count === cmt.data.length || !cmt.count) return;
     else {
       setLimit(limit + 1);
     }

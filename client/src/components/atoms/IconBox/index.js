@@ -82,7 +82,7 @@ export default function IconBox({ label = "arrow", handleClick }) {
     <Container
       label={label}
       color={color}
-      onClick={() => handleClick(label)}
+      onClick={category === "postInfo" ? null : () => handleClick(label)}
       category={category}
     >
       {icon}
@@ -97,6 +97,12 @@ const Container = styled.div`
   text-align: center;
   cursor: pointer;
 
+  ${({ category }) =>
+    category === "postInfo" &&
+    css`
+      cursor: default;
+    `}
+
   ${({ category, color }) =>
     category === "postNav" &&
     css`
@@ -108,6 +114,15 @@ const Container = styled.div`
       border-radius: 10px;
       svg {
         font-size: 1.5rem;
+      }
+    `}
+
+${({ label }) =>
+    label === "arrow" &&
+    css`
+      :hover {
+        color: #fff;
+        background-color: #0c0c42;
       }
     `}
 `;

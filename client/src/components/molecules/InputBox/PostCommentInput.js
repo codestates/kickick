@@ -8,7 +8,7 @@ export default function PostCommentInput({ handleClick, value, handleChange }) {
     <Container>
       <Textarea value={value} handleChange={handleChange} />
       <CommentButtons>
-        <Common label="댓글등록" type="comment" handleClick={handleClick} />
+        <Common label="댓글등록" type="register" handleClick={handleClick} />
       </CommentButtons>
     </Container>
   );

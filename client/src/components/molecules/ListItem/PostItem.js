@@ -134,7 +134,6 @@ export function MyPageLogs({ data }) {
 const Container = styled.div`
   color: #666;
   font-size: 0.9rem;
-
   div:nth-of-type(2) {
     text-align: start;
     font-size: 0.95rem;
@@ -144,7 +143,7 @@ const Container = styled.div`
     margin: 0 0.2rem;
     font-weight: bold;
     font-size: 0.8rem;
-    color: hotpink;
+    color: #f90716;
   }
 
   a {

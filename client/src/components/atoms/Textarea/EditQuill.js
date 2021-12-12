@@ -124,7 +124,8 @@ export default function EditQuill({
         onBlur={handleContent}
         theme="snow"
         style={{
-          height: "30rem",
+          width: image === false ? "43rem" : null,
+          height: image === false ? "32rem" : "60rem",
           display: "flex",
           flexDirection: "column",
         }}

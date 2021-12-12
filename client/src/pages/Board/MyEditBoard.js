@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
+
 import {
   EditQuill,
   TitleInput,
   Common,
   TagInput,
-  IconText,
+  IconBox,
 } from "../../components";
 
 import { getPostInfoAction } from "../../store/actions/postadd";
@@ -16,7 +19,7 @@ import { delTags, createTags } from "../../apis/tags";
 
 export default function MyEditBoard() {
   const navigate = useNavigate();
-  const state = useSelector((state) => state.postInfo);
+  const state = useSelector((state) => state.persist.postInfo);
 
   const { post_id, category } = useParams();
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ export default function MyEditBoard() {
     state.tags.filter((el) => el.content !== category).map((el) => el.content)
   );
 
-  const handleBlur = (e) => {
+  const handleChange = (e) => {
     setTitle(e.target.value);
   };
 
@@ -64,34 +67,75 @@ export default function MyEditBoard() {
   if (loading) return "";
   return (
     <Container>
-      <TitleContainer>
-        <IconText label={category} />
-        <TitleInput handleBlur={handleBlur} title={title} />
-      </TitleContainer>
-      <EditQuill
-        image={false}
-        content={content}
-        setContent={setContent}
-        handleQuill={handleQuill}
-      />
-      <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
-      <BtnContainer>
-        <Common label="수 정" type="bigger" handleClick={handleClick} />
-      </BtnContainer>
+      <QullContainer>
+        <DividBox>
+          <TitleContainer>
+            <TitleInput
+              handleChange={handleChange}
+              type="title"
+              title={title}
+            />
+            <TagInput
+              tagArr={tagArr}
+              setTagArr={setTagArr}
+              category={category}
+            />
+          </TitleContainer>
+          <EditQuill
+            image={false}
+            content={content}
+            setContent={setContent}
+            handleQuill={handleQuill}
+          />
+          <BtnContainer>
+            <IconBox
+              label="arrow"
+              handleClick={() => navigate(`/detailboard/${post_id}`)}
+            />
+            <Common label="수 정" type="bigger" handleClick={handleClick} />
+          </BtnContainer>
+        </DividBox>
+
+        <DividBox>
+          <TitleContainer style={{ marginBottom: "2rem" }}>
+            <TitleBox>{title}</TitleBox>
+          </TitleContainer>
+          <ReactQuill
+            value={content}
+            readOnly={true}
+            theme={"bubble"}
+            style={{ widht: "43rem", paddingTop: "0.5rem" }}
+          />
+        </DividBox>
+      </QullContainer>
     </Container>
   );
 }
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 88rem;
+  width: 90rem;
   margin: 0 auto;
   gap: 1rem;
 `;
 const TitleContainer = styled.div`
-  display: flex;
   margin-top: 2rem;
 `;
 const BtnContainer = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+`;
+
+const QullContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
+const DividBox = styled.div``;
+
+const TitleBox = styled.div`
+  width: 43rem;
+  height: 2.8rem;
+  padding-top: 0.5rem;
+  font-size: 2.8rem;
+  font-weight: bold;
 `;

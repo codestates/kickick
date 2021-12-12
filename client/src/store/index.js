@@ -1,4 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 
 import {
@@ -16,12 +19,23 @@ import {
   postsearchReducer,
 } from "./reducers";
 
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const reducers = combineReducers({
+  postInfo: postInfoReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 export const store = configureStore({
   reducer: {
+    persist: persistedReducer,
     kickboard: kickboardReducer,
     board: postlistReducer,
     postAdd: postAddReducer,
-    postInfo: postInfoReducer,
     onoff: onoffReducer,
     tag: tagReducer,
     login: loginReducer,
@@ -33,3 +47,5 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
+
+export default store;
