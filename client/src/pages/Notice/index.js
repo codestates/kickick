@@ -22,7 +22,7 @@ const noticeList = [
 export default function Notice() {
   const { category } = useParams();
   const { component } = noticeList.find((el) => el.category === category);
-
+  console.log(component);
   return (
     <>
       {/* <BoardTop /> */}

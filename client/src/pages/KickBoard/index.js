@@ -84,6 +84,7 @@ export default function KickBoard() {
   ]);
 
   if (loading) return <div>d</div>;
+
   return (
     <Container>
       <Common handleClick={() => navigate(`/editkick/${category}`)} />
