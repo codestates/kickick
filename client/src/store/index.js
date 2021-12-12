@@ -24,7 +24,7 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  postAdd: postAddReducer,
+  postInfo: postInfoReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -35,7 +35,6 @@ export const store = configureStore({
     kickboard: kickboardReducer,
     board: boardReducer,
     postAdd: postAddReducer,
-    postInfo: postInfoReducer,
     onoff: onoffReducer,
     tag: tagReducer,
     login: loginReducer,

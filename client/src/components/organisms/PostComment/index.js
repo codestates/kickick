@@ -12,7 +12,8 @@ import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 
 export default function PostComment({ post_id }) {
   const test = useRef();
-  const { postInfo, login } = useSelector((state) => state);
+  const { login } = useSelector((state) => state);
+  const { postInfo } = useSelector((state) => state.persist);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
   const [plusCmt, setPlusCmt] = useState(0);

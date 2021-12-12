@@ -10,7 +10,7 @@ import { getPostsInfo } from "../../apis/posts";
 import { getPostInfoAction } from "../../store/actions/postadd";
 
 export default function DetailBoard({ type = "kick" }) {
-  const state = useSelector((state) => state.postInfo);
+  const state = useSelector((state) => state.persist.postInfo);
   const dispatch = useDispatch();
   const { post_id } = useParams();
   const [loading, setLoading] = useState(true);

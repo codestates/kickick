@@ -19,7 +19,7 @@ import { delTags, createTags } from "../../apis/tags";
 
 export default function MyEditBoard() {
   const navigate = useNavigate();
-  const state = useSelector((state) => state.postInfo);
+  const state = useSelector((state) => state.persist.postInfo);
 
   const { post_id, category } = useParams();
   const dispatch = useDispatch();
