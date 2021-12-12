@@ -6,6 +6,8 @@ import {
   GET_KICKMONEY_LOG,
 } from "../actions/mypage";
 
+import { dateConverter } from "../../commons/utils/dateConverter";
+
 const initialState = {
   favorites: { count: 0, data: [] },
   mypost: { count: 0, data: [] },

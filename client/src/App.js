@@ -19,7 +19,7 @@ import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
 import EditKickBoard from "./pages/KickBoard/EditKickBoard";
 import MyPage from "./pages/MyPage";
 import Notice, { NoticeDetail } from "./pages/Notice";
-import Error from "./pages/Error";
+import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 

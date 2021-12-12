@@ -59,6 +59,7 @@ export default function MyPage() {
   const { component, title } = pageList.find((el) => el.category === category);
   const dispatch = useDispatch();
   const postsearch = useSelector((state) => state.postsearch);
+  const { isLogin } = useSelector((state) => state.login);
 
   useEffect(() => {
     getFavorites(null, null, postsearch.selectPage)
@@ -80,7 +81,6 @@ export default function MyPage() {
       .catch((err) => console.log(err));
     getKicksList(10, postsearch.selectPage)
       .then((data) => {
-        console.log(data);
         dispatch(getPurchasedKickAction(data));
       })
       .catch((err) => console.log(err));
@@ -91,6 +91,8 @@ export default function MyPage() {
       })
       .catch((err) => console.log(err));
   }, [dispatch, postsearch.selectPage]);
+
+  if (!isLogin) return <div>d</div>;
   return (
     <>
       <Landscape />
@@ -135,8 +137,6 @@ export function Home() {
 }
 
 export function Profile() {
-  const { isLogin } = useSelector((state) => state.login);
-  if (!isLogin) return <div>d</div>;
   return <ProfileEditForm />;
 }
 

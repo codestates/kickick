@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 import { ProfileInput, Common } from "../../../components";
+
 import { putUserInfo } from "../../../apis/users";
+import { uploadSingleImage } from "../../../apis/upload";
+
 import { isLoginAction } from "../../../store/actions/login";
 
 export default function ProfileEditForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
 
   const [username, setUsername] = useState(isLogin.username);
   const [profile, setProfile] = useState(isLogin.profile);
+  const [rawProfile, setRawProfile] = useState();
   const [email, setEmail] = useState(isLogin.email);
   const [birthday, setBirthday] = useState(isLogin.birthday);
 
@@ -27,8 +32,8 @@ export default function ProfileEditForm() {
   const handleBirthday = (e) => {
     setBirthday(e.target.value);
   };
-  const handleProfile = (base64) => {
-    console.log(base64);
+  const handleProfile = (raw, base64) => {
+    setRawProfile(raw);
     setProfile(base64);
   };
 
@@ -48,7 +53,7 @@ export default function ProfileEditForm() {
       handler: handleEmail,
     },
     {
-      head: "내상태",
+      head: "생일",
       type: "text",
       placeholder: "내상태을 입력해주세요",
       value: birthday,
@@ -63,11 +68,41 @@ export default function ProfileEditForm() {
   ];
 
   const handleUserInfo = () => {
-    putUserInfo({ username, profile, email, birthday }).then(() => {
-      // dispatch(
-      //   isLoginAction({ ...isLogin, username, profile, email, birthday })
-      // );
-    });
+    if (rawProfile) {
+      const formData = new FormData();
+      formData.append("img", rawProfile);
+      uploadSingleImage(formData, "profile").then((data) => {
+        const location = data.data.data.location;
+        putUserInfo({ username, profile: location, email, birthday })
+          .then(() => {
+            navigate("/mypage/home");
+            dispatch(
+              isLoginAction({
+                ...isLogin,
+                username,
+                profile: location,
+                email,
+                birthday,
+              })
+            );
+          })
+          .catch((err) => console.log(err));
+      });
+    } else {
+      putUserInfo({ username, email, birthday })
+        .then(() => {
+          navigate("/mypage/home");
+          dispatch(
+            isLoginAction({
+              ...isLogin,
+              username,
+              email,
+              birthday,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
+    }
   };
   return (
     <>

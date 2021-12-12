@@ -4,7 +4,7 @@ export const fileReader = (event, handler) => {
   } = event;
   const theFile = files[0];
   const reader = new FileReader();
-  console.log(theFile);
+
   if (theFile) {
     reader.readAsDataURL(theFile);
     reader.onloadend = (finishedEvent) => {
@@ -12,7 +12,7 @@ export const fileReader = (event, handler) => {
         currentTarget: { result },
       } = finishedEvent;
 
-      return handler(result);
+      return handler(theFile, result);
     };
   }
 };

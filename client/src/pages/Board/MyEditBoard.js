@@ -66,7 +66,7 @@ export default function MyEditBoard() {
     <Container>
       <TitleContainer>
         <IconText label={category} />
-        <TitleInput padding="0.3rem" handleBlur={handleBlur} title={title} />
+        <TitleInput handleBlur={handleBlur} title={title} />
       </TitleContainer>
       <EditQuill
         image={false}

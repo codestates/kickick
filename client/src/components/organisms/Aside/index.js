@@ -32,13 +32,11 @@ const logoList = [
 ];
 export default function MyPageAside() {
   const { isLogin } = useSelector((state) => state.login);
-  if (!isLogin) return <div>d</div>;
-  const type = "admin";
-  const { logo, color, text } = logoList.find((el) => el.type === type);
+  const { logo, color, text } = logoList.find((el) => el.type === isLogin.type);
   return (
     <Container>
       <ProfileContainer>
-        <Profile type="mypage" />
+        <Profile type="mypage" src={isLogin.profile} />
         <div className="username">
           <strong>{isLogin.username}</strong>님
         </div>
@@ -47,7 +45,7 @@ export default function MyPageAside() {
         <LoginStatusContainer>
           <div>
             <IconText label="생일" />
-            <span>{"2021.12.10"}</span>
+            <span>{isLogin.birthday}</span>
           </div>
           <div>
             <IconText label="이메일" />
