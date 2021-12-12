@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
@@ -12,7 +12,6 @@ export default function AlarmBtn({ fontSize = "xl" }) {
 
   const [alarmOpen, setAlarmOpen] = useState(false);
   const [isOver, setIsOver] = useState(false);
-
   
   const alarmOpner = () => {
       return setAlarmOpen(!alarmOpen);
@@ -21,9 +20,9 @@ export default function AlarmBtn({ fontSize = "xl" }) {
   const moveRefer = (obj) => {
     if (obj.reference) {
       const middleLink =
-        obj.reference.table === "post"
+        obj.reference.table === "posts"
           ? "detailboard"
-          : obj.reference.table === "notice"
+          : obj.reference.table === "notices"
           ? "notice"
             : "event";
       

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
-import { Nav, Footer, PageUp } from "./components";
+import { Nav, Footer, PageUp, CommonModal } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -42,29 +42,6 @@ export default function App() {
   const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
 
-  socketClient.on("connect", () => {
-    console.log("connection server");
-
-    socketClient.emit("signin", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
-
-    socketClient.on("alarms", (data) => {
-      console.log("난 1이야", data);
-      dispatch(alarmListAction(data));
-    });
-
-    socketClient.on("disconnect", () => {
-      console.log("disconnection");
-    });
-  });
-
-  socketClient.emit("alarms", {
-    username: isLogin.username,
-    ...socketChange.alarmPage,
-  });
-
   useEffect(() => {
     setTimeout(() => {
       if (themeMode === "light") {
@@ -82,6 +59,31 @@ export default function App() {
       })
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
+
+  socketClient.on("connect", () => {
+    console.log("connection server");
+
+    socketClient.emit("signin", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
+    });
+
+    socketClient.on("alarms", (data) => {
+      console.log("난 1이야", data);
+      dispatch(alarmListAction(data));
+    });
+
+    socketClient.on("disconnect", () => {
+      console.log("disconnection");
+    });
+  });
+  
+  socketClient.emit("alarms", {
+    username: isLogin.username,
+    ...socketChange.alarmPage,
+  });
+  
+  
 
   return (
     <ThemeProvider theme={theme[0]}>
@@ -104,6 +106,7 @@ export default function App() {
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
               <Route path="naver" element={<NaverAuth />} />
+              <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignupSelect />} />
@@ -145,14 +148,15 @@ const Theme = styled.img`
 `;
 
 const DarkBox = styled.div`
+  position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
 const ModeChanger = styled.div`
-  position: absolute;
-  top: -4rem;
+  position: fixed;
+  top: 0rem;
   right: 100vw;
   display: flex;
   z-index: 99999;

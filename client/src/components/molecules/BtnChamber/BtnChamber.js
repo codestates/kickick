@@ -9,7 +9,7 @@ export default function BtnChamber() {
     { pathname: "intro", context: "소개", isSubNav: false },
     { pathname: "notice", context: "공지", isSubNav: true },
     { pathname: "board/학습", context: "게시판", isSubNav: true },
-    { pathname: "kickboard", context: "킥 배우기", isSubNav: true },
+    { pathname: "kickboard/학습", context: "킥 배우기", isSubNav: true },
   ];
 
   const [isHover, setIsHover] = useState("");
