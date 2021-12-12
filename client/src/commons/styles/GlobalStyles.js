@@ -40,9 +40,9 @@ const GlobalStyles = createGlobalStyle`
         font-weight:bold;
     }
 
-    img {
+    /* img {
         pointer-events:none;
-    }
+    } */
 
    
 `;

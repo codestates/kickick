@@ -30,6 +30,7 @@ export default function KickBoard() {
   const navigate = useNavigate();
   const { kickboard, postsearch, postAdd } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
+  const [onScroll, setOnScroll] = useState(true);
 
   const handleLimit = () => {
     dispatch(selectPageAction(postsearch.selectPage + 1));
@@ -53,8 +54,21 @@ export default function KickBoard() {
       page_num: postsearch.selectPage,
     })
       .then((data) => {
-        console.log(data);
-        dispatch(getListStackAction(data.data));
+        if (data.data.data.length === 0) {
+          setOnScroll(false);
+          if (postsearch.selectPage === 1) {
+            dispatch(getListAction(data.data));
+          } else {
+            dispatch(getListStackAction(data.data));
+          }
+        } else {
+          setOnScroll(true);
+          if (postsearch.selectPage === 1) {
+            dispatch(getListAction(data.data));
+          } else {
+            dispatch(getListStackAction(data.data));
+          }
+        }
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
@@ -68,6 +82,7 @@ export default function KickBoard() {
     postsearch.writer,
     postsearch.align,
   ]);
+
   if (loading) return <div>d</div>;
   return (
     <Container>
@@ -75,7 +90,7 @@ export default function KickBoard() {
       <TotalSearch />
       <CardBox />
       {kickboard.modalState && <KickConfirm />}
-      <InfiniteScroll callback={handleLimit} />
+      {onScroll && <InfiniteScroll callback={handleLimit} />}
     </Container>
   );
 }

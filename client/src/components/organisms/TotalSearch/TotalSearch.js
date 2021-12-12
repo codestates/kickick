@@ -13,7 +13,7 @@ import {
 } from "../../../store/actions/postsearch";
 
 import { addTagAction, delTagAction } from "../../../store/actions/postadd";
-
+import { resetListAction } from "../../../store/actions/postlist";
 export default function TotalSearch() {
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ export default function TotalSearch() {
   const handleAlign = (event) => {
     const label = event.target.innerText;
     dispatch(boardAlignAction(label));
+    dispatch(resetListAction());
     dispatch(resetPaginationAction());
   };
   const handleIcon = (label) => {

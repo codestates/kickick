@@ -1,14 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
+import styled from "styled-components";
 
 export default function InfiniteScroll({ callback }) {
-  const [loading, setLoading] = useState(true);
   const fetchSection = useRef();
-
+  const handleFetch = useCallback(
+    (entry) => {
+      if (entry[0].isIntersecting) {
+        console.log("e");
+        callback();
+      }
+    },
+    [callback]
+  );
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: "-150px",
-      threshold: 1,
+      rootMargin: "-300px",
+      threshold: 0.1,
     };
 
     let observer;
@@ -19,14 +27,13 @@ export default function InfiniteScroll({ callback }) {
       observer.observe(fetchelement);
     }
     return () => observer.disconnect(fetchelement);
-  }, []);
+  }, [handleFetch]);
 
-  const handleFetch = (entry) => {
-    if (entry[0].isIntersecting) {
-      console.log("e");
-      callback();
-    }
-  };
-
-  return <div ref={fetchSection}></div>;
+  return <Container ref={fetchSection}></Container>;
 }
+
+const Container = styled.div`
+  position: relative;
+
+  top: -50vh;
+`;

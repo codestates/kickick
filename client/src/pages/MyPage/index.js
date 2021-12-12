@@ -25,9 +25,9 @@ import {
 
 import { selectPageAction } from "../../store/actions/postsearch";
 
-import profileinfoicon from "../../assets/images/profileinfoicon.png";
-import activityicon from "../../assets/images/activityicon.png";
-import purchaselog from "../../assets/images/purchaselog.png";
+import profileinfoicon from "../../assets/images/icon/profileinfoicon.png";
+import activityicon from "../../assets/images//icon/activityicon.png";
+import purchaselog from "../../assets/images//icon/purchaselogicon.png";
 
 import {
   PROFILE,

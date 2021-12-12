@@ -18,10 +18,10 @@ import {
   reset,
 } from "../../store/actions/postadd";
 
-import introductionicon from "../../assets/images/introductionicon.png";
-import contenticon from "../../assets/images/contenticon.png";
-import titileicon from "../../assets/images/titleicon.png";
-import thumbnailicon from "../../assets/images/thumbnailicon.png";
+import introductionicon from "../../assets/images/icon/introductionicon.png";
+import contenticon from "../../assets/images/icon/contenticon.png";
+import titileicon from "../../assets/images/icon/titleicon.png";
+import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
 
 import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
