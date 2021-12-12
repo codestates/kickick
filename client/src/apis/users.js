@@ -1,5 +1,4 @@
 import api from "./";
-
 /**
  * Query가 있으면 Query로 검색(email / username 둘 중 하나만)
  * 없으면 단일 유저 정보
@@ -20,4 +19,11 @@ export const getUserInfo = (username, email, today_login, limit, page_num) => {
   if (page_num) query += `page_num=${page_num}&`;
 
   return api.get(`/users/info${query.slice(0, -1)}`);
+};
+/**
+ * @param {object} data required
+ */
+export const putUserInfo = (data) => {
+  // data {username,email,password,profile,birthday,kick_money}
+  return api.put(`users/info`, data);
 };

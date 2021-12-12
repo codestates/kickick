@@ -16,11 +16,15 @@ import { FaArrowLeft } from "react-icons/fa";
 import { getPostsList } from "../../apis/posts";
 import { getComments } from "../../apis/comments";
 import { getFavorites } from "../../apis/favorites";
+import { getLogs } from "../../apis/logs";
+import { getKicksList } from "../../apis/kicks";
 
 import {
   getFavoritesAction,
   getMyPostAction,
   getMyCommentAction,
+  getKickmoneylogAction,
+  getPurchasedKickAction,
 } from "../../store/actions/mypage";
 
 import { selectPageAction } from "../../store/actions/postsearch";
@@ -35,6 +39,8 @@ import {
   FAVORITES,
   MY_POST,
   MY_COMMENT,
+  PURCHASED_KICK,
+  KICKMONEY_LOG,
 } from "../../commons/constants/mypage";
 
 const pageList = [
@@ -44,6 +50,8 @@ const pageList = [
   { category: "favorites", component: <Favorites />, title: FAVORITES },
   { category: "mypost", component: <MyPost />, title: MY_POST },
   { category: "mycomment", component: <MyComment />, title: MY_COMMENT },
+  { category: "kick", component: <PurchasedKick />, title: PURCHASED_KICK },
+  { category: "log", component: <KickmoneyLog />, title: KICKMONEY_LOG },
 ];
 
 export default function MyPage() {
@@ -68,6 +76,18 @@ export default function MyPage() {
     getComments(null, null, postsearch.selectPage)
       .then((data) => {
         dispatch(getMyCommentAction(data));
+      })
+      .catch((err) => console.log(err));
+    getKicksList(10, postsearch.selectPage)
+      .then((data) => {
+        console.log(data);
+        dispatch(getPurchasedKickAction(data));
+      })
+      .catch((err) => console.log(err));
+    getLogs("kick_money", 10, postsearch.selectPage)
+      .then((data) => {
+        console.log(data);
+        dispatch(getKickmoneylogAction(data));
       })
       .catch((err) => console.log(err));
   }, [dispatch, postsearch.selectPage]);
@@ -115,6 +135,8 @@ export function Home() {
 }
 
 export function Profile() {
+  const { isLogin } = useSelector((state) => state.login);
+  if (!isLogin) return <div>d</div>;
   return <ProfileEditForm />;
 }
 
@@ -130,6 +152,14 @@ export function MyPost() {
 }
 export function MyComment() {
   return <PostList type="mypagemycomment" />;
+}
+
+export function PurchasedKick() {
+  return <PostList type="mypagemycomment" />;
+}
+
+export function KickmoneyLog() {
+  return <PostList type="mypagelog" />;
 }
 
 export function Navigator({ title }) {

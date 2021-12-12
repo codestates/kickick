@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 import { Profile, Common, Chart } from "../../../components";
 
+import { putUserInfo } from "../../../apis/users";
 import { modalOffAction } from "../../../store/actions/kickboard";
 
 import kickmoney from "../../../assets/images/icon/kickmoney.png";
@@ -13,7 +15,20 @@ import staticsicon from "../../../assets/images/icon/staticsicon.png";
 
 export default function KickConfirm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [errMsg, setErrMsg] = useState();
   const { modalState, modalInfo } = useSelector((state) => state.kickboard);
+  const { isLogin } = useSelector((state) => state.login);
+
+  const handleKickChange = () => {
+    putUserInfo({ kick_money: `-${modalInfo.cost}` })
+      .then(() => {
+        navigate(`/detailkick/${modalInfo.post_id}`);
+      })
+      .catch((err) => {
+        setErrMsg("킥머니가 부족합니다");
+      });
+  };
 
   return (
     <>
@@ -62,7 +77,11 @@ export default function KickConfirm() {
               <img src={kickmoney} alt="" />
               <h3>{modalInfo.cost}</h3>
             </KickConfirmKickMoney>
-            <Common type="confirm" label="보기" />
+            <Common
+              type={"error"}
+              label={errMsg ? errMsg : "보기"}
+              handleClick={handleKickChange}
+            />
           </KickConfirmSummary>
         </ModalInner>
       </ModalWrapper>

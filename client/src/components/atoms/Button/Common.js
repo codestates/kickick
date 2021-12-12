@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export default function Common({ label, type, handleClick }) {
   return (
@@ -8,6 +8,14 @@ export default function Common({ label, type, handleClick }) {
     </Container>
   );
 }
+const shake = keyframes`
+  0% {  transform: scale(0.98); }
+  20% {  transform: scale(1); }
+  40% { margin-left: -10px; }
+  60% { margin-left: 0; margin-right: -10px; }
+  80% { margin-right: 0; margin-left: -10px; }
+  100% { margin: 0; } 
+`;
 
 const Container = styled.div`
   display: inline-flex;
@@ -76,5 +84,13 @@ const Container = styled.div`
     css`
       height: 2.5rem;
       background-color: skyblue;
+    `}
+
+    ${({ type }) =>
+    type === "error" &&
+    css`
+      height: 2.5rem;
+      background-color: red;
+      animation: 0.3s linear ${shake};
     `}
 `;

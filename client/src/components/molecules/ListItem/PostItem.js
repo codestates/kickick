@@ -27,6 +27,12 @@ const postItemList = [
       return <MyPageFavorites data={data} />;
     },
   },
+  {
+    type: "mypagelog",
+    component(data) {
+      return <MyPageLogs data={data} />;
+    },
+  },
 ];
 
 export default function PostItem({ type, data }) {
@@ -111,6 +117,16 @@ export function MyPageFavorites({ data }) {
       <div>{data.post.user.username}</div>
       <div>{data.post.view_count}</div>
       <div>{data.post.view_count}</div>
+    </Container>
+  );
+}
+
+export function MyPageLogs({ data }) {
+  return (
+    <Container>
+      <div>{data.created_at}</div>
+      <div>{data.content}</div>
+      <div>{"출석"}</div>
     </Container>
   );
 }

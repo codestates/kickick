@@ -54,14 +54,14 @@ export default function MyPageAside() {
             <span>{isLogin.email}</span>
           </div>
         </LoginStatusContainer>
-        <AuthContainer>
-          <LoginLogo color={color}>
-            <img className="logo" src={logo} alt="" />
-            <span>{text}</span>
-          </LoginLogo>
-          <Common label="로그아웃" type="new" />
-        </AuthContainer>
       </StatusContainer>
+      <AuthContainer>
+        <LoginLogo color={color}>
+          <img className="logo" src={logo} alt="" />
+          <span>{text}</span>
+        </LoginLogo>
+        <Common label="로그아웃" type="new" />
+      </AuthContainer>
     </Container>
   );
 }
@@ -84,7 +84,7 @@ const ProfileContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  padding: 1rem 2rem;
+  padding: 2rem 2rem 0 2rem;
 
   strong {
     font-size: 1.25rem;
@@ -99,7 +99,7 @@ const StatusContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  padding: 1rem 2rem;
+  padding: 2rem;
   font-size: 0.9rem;
   color: gray;
   gap: 2rem;
@@ -144,6 +144,12 @@ const AuthContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-top: 2px dashed #d8d8d8;
-  padding-top: 1rem;
+
+  padding: 1rem 2rem;
   gap: 0.5rem;
+  @media ${({ theme }) => theme.device.notebookS} {
+    border-left: 2px dashed #d8d8d8;
+    border-top: none;
+    flex-direction: row;
+  }
 `;

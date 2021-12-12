@@ -5,18 +5,24 @@ import { Common, Profile } from "../../../components";
 
 import { fileReader } from "../../../commons/utils/fileReader";
 
-export default function ProfileInput({ head, type, placeholder }) {
+export default function ProfileInput({
+  head,
+  type,
+  placeholder,
+  handler,
+  value,
+}) {
   if (type === "file")
     return (
       <Container>
         <h3>{head}</h3>
-        <Profile type="mypageedit" />
+        <Profile type="mypageedit" src={value} />
         <form>
           <input
             id="file"
             type="file"
             accept="image/*"
-            onChange={fileReader}
+            onChange={(e) => fileReader(e, handler)}
             style={{ display: "none" }}
           />
           <label htmlFor="file">
@@ -29,7 +35,12 @@ export default function ProfileInput({ head, type, placeholder }) {
   return (
     <Container>
       <h3>{head}</h3>
-      <input type={type} placeholder={placeholder} />
+      <input
+        value={value}
+        onChange={handler}
+        type={type}
+        placeholder={placeholder}
+      />
     </Container>
   );
 }

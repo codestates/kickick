@@ -34,6 +34,7 @@ export default function TotalSearch() {
   };
   const handleSearch = () => {
     dispatch(addTagAction(icon.label, word));
+    dispatch(resetPaginationAction());
     setWord("");
 
     if (icon.label === "제목") {

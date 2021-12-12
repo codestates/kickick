@@ -15,7 +15,7 @@ export const getKicksList = (limit, page_num) => {
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 
-  return api.get(`/kicks/info-list${query.slice(0, -1)}`);
+  return api.get(`/kicks/list${query.slice(0, -1)}`);
 };
 /**
  *  @param {number} post_id required

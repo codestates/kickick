@@ -3,7 +3,7 @@ export const ATTENDANCE = "출석";
 export const FAVORITES = "좋아요 한 글";
 export const MY_POST = "내가 쓴 글";
 export const MY_COMMENT = "내가 단 댓글";
-export const MY_KICK = "내가 산 킥";
+export const PURCHASED_KICK = "내가 산 킥";
 export const KICKMONEY_LOG = "킥머니 로그";
 export const USER_CONTROL = "유저관리";
 export const POST_REPORT = "게시글 신고 목록";
@@ -13,10 +13,10 @@ export const ATTENDANCE_PATHNAME = "/mypage/attendance";
 export const FAVORITES_PATHNAME = "/mypage/favorites";
 export const MY_POST_PATHNAME = "/mypage/mypost";
 export const MY_COMMENT_PATHNAME = "/mypage/mycomment";
-export const MY_KICK_PATHNAME = "/mypage/kick";
+export const PURCHASED_KICK_PATHNAME = "/mypage/kick";
 export const KICKMONEY_LOG_PATHNAME = "/mypage/log";
-export const USER_CONTROL_PATHNAME = "mypage/usercontrol";
-export const POST_REPORT_PATHNAME = "mypage/report";
+export const USER_CONTROL_PATHNAME = "/mypage/usercontrol";
+export const POST_REPORT_PATHNAME = "/mypage/report";
 
 export const CATEGORY_USER = "회원정보";
 export const CATEGORY_ACTIVITY = "나의활동";
@@ -37,7 +37,11 @@ export const generalTabList = [
     pathname: MY_COMMENT_PATHNAME,
     category: CATEGORY_ACTIVITY,
   },
-  { label: MY_KICK, pathname: MY_KICK_PATHNAME, category: CATEGORY_PURCHASE },
+  {
+    label: PURCHASED_KICK,
+    pathname: PURCHASED_KICK_PATHNAME,
+    category: CATEGORY_PURCHASE,
+  },
   {
     label: KICKMONEY_LOG,
     pathname: KICKMONEY_LOG_PATHNAME,
