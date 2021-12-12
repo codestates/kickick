@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Profile, Common, IconText } from "../../../components";
+
+import { signOut } from "../../../apis/auth";
+
+import { isLoginAction, isPointAction } from "../../../store/actions/login";
 
 import kakaologo from "../../../assets/images/authlogo/kakaologo.png";
 import naverlogo from "../../../assets/images/authlogo/naverlogo.png";
@@ -31,8 +35,16 @@ const logoList = [
   },
 ];
 export default function MyPageAside() {
+  const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
   const { logo, color, text } = logoList.find((el) => el.type === isLogin.type);
+  const logoutHanlder = () => {
+    signOut().then(() => {
+      dispatch(isLoginAction(false));
+      dispatch(isPointAction(false));
+    });
+  };
+
   return (
     <Container>
       <ProfileContainer>
@@ -58,7 +70,7 @@ export default function MyPageAside() {
           <img className="logo" src={logo} alt="" />
           <span>{text}</span>
         </LoginLogo>
-        <Common label="로그아웃" type="new" />
+        <Common label="로그아웃" type="new" handleClick={logoutHanlder} />
       </AuthContainer>
     </Container>
   );

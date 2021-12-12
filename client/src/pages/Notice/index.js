@@ -47,9 +47,7 @@ export default function Notice() {
 export function News() {
   return (
     <NewsContainer>
-      <CardBox>
-        <NewsPost />
-      </CardBox>
+      <CardBox type="news" />
     </NewsContainer>
   );
 }
@@ -57,9 +55,7 @@ export function News() {
 export function Event() {
   return (
     <EventContainer>
-      <CardBox>
-        <EventPost />
-      </CardBox>
+      <CardBox type="event" />
     </EventContainer>
   );
 }

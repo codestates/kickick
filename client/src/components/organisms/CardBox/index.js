@@ -2,23 +2,35 @@ import React from "react";
 import styled from "styled-components";
 
 import { useSelector } from "react-redux";
-import { KickBoardPost } from "../../../components";
+import { KickBoardPost, NewsPost, EventPost } from "../../../components";
 
-export default function CardBox({ children }) {
+const cardlist = [
+  {
+    type: "kickboard",
+    component(key, data) {
+      return <KickBoardPost key={key} data={data} />;
+    },
+  },
+  {
+    type: "news",
+    component(key, data) {
+      <NewsPost key={key} data={data} />;
+    },
+  },
+  {
+    type: "event",
+    component(key, data) {
+      <EventPost key={key} data={data} />;
+    },
+  },
+];
+
+export default function CardBox({ type }) {
+  const { component } = cardlist.find((el) => el.type === type);
+
   const list = useSelector((state) => state.board.data);
-  const arr = Array(10).fill(0);
 
-  return (
-    <Container>
-      {/* {list.map((el, idx) => (
-        <KickBoardPost key={idx} data={el} />
-      ))} */}
-
-      {arr.map((el) => (
-        <>{children}</>
-      ))}
-    </Container>
-  );
+  return <Container>{list.map((el, idx) => component(idx, el))}</Container>;
 }
 
 const Container = styled.div`

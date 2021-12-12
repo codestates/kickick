@@ -89,7 +89,7 @@ export default function KickBoard() {
     <Container>
       <Common handleClick={() => navigate(`/editkick/${category}`)} />
       <TotalSearch />
-      <CardBox />
+      <CardBox type="kickboard" />
       {kickboard.modalState && <KickConfirm />}
       {onScroll && <InfiniteScroll callback={handleLimit} />}
     </Container>
