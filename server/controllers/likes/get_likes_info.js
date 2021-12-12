@@ -73,16 +73,17 @@ module.exports = async (req, res) => {
         const user_id = user_info.user_id;
 
         let like_info = await likes.findOne({
+          attributes:["agreement"],
           where: {
             user_id: user_id,
             post_id : post_id
           }
         })
 
-        data.is_liked = false;
+        data.is_liked = null;
 
         if (like_info) {
-          data.is_liked = true;
+          data.is_liked = like_info.agreement;
         }
       }
 

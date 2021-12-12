@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 const Op = sequelize.Op;
 const fuzzy_searcher = require("../../functions/fuzzy_searcher");
+const typo_searcher = require("../../functions/typo_searcher");
 
 module.exports = async (req, res) => {
   // TODO 게시글 목록 조회 구현
@@ -133,8 +134,18 @@ module.exports = async (req, res) => {
   if (req.query.category) where_obj.category = req.query.category;
   if (req.query.post_name) {
     let regexp = fuzzy_searcher(req.query.post_name);
+    let typo_arr = typo_searcher(req.query.post_name);
+    let where_or_arr = [];
+
+    where_or_arr.push({ [Op.regexp]: regexp });
+    typo_arr.forEach((el) => {
+      where_or_arr.push({
+        [Op.like]: `%${el}%`,
+      });
+    });
+
     where_obj.post_name = {
-      [Op.regexp]: regexp,
+      [Op.or]: where_or_arr,
     };
   }
   if (req.query.content)

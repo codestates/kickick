@@ -118,20 +118,34 @@ module.exports = async (req, res) => {
     if (change) {
       update_obj.kick_money = sequelize.literal(`kick_money + ${change}`);
     }
+    // 요청에 비밀번호가 포함되어있다면
+    if (req.body.password) {
+      // 비밀번호 해싱해서 수정
+      bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+        if (err) {
+          console.log(err);
+          return res
+            .status(500)
+            .json({ data: null, message: "데이터베이스 에러" });
+        }
 
-    // 비밀번호 해싱해서 수정
-    bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
-      if (err) {
-        console.log(err);
-        return res
-          .status(500)
-          .json({ data: null, message: "데이터베이스 에러" });
-      }
-
+        await users.update(
+          {
+            ...update_obj,
+            password: hash,
+          },
+          {
+            where: {
+              username: username,
+            },
+          }
+        );
+      });
+    } else {
+      // 비밀번호가 없으면 바로 업데이트
       await users.update(
         {
           ...update_obj,
-          password: hash,
         },
         {
           where: {
@@ -139,7 +153,7 @@ module.exports = async (req, res) => {
           },
         }
       );
-    });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

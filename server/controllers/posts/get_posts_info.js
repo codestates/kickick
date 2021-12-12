@@ -93,7 +93,7 @@ module.exports = async (req, res) => {
 
         // user_id 구함
         let user_info = await users.findOne({
-          attributes: [["id", "user_id"]],
+          attributes: [["id", "user_id"], "agreement"],
           where: {
             username: username,
           },
