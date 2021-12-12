@@ -12,7 +12,6 @@ export default function TitleInput({
   return (
     <Title
       maxLength="30"
-      type="text"
       placeholder={holder}
       onBlur={handlePostName}
       onKeyDown={handleKeyon}

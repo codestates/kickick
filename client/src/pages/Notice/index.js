@@ -7,7 +7,6 @@ import {
   CardBox,
   EventPost,
   NewsPost,
-  Align,
   BoardTop,
   IconText,
 } from "../../components";
@@ -22,7 +21,7 @@ const noticeList = [
 export default function Notice() {
   const { category } = useParams();
   const { component } = noticeList.find((el) => el.category === category);
-  console.log(component);
+
   return (
     <>
       {/* <BoardTop /> */}
@@ -56,19 +55,8 @@ export function News() {
 }
 
 export function Event() {
-  // const [highlight, setHighlight] = useState("진행중인 이벤트");
-  // const handleAlign = (event) => {
-  //   const label = event.target.innerText;
-  //   setHighlight(label);
-  // };
-
   return (
     <EventContainer>
-      {/* <Align
-        category="이벤트"
-        highlight={highlight}
-        handleAlign={handleAlign}
-      /> */}
       <CardBox>
         <EventPost />
       </CardBox>

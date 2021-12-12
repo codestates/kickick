@@ -3,13 +3,12 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import astronautImg from "../../../assets/images/astronaut2.png";
-import alienImg from "../../../assets/images/alien1.png";
-import thumbnail from "../../../assets/images/default_thumbnail.jpg";
-import star from "../../../assets/images/contenticon.png";
+import astronautImg from "../../../assets/images/astronaut.svg";
+import alienImg from "../../../assets/images/alien.svg";
+import star from "../../../assets/images/icon/contenticon.png";
 
 import { createLikes } from "../../../apis/likes";
-import { IconBox } from "../../";
+import { IconBox } from "../../../components";
 
 export default function DetailBoardTop({ state, type }) {
   const [astronaut, setAstronaut] = useState(0);
