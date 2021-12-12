@@ -69,6 +69,10 @@ const Container = styled.div`
     type === "bigger" &&
     css`
       width: 10rem;
+      height: 2.5rem;
+      &:hover {
+        background-color: gray;
+      }
     `}
 
     ${({ type }) =>
