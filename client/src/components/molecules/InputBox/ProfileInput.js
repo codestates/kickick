@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { Common, Profile } from "../../../components";
 
@@ -34,7 +34,7 @@ export default function ProfileInput({
     );
 
   return (
-    <Container>
+    <Container err={err}>
       <h3>{head}</h3>
       <input
         value={value}
@@ -58,7 +58,7 @@ const Container = styled.div`
     width: 30rem;
     height: 3rem;
     background-color: #eeeeee;
-    border: 3px solid #dddddd;
+    border: 2px solid #dddddd;
     border-radius: 10px;
     padding: 0.5rem 1rem;
     font-size: 1.1rem;
@@ -67,7 +67,12 @@ const Container = styled.div`
       font-size: 0.85rem;
     }
     &:focus {
-      border: 3px solid rgba(0, 0, 255, 0.3);
+      border: 2px solid #45aa00;
+      ${({ err }) =>
+        err &&
+        css`
+          border: 2px solid #ff5555;
+        `}
     }
   }
 
@@ -86,5 +91,5 @@ const ErrorBox = styled.div`
   margin-left: 0.5rem;
   height: 1.5rem;
   font-size: 0.9rem;
-  color: red;
+  color: #ff5555;
 `;

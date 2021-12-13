@@ -27,3 +27,9 @@ export const putUserInfo = (data) => {
   // data {username,email,password,profile,birthday,kick_money}
   return api.put(`users/info`, data);
 };
+/**
+ *
+ */
+export const delUserInfo = () => {
+  return api.delete(`users/info`);
+};

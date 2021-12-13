@@ -28,7 +28,7 @@ export const iconList = [
   { icon: <FaHashtag />, label: "태그", category: "검색" },
   { icon: <FaRegClock />, label: "최신", category: "정렬", color: "skyblue" },
   { icon: <FaFireAlt />, label: "인기", category: "정렬", color: "red" },
-  { icon: <FaRegEdit />, label: "프로필 수정", category: "마이페이지" },
+  { icon: <FaRegEdit />, label: "회원정보 수정", category: "마이페이지" },
   { icon: <FaRegCalendarAlt />, label: "출석", category: "마이페이지" },
   { icon: <FaRegHeart />, label: "좋아요 한 글", category: "마이페이지" },
   { icon: <FaRegClipboard />, label: "내가 쓴 글", category: "마이페이지" },

@@ -21,6 +21,10 @@ export default function KickConfirm() {
   const { isLogin } = useSelector((state) => state.login);
 
   const handleKickChange = () => {
+    if (!isLogin) {
+      setErrMsg("로그인 후 이용가능합니다");
+      return;
+    }
     putUserInfo({ kick_money: `-${modalInfo.cost}` })
       .then(() => {
         navigate(`/detailkick/${modalInfo.post_id}`);
@@ -125,7 +129,7 @@ const ModalInner = styled.div`
 
   h2 {
     font-size: 1.5rem;
-    height: 1.5rem;
+    height: 1.6rem;
     margin-bottom: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;

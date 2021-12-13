@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { ProfileInput, Common } from "../../../components";
+import { ProfileInput, Common, Modal } from "../../../components";
 
-import { putUserInfo } from "../../../apis/users";
+import { putUserInfo, delUserInfo } from "../../../apis/users";
 import { uploadSingleImage } from "../../../apis/upload";
+import { signOut } from "../../../apis/auth";
 
-import { isLoginAction } from "../../../store/actions/login";
+import { isLoginAction, isPointAction } from "../../../store/actions/login";
 
 import { validation } from "../../../commons/utils/validation";
 
@@ -22,9 +23,11 @@ export default function ProfileEditForm() {
   const [profile, setProfile] = useState(isLogin.profile);
   const [rawProfile, setRawProfile] = useState();
   const [email, setEmail] = useState(isLogin.email);
-  const [birthday, setBirthday] = useState(isLogin.birthday);
-  const [errEmailMsg, setErrEmailMsg] = useState("");
-  const [errNameMsg, setErrNameMsg] = useState(null);
+  const [password, setPassword] = useState();
+  const [errEmailMsg, setErrEmailMsg] = useState();
+  const [errNameMsg, setErrNameMsg] = useState();
+  const [errPWMsg, setErrPWMsg] = useState();
+  const [modal, setModal] = useState(false);
 
   const handleUsername = (e) => {
     const { message, isValid } = validation("username", e.target.value);
@@ -42,14 +45,30 @@ export default function ProfileEditForm() {
     const { message, isValid } = validation("email", e.target.value);
     if (!isValid) {
       setErrEmailMsg(message);
+      setDisabled(true);
     } else {
       setErrEmailMsg(null);
+      setDisabled(false);
     }
     setEmail(e.target.value);
   };
 
-  const handleBirthday = (e) => {
-    setBirthday(e.target.value);
+  const handlePassword = (e) => {
+    const { message, isValid } = validation("password", e.target.value);
+    if (!isValid) {
+      setErrPWMsg(message);
+      setDisabled(true);
+    } else {
+      setErrPWMsg(null);
+      setDisabled(false);
+    }
+    if (e.target.value === "") {
+      setPassword(null);
+      setDisabled(false);
+      setErrPWMsg(null);
+      return;
+    }
+    setPassword(e.target.value);
   };
   const handleProfile = (raw, base64) => {
     setRawProfile(raw);
@@ -60,7 +79,7 @@ export default function ProfileEditForm() {
     {
       head: "닉네임",
       type: "text",
-      placeholder: "닉네임을 입력해주세요",
+      placeholder: "새로운 닉네임을 입력해주세요",
       value: username,
       handler: handleUsername,
       err: errNameMsg,
@@ -68,17 +87,18 @@ export default function ProfileEditForm() {
     {
       head: "이메일",
       type: "email",
-      placeholder: "이메일을 입력해주세요",
+      placeholder: "새로운 이메일을 입력해주세요",
       value: email,
       handler: handleEmail,
       err: errEmailMsg,
     },
     {
-      head: "생일",
-      type: "text",
-      placeholder: "내상태을 입력해주세요",
-      value: birthday,
-      handler: handleBirthday,
+      head: "비밀번호 수정",
+      type: "password",
+      placeholder: "새로운 비밀번호를 입력해주세요",
+      value: password,
+      handler: handlePassword,
+      err: errPWMsg,
     },
     {
       head: "프로필 이미지 ",
@@ -94,7 +114,7 @@ export default function ProfileEditForm() {
       formData.append("img", rawProfile);
       uploadSingleImage(formData, "profile").then((data) => {
         const location = data.data.data.location;
-        putUserInfo({ username, profile: location, email, birthday })
+        putUserInfo({ username, profile: location, email, password })
           .then(() => {
             navigate("/mypage/home");
             dispatch(
@@ -103,14 +123,14 @@ export default function ProfileEditForm() {
                 username,
                 profile: location,
                 email,
-                birthday,
+                password,
               })
             );
           })
           .catch((err) => console.log(err));
       });
     } else {
-      putUserInfo({ username, email, birthday })
+      putUserInfo({ username, email, password })
         .then(() => {
           navigate("/mypage/home");
           dispatch(
@@ -118,12 +138,27 @@ export default function ProfileEditForm() {
               ...isLogin,
               username,
               email,
-              birthday,
+              password,
             })
           );
         })
         .catch((err) => console.log(err));
     }
+  };
+
+  const handleResign = () => {
+    delUserInfo()
+      .then(() => {
+        signOut().then(() => {
+          dispatch(isLoginAction(false));
+          dispatch(isPointAction(false));
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleModal = () => {
+    setModal(!modal);
   };
   return (
     <>
@@ -146,10 +181,24 @@ export default function ProfileEditForm() {
       </Container>
       <Common
         type="mypage"
-        label="프로필 수정"
+        label="회원정보 수정"
         handleClick={handleUserInfo}
         disabled={disabled}
       />
+      <ResignContainer>
+        <h2>회원탈퇴</h2>
+        <p>
+          저희 이거 책임 못집니다. 포인트 다 잃어요 괜찮아요? 하... 후회할텐데
+        </p>
+        <Common type="resign" label="회원탈퇴" handleClick={handleModal} />
+        {modal && (
+          <Modal
+            handleModal={handleModal}
+            handleModalFunc={handleResign}
+            type="resign"
+          />
+        )}
+      </ResignContainer>
     </>
   );
 }
@@ -165,4 +214,11 @@ const ListContainer = styled.div`
   gap: 2rem;
   flex-wrap: wrap;
   height: 25rem;
+`;
+
+const ResignContainer = styled.div`
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;

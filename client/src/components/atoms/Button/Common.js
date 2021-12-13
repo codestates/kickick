@@ -21,7 +21,7 @@ const Container = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
+  height: 2.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #0c0c42;
@@ -33,6 +33,7 @@ const Container = styled.button`
   ${({ disabled }) =>
     disabled &&
     css`
+      cursor: default;
       background-color: gray;
     `}
 
@@ -54,23 +55,28 @@ const Container = styled.button`
     css`
       margin-left: auto;
       width: 5rem;
-      height: 2.5rem;
+
       &:hover {
         background-color: gray;
       }
     `}
 
-    ${({ type }) =>
+    ${({ type, disabled }) =>
     type === "mypage" &&
+    !disabled &&
     css`
-      height: 2.5rem;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+        transition: all 0.25s linear;
+      }
     `}
 
     ${({ type }) =>
     type === "new" &&
     css`
       width: 10rem;
-      height: 2.5rem;
+
       background-color: white;
       border: 1px solid #d8d8d8;
       color: #aaa;
@@ -83,7 +89,7 @@ const Container = styled.button`
     type === "bigger" &&
     css`
       width: 10rem;
-      height: 2.5rem;
+
       &:hover {
         background-color: gray;
       }
@@ -92,15 +98,20 @@ const Container = styled.button`
     ${({ type }) =>
     type === "confirm" &&
     css`
-      height: 2.5rem;
       background-color: skyblue;
     `}
 
     ${({ type }) =>
     type === "error" &&
     css`
-      height: 2.5rem;
       background-color: red;
       animation: 0.3s linear ${shake};
+    `}
+
+    ${({ type }) =>
+    type === "resign" &&
+    css`
+      background-color: red;
+      width: 15rem;
     `}
 `;
