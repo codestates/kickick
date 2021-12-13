@@ -19,6 +19,8 @@ export default function Main() {
   const [noticeLoding, setNoticeLoding] = useState(false);
   const [eventLoding, setEventLoding] = useState(false);
 
+  const isLoding = noticeLoding && eventLoding && kickListLoding;
+
   useEffect(() => {
     // 킥 추천 불러오기
     recommendedPost()
@@ -38,7 +40,7 @@ export default function Main() {
       .then(() => setEventLoding(true));
   }, []);
   
-  console.log("isLoding", noticeLoding && eventLoding && kickListLoding);
+  console.log("isLoding", isLoding);
   return (
     <Container>
       <ContentSection>

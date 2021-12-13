@@ -1,15 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import default_thumbnail from "../../../assets/images/default_thumbnail.jpg"
 
 export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }] }) {
-  console.log("event", eventInfo[0]);
+  const navigate = useNavigate();
+
+  // console.log("event", eventInfo[0]);
   return (
     <Container>
       {eventInfo.length
         ? eventInfo.map((el) => (
-            <EventContainer key={el.notice_id}>
+            <EventContainer
+              key={el.notice_id}
+              onClick={() => navigate(`/notice/event/${el.notice_id}`)}
+            >
               <Thumbnail
                 src={el.thumbnail && default_thumbnail}
                 alt="thumbnail"
@@ -35,6 +41,7 @@ const EventContainer = styled.article`
   border-radius: 1vw;
   box-shadow: 0.1vw 0.1vw 0.1vw 0.1vw #F4F4F4;
   overflow: hidden;
+  cursor:pointer;
 `;
 
 const SummaryContainer = styled.div`

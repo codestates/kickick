@@ -76,11 +76,11 @@ export default function App() {
     socketClient.on("disconnect", () => {
       console.log("disconnection");
     });
-  });
-  
-  socketClient.emit("alarms", {
-    username: isLogin.username,
-    ...socketChange.alarmPage,
+
+    socketClient.emit("alarms", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
+    });
   });
   
   

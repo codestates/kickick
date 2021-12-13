@@ -1,12 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
 
 import default_thumbnail from "../../../assets/images/default_thumbnail.jpg"
 
 export default function MainNotice({ noticeInfo }) {
+  const navigate = useNavigate();
+
   return (
-    <Container>
-      <Thumpnail src={noticeInfo.thumbnail && default_thumbnail} alt="thumbnail" />
+    <Container
+      onClick={() => navigate(`/notice/notice/${noticeInfo.notice_id}`)}
+    >
+      <Thumpnail
+        src={noticeInfo.thumbnail && default_thumbnail}
+        alt="thumbnail"
+      />
       <ContextContainer>
         <Title>{noticeInfo.notice_name}</Title>
         <Context>{noticeInfo.summary}</Context>
@@ -21,6 +29,7 @@ const Container = styled.div`
   margin-top: 1vw;
   /* border: 1px solid black; */
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  cursor: pointer;
 `;
 
 const Thumpnail = styled.img`
