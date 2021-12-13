@@ -12,9 +12,9 @@ import {
   resetPaginationAction,
 } from "../../../store/actions/postsearch";
 
-import { search, delSearch } from "../../../store/actions/postadd";
-
-export default function TotalSearch({ setLoading }) {
+import { addTagAction, delTagAction } from "../../../store/actions/postadd";
+import { resetListAction } from "../../../store/actions/postlist";
+export default function TotalSearch() {
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
 
@@ -32,7 +32,8 @@ export default function TotalSearch({ setLoading }) {
     setIsSelect(!isSelect);
   };
   const handleSearch = () => {
-    dispatch(search(icon.label, word));
+    dispatch(addTagAction(icon.label, word));
+    dispatch(resetPaginationAction());
     setWord("");
 
     if (icon.label === "제목") {
@@ -48,7 +49,7 @@ export default function TotalSearch({ setLoading }) {
     setWord(e.target.value);
   };
   const handleClick = (idx, label) => {
-    dispatch(delSearch(idx));
+    dispatch(delTagAction(idx));
 
     if ("제목" === label) {
       dispatch(titleSearchAction());

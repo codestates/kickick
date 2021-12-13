@@ -1,7 +1,8 @@
 import { GET_KICKS_INFO, MODAL_ON, MODAL_OFF } from "../actions/kickboard";
 
 const initialState = {
-  modal: false,
+  modalState: false,
+  modalInfo: {},
 };
 
 export default function kickboardReducer(state = initialState, action) {

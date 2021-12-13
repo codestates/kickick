@@ -7,12 +7,7 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 
 Quill.register("modules/ImageResize", ImageResize);
 
-export default function EditQuill({
-  image = true,
-  content,
-  setContent,
-  handleContent,
-}) {
+export default function EditQuill({ image = true, content, setContent }) {
   const quill = useRef(null);
   const tempImage = useRef([]);
 
@@ -102,9 +97,10 @@ export default function EditQuill({
   }, []);
 
   const alertUser = (e) => {
+    console.log("성공");
     e.preventDefault();
     e.stopPropagation();
-    const result = window.confirm("변경사항이 저장되지 않았습니다. 가시게요?");
+    window.confirm("변경사항이 저장되지 않았습니다. 가시게요?");
     if (tempImage.current.length !== 0) {
       destroyImage(tempImage.current)
         .then((data) => {
@@ -120,7 +116,6 @@ export default function EditQuill({
         ref={quill}
         value={content}
         onChange={setContent}
-        onBlur={handleContent}
         theme="snow"
         style={{
           width: image === false ? "43rem" : null,

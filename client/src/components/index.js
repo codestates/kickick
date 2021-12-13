@@ -20,6 +20,8 @@ export { default as IntroTextarea } from "./atoms/Textarea/IntroTextarea";
 export { default as IconBox } from "./atoms/IconBox";
 export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 export { default as Modal } from "./atoms/Modal";
+export { default as InfiniteScroll } from "./atoms/InfiniteScroll";
+export { default as AlienPortion } from "./atoms/Graph";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";

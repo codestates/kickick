@@ -112,12 +112,12 @@ export default function PostComment({ post_id }) {
       threshold: 1,
     };
     let observer;
-
-    if (test.current) {
+    const fetchelement = test.current;
+    if (fetchelement) {
       observer = new IntersectionObserver(handleTest, options);
-      observer.observe(test.current);
+      observer.observe(fetchelement);
     }
-    return () => observer.disconnect(test.current);
+    return () => observer.disconnect(fetchelement);
   }, [loading]);
 
   const testFunc = () => {

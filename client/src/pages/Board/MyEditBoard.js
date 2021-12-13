@@ -43,7 +43,7 @@ export default function MyEditBoard() {
       .then(() => {
         state.tags
           .filter((el) => el.content !== category)
-          .map((tag) => {
+          .forEach((tag) => {
             delTags(post_id, tag.tag_id).catch((err) => err.response);
           });
       })
@@ -62,7 +62,7 @@ export default function MyEditBoard() {
       })
       .then(setLoading(false))
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [dispatch, post_id]);
 
   if (loading) return "";
   return (

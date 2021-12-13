@@ -11,7 +11,7 @@ export default function TitleInput({
 }) {
   return (
     <Title
-      type="text"
+      maxLength="30"
       placeholder={holder}
       onBlur={handlePostName}
       onKeyDown={handleKeyon}
@@ -23,7 +23,6 @@ export default function TitleInput({
   );
 }
 const Title = styled.input`
-  border: none;
   width: 30rem;
   font-size: 1.2rem;
   border-bottom: 3px solid transparent;

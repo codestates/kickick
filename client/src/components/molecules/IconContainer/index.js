@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import disableScroll from "disable-scroll";
 import { delPost } from "../../../apis/posts";
 import { createFavorites, delFavorites } from "../../../apis/favorites";
 import { goBack } from "../../../store/actions/postadd";
-import { IconBox, Modal } from "../../";
+import { IconBox, Modal } from "../../../components";
 
 export default function IconContainer() {
   const [modal, setModal] = useState(false);
