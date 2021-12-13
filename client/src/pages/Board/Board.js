@@ -8,7 +8,8 @@ import BoardSkeleton from "./BoardSkeleton";
 
 import { getPostsList } from "../../apis/posts";
 
-import { getListAction } from "../../store/actions/postadd/boardList";
+import { getListAction, resetListAction } from "../../store/actions/postlist";
+
 import {
   getCategoryAction,
   resetTag,
@@ -30,8 +31,9 @@ export default function Board() {
       dispatch(resetSearchReducerAction());
       dispatch(resetTag());
     }
+    dispatch(resetListAction());
     dispatch(goBack(false));
-  }, [category]);
+  }, [category, dispatch]);
 
   useEffect(() => {
     getPostsList({

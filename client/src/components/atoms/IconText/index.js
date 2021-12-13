@@ -7,12 +7,6 @@ import {
   FaAlignJustify,
   FaRegClock,
   FaFireAlt,
-  FaBook,
-  FaAffiliatetheme,
-  FaShoppingBag,
-  FaGuitar,
-  FaMoneyBillAlt,
-  FaHelicopter,
   FaRegEdit,
   FaRegCalendarAlt,
   FaRegBookmark,
@@ -21,11 +15,14 @@ import {
   FaRegHeart,
   FaDollarSign,
   FaRegWindowClose,
+  FaBirthdayCake,
 } from "react-icons/fa";
 
 import { ImGift } from "react-icons/im";
-
+import { AiOutlineMail } from "react-icons/ai";
 import { VscMegaphone } from "react-icons/vsc";
+import { FiUserCheck } from "react-icons/fi";
+import { BsBell } from "react-icons/bs";
 
 export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
@@ -33,19 +30,18 @@ export const iconList = [
   { icon: <FaHashtag />, label: "태그", category: "검색" },
   { icon: <FaRegClock />, label: "최신", category: "정렬", color: "skyblue" },
   { icon: <FaFireAlt />, label: "인기", category: "정렬", color: "red" },
-  { icon: <FaBook />, label: "학습", category: "게시판" },
-  { icon: <FaAffiliatetheme />, label: "여가", category: "게시판" },
-  { icon: <FaShoppingBag />, label: "생활", category: "게시판" },
-  { icon: <FaGuitar />, label: "예술", category: "게시판" },
-  { icon: <FaMoneyBillAlt />, label: "경제", category: "게시판" },
-  { icon: <FaHelicopter />, label: "여행", category: "게시판" },
-  { icon: <FaRegEdit />, label: "프로필 수정", category: "마이페이지" },
+  { icon: <FaRegEdit />, label: "회원정보 수정", category: "마이페이지" },
   { icon: <FaRegCalendarAlt />, label: "출석", category: "마이페이지" },
   { icon: <FaRegHeart />, label: "좋아요 한 글", category: "마이페이지" },
   { icon: <FaRegClipboard />, label: "내가 쓴 글", category: "마이페이지" },
   { icon: <FaRegComment />, label: "내가 단 댓글", category: "마이페이지" },
   { icon: <FaRegBookmark />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <FiUserCheck />, label: "유저관리", category: "마이페이지" },
+  { icon: <VscMegaphone />, label: "게시글 신고 목록", category: "마이페이지" },
+  { icon: <BsBell />, label: "공지 적기", category: "마이페이지" },
+  { icon: <FaBirthdayCake />, label: "생일", category: "유저" },
+  { icon: <AiOutlineMail />, label: "이메일", category: "유저" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
   { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
   { icon: <VscMegaphone />, label: "뉴스", category: "공지" },
@@ -137,6 +133,19 @@ const Container = styled.div`
       svg {
         margin-right: 1rem;
         font-size: 1.5rem;
+        color: #555;
+      }
+    `}
+
+    ${({ category }) =>
+    category === "유저" &&
+    css`
+      font-size: 0.9rem;
+      font-weight: normal;
+
+      svg {
+        margin-right: 0.2rem;
+        font-size: 1rem;
         color: #555;
       }
     `}

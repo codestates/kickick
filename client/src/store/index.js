@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
+import logger from "redux-logger";
 
 import {
   kickboardReducer,
-  boardReducer,
+  postlistReducer,
   postAddReducer,
   postInfoReducer,
   loginReducer,
@@ -33,7 +34,7 @@ export const store = configureStore({
   reducer: {
     persist: persistedReducer,
     kickboard: kickboardReducer,
-    board: boardReducer,
+    board: postlistReducer,
     postAdd: postAddReducer,
     onoff: onoffReducer,
     tag: tagReducer,
@@ -44,6 +45,7 @@ export const store = configureStore({
     alarmList: alarmListReducer,
     postsearch: postsearchReducer,
   },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export default store;

@@ -14,13 +14,8 @@ export function dateConverter(date) {
   return date.slice(0, 10);
 }
 
-export function boardDateConverter(date) {
-  const now = new Date();
-  const isoNow = now.toISOString();
+export function logDateConverter(date) {
+  const [fulldate, time] = date.split("T");
 
-  if (date.slice(0, 10) === isoNow.slice(0, 10)) {
-    return;
-  }
-
-  return date.slice(0, 10);
+  return fulldate + " " + time.slice(0, -5);
 }

@@ -13,20 +13,19 @@ export default function KickBoardPost({ data }) {
   const dispatch = useDispatch();
 
   return (
-    <Container onClick={() => dispatch(modalOnAction())}>
-      <Thumbnail />
+    <Container onClick={() => dispatch(modalOnAction(data))}>
+      <Thumbnail src={data.kick?.thumbnail} />
       <PostDescription>
         <PostSummary>
           <h3>{data.post_name}</h3>
-          <p>1. 코드스테이츠 부트캠프를 등록한다</p>
-          <p>2. 공부한다</p>
+          <p>{data.content}</p>
         </PostSummary>
         <PostUser>
-          <Profile type="post" />
+          <Profile type="post" src={data.user.profile} />
           <div className="username">{data.user.username}</div>
-          <div className="datetime">{data.user.created_at}</div>
+          <div className="datetime">{data.created_at}</div>
           <div className="seperator">·</div>
-          <div className="commentCount">{5} 개의 댓글</div>
+          <div className="commentCount">{data.comments.length} 개의 댓글</div>
         </PostUser>
       </PostDescription>
       <Interest>
@@ -72,13 +71,19 @@ const PostSummary = styled.div`
 
   h3 {
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    font-weight: bold;
     margin-bottom: ${({ theme }) => theme.margins.lg};
+    word-break: break-all;
   }
 
   p {
     font-size: ${({ theme }) => theme.fontSizes.small};
-    white-space: pre-line;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
   }
 `;
 const PostUser = styled.div`

@@ -1,5 +1,4 @@
-export const fileReader = (event) => {
-  console.log(event);
+export const fileReader = (event, handler) => {
   const {
     target: { files },
   } = event;
@@ -12,7 +11,8 @@ export const fileReader = (event) => {
       const {
         currentTarget: { result },
       } = finishedEvent;
-      return result;
+
+      return handler(theFile, result);
     };
   }
 };

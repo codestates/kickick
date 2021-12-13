@@ -3,13 +3,13 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import astronautImg from "../../../assets/images/astronaut2.png";
-import alienImg from "../../../assets/images/alien1.png";
-import thumbnail from "../../../assets/images/default_thumbnail.jpg";
-import star from "../../../assets/images/contenticon.png";
+import { IconBox, Profile } from "../../../components";
 
 import { createLikes } from "../../../apis/likes";
-import { IconBox } from "../../";
+
+import astronautImg from "../../../assets/images/astronaut.svg";
+import alienImg from "../../../assets/images/alien.svg";
+import star from "../../../assets/images/icon/contenticon.png";
 
 export default function DetailBoardTop({ state, type }) {
   const [astronaut, setAstronaut] = useState(0);
@@ -36,14 +36,9 @@ export default function DetailBoardTop({ state, type }) {
     <Container>
       <TopContainer>
         <Title>{state.post_name}</Title>
-        {/* {type === "kick" ? (
-          <Thumbnail>
-            <img src={thumbnail} />
-          </Thumbnail>
-        ) : null} */}
         <UserAndCountContainer>
           <UserContainer>
-            <IconBox label="user" />
+            <Profile src={state.user.profile} type="post" />
             {state.user.username}
           </UserContainer>
           <UserContainer>
@@ -51,16 +46,13 @@ export default function DetailBoardTop({ state, type }) {
             {state.view_count}
           </UserContainer>
         </UserAndCountContainer>
-        {type === "kick" ? null : (
-          <TagContainer>
-            <span>태그</span>
-            {state.tags.map((tag) => (
-              <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
-                # {tag.content}
-              </span>
-            ))}
-          </TagContainer>
-        )}
+        <TagContainer>
+          {state.tags.map((tag) => (
+            <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
+              # {tag.content}
+            </span>
+          ))}
+        </TagContainer>
       </TopContainer>
       <Content>
         <ReactQuill value={state.content} readOnly={true} theme={"bubble"} />
@@ -68,9 +60,10 @@ export default function DetailBoardTop({ state, type }) {
       {type === "kick" ? (
         <VotesContainer>
           <Astronaut>
-            {astronaut ? <img className="star" src={star} /> : null}
+            {astronaut ? <img className="star" src={star} alt="" /> : null}
             <img
               className="astronaut"
+              alt=""
               src={astronautImg}
               onClick={() => handleLike("false")}
             />
@@ -79,8 +72,8 @@ export default function DetailBoardTop({ state, type }) {
           <span>vs</span>
           <Alien>
             <span>{state.likes.true + alien}</span>
-            <img src={alienImg} onClick={() => handleLike("true")} />
-            {alien ? <img className="star" src={star} /> : null}
+            <img src={alienImg} onClick={() => handleLike("true")} alt="" />
+            {alien ? <img className="star" src={star} alt="" /> : null}
           </Alien>
         </VotesContainer>
       ) : null}
@@ -110,13 +103,18 @@ const UserContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  margin-right: 8rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
+  color: gray;
+
+  img {
+    margin-right: 0.5rem;
+  }
 `;
 
 const TagContainer = styled.div`
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 0.5rem;
+
   span {
     margin-right: 1rem;
     font-weight: bold;
@@ -125,20 +123,7 @@ const TagContainer = styled.div`
 
 const Content = styled.div`
   height: auto;
-  padding: 2rem 1rem;
-`;
-
-const Thumbnail = styled.div`
-  height: 15rem;
-  padding: 0.5rem;
-  margin-bottom: 2rem;
-  img {
-    width: 100%;
-    height: inherit;
-
-    border-radius: 20px;
-    object-fit: fill;
-  }
+  padding: 2rem 0;
 `;
 
 const VotesContainer = styled.div`
