@@ -58,4 +58,7 @@ module.exports = {
   // logs
   get_logs_info: require("./logs/get_logs_info"),
   delete_logs_info: require("./logs/delete_logs_info"),
+  // cookies
+  get_cookies_info: require("./cookies/get_cookies_info"),
+  post_cookies_info: require("./cookies/post_cookies_info"),
 };

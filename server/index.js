@@ -25,6 +25,7 @@ const favorites_router = require("./routers/favorites_router");
 const alarms_router = require("./routers/alarms_router");
 const logs_router = require("./routers/logs_router");
 const bucket_router = require("./routers/bucket_router");
+const cookies_router = require("./routers/cookies_router");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +52,7 @@ app.use("/favorites", favorites_router);
 app.use("/alarms", alarms_router);
 app.use("/logs", logs_router);
 app.use("/bucket", bucket_router);
+app.use("/cookies", cookies_router);
 
 app.get("/", (req, res) => {
   res.status(201).send("Hello World");

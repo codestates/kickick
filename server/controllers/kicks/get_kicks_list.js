@@ -27,40 +27,43 @@ module.exports = async (req, res) => {
 
   const { username } = decoded;
   let data;
+  let count;
   try {
     // 토큰의 username으로 kick 정보 구함
-    data = await users.findOne({
-      attributes: ["id"],
+    let user_info = await users.findOne({
+      attributes: [["id", "user_id"]],
       where: {
         username: username,
       },
+      raw: true,
+    });
+    const user_id = user_info.user_id;
+    let users_kicks_info = await users_kicks.findAndCountAll({
+      attributes: ["kick_id"],
+      offset: limit * (page_num - 1),
+      limit: limit,
+      where: {
+        user_id: user_id,
+      },
       include: [
         {
-          model: users_kicks,
-          attributes: ["kick_id"],
-          offset: limit * (page_num - 1),
-          limit: limit,
+          model: kicks,
+          attributes: [
+            ["id", "kick_id"],
+            "post_id",
+            "thumbnail",
+            "content",
+            "created_at",
+            "updated_at",
+          ],
           include: [
             {
-              model: kicks,
-              attributes: [
-                ["id", "kick_id"],
-                "post_id",
-                "thumbnail",
-                "content",
-                "created_at",
-                "updated_at",
-              ],
+              model: posts,
+              attributes: ["user_id", "post_name"],
               include: [
                 {
-                  model: posts,
-                  attributes: ["user_id", "post_name"],
-                  include: [
-                    {
-                      model: users,
-                      attributes: ["username", "profile"],
-                    },
-                  ],
+                  model: users,
+                  attributes: ["username", "profile"],
                 },
               ],
             },
@@ -68,9 +71,12 @@ module.exports = async (req, res) => {
         },
       ],
     });
+
+    data = users_kicks_info.rows;
+    count = users_kicks_info.count;
     // 데이터 가공
-    data = data.get({ plain: true }).users_kicks;
     data = data.map((el) => {
+      el = el.get({ plain: true });
       if (el.kick) {
         el.kick.user = el.kick.post.user;
         el.kick.post_name = el.kick.post.post_name;
@@ -88,5 +94,5 @@ module.exports = async (req, res) => {
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

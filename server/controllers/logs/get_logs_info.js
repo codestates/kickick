@@ -30,6 +30,7 @@ module.exports = async (req, res) => {
   const type = req.query.type;
   const { username } = decoded;
   let data;
+  let count;
 
   try {
     let where_obj = {};
@@ -37,29 +38,31 @@ module.exports = async (req, res) => {
       where_obj = { type };
     }
     // 토큰으로 log정보 구함
-    data = await users.findOne({
-      attributes: ["id", "username", "profile"],
+    let user_info = await users.findOne({
+      attributes: [["id", "user_id"]],
       where: {
         username: username,
       },
-
-      include: [
-        {
-          model: logs,
-          attributes: [["id", "log_id"], "type", "content", "created_at"],
-          where: where_obj,
-          order: [["id", "DESC"]],
-          offset: limit * (page_num - 1),
-          limit: limit,
-        },
-      ],
+      raw: true,
     });
-    data = data.get({ plain: true });
-    delete data.id;
+    const user_id = user_info.user_id;
+
+    let log_info = await logs.findAndCountAll({
+      model: logs,
+      attributes: [["id", "log_id"], "type", "content", "created_at"],
+      where: where_obj,
+      order: [["id", "DESC"]],
+      offset: limit * (page_num - 1),
+      limit: limit,
+    });
+    count = log_info.count;
+    data = log_info.rows;
+
+    data = data.map((el) => el.get({ plain: true }));
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };
