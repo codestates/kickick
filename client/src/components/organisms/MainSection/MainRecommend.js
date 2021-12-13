@@ -39,28 +39,40 @@ export default function MainRecommend({
             <>
               <ContentPage name="tags">
                 {kickListInfo.data_by_tags.map((el) => (
-                  <KickBtn onClick={() => navigate(`/detailkick`)}>
+                  <KickBtn
+                    key={el.post_name}
+                    onClick={() => navigate(`/detailkick`)}
+                  >
                     {el.post_name}
                   </KickBtn>
                 ))}
               </ContentPage>
               <ContentPage name="3days">
                 {kickListInfo.data_by_3days.map((el) => (
-                  <KickBtn onClick={() => navigate(`/detailkick`)}>
+                  <KickBtn
+                    key={el.post_name}
+                    onClick={() => navigate(`/detailkick`)}
+                  >
                     {el.post_name}
                   </KickBtn>
                 ))}
               </ContentPage>
               <ContentPage name="time">
                 {kickListInfo.data_by_time.map((el) => (
-                  <KickBtn onClick={() => navigate(`/detailkick`)}>
+                  <KickBtn
+                    key={el.post_name}
+                    onClick={() => navigate(`/detailkick`)}
+                  >
                     {el.post_name}
                   </KickBtn>
                 ))}
               </ContentPage>
               <ContentPage name="tags">
                 {kickListInfo.data_by_tags.map((el) => (
-                  <KickBtn onClick={() => navigate(`/detailkick`)}>
+                  <KickBtn
+                    key={el.post_name}
+                    onClick={() => navigate(`/detailkick`)}
+                  >
                     {el.post_name}
                   </KickBtn>
                 ))}

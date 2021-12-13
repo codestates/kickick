@@ -22,6 +22,7 @@ import Notice, { NoticeDetail } from "./pages/Notice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
+import GoogleAuth from "./pages/Login/GoogleAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -107,6 +108,7 @@ export default function App() {
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
               <Route path="naver" element={<NaverAuth />} />
+              <Route path="google" element={<GoogleAuth />} />
               <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
             <Route path="login" element={<Login />} />

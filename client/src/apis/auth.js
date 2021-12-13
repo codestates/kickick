@@ -21,6 +21,11 @@ export const signIn = (username, password) =>
  **/
 export const kakaoSignIn = (code) =>
   api.post(`/auth/kakao`, { code });
+/**
+ *  @param {string} access_tokencode
+ **/
+export const googleSignIn = (access_token) =>
+  api.post(`/auth/google`, { access_token });
   /**
  *  @param {string} code
  *  @param {string} state
@@ -51,15 +56,3 @@ export const tempoSignUp = ( data ) =>
  *
  **/
 export const signOut = () => api.post(`/auth/signout`);
-/**
- *  @param {string} code
- **/
-export const kakaoAuth = (code) => api.post(`/auth/kakao`, { code });
-
-/**
- *  @param {string} code
- *  @param {string} state
- **/
-export const naverAuth = (code, state) => {
-  return api.post(`/auth/kakao`, { code, state });
-};

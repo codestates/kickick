@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import default_thumbnail from "../../../assets/images/default_thumbnail.jpg"
+import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
 
 export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }] }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }]
         ? eventInfo.map((el) => (
             <EventContainer
               key={el.notice_id}
-              onClick={() => navigate(`/notice/event/${el.notice_id}`)}
+              onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
             >
               <Thumbnail
                 src={el.thumbnail && default_thumbnail}

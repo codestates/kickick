@@ -14,7 +14,7 @@ import whiteGuy from "../../../assets/images/people/6.png";
 import redhatGirl from "../../../assets/images/people/5.png";
 import suitGuy from "../../../assets/images/people/4.png";
 import checkGuy from "../../../assets/images/people/3.png";
-import stranger from "../../../assets/images/profileinfoicon.png";
+import stranger from "../../../assets/images/icon/profileinfoicon.png";
 import grass from "../../../assets/images/grass.png"
 import cloud5 from "../../../assets/images/cloud/cloud5.png"
 
@@ -40,7 +40,7 @@ export default function MainMiniNav() {
       <CloudDown left={63} src={cloud5} alt="cloud" />
       <CloudUp left={76} src={cloud5} alt="cloud" />
       {peopleList.map((el) => (
-        <BtnFrame onClick={() => navigate(`/kickboard/${el[0]}`)}>
+        <BtnFrame key={el[0]} onClick={() => navigate(`/kickboard/${el[0]}`)}>
           <BtnName>{el[0]}</BtnName>
           <People src={el[1]} alt="people" />
         </BtnFrame>

@@ -7,7 +7,7 @@ export default function BtnChamber() {
   // nav에 있어서 클릭하면 해당 페이지로 이동하는 버튼들의 모음집
   const list = [
     { pathname: "intro", context: "소개", isSubNav: false },
-    { pathname: "notice", context: "공지", isSubNav: true },
+    { pathname: "notice/소식", context: "공지", isSubNav: true },
     { pathname: "board/학습", context: "게시판", isSubNav: true },
     { pathname: "kickboard/학습", context: "킥 배우기", isSubNav: true },
   ];

@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
 
-import default_thumbnail from "../../../assets/images/default_thumbnail.jpg"
+import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
 
 export default function MainNotice({ noticeInfo }) {
   const navigate = useNavigate();
 
   return (
     <Container
-      onClick={() => navigate(`/notice/notice/${noticeInfo.notice_id}`)}
+      onClick={() => navigate(`/notice/소식/${noticeInfo.notice_id}`)}
     >
       <Thumpnail
         src={noticeInfo.thumbnail && default_thumbnail}

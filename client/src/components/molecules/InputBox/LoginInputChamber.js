@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
-import { signIn, signUp, tempoSignIn } from "../../../apis/auth";
+import { signIn } from "../../../apis/auth";
 import {
   isLoginAction,
   todayLoginAction,
@@ -30,6 +30,7 @@ export default function LoginInputChamber({
   ];
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
   const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=${process.env.REACT_APP_NAVER_STATE}`;
+  const googleURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email`;
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -92,6 +93,9 @@ export default function LoginInputChamber({
       </a>
       <a href={naverURL}>
         <Test>네이버 로그인</Test>
+      </a>
+      <a href={googleURL}>
+        <Test>구글 로그인</Test>
       </a>
     </Container>
   );

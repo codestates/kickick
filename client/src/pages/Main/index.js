@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import {
@@ -10,8 +10,10 @@ import {
 } from "../../components";
 import { getNoticesInfo, getNoticesList } from "../../apis/notices"
 import { recommendedPost } from "../../apis/posts";
+import { firstEnterCheck } from "../../apis/cookie"
 
 export default function Main() {
+  const navigate = useNavigate();
   const [kickListInfo, setKickList] = useState({});
   const [noticeInfo, setNoticeInfo] = useState({})
   const [eventInfo, setEventInfo] = useState([])
@@ -22,6 +24,20 @@ export default function Main() {
   const isLoding = noticeLoding && eventLoding && kickListLoding;
 
   useEffect(() => {
+    // 첫방문인지 체크하고 첫 방문이면 이동
+    firstEnterCheck().then((res) => {
+      console.log(res.data.data);
+      if (res.data.data.is_visited === true) {
+        return null
+      }
+      if (!isLoding && !Object.keys(res.data.data).includes("is_visited")) {
+        navigate("/modal/firstenter");
+      }
+    }).catch((err) => {
+      if (err.data && err.data.message === "쿠키가 존재하지 않습니다.") {
+        navigate("/modal/firstenter");
+      }
+    });
     // 킥 추천 불러오기
     recommendedPost()
       .then((res) => setKickList(res.data.data))
