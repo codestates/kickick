@@ -14,6 +14,7 @@ module.exports = {
   email_auth: require("./auth/email_auth"),
   naver: require("./auth/naver"),
   kakao: require("./auth/kakao"),
+  google: require("./auth/google"),
   // posts
   get_posts_info: require("./posts/get_posts_info"),
   get_posts_list: require("./posts/get_posts_list"),

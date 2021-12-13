@@ -5,6 +5,7 @@ const {
   email_auth,
   naver,
   kakao,
+  google,
 } = require("../controllers");
 const express = require("express");
 const router = express.Router();
@@ -15,5 +16,6 @@ router.post("/signout", signout);
 router.post("/email", email_auth);
 router.post("/naver", naver);
 router.post("/kakao", kakao);
+router.post("/google", google);
 
 module.exports = router;
