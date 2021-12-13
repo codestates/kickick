@@ -149,6 +149,7 @@ const Container = styled.div`
   width: 90rem;
   margin: 3rem auto;
   gap: 1rem;
+  min-height: 30vh;
 
   @media ${({ theme }) => theme.device.notebookL} {
     width: 64rem;

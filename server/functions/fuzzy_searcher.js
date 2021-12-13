@@ -1,4 +1,5 @@
 const escapeRegExp = require("lodash").escapeRegExp;
+
 module.exports = (word) => {
   // TODO 퍼지 검색을 위한 정규표현식 만드는 함수 구현
   // (자음번호 * 588 + 모음번호 * 28 + 종성번호) + 44032('가'코드)

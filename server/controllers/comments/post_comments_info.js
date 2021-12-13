@@ -79,7 +79,7 @@ module.exports = async (req, res) => {
 
       await alarms.create({
         user_id: post_info.user.user_id,
-        type: "comments",
+        type: "alarms",
         reference: JSON.stringify({
           table: "posts",
           id: post_id,

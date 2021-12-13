@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { IconBox, Profile } from "../../../components";
+import { IconBox, Profile, AlienPortion } from "../../../components";
 
 import { createLikes } from "../../../apis/likes";
 
@@ -12,26 +12,6 @@ import alienImg from "../../../assets/images/alien.svg";
 import star from "../../../assets/images/icon/contenticon.png";
 
 export default function DetailBoardTop({ state, type }) {
-  const [astronaut, setAstronaut] = useState(0);
-  const [alien, setAlien] = useState(0);
-
-  const handleLike = (item) => {
-    if (item === "true" && alien === 1) return;
-    if (item === "false" && astronaut === 1) return;
-
-    if (item === "true") {
-      setAstronaut(0);
-      setAlien(1);
-    } else {
-      setAstronaut(1);
-      setAlien(0);
-    }
-
-    // createLikes(state.post_id, item)
-    //   .then((data) => console.log(data.data))
-    //   .catch((err) => console.log(err.response));
-  };
-
   return (
     <Container>
       <TopContainer>
@@ -59,22 +39,11 @@ export default function DetailBoardTop({ state, type }) {
       </Content>
       {type === "kick" ? (
         <VotesContainer>
-          <Astronaut>
-            {astronaut ? <img className="star" src={star} alt="" /> : null}
-            <img
-              className="astronaut"
-              alt=""
-              src={astronautImg}
-              onClick={() => handleLike("false")}
-            />
-            <span>{state.likes.false + astronaut}</span>
-          </Astronaut>
-          <span>vs</span>
-          <Alien>
-            <span>{state.likes.true + alien}</span>
-            <img src={alienImg} onClick={() => handleLike("true")} alt="" />
-            {alien ? <img className="star" src={star} alt="" /> : null}
-          </Alien>
+          <AlienPortion
+            likes={state.likes}
+            is_liked={state.is_liked}
+            postId={state.post_id}
+          />
         </VotesContainer>
       ) : null}
     </Container>

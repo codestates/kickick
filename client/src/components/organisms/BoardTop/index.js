@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useParams } from "react-router";
@@ -24,21 +24,34 @@ const list = [
   { label: "art", src: art, category: "예술", color: "#EED548" },
   { label: "notice", src: null, category: "소식", color: "#EED548" },
   { label: "event", src: null, category: "이벤트", color: "#EED548" },
-  { label: "", src: "", category: "default", color: "#000000" },
+  // { label: "", src: "", category: "default", color: "#000000" },
 ];
 
 export default function BoardTop() {
   const { category } = useParams();
   const { src, label, color } = list.find((el) => el.category === category);
+  const [select, setSelect] = useState(0);
 
+  useEffect(() => {
+    setSelect(list.findIndex((el) => category === el.category));
+  }, [category]);
   return (
     <Container image={spacebackground} color={color}>
-      {category && (
-        <>
-          <img src={src} alt="" />
-          <span>{label}</span>
-        </>
-      )}
+      <Lists>
+        {category &&
+          list.map((el, idx) => {
+            return (
+              <ListContainer
+                style={{
+                  marginTop: idx === 0 ? `-${select * 5}rem` : 0,
+                }}
+              >
+                <img src={el.src} alt="" />
+                <span>{el.label}</span>
+              </ListContainer>
+            );
+          })}
+      </Lists>
     </Container>
   );
   // <Container>
@@ -56,13 +69,15 @@ const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  height: 12rem;
   justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
   /* background-image: url(${({ image }) => image}); */
-  height: 8rem;
   object-fit: cover;
   font-size: 4rem;
+
+  background: linear-gradient(to top, #ffffff, #6dd5fa, #2980b9);
 
   pointer-events: none !important;
 
@@ -98,7 +113,24 @@ const Container = styled.div`
   img {
     width: 4.5rem;
     height: 4.5rem;
-    filter: drop-shadow(0.5rem 0.5rem 0.3rem gray);
+    filter: drop-shadow(0.2rem 0.2rem 0.3rem gray);
     z-index: 5;
   }
+`;
+
+const Lists = styled.div`
+  position: relative;
+
+  width: 30rem;
+  height: 4.8rem;
+
+  overflow: hidden;
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 5rem;
+
+  transition: all 0.5s linear;
 `;

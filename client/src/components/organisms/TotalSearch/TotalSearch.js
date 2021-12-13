@@ -25,7 +25,6 @@ export default function TotalSearch() {
   const handleAlign = (event) => {
     const label = event.target.innerText;
     dispatch(boardAlignAction(label));
-    dispatch(resetListAction());
     dispatch(resetPaginationAction());
   };
   const handleIcon = (label) => {
