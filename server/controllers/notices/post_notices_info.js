@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
   let data;
   // 관리자가 아니면 권한 x
   if (type !== "admin") {
-    return res.status(401).json({ data: err, message: "권한이 없습니다." });
+    return res.status(401).json({ data: null, message: "권한이 없습니다." });
   }
   try {
     let user_info = await users.findOne({
