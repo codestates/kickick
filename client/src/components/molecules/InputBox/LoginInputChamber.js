@@ -17,15 +17,15 @@ export default function LoginInputChamber({
   setIsClicked,
 }) {
   // 로그인에 쓰이는 인풋 박스 모음집
-  const [inputValue, setInputValue] = useState({ id: "", password: "" });
-  const [isValid, setIsValid] = useState({ id: false, password: false });
+  const [inputValue, setInputValue] = useState({ username: "", password: "" });
+  const [isValid, setIsValid] = useState({ username: false, password: false });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const passwordInput = useRef();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const inputlist = [
-    { part: "id", type: "text", ref: null },
+    { part: "username", type: "text", ref: null },
     { part: "password", type: "password", ref: passwordInput },
   ];
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
@@ -45,10 +45,10 @@ export default function LoginInputChamber({
   };
 
   const loginHandler = () => {
-    if (isValid.id && isValid.password) {
+    if (isValid.username && isValid.password) {
       setIsClicked(true);
       setTimeout(() => {
-        signIn(inputValue.id, inputValue.password)
+        signIn(inputValue.username, inputValue.password)
           .then((res) => {
             const loginData = { ...res.data.data };
             delete loginData.kick_money;
@@ -129,7 +129,7 @@ const SubmitBtn = styled.button`
   cursor: default;
 
   ${({ isValid }) =>
-    isValid.id && isValid.password
+    isValid.username && isValid.password
       ? `
   cursor:pointer;
   : hover {
