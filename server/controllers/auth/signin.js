@@ -91,13 +91,16 @@ module.exports = async (req, res) => {
           user_id: user_id,
           type: "signin",
         },
+        order: [["id", "DESC"]],
+        raw: true,
       });
+      // 로그 살펴 봄
       let log_date;
       const today = new Date();
       if (log_info.length !== 0) {
-        log_info = log_info[0].get({ plain: true });
-        log_date = log_info.created_at;
+        log_date = log_info[0].created_at;
       }
+      // 오늘 로그인한 로그가 있는지 확인
       if (
         !log_date ||
         !(
@@ -113,9 +116,24 @@ module.exports = async (req, res) => {
           content: `${username}님이 로그인 하였습니다.`,
         });
         // 킥머니 지급
+        let change = 100;
+        // 3일간 로그인 기록이 있다면
+
+        if (log_info.length >= 2) {
+          log_date = log_info[1].created_at;
+          const prev_3days = new Date(today - 3600000 * 24 * 3);
+          if (
+            log_date.getDate() === prev_3days.getDate &&
+            log_date.getMonth() === today.getMonth() &&
+            log_date.getFullYear() === today.getFullYear()
+          ) {
+            change = 200;
+          }
+        }
+
         await users.update(
           {
-            kick_money: sequelize.literal(`kick_money + 100`),
+            kick_money: sequelize.literal(`kick_money + ${change}`),
           },
           {
             where: {
@@ -123,18 +141,18 @@ module.exports = async (req, res) => {
             },
           }
         );
-        data.kick_money += 100;
+        data.kick_money += change;
         // 킥머니 지급 로그 추가
         await logs.create({
           user_id: user_id,
           type: "kick_money",
-          content: "100 킥머니를 받았습니다.",
+          content: `${change} 킥머니를 받았습니다.`,
         });
         // 킥머니 지급 알림 추가
         await alarms.create({
           user_id: user_id,
           type: "alarms",
-          content: "로그인으로 100 킥머니를 받았습니다.",
+          content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
       }
     } catch (err) {
@@ -204,13 +222,16 @@ module.exports = async (req, res) => {
           user_id: user_id,
           type: "signin",
         },
+        order: [["id", "DESC"]],
+        raw: true,
       });
+      // 로그 살펴 봄
       let log_date;
       const today = new Date();
       if (log_info.length !== 0) {
-        log_info = log_info[0].get({ plain: true });
-        log_date = log_info.created_at;
+        log_date = log_info[0].created_at;
       }
+      // 오늘 로그인한 로그가 있는지 확인
       if (
         !log_date ||
         !(
@@ -226,9 +247,24 @@ module.exports = async (req, res) => {
           content: `${username}님이 로그인 하였습니다.`,
         });
         // 킥머니 지급
+        let change = 100;
+        // 3일간 로그인 기록이 있다면
+
+        if (log_info.length >= 2) {
+          log_date = log_info[1].created_at;
+          const prev_3days = new Date(today - 3600000 * 24 * 3);
+          if (
+            log_date.getDate() === prev_3days.getDate &&
+            log_date.getMonth() === today.getMonth() &&
+            log_date.getFullYear() === today.getFullYear()
+          ) {
+            change = 200;
+          }
+        }
+
         await users.update(
           {
-            kick_money: sequelize.literal(`kick_money + 100`),
+            kick_money: sequelize.literal(`kick_money + ${change}`),
           },
           {
             where: {
@@ -236,18 +272,18 @@ module.exports = async (req, res) => {
             },
           }
         );
-        data.kick_money += 100;
+        data.kick_money += change;
         // 킥머니 지급 로그 추가
         await logs.create({
           user_id: user_id,
           type: "kick_money",
-          content: "100 킥머니를 받았습니다.",
+          content: `${change} 킥머니를 받았습니다.`,
         });
         // 킥머니 지급 알림 추가
         await alarms.create({
           user_id: user_id,
           type: "alarms",
-          content: "로그인으로 100 킥머니를 받았습니다.",
+          content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
       }
     } catch (err) {

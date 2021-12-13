@@ -4,7 +4,13 @@ import styled, { css } from "styled-components";
 import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
 
 export default function Thumbnail({ type = "post", src }) {
-  return <Container type={type} src={src ? src : default_thumbnail} alt="" />;
+  return (
+    <Container
+      type={type}
+      src={src === "picture.jpg" ? default_thumbnail : src}
+      alt=""
+    />
+  );
 }
 
 const Container = styled.img`
@@ -14,6 +20,15 @@ const Container = styled.img`
       object-fit: cover;
       object-position: center top;
       height: 13.5rem;
+      opacity: 0.8;
+    `}
+
+  ${({ type }) =>
+    type === "event" &&
+    css`
+      object-fit: cover;
+      object-position: center top;
+      height: 8.5rem;
       opacity: 0.8;
     `}
 `;

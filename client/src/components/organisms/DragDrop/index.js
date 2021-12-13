@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 
 import { FaPlusSquare, FaTimes } from "react-icons/fa";
 
-export default function DragDrop({ setThumbnail }) {
-  const [file, setFile] = useState();
+export default function DragDrop({ setThumbnail, file, setFile }) {
   const dragRef = useRef();
 
   const fileChange = useCallback((e) => {
