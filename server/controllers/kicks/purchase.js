@@ -13,6 +13,7 @@ const {
   notices,
 } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO kick 구매 api 구현
@@ -54,14 +55,17 @@ module.exports = async (req, res) => {
       raw: true,
     });
     const user_id = user_info.user_id;
-    console.log(user_id);
+
     // 킥머니가 100보다 적으면 구매 불가
     if (user_info.kick_money < 100) {
       return res
         .status(400)
-        .json({ data: err, message: "킥머니가 부족합니다." });
+        .json({ data: null, message: "킥머니가 부족합니다." });
     }
+
+    // users_kicks 검색해서 이미 샀는지 확인 겸 추가
     let kick_info = await users_kicks.findOrCreate({
+      attributes: ["user_id", "kick_id"],
       where: {
         user_id: user_id,
         kick_id: kick_id,
@@ -70,19 +74,43 @@ module.exports = async (req, res) => {
         user_id: user_id,
         kick_id: kick_id,
       },
-      // raw: true,
     });
-    // console.log(kick_info);
-    // users_kicks 검색해서 이미 샀는지 확인
-    // 안샀으면 kick_money 확인
-    // kick_money 여유가 되면 구매
-    // users_kicks 테이블에 추가
+    data = kick_info[0].get({ plain: true });
+    console.log(data);
+    delete data.id;
+    delete data.kickId;
+    delete data.userId;
+
+    if (!kick_info[1]) {
+      return res
+        .status(400)
+        .json({ data: null, message: "이미 구매한 킥입니다." });
+    }
+
+    const change = -100;
+
+    // kick_money 변동
+    await users.update(
+      {
+        kick_money: sequelize.literal(`kick_money + ${change}`),
+      },
+      {
+        where: {
+          username: username,
+        },
+      }
+    );
+
     // log에 기록
+    await logs.create({
+      user_id: user_id,
+      type: "kick_money",
+      content: `킥구매로 ${Math.abs(change)} 킥머니를 사용했습니다.`,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
-  // console.log(data);
 
-  return res.status(200).json({ data: null, message: "ok" });
+  return res.status(201).json({ data: data, message: "ok" });
 };

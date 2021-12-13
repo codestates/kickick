@@ -12,13 +12,19 @@ module.exports = async (req, res) => {
     // 존재하지 않으면 400
     let user_info = await users.findOne({
       where: {
-        username: username,
+        username: req.body.username,
       },
+      raw: true,
     });
     if (!user_info) {
       return res
         .status(400)
         .json({ data: null, message: "존재하지 않는 닉네임입니다." });
+    }
+    if (user_info.type !== "email auth required") {
+      return res
+        .status(400)
+        .json({ data: null, message: "이미 인증되었습니다." });
     }
     // 유저정보 수정
     await users.update(
