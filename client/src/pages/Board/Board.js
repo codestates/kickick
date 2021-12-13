@@ -39,7 +39,7 @@ export default function Board() {
       post_name: postsearch.title,
       username: postsearch.writer,
       tag: postsearch.tag,
-      limit: 20,
+      limit: 10,
       favorite_count: postsearch.align === "인기" ? 1 : null,
       page_num: postsearch.selectPage,
     })

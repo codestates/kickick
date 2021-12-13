@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
-import { Nav, Footer, PageUp } from "./components";
+import { Nav, Footer, PageUp, BoardTop } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
