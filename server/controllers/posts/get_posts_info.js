@@ -122,6 +122,7 @@ module.exports = async (req, res) => {
           attributes: ["agreement"],
           where: {
             user_id: user_id,
+            post_id: post_id,
           },
         });
 
