@@ -7,7 +7,12 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 
 Quill.register("modules/ImageResize", ImageResize);
 
-export default function EditQuill({ image = true, content, setContent }) {
+export default function EditQuill({
+  image = true,
+  content,
+  setContent,
+  handleContent,
+}) {
   const quill = useRef(null);
   const tempImage = useRef([]);
 
@@ -116,6 +121,7 @@ export default function EditQuill({ image = true, content, setContent }) {
         ref={quill}
         value={content}
         onChange={setContent}
+        onBlur={handleContent}
         theme="snow"
         style={{
           width: image === false ? "43rem" : null,
