@@ -47,6 +47,7 @@ module.exports = async (req, res) => {
         type: "google",
         email: user_info.email,
         username: `google ${user_info.id}`,
+        kick_money: 1500,
       },
     });
     data = data[0].get({ plain: true });

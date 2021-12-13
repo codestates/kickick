@@ -56,6 +56,7 @@ module.exports = async (req, res) => {
         type: "kakao",
         email: user_info.email,
         username: `kakao ${user_info.profile.nickname}`,
+        kick_money: 1500,
       },
     });
     data = data[0].get({ plain: true });

@@ -61,6 +61,7 @@ module.exports = async (req, res) => {
         type: "naver",
         username: `naver ${nickname}`,
         email: email,
+        kick_money: 1500,
       },
     });
     data = data[0].get({ plain: true });
