@@ -2,7 +2,7 @@ const hangul = require("hangul-js");
 // const escapeRegExp = require("lodash").escapeRegExp;
 
 module.exports = (word) => {
-  // TODO 오타 검색 순서 변경
+  // TODO 오타 검색 및 순서 변경 검색 구현
   // hangul 라이브러리 쓰는 걸로 수정
 
   // 오타 분기 구현
@@ -84,7 +84,7 @@ module.exports = (word) => {
     // 현재 문자 - copy[i]
     // copy[i]를 type_obj 에 대치시켜봄
     if (typo_obj[copy[i]]) {
-      // typo_obj에 현재 값이 들어있다면
+      // typo_obj에 현재 값이 들어있다면 <- 한글 or 영어면
       typo_obj[copy[i]].forEach((el) => {
         let copy = original.slice();
         copy.splice(i, 1, el); // 현재위치의 값을 el로 변경
