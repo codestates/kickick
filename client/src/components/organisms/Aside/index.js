@@ -16,7 +16,7 @@ import adminlogo from "../../../assets/images/Admin.png";
 const logoList = [
   { type: "admin", logo: adminlogo, color: "#000000", text: "관리자" },
   {
-    type: "general",
+    type: "Traveler",
     logo: generallogo,
     color: "#000000",
     text: "이메일로 로그인 중",

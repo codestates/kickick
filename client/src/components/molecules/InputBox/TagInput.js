@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { TitleInput } from "../../";
 import { FaHashtag } from "react-icons/fa";
 
-export default function TagInput({ tagArr, setTagArr, category }) {
+export default function TagInput({ tagArr, setTagArr, category, readOnly }) {
   const [value, setValue] = useState("");
 
   const handleKeyon = (e) => {
@@ -42,14 +42,18 @@ export default function TagInput({ tagArr, setTagArr, category }) {
           </TagContainer>
         );
       })}
-      <TitleInput
-        holder="태그를 입력하세요."
-        handleKeyon={handleKeyon}
-        handleChange={handleChange}
-        val={value}
-        type="tag"
-      />
-      <Alarm tag={tagArr}>태그는 2개까지 입력 가능합니다.</Alarm>
+      {!readOnly && (
+        <>
+          <TitleInput
+            holder="태그를 입력하세요."
+            handleKeyon={handleKeyon}
+            handleChange={handleChange}
+            val={value}
+            type="tag"
+          />
+          <Alarm tag={tagArr}>태그는 2개까지 입력 가능합니다.</Alarm>
+        </>
+      )}
     </Container>
   );
 }
@@ -58,13 +62,14 @@ const Container = styled.div`
   display: flex;
   padding: 0.5rem;
   gap: 1rem;
+  height: 3.3rem;
 `;
 const TagContainer = styled.div`
-  padding: 0.37rem;
+  padding: 0.6rem;
   font-weight: bold;
   color: #66a14b;
   background-color: #ececec;
-  border-radius: 10px;
+  border-radius: 0.5rem;
 
   cursor: pointer;
 

@@ -14,13 +14,13 @@ const cardlist = [
   {
     type: "news",
     component(key, data) {
-      <NewsPost key={key} data={data} />;
+      return <NewsPost key={key} data={data} />;
     },
   },
   {
     type: "event",
     component(key, data) {
-      <EventPost key={key} data={data} />;
+      return <EventPost data={data} />;
     },
   },
 ];

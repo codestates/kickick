@@ -15,8 +15,6 @@ import {
 
 import {
   getCategoryAction,
-  getPostNameAction,
-  getContentAction,
   resetPostAddAction,
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
@@ -30,15 +28,8 @@ export default function EditBoard() {
   const [tagArr, setTagArr] = useState([]);
   const [title, setTitle] = useState("");
 
-  const handlePostName = (e) => {
-    dispatch(getPostNameAction(e.target.value));
-  };
-
   const handleChange = (e) => {
     setTitle(e.target.value);
-  };
-  const handleContent = () => {
-    dispatch(getContentAction(content));
   };
 
   const handleMovePage = () => {
@@ -46,7 +37,7 @@ export default function EditBoard() {
   };
 
   const handleClick = () => {
-    createPost(state.category, state.post_name, state.content)
+    createPost(state.category, title, content)
       .then((data) => {
         createTag(data.data.data.post_id, [category, ...tagArr])
           .then(() => navigate(`/board/${category}`))
@@ -65,23 +56,14 @@ export default function EditBoard() {
       <QullContainer>
         <DividBox>
           <TitleContainer>
-            <TitleInput
-              handlePostName={handlePostName}
-              handleChange={handleChange}
-              type="title"
-            />
+            <TitleInput handleChange={handleChange} type="title" />
             <TagInput
               tagArr={tagArr}
               setTagArr={setTagArr}
               category={category}
             />
           </TitleContainer>
-          <EditQuill
-            image={false}
-            content={content}
-            setContent={setContent}
-            handleContent={handleContent}
-          />
+          <EditQuill image={false} content={content} setContent={setContent} />
 
           <BtnContainer>
             <IconBox label="arrow" handleClick={handleMovePage} />
