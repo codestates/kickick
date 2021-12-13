@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
 
 import {
   EditQuill,
@@ -11,9 +9,6 @@ import {
   Common,
   IntroTextarea,
   DragDrop,
-  Profile,
-  Thumbnail,
-  TagInput,
 } from "../../components";
 
 import {
@@ -28,26 +23,19 @@ import introductionicon from "../../assets/images/icon/introductionicon.png";
 import contenticon from "../../assets/images/icon/contenticon.png";
 import titileicon from "../../assets/images/icon/titleicon.png";
 import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
-import tagicon from "../../assets/images/icon/tagicon.png";
 
-import { createPost, createTag } from "../../apis/posts";
-import { createKicks } from "../../apis/kicks";
+import { createNotices } from "../../apis/notices";
 import { uploadSingleImage } from "../../apis/upload";
 
-export default function EditKickBoard() {
+export default function EditNotice() {
   const { category } = useParams();
   const navigate = useNavigate();
-  const { postAdd, login } = useSelector((state) => state);
+  const { postAdd } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [postname, setPostname] = useState();
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
-  const [tagArr, setTagArr] = useState([]);
 
-  const handleViewPostName = (e) => {
-    setPostname(e.target.value);
-  };
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
@@ -56,71 +44,46 @@ export default function EditKickBoard() {
     dispatch(getContentAction(e.target.value));
   };
 
-  // const handleThumbnail = (thumbnail) => {
-  //   dispatch(getThumbnailAction(thumbnail));
-  // };
-
   const handleContent = () => {
     dispatch(getKickContentAction(content));
   };
 
   const handleClick = () => {
-    createPost(postAdd.category, postAdd.post_name, postAdd.content)
-      .then((data) => {
-        const post_id = data.data.data.post_id;
-        if (thumbnail) {
-          const formData = new FormData();
-          formData.append("img", thumbnail);
-          uploadSingleImage(formData, "post").then((data) => {
-            const location = data.data.data.location;
-            createKicks(post_id, location, postAdd.kick_content).then(() => {
-              navigate(`/kickboard/${category}`);
-            });
-          });
-        } else {
-          createKicks(post_id, null, postAdd.kick_content).then(() => {
-            navigate(`/kickboard/${category}`);
-          });
-        }
-
-        createTag(post_id, [category]).catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err.response));
+    if (thumbnail) {
+      const formData = new FormData();
+      formData.append("img", thumbnail);
+      uploadSingleImage(formData, "post").then((data) => {
+        const location = data.data.data.location;
+        createNotices({
+          type: category === "이벤트" ? "event" : "notice",
+          notice_name: postAdd.post_name,
+          summary: postAdd.content,
+          thumbnail: location,
+          content: postAdd.kick_content,
+        })
+          .then(() => navigate(`/notice${category}`))
+          .catch((err) => console.log(err));
+      });
+    }
   };
 
   useEffect(() => {
     dispatch(resetPostAddAction());
-    dispatch(getCategoryAction(category, "킥"));
+    dispatch(getCategoryAction(category));
   }, [dispatch, category]);
 
   return (
     <Wrapper>
-      <h1>나만의 킥 작성 </h1>
+      <h1>공지 작성 </h1>
       <Container>
         <WritePage>
           <InfoContainer>
             <HeadlineContainer>
               <img src={titileicon} alt="" />
               <h3>제목</h3>
-              <TitleInput
-                type="title"
-                handlePostName={handlePostName}
-                handleChange={handleViewPostName}
-              />
+              <TitleInput type="title" handlePostName={handlePostName} />
             </HeadlineContainer>
           </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={tagicon} alt="" />
-              <h3>태그</h3>
-              <TagInput
-                tagArr={tagArr}
-                setTagArr={setTagArr}
-                category={category}
-              />
-            </HeadlineContainer>
-          </InfoContainer>
-
           <InfoContainer>
             <HeadlineContainer>
               <img src={thumbnailicon} alt="" />
@@ -132,7 +95,6 @@ export default function EditKickBoard() {
               setThumbnail={setThumbnail}
             />
           </InfoContainer>
-
           <InfoContainer>
             <HeadlineContainer>
               <img src={contenticon} alt="" />
@@ -155,31 +117,6 @@ export default function EditKickBoard() {
             <Common label="등 록" type="bigger" handleClick={handleClick} />
           </BtnContainer>
         </WritePage>
-        <ViewPage>
-          <h1>{postname}</h1>
-          <ProfileContainer>
-            <Profile type="post" src={login.isLogin.profile} />
-            <span>{login.isLogin.username}</span>
-          </ProfileContainer>
-          <TagInput
-            tagArr={tagArr}
-            setTagArr={setTagArr}
-            category={category}
-            readOnly={true}
-          />
-          <Thumbnail src={file} alt="" />
-          <ReactQuill
-            readOnly={true}
-            theme={"bubble"}
-            value={content}
-            style={{
-              backgroundColor: "#eee",
-              padding: "1rem 0",
-              borderRadius: "0.5rem",
-              height: "40rem",
-            }}
-          />
-        </ViewPage>
       </Container>
     </Wrapper>
   );
@@ -195,35 +132,14 @@ const Wrapper = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  width: 64rem;
 `;
 const WritePage = styled.div`
-  width: calc(50% - 2rem);
-
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
   gap: 1rem;
-`;
-
-const ViewPage = styled.div`
-  width: calc(50% - 2rem);
-  display: flex;
-  flex-direction: column;
-  padding: 0 4rem;
-  gap: 1rem;
-  border-left: 3px dashed #eee;
-
-  > h1 {
-    font-size: 3rem;
-    height: 4.5rem;
-  }
-
-  > img {
-    object-fit: scale-down;
-    height: 20rem;
-    width: 100%;
-    margin: 3rem 0 5rem 0;
-  }
+  width: 64rem;
 `;
 
 const InfoContainer = styled.div`
@@ -251,13 +167,4 @@ const HeadlineContainer = styled.div`
 const BtnContainer = styled.div`
   margin-top: 2rem;
   text-align: center;
-`;
-
-const ProfileContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  img {
-    margin-right: 1rem;
-  }
 `;

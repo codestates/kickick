@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams, Outlet } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Outlet, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 import {
   CardBox,
-  EventPost,
-  NewsPost,
   BoardTop,
   IconText,
+  Common,
+  Thumbnail,
 } from "../../components";
+
+import { getNoticesInfo, getNoticesList } from "../../apis/notices";
+
+import { getListAction } from "../../store/actions/postlist";
+import { getPostInfoAction } from "../../store/actions/postadd";
 
 import event_sample from "../../assets/images/event_sample_landscape.png";
 
@@ -45,16 +52,62 @@ export default function Notice() {
 }
 
 export function News() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { postsearch, login } = useSelector((state) => state);
+  const [loading, setLoading] = useState(true);
+
+  const handleNewPost = () => {
+    navigate("edit");
+  };
+  useEffect(() => {
+    getNoticesList({
+      type: "notice",
+      limit: 10,
+      page_num: postsearch.selectPage,
+    }).then((data) => {
+      dispatch(getListAction(data.data));
+      setLoading(false);
+    });
+  }, [postsearch.selectPage, dispatch]);
+  if (loading) return <div>d</div>;
   return (
     <NewsContainer>
+      {login.isLogin.type === "admin" && (
+        <Common type="new" label="글쓰기" handleClick={handleNewPost} />
+      )}
       <CardBox type="news" />
     </NewsContainer>
   );
 }
 
 export function Event() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { postsearch, login } = useSelector((state) => state);
+  const [loading, setLoading] = useState(true);
+
+  const handleNewPost = () => {
+    navigate("edit");
+  };
+
+  useEffect(() => {
+    getNoticesList({
+      type: "event",
+      limit: 10,
+      page_num: postsearch.selectPage,
+    }).then((data) => {
+      dispatch(getListAction(data.data));
+      setLoading(false);
+    });
+  }, [postsearch.selectPage, dispatch]);
+  if (loading) return <div>d</div>;
+
   return (
     <EventContainer>
+      {login.isLogin.type === "admin" && (
+        <Common type="new" label="글쓰기" handleClick={handleNewPost} />
+      )}
       <CardBox type="event" />
     </EventContainer>
   );
@@ -62,18 +115,31 @@ export function Event() {
 
 export function NoticeDetail() {
   const { notice_id } = useParams();
+  const dispatch = useDispatch();
+  const { postInfo } = useSelector((state) => state.persist);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    getNoticesInfo(notice_id).then((data) => {
+      dispatch(getPostInfoAction(data.data.data));
+      setLoading(false);
+    });
+  }, [notice_id, dispatch]);
+
+  if (loading) return <div></div>;
   return (
     <NoticeDetailContainer>
       <NoticeDetailInfo>
-        <img src={event_sample} alt="" />
-        <h2>오늘 가입 하시면 전원 킥머니 300 증정</h2>
+        <Thumbnail src={postInfo.thumbnail} alt="" />
+        <h2>{postInfo.notice_name}</h2>
         <div className="subinfo">
           <span>운영자 석</span>
           <span>6달전</span>
         </div>
       </NoticeDetailInfo>
-      <NoticeDetailContent></NoticeDetailContent>
+      <NoticeDetailContent>
+        <ReactQuill readOnly={true} theme={"bubble"} value={postInfo.content} />
+      </NoticeDetailContent>
     </NoticeDetailContainer>
   );
 }

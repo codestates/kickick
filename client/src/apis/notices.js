@@ -11,7 +11,7 @@ export const getNoticesInfo = (notice_id) => {
  *  @param {number} limit option
  *  @param {number} page_num option
  **/
-export const getNoticesList = (notice_name, type, limit, page_num) => {
+export const getNoticesList = ({ notice_name, type, limit, page_num }) => {
   let query = "?";
 
   if (notice_name) query += `notice_name=${notice_name}&`;
@@ -35,6 +35,7 @@ export const createNotices = ({
   summary,
   content,
 }) => {
+  console.log(type, notice_name, thumbnail, summary, content);
   return api.post(`/notices/info`, {
     type,
     notice_name,
