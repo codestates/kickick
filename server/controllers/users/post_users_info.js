@@ -44,6 +44,12 @@ module.exports = async (req, res) => {
       message: "username, email, password 중 누락된 항목이 있습니다.",
     });
   }
+  if (req.body.type === "admin") {
+    return res.status(401).json({
+      data: null,
+      message: "관리자 계정을 생성할 수 있는 권한이 없습니다.",
+    });
+  }
   try {
     // 비밀번호 해싱
     bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {

@@ -15,7 +15,7 @@ export default function Profile({ type, src = "picture.jpg" }) {
   return (
     <Container
       size={size}
-      src={src === "picture.jpg" ? default_profile : src}
+      src={src === "picture.jpg" || src === null ? default_profile : src}
       alt=""
     />
   );

@@ -116,6 +116,23 @@ module.exports = async (req, res) => {
           data.favorite = "false";
         }
         const user_id = user_info.user_id;
+
+        // like 정보 가져옴
+        let like_info = await likes.findOne({
+          attributes: ["agreement"],
+          where: {
+            user_id: user_id,
+            post_id: post_id,
+          },
+        });
+
+        // like_info 가 존재하면 agreement 달아서 보내줌
+        if (like_info) {
+          data.is_liked = like_info.agreement;
+        } else {
+          data.is_liked = null;
+        }
+
         // logs 추가하기전에 최근 20개 가져와서 post_id가 동일한게 있는지 확인
         let log_info = await logs.findAll({
           attributes: ["content"],

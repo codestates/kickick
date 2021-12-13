@@ -53,7 +53,7 @@ export default function LoginInput({
           )
           //영문,숫자,특문을 혼합
         )
-      : inputValue.length < 4 || inputValue.length > 10;
+      : inputValue.length < 4 || inputValue.length > 15;
 
   const contextHandler = (e) => {
     setIsChange(true);
@@ -63,16 +63,16 @@ export default function LoginInput({
 
   const validContoller = () => {
     validHandler(part, validation);
-  }
+  };
 
   const movePasswordInput = (e) => {
     if (e.key === "Enter" && type === "text") {
-      passwordInput.current.focus()
+      passwordInput.current.focus();
     }
     if (e.key === "Enter" && type === "password") {
       loginHandler();
     }
-  }
+  };
   return (
     <Container
       width={width}

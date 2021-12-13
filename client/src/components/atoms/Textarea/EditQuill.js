@@ -125,7 +125,7 @@ export default function EditQuill({
         theme="snow"
         style={{
           width: image === false ? "43rem" : null,
-          height: image === false ? "32rem" : "60rem",
+          height: image === false ? "32rem" : "40rem",
           display: "flex",
           flexDirection: "column",
         }}
