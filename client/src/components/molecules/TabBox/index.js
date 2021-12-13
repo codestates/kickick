@@ -3,14 +3,14 @@ import styled from "styled-components";
 
 import { Tab } from "../../../components";
 
-import { generalTabList } from "../../../commons/constants/mypage";
+import { tabList } from "../../../commons/constants/mypage";
 
 export default function TabBox({ category }) {
-  const tabList = generalTabList.filter((l) => l.category === category);
+  const list = tabList.filter((l) => l.category === category);
 
   return (
     <Conatiner>
-      {tabList.map((el) => (
+      {list.map((el) => (
         <Tab label={el.label} pathname={el.pathname} key={el.label} />
       ))}
     </Conatiner>

@@ -29,6 +29,7 @@ import {
 
 import { selectPageAction } from "../../store/actions/postsearch";
 
+import controlicon from "../../assets/images/icon/controlicon.png";
 import profileinfoicon from "../../assets/images/icon/profileinfoicon.png";
 import activityicon from "../../assets/images//icon/activityicon.png";
 import purchaselog from "../../assets/images//icon/purchaselogicon.png";
@@ -108,8 +109,18 @@ export default function MyPage() {
 }
 
 export function Home() {
+  const { isLogin } = useSelector((state) => state.login);
   return (
     <HomeWrapper>
+      {isLogin.type === "admin" && (
+        <ListContainer>
+          <Subtitle>
+            <img src={controlicon} alt="" />
+            <h2>관리</h2>
+          </Subtitle>
+          <TabBox category="관리" />
+        </ListContainer>
+      )}
       <ListContainer>
         <Subtitle>
           <img src={profileinfoicon} alt="" />

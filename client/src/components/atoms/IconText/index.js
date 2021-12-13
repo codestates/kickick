@@ -21,6 +21,8 @@ import {
 import { ImGift } from "react-icons/im";
 import { AiOutlineMail } from "react-icons/ai";
 import { VscMegaphone } from "react-icons/vsc";
+import { FiUserCheck } from "react-icons/fi";
+import { BsBell } from "react-icons/bs";
 
 export const iconList = [
   { icon: <FaAlignJustify />, label: "제목", category: "검색" },
@@ -35,6 +37,9 @@ export const iconList = [
   { icon: <FaRegComment />, label: "내가 단 댓글", category: "마이페이지" },
   { icon: <FaRegBookmark />, label: "내가 산 킥", category: "마이페이지" },
   { icon: <FaDollarSign />, label: "킥머니 로그", category: "마이페이지" },
+  { icon: <FiUserCheck />, label: "유저관리", category: "마이페이지" },
+  { icon: <VscMegaphone />, label: "게시글 신고 목록", category: "마이페이지" },
+  { icon: <BsBell />, label: "공지 적기", category: "마이페이지" },
   { icon: <FaBirthdayCake />, label: "생일", category: "유저" },
   { icon: <AiOutlineMail />, label: "이메일", category: "유저" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
