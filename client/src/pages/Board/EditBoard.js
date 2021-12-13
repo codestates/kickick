@@ -17,7 +17,7 @@ import {
   getCategoryAction,
   getPostNameAction,
   getContentAction,
-  reset,
+  resetPostAddAction,
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
 
@@ -56,7 +56,7 @@ export default function EditBoard() {
   };
 
   useEffect(() => {
-    dispatch(reset());
+    dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
   }, [category, dispatch]);
 

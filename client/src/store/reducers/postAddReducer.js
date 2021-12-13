@@ -2,16 +2,15 @@ import {
   GET_CATEGORY,
   GET_POST_NAME,
   GET_CONTENT,
-  GET_THUMBNAIL,
   GET_KICK_CONTENT,
-  RESET,
+  RESET_POSTADD,
 } from "../actions/postadd";
 
 const initialState = {
+  mode: "new",
   category: "",
   post_name: "",
   content: "",
-  // thumbnail: {},
   kick_content: "",
 };
 export default function postAddReducer(state = initialState, action) {
@@ -20,13 +19,11 @@ export default function postAddReducer(state = initialState, action) {
       return { ...state, ...action.payload };
     case GET_POST_NAME:
       return { ...state, ...action.payload };
-    // case GET_THUMBNAIL:
-    //   return { ...state, ...action.payload };
     case GET_CONTENT:
       return { ...state, ...action.payload };
     case GET_KICK_CONTENT:
       return { ...state, ...action.payload };
-    case RESET:
+    case RESET_POSTADD:
       return initialState;
     default:
       return state;
