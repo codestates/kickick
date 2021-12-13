@@ -5,19 +5,8 @@ module.exports = (word) => {
   // TODO 오타 검색 순서 변경
   // hangul 라이브러리 쓰는 걸로 수정
 
-  const original = hangul.d(word);
-  const reordered = [];
-
-  // 순서 변경
-  for (let i = 0; i < original.length - 1; i++) {
-    let copy = original.slice();
-    let temp = copy.splice(i, 1)[0];
-    copy.splice(i + 1, 0, temp);
-    reordered.push(copy);
-  }
-
   // 오타 분기 구현
-  let typo_obj = {
+  const typo_obj = {
     // 한글 분기
     ㅂ: ["ㅈ"],
     ㅈ: ["ㅂ", "ㄷ"],
@@ -75,5 +64,36 @@ module.exports = (word) => {
     m: ["n"],
   };
 
-  return reordered.map((el) => hangul.a(el));
+  const original = hangul.d(word);
+  const reordered = [];
+
+  // type_obj 사용
+  // original에 word 분리시켜서 들어가있음
+  // original 순서대로 돌면서 접근
+
+  for (let i = 0; i < original.length - 1; i++) {
+    // 순서 변경
+    let copy = original.slice();
+    let temp = copy.splice(i, 1)[0];
+    copy.splice(i + 1, 0, temp);
+    reordered.push(copy);
+
+    // 현재 문자를 typo_obj에 대치
+    // typo_obj 의 값들로 대치시켜서 reordered에 push
+    copy = original.slice();
+    // 현재 문자 - copy[i]
+    // copy[i]를 type_obj 에 대치시켜봄
+    if (typo_obj[copy[i]]) {
+      // typo_obj에 현재 값이 들어있다면
+      typo_obj[copy[i]].forEach((el) => {
+        let copy = original.slice();
+        copy.splice(i, 1, el); // 현재위치의 값을 el로 변경
+        reordered.push(copy);
+      });
+    }
+  }
+  const result = reordered.map((el) => hangul.a(el));
+  // console.log(result);
+
+  return result;
 };
