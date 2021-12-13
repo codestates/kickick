@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
       .json({ data: null, message: "쿠키가 존재하지 않습니다." });
   }
 
-  if (!req.body.first_visit) {
+  if (!req.body.is_visited) {
     return res
       .status(400)
       .json({ data: null, message: "수정할 쿠키내용이 존재하지 않습니다." });
@@ -14,14 +14,14 @@ module.exports = async (req, res) => {
 
   let data = {
     ...req.cookies,
-    first_visit: req.body.first_visit,
+    is_visited: req.body.is_visited,
   };
   delete data.token;
-  let first_visit = req.body.first_visit;
+  let is_visited = req.body.is_visited;
 
   return res
     .status(200)
-    .cookie("first_visit", first_visit, {
+    .cookie("is_visited", is_visited, {
       httpOnly: true,
     })
     .json({ data: data, message: "ok" });
