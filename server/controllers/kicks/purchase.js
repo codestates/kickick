@@ -101,6 +101,47 @@ module.exports = async (req, res) => {
       }
     );
 
+    // 게시글 정보 구함
+    let post_info = await kicks.findOne({
+      where: {
+        id: kick_id,
+      },
+      include: [
+        {
+          model: posts,
+          include: [
+            {
+              model: users,
+              attributes: [["id", "user_id"]],
+            },
+          ],
+        },
+      ],
+    });
+    post_info = post_info.get({ plain: true });
+    console.log(post_info);
+    const writer_id = post_info.post.user.user_id;
+
+    // 작성자 킥머니 업데이트
+
+    await users.update(
+      {
+        kick_money: sequelize.literal(`kick_money + ${Math.abs(change)}`),
+      },
+      {
+        where: {
+          id: writer_id,
+        },
+      }
+    );
+
+    // 작성자 log에 기록
+    await logs.create({
+      user_id: writer_id,
+      type: "kick_money",
+      content: `킥판매로 ${Math.abs(change)} 킥머니를 얻었습니다.`,
+    });
+
     // log에 기록
     await logs.create({
       user_id: user_id,
