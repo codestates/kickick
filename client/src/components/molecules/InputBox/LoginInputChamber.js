@@ -10,6 +10,9 @@ import {
   todayLoginAction,
   isPointAction,
 } from "../../../store/actions/login";
+import kakaologo from "../../../assets/images/authlogo/kakaologo.png"
+import naverlogo from "../../../assets/images/authlogo/naverlogo.png"
+import googlelogo from "../../../assets/images/authlogo/googlelogo.png";
 
 export default function LoginInputChamber({
   width = 30,
@@ -80,6 +83,17 @@ export default function LoginInputChamber({
           key={idx}
         />
       ))}
+      <AuthLogoContainer height={height}>
+        <a href={kakaoURL}>
+          <AuthLogo height={height} src={kakaologo} alt="kakao" />
+        </a>
+        <a href={naverURL}>
+          <AuthLogo height={height} src={naverlogo} alt="naver" />
+        </a>
+        <a href={googleURL}>
+          <AuthLogo height={height} src={googlelogo} alt="google" />
+        </a>
+      </AuthLogoContainer>
       <SubmitBtn
         width={width}
         height={height}
@@ -88,25 +102,9 @@ export default function LoginInputChamber({
       >
         로그인
       </SubmitBtn>
-      <a href={kakaoURL}>
-        <Test>카카오 로그인</Test>
-      </a>
-      <a href={naverURL}>
-        <Test>네이버 로그인</Test>
-      </a>
-      <a href={googleURL}>
-        <Test>구글 로그인</Test>
-      </a>
     </Container>
   );
 }
-
-const Test = styled.div`
-margin-top:1rem;
-border:1px solid black;
-cursor:pointer;
-:hover{color:red;}
-`
 
 const Container = styled.div`
   display: flex;
@@ -142,4 +140,17 @@ const SubmitBtn = styled.button`
       : `
   opacity: 0.8
   `}
+`;
+
+const AuthLogoContainer = styled.div`
+  display: flex;
+  justify-content:flex-end;
+  gap: ${({ height }) => `${height / 6}rem`};
+  width:100%;
+`;
+
+const AuthLogo = styled.img`
+  width: ${({ height }) => `${height * 1}rem`};
+  height: ${({ height }) => `${height * 1}rem`};
+  border-radius:50%;
 `;
