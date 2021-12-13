@@ -59,9 +59,4 @@ export const tabList = [
     pathname: POST_REPORT_PATHNAME,
     category: CATEGORY_CONTROL,
   },
-  {
-    label: WRITE_NOTICE,
-    pathname: WRITE_NOTICE_PATHNAME,
-    category: CATEGORY_CONTROL,
-  },
 ];

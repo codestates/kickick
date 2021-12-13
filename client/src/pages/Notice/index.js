@@ -18,8 +18,6 @@ import { getNoticesInfo, getNoticesList } from "../../apis/notices";
 import { getListAction } from "../../store/actions/postlist";
 import { getPostInfoAction } from "../../store/actions/postadd";
 
-import event_sample from "../../assets/images/event_sample_landscape.png";
-
 const noticeList = [
   { category: "소식", component: <News /> },
   { category: "이벤트", component: <Event /> },
@@ -27,11 +25,12 @@ const noticeList = [
 
 export default function Notice() {
   const { category } = useParams();
+  if (category !== "소식" && category !== "이벤트") return <div>에러</div>;
   const { component } = noticeList.find((el) => el.category === category);
 
   return (
     <>
-      {/* <BoardTop /> */}
+      <BoardTop />
       <Container>
         <NavContainer>
           <h3>공지</h3>
@@ -60,6 +59,7 @@ export function News() {
   const handleNewPost = () => {
     navigate("edit");
   };
+
   useEffect(() => {
     getNoticesList({
       type: "notice",
