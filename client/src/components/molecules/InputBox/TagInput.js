@@ -63,7 +63,6 @@ const TagContainer = styled.div`
   padding: 0.37rem;
   font-weight: bold;
   color: #66a14b;
-  /* border: 2px solid #f15f5f; */
   background-color: #ececec;
   border-radius: 10px;
 

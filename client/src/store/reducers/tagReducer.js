@@ -1,8 +1,8 @@
-import { SEARCH, DEL_SEARCH, RESET_TAG } from "../actions/postadd";
+import { ADD_TAG, DEL_TAG, RESET_TAG } from "../actions/postadd";
 
 export default function tagReducer(state = [], action) {
   switch (action.type) {
-    case SEARCH:
+    case ADD_TAG:
       let newArr = state.slice();
 
       let idx = newArr.findIndex((el) => el.label === action.payload.label);
@@ -13,7 +13,7 @@ export default function tagReducer(state = [], action) {
       }
       return newArr;
 
-    case DEL_SEARCH:
+    case DEL_TAG:
       let arr = state.slice();
       arr.splice(action.idx, 1);
       return arr;

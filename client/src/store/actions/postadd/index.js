@@ -4,10 +4,11 @@ export const GET_CONTENT = "GET_CONTENT";
 export const GET_THUMBNAIL = "GET_THUMBNAIL";
 export const GET_KICK_CONTENT = "GET_KICK_CONTENT";
 export const GET_POST_INFO = "GET_POST_INFO";
-export const RESET = "RESET";
+export const CHANGE_WRITE_MODE = "CHANGE_WRITE_MODE";
+export const RESET_POSTADD = "RESET_POSTADD";
 export const GO_BACK = "GO_BACK";
-export const SEARCH = "SEARCH";
-export const DEL_SEARCH = "DEL_SEARCH";
+export const ADD_TAG = "ADD_TAG";
+export const DEL_TAG = "DEL_TAG";
 export const RESET_TAG = "RESET_TAG";
 
 export const getCategoryAction = (category, type) => {
@@ -42,6 +43,12 @@ export const getKickContentAction = (kick_content) => {
     payload: { kick_content },
   };
 };
+export const changeWriteModeAction = (mode) => {
+  return {
+    type: CHANGE_WRITE_MODE,
+    payload: { mode },
+  };
+};
 export const getPostInfoAction = (data) => {
   return {
     type: GET_POST_INFO,
@@ -49,9 +56,9 @@ export const getPostInfoAction = (data) => {
   };
 };
 
-export const reset = () => {
+export const resetPostAddAction = () => {
   return {
-    type: RESET,
+    type: RESET_POSTADD,
   };
 };
 
@@ -62,16 +69,16 @@ export const goBack = (trigger) => {
   };
 };
 
-export const search = (label, word) => {
+export const addTagAction = (label, word) => {
   return {
-    type: SEARCH,
+    type: ADD_TAG,
     payload: { label, word },
   };
 };
 
-export const delSearch = (idx) => {
+export const delTagAction = (idx) => {
   return {
-    type: DEL_SEARCH,
+    type: DEL_TAG,
     idx,
   };
 };

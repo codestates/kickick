@@ -19,6 +19,7 @@ import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
 import EditKickBoard from "./pages/KickBoard/EditKickBoard";
 import MyPage from "./pages/MyPage";
 import Notice, { NoticeDetail } from "./pages/Notice";
+import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 
@@ -61,7 +62,7 @@ export default function App() {
   }, [themeMode]);
 
   socketClient.on("connect", () => {
-    console.log("connection server");
+    // console.log("connection server");
 
     socketClient.emit("signin", {
       username: isLogin.username,
@@ -69,7 +70,7 @@ export default function App() {
     });
 
     socketClient.on("alarms", (data) => {
-      console.log("난 1이야", data);
+      // console.log("난 1이야", data);
       dispatch(alarmListAction(data));
     });
 
@@ -118,6 +119,7 @@ export default function App() {
             <Route path="notice/:category" element={<Notice />}>
               <Route path=":notice_id" element={<NoticeDetail />} />
             </Route>
+            <Route path="*" element={<Error />} />
           </Routes>
           <Footer />
         </Container>

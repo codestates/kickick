@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import sampleImg from "../../../assets/images/whale.jpg";
+import default_profile from "../../../assets/images/default/default_profile.jpg";
 
 const profileList = [
   { type: "comment", size: "1.5rem" },
@@ -10,10 +10,15 @@ const profileList = [
   { type: "mypageedit", size: "7rem" },
 ];
 
-export default function Profile({ type, src }) {
+export default function Profile({ type, src = "picture.jpg" }) {
   const { size } = profileList.find((i) => i.type === type);
-
-  return <Container size={size} src={sampleImg} alt="" />;
+  return (
+    <Container
+      size={size}
+      src={src === "picture.jpg" ? default_profile : src}
+      alt=""
+    />
+  );
 }
 
 const Container = styled.img`

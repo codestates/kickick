@@ -15,13 +15,13 @@ import {
   getPostNameAction,
   getContentAction,
   getKickContentAction,
-  reset,
+  resetPostAddAction,
 } from "../../store/actions/postadd";
 
-import introductionicon from "../../assets/images/introductionicon.png";
-import contenticon from "../../assets/images/contenticon.png";
-import titileicon from "../../assets/images/titleicon.png";
-import thumbnailicon from "../../assets/images/thumbnailicon.png";
+import introductionicon from "../../assets/images/icon/introductionicon.png";
+import contenticon from "../../assets/images/icon/contenticon.png";
+import titileicon from "../../assets/images/icon/titleicon.png";
+import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
 
 import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
@@ -76,63 +76,104 @@ export default function EditKickBoard() {
   };
 
   useEffect(() => {
-    dispatch(reset());
+    dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category, "킥"));
   }, [dispatch, category]);
 
   return (
-    <Container>
+    <Wrapper>
       <h1>나만의 킥 작성 </h1>
-      <InfoContainer>
-        <HeadlineContainer>
-          <img src={titileicon} alt="" />
-          <h3>제목</h3>
-        </HeadlineContainer>
-        <TitleInput handlePostName={handlePostName} />
-      </InfoContainer>
-      <InfoContainer>
-        <HeadlineContainer>
-          <img src={thumbnailicon} alt="" />
-          <h3>썸네일</h3>
-        </HeadlineContainer>
-        <DragDrop setThumbnail={setThumbnail} />
-      </InfoContainer>
-      <InfoContainer>
-        <HeadlineContainer>
-          <img src={introductionicon} alt="" />
-          <h3>소개</h3>
-        </HeadlineContainer>
-        <IntroTextarea handleTextarea={handleIntro} />
-      </InfoContainer>
-      <InfoContainer>
-        <HeadlineContainer>
-          <img src={contenticon} alt="" />
-          <h3>본문</h3>
-        </HeadlineContainer>
-        <EditQuill
-          content={content}
-          setContent={setContent}
-          handleContent={handleContent}
-        />
-      </InfoContainer>
-      <BtnContainer>
-        <Common label="등 록" type="bigger" handleClick={handleClick} />
-      </BtnContainer>
-    </Container>
+      <Container>
+        <DividedPage>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={titileicon} alt="" />
+              <h3>제목</h3>
+            </HeadlineContainer>
+            <TitleInput handlePostName={handlePostName} />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={thumbnailicon} alt="" />
+              <h3>썸네일</h3>
+            </HeadlineContainer>
+            <DragDrop setThumbnail={setThumbnail} />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={introductionicon} alt="" />
+              <h3>소개</h3>
+            </HeadlineContainer>
+            <IntroTextarea handleTextarea={handleIntro} />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={contenticon} alt="" />
+              <h3>본문</h3>
+            </HeadlineContainer>
+            <EditQuill
+              content={content}
+              setContent={setContent}
+              handleContent={handleContent}
+            />
+          </InfoContainer>
+          <BtnContainer>
+            <Common label="등 록" type="bigger" handleClick={handleClick} />
+          </BtnContainer>
+        </DividedPage>
+        <DividedPage>
+          <InfoContainer>
+            <h3>{state.post_name}</h3>
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={thumbnailicon} alt="" />
+              <h3>썸네일</h3>
+            </HeadlineContainer>
+            <DragDrop setThumbnail={setThumbnail} />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={introductionicon} alt="" />
+              <h3>소개</h3>
+            </HeadlineContainer>
+            <IntroTextarea handleTextarea={handleIntro} />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
+              <img src={contenticon} alt="" />
+              <h3>본문</h3>
+            </HeadlineContainer>
+            <EditQuill
+              content={content}
+              setContent={setContent}
+              handleContent={handleContent}
+            />
+          </InfoContainer>
+          <BtnContainer>
+            <Common label="등 록" type="bigger" handleClick={handleClick} />
+          </BtnContainer>
+        </DividedPage>
+      </Container>
+    </Wrapper>
   );
 }
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 48rem;
-  margin: 8rem auto;
-  gap: 1rem;
-
+const Wrapper = styled.div`
   h1 {
     font-size: 3rem;
     font-weight: bold;
     color: skyblue;
   }
+`;
+const Container = styled.div`
+  display: flex;
+`;
+const DividedPage = styled.div`
+  width: calc(50% - 4rem);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 1rem;
 `;
 const InfoContainer = styled.div`
   display: flex;

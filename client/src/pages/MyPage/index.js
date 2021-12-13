@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MyPageAside,
   Landscape,
@@ -16,18 +16,23 @@ import { FaArrowLeft } from "react-icons/fa";
 import { getPostsList } from "../../apis/posts";
 import { getComments } from "../../apis/comments";
 import { getFavorites } from "../../apis/favorites";
+import { getLogs } from "../../apis/logs";
+import { getKicksList } from "../../apis/kicks";
 
 import {
   getFavoritesAction,
   getMyPostAction,
   getMyCommentAction,
+  getKickmoneylogAction,
+  getPurchasedKickAction,
 } from "../../store/actions/mypage";
 
 import { selectPageAction } from "../../store/actions/postsearch";
 
-import profileinfoicon from "../../assets/images/profileinfoicon.png";
-import activityicon from "../../assets/images/activityicon.png";
-import purchaselog from "../../assets/images/purchaselog.png";
+import controlicon from "../../assets/images/icon/controlicon.png";
+import profileinfoicon from "../../assets/images/icon/profileinfoicon.png";
+import activityicon from "../../assets/images//icon/activityicon.png";
+import purchaselog from "../../assets/images//icon/purchaselogicon.png";
 
 import {
   PROFILE,
@@ -35,6 +40,8 @@ import {
   FAVORITES,
   MY_POST,
   MY_COMMENT,
+  PURCHASED_KICK,
+  KICKMONEY_LOG,
 } from "../../commons/constants/mypage";
 
 const pageList = [
@@ -44,12 +51,49 @@ const pageList = [
   { category: "favorites", component: <Favorites />, title: FAVORITES },
   { category: "mypost", component: <MyPost />, title: MY_POST },
   { category: "mycomment", component: <MyComment />, title: MY_COMMENT },
+  { category: "kick", component: <PurchasedKick />, title: PURCHASED_KICK },
+  { category: "log", component: <KickmoneyLog />, title: KICKMONEY_LOG },
 ];
 
 export default function MyPage() {
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
+  const dispatch = useDispatch();
+  const postsearch = useSelector((state) => state.postsearch);
+  const { isLogin } = useSelector((state) => state.login);
 
+  useEffect(() => {
+    getFavorites(null, null, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getFavoritesAction(data));
+      })
+      .catch((err) => console.log(err));
+
+    getPostsList({ page_num: postsearch.selectPage })
+      .then((data) => {
+        dispatch(getMyPostAction(data));
+      })
+      .catch((err) => console.log(err));
+
+    getComments(null, null, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getMyCommentAction(data));
+      })
+      .catch((err) => console.log(err));
+    getKicksList(10, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getPurchasedKickAction(data));
+      })
+      .catch((err) => console.log(err));
+    getLogs("kick_money", 10, postsearch.selectPage)
+      .then((data) => {
+        console.log(data);
+        dispatch(getKickmoneylogAction(data));
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch, postsearch.selectPage]);
+
+  if (!isLogin) return <div>d</div>;
   return (
     <>
       <Landscape />
@@ -65,8 +109,18 @@ export default function MyPage() {
 }
 
 export function Home() {
+  const { isLogin } = useSelector((state) => state.login);
   return (
     <HomeWrapper>
+      {isLogin.type === "admin" && (
+        <ListContainer>
+          <Subtitle>
+            <img src={controlicon} alt="" />
+            <h2>관리</h2>
+          </Subtitle>
+          <TabBox category="관리" />
+        </ListContainer>
+      )}
       <ListContainer>
         <Subtitle>
           <img src={profileinfoicon} alt="" />
@@ -102,50 +156,33 @@ export function Attendance() {
 }
 
 export function Favorites() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getFavorites()
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getFavoritesAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagefavorites" />;
 }
 export function MyPost() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getPostsList({})
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getMyPostAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagemypost" />;
 }
 export function MyComment() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getComments()
-      .then((data) => {
-        dispatch(selectPageAction(1));
-        dispatch(getMyCommentAction(data));
-      })
-      .catch((err) => console.log(err));
-  }, [dispatch]);
   return <PostList type="mypagemycomment" />;
+}
+
+export function PurchasedKick() {
+  return <PostList type="mypagemycomment" />;
+}
+
+export function KickmoneyLog() {
+  return <PostList type="mypagelog" />;
 }
 
 export function Navigator({ title }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <NavContainer>
       <FaArrowLeft
         onClick={() => {
           navigate(-1);
+          dispatch(selectPageAction(1));
         }}
       />
       <h2>{title}</h2>
