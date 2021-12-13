@@ -53,8 +53,9 @@ export const resetPaginationAction = () => {
   };
 };
 
-export const resetSearchReducerAction = () => {
+export const resetSearchReducerAction = (align) => {
   return {
     type: RESET_SEARCH_REDUCER,
+    payload: { align },
   };
 };

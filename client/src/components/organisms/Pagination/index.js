@@ -11,7 +11,7 @@ export default function Pagination({ count }) {
   const [selectDivPage, setSelectDivPage] = useState(0);
   const { selectPage, limitPage } = useSelector((state) => state.postsearch);
 
-  const totalPage = count !== 0 ? Math.ceil(count / 20) : 1;
+  const totalPage = count !== 0 ? Math.ceil(count / 10) : 1;
   const dividPage = Math.ceil(totalPage / limitPage);
   const firstPage = limitPage * (selectDivPage + 1) - (limitPage - 1);
 

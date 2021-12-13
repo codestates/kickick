@@ -45,6 +45,9 @@ export const store = configureStore({
     alarmList: alarmListReducer,
     postsearch: postsearchReducer,
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

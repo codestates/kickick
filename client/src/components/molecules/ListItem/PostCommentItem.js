@@ -38,16 +38,17 @@ export default function PostCommentItem({ item, handleDelComment }) {
             <IconBox label="cmtDel" handleClick={handleModalOn}></IconBox>
           </Del>
         ) : null}
-        {modal ? (
-          <Modal
-            handleModal={handleModalOff}
-            handleModalFunc={hadleModalFunc}
-            type="del"
-          />
-        ) : null}
+
         <div className="datetime">{dateConverter(item.created_at)}</div>
       </UserInfoContainer>
       <div className="comment">{item.content}</div>
+      {modal ? (
+        <Modal
+          handleModal={handleModalOff}
+          handleModalFunc={hadleModalFunc}
+          type="del"
+        />
+      ) : null}
     </Container>
   );
 }

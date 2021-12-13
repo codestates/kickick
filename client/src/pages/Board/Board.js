@@ -28,12 +28,12 @@ export default function Board() {
   useEffect(() => {
     dispatch(getCategoryAction(category));
     if (!onoff) {
-      dispatch(resetSearchReducerAction());
+      dispatch(resetSearchReducerAction(postsearch.align));
       dispatch(resetTag());
     }
     dispatch(resetListAction());
     dispatch(goBack(false));
-  }, [category, dispatch]);
+  }, [category, postsearch.align, dispatch]);
 
   useEffect(() => {
     getPostsList({
@@ -41,7 +41,7 @@ export default function Board() {
       post_name: postsearch.title,
       username: postsearch.writer,
       tag: postsearch.tag,
-      limit: 20,
+      limit: 10,
       favorite_count: postsearch.align === "인기" ? 1 : null,
       page_num: postsearch.selectPage,
     })
@@ -67,7 +67,7 @@ export default function Board() {
       <BoardTop />
       <Container>
         <BoardContainer>
-          <TotalSearch setLoading={setLoading} />
+          <TotalSearch />
           <PostList type="freepost" />
         </BoardContainer>
       </Container>
