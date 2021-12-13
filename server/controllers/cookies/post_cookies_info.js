@@ -11,13 +11,13 @@ module.exports = async (req, res) => {
       .status(400)
       .json({ data: null, message: "수정할 쿠키내용이 존재하지 않습니다." });
   }
+  const is_visited = req.body.is_visited;
 
   let data = {
     ...req.cookies,
-    is_visited: req.body.is_visited,
+    is_visited: is_visited,
   };
   delete data.token;
-  let is_visited = req.body.is_visited;
 
   return res
     .status(200)
