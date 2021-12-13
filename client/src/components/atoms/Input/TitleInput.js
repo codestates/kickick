@@ -25,7 +25,7 @@ export default function TitleInput({
 const Title = styled.input`
   width: 30rem;
   font-size: 1.2rem;
-  border-bottom: 3px solid transparent;
+  border-bottom: 3px solid #eee;
   &:focus {
     border-bottom: 3px solid skyblue;
   }
@@ -34,8 +34,9 @@ const Title = styled.input`
     type === "title" &&
     css`
       width: 24rem;
-      font-size: 2.8rem;
-      font-weight: bold;
+      font-size: 1.2rem;
+      height: 2.5rem;
+      padding: 0.5rem;
     `}
 
   ${({ type }) =>

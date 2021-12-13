@@ -19,6 +19,7 @@ import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
 import EditKickBoard from "./pages/KickBoard/EditKickBoard";
 import MyPage from "./pages/MyPage";
 import Notice, { NoticeDetail } from "./pages/Notice";
+import EditNotice from "./pages/Notice/EditNotice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
@@ -118,6 +119,7 @@ export default function App() {
             <Route path="mypage/:category" element={<MyPage />} />
             <Route path="notice/:category" element={<Notice />}>
               <Route path=":notice_id" element={<NoticeDetail />} />
+              <Route path="edit" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
           </Routes>

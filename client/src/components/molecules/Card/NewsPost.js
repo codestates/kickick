@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-
-export default function NewsPost() {
+import { useNavigate } from "react-router";
+export default function NewsPost({ data }) {
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate(`${data.notice_id}`)}>
       <LogoBox>KICK</LogoBox>
       <ContentContainer>
-        <h2>[공지] 킥머니 오류가 생겨서 모두 초기화합니다 잘먹고 갑니다 </h2>
+        <h2>{data.notice_name} </h2>
         <DetailInfo>
-          <span>3달전</span>
+          <span>{data.created_at}</span>
           <span>운영자</span>
         </DetailInfo>
       </ContentContainer>
@@ -22,6 +23,7 @@ const Container = styled.div`
   gap: 1rem;
   border-bottom: 1px solid #d8d8d8;
   padding: 1rem;
+  width: 100%;
 `;
 
 const LogoBox = styled.div`
