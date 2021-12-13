@@ -1,5 +1,7 @@
 const { users, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
   // TODO 알림 정보 조회 구현
@@ -26,43 +28,23 @@ module.exports = async (req, res) => {
   }
 
   const { username } = decoded;
-  let data = new Object();
+  let data;
+  let count;
 
   try {
+    // 그냥 공지까지 포함헤서 count 보내주세요
+    // 토큰으로 user_id 구함
     let user_info = await users.findOne({
-      attributes: ["id"],
+      attributes: [["id", "user_id"]],
       where: {
         username: username,
       },
-      include: [
-        {
-          model: alarms,
-          attributes: [
-            ["id", "alarm_id"],
-            "type",
-            "reference",
-            "content",
-            "is_checked",
-            "created_at",
-          ],
-          offset: limit * (page_num - 1),
-          limit: limit,
-        },
-      ],
+      raw: true,
     });
-    user_info = user_info.get({ plain: true });
-    // user_info 가공
-    data.alarms = [];
-    if (user_info.length !== 0) {
-      user_info = user_info.alarms.map((el) => {
-        el.reference = JSON.parse(el.reference);
-        return el;
-      });
-      data.alarms = user_info;
-    }
 
-    // 공지 알림 구함
-    let notice_alarms = await alarms.findAll({
+    const user_id = user_info.user_id;
+
+    data = await alarms.findAndCountAll({
       attributes: [
         ["id", "alarm_id"],
         "type",
@@ -71,28 +53,36 @@ module.exports = async (req, res) => {
         "is_checked",
         "created_at",
       ],
+      where: {
+        [Op.or]: [
+          {
+            user_id: user_id,
+          },
+          {
+            user_id: null,
+          },
+        ],
+        is_checked: false,
+      },
+      order: [["id", "DESC"]],
       offset: limit * (page_num - 1),
       limit: limit,
-      where: {
-        type: "notices",
-      },
     });
 
-    // notice_alarms 가공
-    data.notices = [];
-    console.log(notice_alarms);
-    if (notice_alarms.length !== 0) {
-      notice_alarms = notice_alarms.map((el) => {
-        el = el.get({ plain: true });
-        el.reference = JSON.parse(el.reference);
-        return el;
-      });
-      data.notices = notice_alarms;
-    }
+    // count 와 실제 데이터 배열 재할당
+    count = data.count;
+    data = data.rows;
+
+    // reference 필드 파싱
+    data = data.map((el) => {
+      el = el.get({ plain: true });
+      el.reference = JSON.parse(el.reference);
+      return el;
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

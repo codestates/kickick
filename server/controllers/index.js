@@ -1,6 +1,7 @@
 module.exports = {
   test: require("./test"),
-  upload: require("./multer"),
+  upload: require("./bucket").upload,
+  destroy: require("./bucket").destroy,
   // users
   get_users_info: require("./users/get_users_info"),
   post_users_info: require("./users/post_users_info"),
@@ -13,6 +14,7 @@ module.exports = {
   email_auth: require("./auth/email_auth"),
   naver: require("./auth/naver"),
   kakao: require("./auth/kakao"),
+  google: require("./auth/google"),
   // posts
   get_posts_info: require("./posts/get_posts_info"),
   get_posts_list: require("./posts/get_posts_list"),
@@ -57,4 +59,7 @@ module.exports = {
   // logs
   get_logs_info: require("./logs/get_logs_info"),
   delete_logs_info: require("./logs/delete_logs_info"),
+  // cookies
+  get_cookies_info: require("./cookies/get_cookies_info"),
+  post_cookies_info: require("./cookies/post_cookies_info"),
 };

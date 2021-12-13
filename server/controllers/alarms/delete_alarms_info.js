@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       .json({ data: err, message: "토큰이 만료되었습니다." });
   }
 
-  const { username } = decoded;
+  const { type, username } = decoded;
   const alarm_id = req.params.alarm_id;
 
   try {
@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
     }
     alarm_info = alarm_info.get({ plain: true });
 
-    if (user_id !== alarm_info.user_id) {
+    if (user_id !== alarm_info.user_id && type !== "admin") {
       return res.status(401).json({ data: err, message: "권한이 없습니다." });
     }
 
