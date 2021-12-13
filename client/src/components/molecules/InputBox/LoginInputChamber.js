@@ -62,21 +62,6 @@ export default function LoginInputChamber({
       }, 1000);
     }
   };
-  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  const tempoAuth = () => {
-    signUp({ type: "guest" }).then((res) => {
-      if (res.data.message === "guest 회원가입") {
-        tempoSignIn(res.data.data.username)
-          .then((res) => {
-            dispatch(isLoginAction(res.data.data));
-            dispatch(isPointAction(res.data.data.kick_money));
-          })
-          .then(() => navigate("/", { replace: true }))
-          .catch((err) => console.log(err));
-      }
-    });
-  };
-  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   
   return (
     <Container width={width} height={height}>
@@ -102,7 +87,6 @@ export default function LoginInputChamber({
       >
         로그인
       </SubmitBtn>
-      <Test onClick={tempoAuth}>이거 클릭하면 임시 로그인</Test>
       <a href={kakaoURL}>
         <Test>카카오 로그인</Test>
       </a>

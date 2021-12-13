@@ -1,10 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 
 import alien from "../../../assets/images/alien.svg"
 import astronaut from "../../../assets/images/astronaut.svg";
 import talkBubble from "../../../assets/images/talkBubble.png";
+import { signUp, tempoSignIn } from "../../../apis/auth";
+import {
+  isLoginAction,
+  isPointAction,
+} from "../../../store/actions/login";
 
 export default function ImageBtn({
   context = ["킥에 대해", "알아보러 가기"],
@@ -14,14 +20,30 @@ export default function ImageBtn({
   talk="아니요"
 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const movePage = () => {
     if (pathname === "/") {
       neverSeeNext();
+      navigate(pathname, { replace: true });
+    } else {
+      tempoAuth();
     }
-
-    navigate(pathname, { replace: true });
   }
+
+  const tempoAuth = () => {
+    signUp({ type: "guest" }).then((res) => {
+      if (res.data.message === "guest 회원가입") {
+        tempoSignIn(res.data.data.username)
+          .then((res) => {
+            dispatch(isLoginAction(res.data.data));
+            dispatch(isPointAction(res.data.data.kick_money));
+          })
+          .then(() => navigate(pathname, { replace: true }))
+          .catch((err) => console.log(err));
+      }
+    });
+  };
 
   const neverSeeNext = () => {
     // 여기다가 처음 방문아니면 쿠키 받아오는 api 설치
