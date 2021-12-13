@@ -20,6 +20,7 @@ export { default as IntroTextarea } from "./atoms/Textarea/IntroTextarea";
 export { default as IconBox } from "./atoms/IconBox";
 export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 export { default as Modal } from "./atoms/Modal";
+export { default as InfiniteScroll } from "./atoms/InfiniteScroll";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
@@ -61,3 +62,4 @@ export { default as Pagination } from "./organisms/Pagination";
 export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
 export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";
 export { default as S_TotalSearch } from "./organisms/TotalSearch/S_TotalSearch";
+export { default as DragDrop } from "./organisms/DragDrop";

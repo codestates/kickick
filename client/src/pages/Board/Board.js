@@ -8,7 +8,8 @@ import BoardSkeleton from "./BoardSkeleton";
 
 import { getPostsList } from "../../apis/posts";
 
-import { getList } from "../../store/actions/postadd/boardList";
+import { getListAction, resetListAction } from "../../store/actions/postlist";
+
 import {
   getCategoryAction,
   resetTag,
@@ -30,8 +31,9 @@ export default function Board() {
       dispatch(resetSearchReducerAction());
       dispatch(resetTag());
     }
+    dispatch(resetListAction());
     dispatch(goBack(false));
-  }, [category]);
+  }, [category, dispatch]);
 
   useEffect(() => {
     getPostsList({
@@ -44,11 +46,12 @@ export default function Board() {
       page_num: postsearch.selectPage,
     })
       .then((data) => {
-        dispatch(getList(data.data));
+        dispatch(getListAction(data.data));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
   }, [
+    dispatch,
     apiCategory,
     loading,
     postsearch.selectPage,

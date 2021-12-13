@@ -11,6 +11,9 @@ import {
 
 const initialState = {
   align: "최신",
+  tag: "",
+  title: "",
+  writer: "",
   selectPage: 1,
   limitPage: 10,
 };

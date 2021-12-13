@@ -21,7 +21,7 @@ const Container = styled(Link)`
   width: calc(50% - 0.5rem);
   height: 3rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 0.3rem;
   background-color: white;
   font-size: 1rem;
   font-family: Roboto, "Noto Sans KR", sans-serif;

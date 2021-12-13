@@ -3,9 +3,11 @@ import {
   GET_POST_NAME,
   GET_CONTENT,
   GET_KICK_CONTENT,
-  RESET,
+  RESET_POSTADD,
 } from "../actions/postadd";
+
 const initialState = {
+  mode: "new",
   category: "",
   post_name: "",
   content: "",
@@ -21,7 +23,7 @@ export default function postAddReducer(state = initialState, action) {
       return { ...state, ...action.payload };
     case GET_KICK_CONTENT:
       return { ...state, ...action.payload };
-    case RESET:
+    case RESET_POSTADD:
       return initialState;
     default:
       return state;

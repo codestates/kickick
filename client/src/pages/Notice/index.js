@@ -7,7 +7,6 @@ import {
   CardBox,
   EventPost,
   NewsPost,
-  Align,
   BoardTop,
   IconText,
 } from "../../components";
@@ -48,30 +47,15 @@ export default function Notice() {
 export function News() {
   return (
     <NewsContainer>
-      <CardBox>
-        <NewsPost />
-      </CardBox>
+      <CardBox type="news" />
     </NewsContainer>
   );
 }
 
 export function Event() {
-  // const [highlight, setHighlight] = useState("진행중인 이벤트");
-  // const handleAlign = (event) => {
-  //   const label = event.target.innerText;
-  //   setHighlight(label);
-  // };
-
   return (
     <EventContainer>
-      {/* <Align
-        category="이벤트"
-        highlight={highlight}
-        handleAlign={handleAlign}
-      /> */}
-      <CardBox>
-        <EventPost />
-      </CardBox>
+      <CardBox type="event" />
     </EventContainer>
   );
 }

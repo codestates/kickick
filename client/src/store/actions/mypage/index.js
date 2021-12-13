@@ -25,3 +25,21 @@ export const getMyCommentAction = ({ data: { data, count } }) => {
     payload: { mycomment: { count, data } },
   };
 };
+
+export const getPurchasedKickAction = ({ data: { data, count } }) => {
+  return {
+    type: GET_PURCHASED_KICK,
+    payload: { kick: { count: 20, data } },
+  };
+};
+
+export const getKickmoneylogAction = ({
+  data: {
+    data: { logs },
+  },
+}) => {
+  return {
+    type: GET_KICKMONEY_LOG,
+    payload: { log: { count: 20, data: logs } },
+  };
+};

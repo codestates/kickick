@@ -27,6 +27,12 @@ const postItemList = [
       return <MyPageFavorites data={data} />;
     },
   },
+  {
+    type: "mypagelog",
+    component(data) {
+      return <MyPageLogs data={data} />;
+    },
+  },
 ];
 
 export default function PostItem({ type, data }) {
@@ -115,10 +121,19 @@ export function MyPageFavorites({ data }) {
   );
 }
 
+export function MyPageLogs({ data }) {
+  return (
+    <Container>
+      <div>{data.created_at}</div>
+      <div>{data.content}</div>
+      <div>{"출석"}</div>
+    </Container>
+  );
+}
+
 const Container = styled.div`
   color: #666;
   font-size: 0.9rem;
-
   div:nth-of-type(2) {
     text-align: start;
     font-size: 0.95rem;
@@ -128,7 +143,7 @@ const Container = styled.div`
     margin: 0 0.2rem;
     font-weight: bold;
     font-size: 0.8rem;
-    color: hotpink;
+    color: #f90716;
   }
 
   a {

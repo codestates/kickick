@@ -22,6 +22,16 @@ const postList = [
     type: "mypagemycomment",
     label: ["글 제목", "댓글", "날짜"],
   },
+  // {
+  //   reducer: ["mypage", "kick"],
+  //   type: "mypagekick",
+  //   label: ["글 제목", "댓글", "날짜"],
+  // },
+  {
+    reducer: ["mypage", "log"],
+    type: "mypagelog",
+    label: ["날짜", "변동", "이벤트"],
+  },
   {
     reducer: ["board"],
     type: "freepost",
@@ -35,9 +45,7 @@ export default function PostList({ type }) {
   const { pathname } = useLocation();
   const [page, category] = decodeURI(pathname).slice(1).split("/");
   const [modal, setModal] = useState(false);
-  // const { data, count } = useSelector(
-  //   (state) => state[`${page}`][`${category}`]
-  // );
+
   let data;
   let count;
   const freepost = useSelector((state) => state[`${reducer[0]}`]);
@@ -52,6 +60,7 @@ export default function PostList({ type }) {
     data = mypage.data;
     count = mypage.count;
   }
+
   const navigate = useNavigate();
 
   const handleMovePage = () => {
@@ -166,7 +175,7 @@ const PostListContainer = styled.div`
       `}
 
     ${({ type }) =>
-      type === "mypagemycomment" &&
+      (type === "mypagemycomment" || type === "mypagelog") &&
       css`
         > div:nth-of-type(1) {
           flex: 3;
@@ -183,10 +192,11 @@ const PostListContainer = styled.div`
       type === "freepost" &&
       css`
         > div:nth-of-type(1) {
-          flex: 3;
+          flex: 2;
         }
         > div:nth-of-type(2) {
           flex: 4;
+          padding-left: 4rem;
           color: black;
         }
         > div:nth-of-type(3) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,12 +7,13 @@ import disableScroll from "disable-scroll";
 import { delPost } from "../../../apis/posts";
 import { createFavorites, delFavorites } from "../../../apis/favorites";
 import { goBack } from "../../../store/actions/postadd";
-import { IconBox, Modal } from "../../";
+import { IconBox, Modal } from "../../../components";
 
 export default function IconContainer() {
   const [modal, setModal] = useState(false);
   const { post_id } = useParams();
-  const { board, postInfo, login } = useSelector((state) => state);
+  const { board, login } = useSelector((state) => state);
+  const { postInfo } = useSelector((state) => state.persist);
   const [heart, setHeart] = useState(
     postInfo.favorite === "true" ? true : false
   );
@@ -69,13 +70,17 @@ export default function IconContainer() {
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />
-      {postInfo.user.username === login.isLogin.username ||
-      login.isLogin.type === "admin" ? (
+      {postInfo.user.username === login.isLogin.username ? (
         <>
           <IconBox label="edit" handleClick={handleClick} />
           <IconBox label="postDel" handleClick={handleModalOn} />
         </>
-      ) : heart ? (
+      ) : (
+        login.isLogin.type === "admin" && (
+          <IconBox label="postDel" handleClick={handleModalOn} />
+        )
+      )}
+      {postInfo.user.username === login.isLogin.username ? null : heart ? (
         <IconBox label="red" handleClick={handleClick} />
       ) : (
         <IconBox label="heart" handleClick={handleClick} />

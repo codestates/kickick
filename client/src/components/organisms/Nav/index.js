@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,12 +10,13 @@ import { themeModeAction } from "../../../store/actions/nav";
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
-export default function Nav({ themeCode }) {
+export default function Nav({ themeCode, socketClient }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
   const themeMode = useSelector((state) => state.themeMode);
   const userPoint = useSelector((state) => state.login.isPoint);
+  const socketChange = useSelector((state) => state.socket);
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
 
@@ -30,6 +31,15 @@ export default function Nav({ themeCode }) {
     if (themeMode === "light") dispatch(themeModeAction("dark"));
     else dispatch(themeModeAction("light"));
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      socketClient.emit("alarms", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
+    }
+  }, [socketChange, isLogin]);
 
   return (
     <Container
@@ -65,7 +75,7 @@ export default function Nav({ themeCode }) {
             />
           </LoginChanger>
           <LoginChanger isLogin={isLogin && isLogin.type !== "guest"}>
-            {/* <AlarmBtn /> */}
+            <AlarmBtn />
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
               context="로그아웃"

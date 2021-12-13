@@ -1,19 +1,27 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-export default function Common({ label, type, handleClick }) {
+export default function Common({ label, type, handleClick, disabled }) {
   return (
-    <Container onClick={handleClick} type={type}>
+    <Container onClick={handleClick} type={type} disabled={disabled}>
       {label}
     </Container>
   );
 }
+const shake = keyframes`
+  0% {  transform: scale(0.98); }
+  20% {  transform: scale(1); }
+  40% { margin-left: -10px; }
+  60% { margin-left: 0; margin-right: -10px; }
+  80% { margin-right: 0; margin-left: -10px; }
+  100% { margin: 0; } 
+`;
 
-const Container = styled.div`
+const Container = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
+  height: 2.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: #0c0c42;
@@ -21,6 +29,13 @@ const Container = styled.div`
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: default;
+      background-color: gray;
+    `}
 
   ${({ type }) =>
     type === "imgedit" &&
@@ -40,23 +55,28 @@ const Container = styled.div`
     css`
       margin-left: auto;
       width: 5rem;
-      height: 2.5rem;
+
       &:hover {
         background-color: gray;
       }
     `}
 
-    ${({ type }) =>
+    ${({ type, disabled }) =>
     type === "mypage" &&
+    !disabled &&
     css`
-      height: 2.5rem;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+        transition: all 0.25s linear;
+      }
     `}
 
     ${({ type }) =>
     type === "new" &&
     css`
       width: 10rem;
-      height: 2.5rem;
+
       background-color: white;
       border: 1px solid #d8d8d8;
       color: #aaa;
@@ -69,12 +89,29 @@ const Container = styled.div`
     type === "bigger" &&
     css`
       width: 10rem;
+
+      &:hover {
+        background-color: gray;
+      }
     `}
 
     ${({ type }) =>
     type === "confirm" &&
     css`
-      height: 4rem;
       background-color: skyblue;
+    `}
+
+    ${({ type }) =>
+    type === "error" &&
+    css`
+      background-color: red;
+      animation: 0.3s linear ${shake};
+    `}
+
+    ${({ type }) =>
+    type === "resign" &&
+    css`
+      background-color: red;
+      width: 15rem;
     `}
 `;
