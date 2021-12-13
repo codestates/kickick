@@ -43,13 +43,13 @@ export default function Main() {
       .then((res) => setKickList(res.data.data))
       .then(() => setKickListLoding(true));
     // 가장 최신 공지 하나 불러오기
-    getNoticesList(null, "notice", 1, 1).then((res) => {
+    getNoticesList("", "notice", 1, 1).then((res) => {
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
         .then(() => setNoticeLoding(true));
     });
     // 이벤트 리스트 불러오기
-    getNoticesList(null, "event", 4, 1)
+    getNoticesList("", "event", 4, 1)
       .then((res) => {
         setEventInfo([...res.data.data]);
       })
@@ -100,7 +100,7 @@ const ContentSection = styled.section`
   margin: 2vw 0;
 `;
 
-const Title = styled.h1`
+const Title = styled.p`
   align-self:flex-start;
   font-size: 2vw;
   font-family:${({theme})=>theme.fontFamily.jua};

@@ -1,10 +1,8 @@
 import api from "./";
 /**
- *  @param {string} email
- *  @param {string} password
+ *  @param {object} data
  **/
-export const duplicationCheck = (email, password) =>
-  api.post(`/auth/duplication-check`, { email, password });
+export const duplicationCheck = (data) => api.post(`/auth/duplication-check`, data);
   /**
  *  @param {boolean} todayLogin
  **/

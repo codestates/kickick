@@ -64,6 +64,7 @@ export default function SignupForm() {
 
   const [inputValue, setInputValue] = useState({ type: params.type });
   const [isvalid, setIsVaild] = useState([]);
+  const [isDuplicate, setIsDuplicate] = useState([false, false]);
   const [conditionCheck,setConditionCheck] = useState({})
 
 
@@ -86,16 +87,25 @@ export default function SignupForm() {
   const vaildHanlder = (idx,validation) => {
     const newArr = [...isvalid];
     newArr[idx] = validation;
-    console.log(validation);
     setIsVaild([...newArr]);
   }
 
+  const duplicateCheckHanlder = (idx, duplicate) => {
+    const newArr = [...isDuplicate];
+    newArr[idx] = duplicate;
+    setIsDuplicate([...newArr]);
+  };
+
   const submitHandler = () => {
     let countIsvalid = 0;
+    let countDuplicate = 0;
     let countCondition = 0;
 
     for (let i = 0; i < isvalid.length; i++) {
       if(isvalid[i] === true) countIsvalid++;
+    }
+    for (let i = 0; i < isDuplicate.length; i++) {
+      if (isDuplicate[i] === true) countDuplicate++;
     }
     for (let k = 0; k < conditionArr.length; k++) {
       if (conditionArr[k].essential) countCondition++;
@@ -103,24 +113,29 @@ export default function SignupForm() {
     for (let l = 0; l < Object.values(conditionCheck).length; l++) {
       if(Object.values(conditionCheck)[l]) countCondition--;
     }
+
     if (
       isLogin === false &&
       countCondition === 0 &&
       countIsvalid === ArrInfo.length &&
+      countDuplicate === 2 &&
       Object.keys(inputValue).join("").includes("birthday")
     ) {
-      signUp(inputValue)
-        .then(() => navigate("/", { replace: true }));
+      signUp(inputValue).then(() => navigate("/", { replace: true }));
     }
     if (
-      isLogin&& isLogin.type === "guest" &&
+      isLogin &&
+      isLogin.type === "guest" &&
       countCondition === 0 &&
+      countDuplicate === 2 &&
       countIsvalid === ArrInfo.length &&
       Object.keys(inputValue).join("").includes("birthday")
     ) {
       tempoSignUp(inputValue).then(() => navigate("/", { replace: true }));
     }
   }
+
+  console.log(isDuplicate);
   return (
     <Container>
       {ArrInfo.map((el, idx) => (
@@ -132,6 +147,7 @@ export default function SignupForm() {
           height={height}
           placeholder={el.placeholder}
           inputHandler={inputHandler}
+          duplicateCheckHanlder={duplicateCheckHanlder}
           moveNextInput={moveNextInput}
           inputRef={el.inputRef}
           validation={el.validation}

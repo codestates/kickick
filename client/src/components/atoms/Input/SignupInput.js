@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { duplicationCheck } from "../../../apis/auth";
+
 export default function SignupInput({
   type = "text",
   part = "username",
@@ -10,6 +12,7 @@ export default function SignupInput({
   height = 3,
   placeholder = "nickname1234",
   moveNextInput,
+  duplicateCheckHanlder,
   inputRef,
   isChange,
   setIsChange,
@@ -17,14 +20,29 @@ export default function SignupInput({
   idx,
 }) {
   const [inputValue, setInputValue] = useState("");
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
   const contextHandler = (e) => {
-    console.log("여기", validation(e.target.value).isValid);
-    console.log("저기", validation(e.target.value).message);
     setIsChange(true);
     setInputValue(e.target.value);
     vaildHanlder(idx, validation(e.target.value).isValid);
     inputHandler(part, e.target.value);
+    duplicateCheckHanlder(idx, false);
+    setIsDuplicate(false);
+  };
+
+  const duplicate = (part, value) => {
+    const newObj = {};
+    newObj[part] = value;
+    duplicationCheck(newObj)
+      .then(() => {
+        setIsDuplicate(true);
+        duplicateCheckHanlder(idx, true)
+      })
+      .catch(() => {
+        setIsDuplicate(false);
+        duplicateCheckHanlder(idx, false)
+      });
   };
 
   const enterHanlder = (e, func) => {
@@ -52,15 +70,26 @@ export default function SignupInput({
           placeholder={`ex) ${placeholder}`}
           ref={inputRef}
         />
+        <Duplication
+          onClick={() => duplicate(part, inputValue)}
+          part={part}
+          height={height}
+        >
+          중복체크
+        </Duplication>
       </Container>
       <Warning
         height={height}
         isChange={isChange}
         validation={validation}
         inputValue={inputValue}
+        isDuplicate={isDuplicate}
+        part={part}
       >
-        {validation(inputValue).message === "pass"
+        {validation(inputValue).message === "pass" && isDuplicate
           ? ""
+          : validation(inputValue).message === "pass" && !isDuplicate
+          ? "중복체크 버튼을 눌러주세요"
           : validation(inputValue).message}
       </Warning>
     </>
@@ -102,8 +131,22 @@ const Input = styled.input`
 
 const Warning = styled.div`
   padding-left: ${({ height }) => `${height / 15}rem`};
-  visibility: ${({ isChange, validation, inputValue }) =>
-    !isChange || validation(inputValue).isValid ? "hidden" : "visible"};
+  visibility: ${({ isChange, validation, inputValue, isDuplicate, part }) =>
+    !isChange || (validation(inputValue).isValid && (isDuplicate || part === "password"))
+      ? "hidden"
+      : "visible"};
   font-family: ${({ theme }) => theme.fontFamily.jua};
   color: red;
+`;
+
+
+const Duplication = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: ${({ height }) => `${height / 4}rem`};
+  display: ${({ part }) => (part !== "password" ? "default" : "none")};
+  width: ${({ height }) => `${height * 1.5}rem`};
+  font-size: ${({ height }) => `${height / 3}rem`};
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+  cursor: pointer;
 `;
