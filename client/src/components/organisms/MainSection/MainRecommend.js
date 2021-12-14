@@ -24,7 +24,6 @@ export default function MainRecommend({
   };
 
   // console.log("kick", Object.keys(kickListInfo));
-  // console.log(Object.keys(kickListInfo).length > 1);
   return (
     <Container>
       <BtnContainer>
@@ -48,31 +47,22 @@ export default function MainRecommend({
                 ))}
               </ContentPage>
               <ContentPage name="3days">
-                {kickListInfo.data_by_3days.map((el) => (
-                  <KickBtn
-                    key={el.post_name}
-                    onClick={() => navigate(`/detailkick`)}
-                  >
+                {kickListInfo.data_by_3days.map((el, idx) => (
+                  <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}
               </ContentPage>
               <ContentPage name="time">
-                {kickListInfo.data_by_time.map((el) => (
-                  <KickBtn
-                    key={el.post_name}
-                    onClick={() => navigate(`/detailkick`)}
-                  >
+                {kickListInfo.data_by_time.map((el, idx) => (
+                  <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}
               </ContentPage>
               <ContentPage name="tags">
-                {kickListInfo.data_by_tags.map((el) => (
-                  <KickBtn
-                    key={el.post_name}
-                    onClick={() => navigate(`/detailkick`)}
-                  >
+                {kickListInfo.data_by_tags.map((el, idx) => (
+                  <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}

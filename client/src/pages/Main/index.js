@@ -26,7 +26,7 @@ export default function Main() {
   useEffect(() => {
     // 첫방문인지 체크하고 첫 방문이면 이동
     firstEnterCheck().then((res) => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       if (res.data.data.is_visited === true) {
         return null
       }
@@ -43,20 +43,20 @@ export default function Main() {
       .then((res) => setKickList(res.data.data))
       .then(() => setKickListLoding(true));
     // 가장 최신 공지 하나 불러오기
-    getNoticesList("", "notice", 1, 1).then((res) => {
+    getNoticesList({ type: "notice", limit: 1, page_num:1 }).then((res) => {
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
         .then(() => setNoticeLoding(true));
     });
     // 이벤트 리스트 불러오기
-    getNoticesList("", "event", 4, 1)
+    getNoticesList({ type: "event", limit: 4, page_num:1 })
       .then((res) => {
         setEventInfo([...res.data.data]);
       })
       .then(() => setEventLoding(true));
   }, []);
   
-  console.log("isLoding", isLoding);
+  // console.log("isLoding", isLoding);
   return (
     <Container>
       <ContentSection>
@@ -107,6 +107,6 @@ const Title = styled.p`
 `;
 
 const ContextContainer = styled.article`
-  /* display: flex;
-  width: 80vw; */
+  display: flex;
+  width: 80vw;
 `;

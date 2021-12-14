@@ -7,17 +7,16 @@ import default_thumbnail from "../../../assets/images/default/default_thumbnail.
 export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }] }) {
   const navigate = useNavigate();
 
-  // console.log("event", eventInfo[0]);
   return (
     <Container>
       {eventInfo.length
-        ? eventInfo.map((el) => (
+        ? eventInfo.map((el,idx) => (
             <EventContainer
-              key={el.notice_id}
+              key={idx}
               onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
             >
               <Thumbnail
-                src={el.thumbnail && default_thumbnail}
+                src={el.thumbnail || default_thumbnail}
                 alt="thumbnail"
               />
               <SummaryContainer>
