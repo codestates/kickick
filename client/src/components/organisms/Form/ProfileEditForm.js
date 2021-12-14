@@ -71,6 +71,7 @@ export default function ProfileEditForm() {
     setPassword(e.target.value);
   };
   const handleProfile = (raw, base64) => {
+    console.log("ee");
     setRawProfile(raw);
     setProfile(base64);
   };
