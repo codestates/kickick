@@ -28,6 +28,14 @@ module.exports = async (req, res) => {
         attributes: ["username", "profile"],
       },
     });
+    if (!data) {
+      return res
+        .status(400)
+        .json({
+          data: null,
+          message: "notice_id가 일치하는 공지가 존재하지 않습니다.",
+        });
+    }
     data = data.get({ plain: true });
   } catch (err) {
     console.log(err);
