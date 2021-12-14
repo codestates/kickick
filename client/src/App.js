@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
@@ -59,7 +63,15 @@ export default function App() {
         dispatch(isLoginAction(loginData));
         dispatch(isPointAction(res.data.data.kick_money));
         if (!todayLogin) dispatch(todayLoginAction(true));
+        return res.data.message;
       })
+      .then((message) =>
+        message === "first login"
+          ? window.location.replace(
+              `/modal/calendar`
+            )
+          : null
+      )
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
 

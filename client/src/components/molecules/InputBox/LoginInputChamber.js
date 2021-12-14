@@ -58,8 +58,13 @@ export default function LoginInputChamber({
             dispatch(isLoginAction(loginData));
             dispatch(isPointAction(res.data.data.kick_money));
             if (!todayLogin) dispatch(todayLoginAction(true));
+            return res.data.message;
           })
-          .then(() => navigate("/", { replace: true }))
+          .then((message) =>
+            message === "first login"
+              ? navigate("/modal/calendar", { replace: true })
+              : navigate("/", { replace: true })
+          )
           .catch(() => {
             setIsClicked("");
           });
