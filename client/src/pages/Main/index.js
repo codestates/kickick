@@ -26,11 +26,8 @@ export default function Main() {
   useEffect(() => {
     // 첫방문인지 체크하고 첫 방문이면 이동
     firstEnterCheck().then((res) => {
-      // console.log(res.data.data);
-      if (res.data.data.is_visited === true) {
-        return null
-      }
-      if (!isLoding && !Object.keys(res.data.data).includes("is_visited")) {
+      console.log(res.data.data);
+      if (!res.data.data.token && !Object.keys(res.data.data).includes("is_visited")) {
         navigate("/modal/firstenter");
       }
     }).catch((err) => {

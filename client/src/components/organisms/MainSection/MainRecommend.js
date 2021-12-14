@@ -36,7 +36,7 @@ export default function MainRecommend({
         <ContentFrame isSelect={isSelect}>
           {Object.keys(kickListInfo).length > 1 ? (
             <>
-              <ContentPage name="tags">
+              {kickListInfo.data_by_tags.length ? <ContentPage name="tags">
                 {kickListInfo.data_by_tags.map((el) => (
                   <KickBtn
                     key={el.post_name}
@@ -45,7 +45,7 @@ export default function MainRecommend({
                     {el.post_name}
                   </KickBtn>
                 ))}
-              </ContentPage>
+              </ContentPage> : null}
               <ContentPage name="3days">
                 {kickListInfo.data_by_3days.map((el, idx) => (
                   <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
@@ -141,9 +141,10 @@ const ContentFrame = styled.div`
 
 const ContentPage = styled.article`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-content:flex-start;
   flex-wrap: wrap;
+  gap: 0 0.8vw;
   width: 80vw;
   padding: 1vw 2vw;
   background-color: #eeeeee;
