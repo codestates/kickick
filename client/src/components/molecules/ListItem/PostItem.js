@@ -136,7 +136,7 @@ export function MyPageLogs({ data }) {
 }
 
 const Container = styled.div`
-  color: #666;
+  color: ${({ theme }) => theme.color.subfont};
   font-size: 0.9rem;
   div:nth-of-type(2) {
     text-align: start;
@@ -147,7 +147,7 @@ const Container = styled.div`
     margin: 0 0.2rem;
     font-weight: bold;
     font-size: 0.8rem;
-    color: #f90716;
+    color: ${({ theme }) => theme.color.tag};
   }
 
   a {

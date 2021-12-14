@@ -121,7 +121,7 @@ const ModalOverlay = styled.div`
 const ModalInner = styled.div`
   position: relative;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.modalBack};
   border-radius: 0.5rem;
   width: 30rem;
   height: 50rem;
@@ -137,6 +137,7 @@ const ModalInner = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: ${({ theme }) => theme.color.font};
   }
 
   h3 {
@@ -181,8 +182,8 @@ const KickConfirmUser = styled.div`
 
 const KickConfirmIntroduction = styled.div`
   padding: 1rem;
-  background-color: #faffff;
-  border: 1px solid #eee;
+  background-color: ${({ theme }) => theme.color.modalSubBack};
+  /* border: 1px solid #eee; */
   border-radius: 0.5rem;
   min-height: 5rem;
 
@@ -202,8 +203,8 @@ const KickConfirmReview = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   padding: 1rem;
-  background-color: #faffff;
-  border: 1px solid #eee;
+  background-color: ${({ theme }) => theme.color.modalSubBack};
+  /* border: 1px solid #eee; */
   border-radius: 0.5rem;
   height: 14.5rem;
   overflow-y: auto;
