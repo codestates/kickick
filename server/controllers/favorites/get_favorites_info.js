@@ -58,7 +58,6 @@ module.exports = async (req, res) => {
           model: posts,
           attributes: [
             ["id", "post_id"],
-            // "user_id",
             "category",
             "post_name",
             "view_count",
