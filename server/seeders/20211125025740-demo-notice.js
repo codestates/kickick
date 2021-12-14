@@ -5,7 +5,7 @@ module.exports = {
     return await queryInterface.bulkInsert("notices", [
       {
         user_id: 1,
-        type: "notice",
+        type: "notices",
         notice_name: "킥머니 이벤트",
         summary:
           "여러분들의 성원에 힘입어 킥머니 이벤트를 진행하게 되었습니다.",
