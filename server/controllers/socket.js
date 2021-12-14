@@ -11,6 +11,7 @@ module.exports = (io) => {
       let client_info = new Object();
       client_info.username = data.username;
       client_info.id = socket.id;
+      if (!client_info.username) return;
       let is_signed = false;
       for (let el of clients) {
         if (el.username === client_info.username) {

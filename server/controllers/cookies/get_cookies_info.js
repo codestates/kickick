@@ -7,7 +7,10 @@ module.exports = async (req, res) => {
   }
 
   let data = req.cookies;
-  delete data.token;
+  if (data.token) {
+    delete data.token;
+    data.token = true;
+  }
 
   return res.status(200).json({ data: data, message: "ok" });
 };
