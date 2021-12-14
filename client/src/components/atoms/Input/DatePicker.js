@@ -44,7 +44,6 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
           }}
           disabledKeyboardNavigation
           inline
-          // readOnly={true}
         />
       </DatePieckerContainer>
     </Container>

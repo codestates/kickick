@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { validation } from "../../../commons/utils/validation";
+
 export default function LoginInput({
   type = "text",
   part = "email",
@@ -16,45 +18,7 @@ export default function LoginInput({
   const [isChange, setIsChange] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const warning = [
-    part,
-    `${part}을(를) 입력해주세요`,
-    "양식이 잘못되었습니다.",
-    "통과!",
-  ];
-  let num = inputValue.search(/[0-9]/g);
-  let eng = inputValue.search(/[a-z]/gi);
-  let spe = inputValue.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-  const validation =
-    part === "email"
-      ? !(
-          (
-            inputValue.includes("@") &&
-            //@를 포함
-            inputValue.split("@")[0] &&
-            inputValue.split("@")[1].includes(".") &&
-            //@앞뒤에 정보가 존재하며 .를 포함
-            inputValue.split("@")[1].split(".")[0] &&
-            inputValue.split("@")[1].split(".")[1]
-          )
-          //.앞뒤에 정보가 존재
-        )
-      : part === "password"
-      ? !(
-          (
-            inputValue.length > 3 &&
-            inputValue.length < 20 &&
-            //8자 이상 20자 이하
-            inputValue.search(/\s/) === -1 &&
-            //공백이 없음
-            num !== -1 &&
-            eng !== -1 &&
-            spe !== -1
-          )
-          //영문,숫자,특문을 혼합
-        )
-      : inputValue.length < 4 || inputValue.length > 15;
-
+  const isValidation = !validation(part,inputValue).isValid
   const contextHandler = (e) => {
     setIsChange(true);
     setInputValue(e.target.value);
@@ -62,7 +26,7 @@ export default function LoginInput({
   };
 
   const validContoller = () => {
-    validHandler(part, validation);
+    validHandler(part, isValidation);
   };
 
   const movePasswordInput = (e) => {
@@ -73,27 +37,28 @@ export default function LoginInput({
       loginHandler();
     }
   };
+
   return (
     <Container
       width={width}
       height={height}
       inputValue={inputValue}
       isChange={isChange}
-      validation={validation}
+      isValidation={!validation(part, inputValue).isValid}
     >
       <WarningBox
         height={height}
         inputValue={inputValue}
         isChange={isChange}
-        validation={validation}
+        isValidation={!validation(part, inputValue).isValid}
       >
-        {!isChange
-          ? warning[0]
-          : !inputValue
-          ? warning[1]
-          : validation
-          ? warning[2]
-          : warning[3]}
+        {!isChange && part === "username"
+          ? "ID"
+          : !isChange
+          ? "PASSWORD"
+          : validation(part, inputValue).message === "pass"
+          ? "통과!"
+          : validation(part, inputValue).message}
       </WarningBox>
       <Input
         type={type}
@@ -118,11 +83,11 @@ const Container = styled.div`
   margin: 0.5rem 0;
   padding: ${({ height }) => `${height * 0.08}rem`};
   border: 0.1rem solid;
-  border-color: ${({ isChange, validation, theme }) =>
-    isChange === true && validation
+  border-color: ${({ isChange, isValidation, theme }) =>
+    isChange === true && isValidation
       ? //한번이라도 입력했는데 벨리데이션을 통과 못함.
         "red"
-      : isChange === true && !validation
+      : isChange === true && !isValidation
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
         "blue"
       : theme.color.font};
@@ -147,11 +112,11 @@ const WarningBox = styled.div`
     inputValue.length
       ? `${((height * 1) / 3) * 0.7}rem`
       : `${((height * 2) / 3) * 0.7}rem`};
-  color: ${({ isChange, validation, theme }) =>
-    isChange === true && validation
+  color: ${({ isChange, isValidation, theme }) =>
+    isChange === true && isValidation
       ? //한번이라도 입력했는데 벨리데이션을 통과 못함.
         "red"
-      : isChange === true && !validation
+      : isChange === true && !isValidation
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
         "blue"
       : theme.color.placeholderGray};

@@ -4,12 +4,15 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { LoginInput } from "../../../components";
-import { signIn, signUp, tempoSignIn } from "../../../apis/auth";
+import { signIn } from "../../../apis/auth";
 import {
   isLoginAction,
   todayLoginAction,
   isPointAction,
 } from "../../../store/actions/login";
+import kakaologo from "../../../assets/images/authlogo/kakaologo.png"
+import naverlogo from "../../../assets/images/authlogo/naverlogo.png"
+import googlelogo from "../../../assets/images/authlogo/googlelogo.png";
 
 export default function LoginInputChamber({
   width = 30,
@@ -17,19 +20,20 @@ export default function LoginInputChamber({
   setIsClicked,
 }) {
   // 로그인에 쓰이는 인풋 박스 모음집
-  const [inputValue, setInputValue] = useState({ id: "", password: "" });
-  const [isValid, setIsValid] = useState({ id: false, password: false });
+  const [inputValue, setInputValue] = useState({ username: "", password: "" });
+  const [isValid, setIsValid] = useState({ username: false, password: false });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const passwordInput = useRef();
   const todayLogin = useSelector((state) => state.login.todayLogin);
   const inputlist = [
-    { part: "id", type: "text", ref: null },
+    { part: "username", type: "text", ref: null },
     { part: "password", type: "password", ref: passwordInput },
   ];
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
   const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=${process.env.REACT_APP_NAVER_STATE}`;
+  const googleURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email`;
 
   const inputHandler = (key, value) => {
     let newObj = { ...inputValue };
@@ -44,39 +48,29 @@ export default function LoginInputChamber({
   };
 
   const loginHandler = () => {
-    if (isValid.id && isValid.password) {
+    if (isValid.username && isValid.password) {
       setIsClicked(true);
       setTimeout(() => {
-        signIn(inputValue.id, inputValue.password)
+        signIn(inputValue.username, inputValue.password)
           .then((res) => {
             const loginData = { ...res.data.data };
             delete loginData.kick_money;
             dispatch(isLoginAction(loginData));
             dispatch(isPointAction(res.data.data.kick_money));
             if (!todayLogin) dispatch(todayLoginAction(true));
+            return res.data.message;
           })
-          .then(() => navigate("/", { replace: true }))
+          .then((message) =>
+            message === "first login"
+              ? navigate("/modal/calendar", { replace: true })
+              : navigate("/", { replace: true })
+          )
           .catch(() => {
             setIsClicked("");
           });
       }, 1000);
     }
   };
-  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  const tempoAuth = () => {
-    signUp({ type: "guest" }).then((res) => {
-      if (res.data.message === "guest 회원가입") {
-        tempoSignIn(res.data.data.username)
-          .then((res) => {
-            dispatch(isLoginAction(res.data.data));
-            dispatch(isPointAction(res.data.data.kick_money));
-          })
-          .then(() => navigate("/", { replace: true }))
-          .catch((err) => console.log(err));
-      }
-    });
-  };
-  // 나중에 메인으로 옴겨서 임시 로그인으로 쓰기 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   
   return (
     <Container width={width} height={height}>
@@ -94,6 +88,17 @@ export default function LoginInputChamber({
           key={idx}
         />
       ))}
+      <AuthLogoContainer height={height}>
+        <a href={kakaoURL}>
+          <AuthLogo height={height} src={kakaologo} alt="kakao" />
+        </a>
+        <a href={naverURL}>
+          <AuthLogo height={height} src={naverlogo} alt="naver" />
+        </a>
+        <a href={googleURL}>
+          <AuthLogo height={height} src={googlelogo} alt="google" />
+        </a>
+      </AuthLogoContainer>
       <SubmitBtn
         width={width}
         height={height}
@@ -102,23 +107,9 @@ export default function LoginInputChamber({
       >
         로그인
       </SubmitBtn>
-      <Test onClick={tempoAuth}>이거 클릭하면 임시 로그인</Test>
-      <a href={kakaoURL}>
-        <Test>카카오 로그인</Test>
-      </a>
-      <a href={naverURL}>
-        <Test>네이버 로그인</Test>
-      </a>
     </Container>
   );
 }
-
-const Test = styled.div`
-margin-top:1rem;
-border:1px solid black;
-cursor:pointer;
-:hover{color:red;}
-`
 
 const Container = styled.div`
   display: flex;
@@ -141,7 +132,7 @@ const SubmitBtn = styled.button`
   cursor: default;
 
   ${({ isValid }) =>
-    isValid.id && isValid.password
+    isValid.username && isValid.password
       ? `
   cursor:pointer;
   : hover {
@@ -154,4 +145,17 @@ const SubmitBtn = styled.button`
       : `
   opacity: 0.8
   `}
+`;
+
+const AuthLogoContainer = styled.div`
+  display: flex;
+  justify-content:flex-end;
+  gap: ${({ height }) => `${height / 6}rem`};
+  width:100%;
+`;
+
+const AuthLogo = styled.img`
+  width: ${({ height }) => `${height * 1}rem`};
+  height: ${({ height }) => `${height * 1}rem`};
+  border-radius:50%;
 `;

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
-import { Nav, Footer, PageUp } from "./components";
+import { Nav, Footer, PageUp, CommonModal } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import SignupSelect from "./pages/Signup/SignupSelect";
@@ -23,6 +27,7 @@ import EditNotice from "./pages/Notice/EditNotice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
+import GoogleAuth from "./pages/Login/GoogleAuth";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -58,7 +63,15 @@ export default function App() {
         dispatch(isLoginAction(loginData));
         dispatch(isPointAction(res.data.data.kick_money));
         if (!todayLogin) dispatch(todayLoginAction(true));
+        return res.data.message;
       })
+      .then((message) =>
+        message === "first login"
+          ? window.location.replace(
+              `/modal/calendar`
+            )
+          : null
+      )
       .catch(() => dispatch(isLoginAction(false)));
   }, [themeMode]);
 
@@ -78,7 +91,14 @@ export default function App() {
     socketClient.on("disconnect", () => {
       console.log("disconnection");
     });
+
+    socketClient.emit("alarms", {
+      username: isLogin.username,
+      ...socketChange.alarmPage,
+    });
   });
+  
+  
 
   return (
     <ThemeProvider theme={theme[0]}>
@@ -101,6 +121,8 @@ export default function App() {
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
               <Route path="naver" element={<NaverAuth />} />
+              <Route path="google" element={<GoogleAuth />} />
+              <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignupSelect />} />
@@ -144,14 +166,15 @@ const Theme = styled.img`
 `;
 
 const DarkBox = styled.div`
+  position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
 const ModeChanger = styled.div`
-  position: absolute;
-  top: -4rem;
+  position: fixed;
+  top: 0rem;
   right: 100vw;
   display: flex;
   z-index: 99999;

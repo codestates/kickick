@@ -12,6 +12,7 @@ export default function SignupInputBox({
   placeholder,
   idx,
   inputHandler,
+  duplicateCheckHanlder,
   moveNextInput,
   validation,
   vaildHanlder,
@@ -28,6 +29,7 @@ export default function SignupInputBox({
         width={width}
         height={height}
         inputHandler={inputHandler}
+        duplicateCheckHanlder={duplicateCheckHanlder}
         placeholder={placeholder}
         validation={validation}
         moveNextInput={moveNextInput}
@@ -42,6 +44,7 @@ export default function SignupInputBox({
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: ${({ width }) => `${width}rem`};
