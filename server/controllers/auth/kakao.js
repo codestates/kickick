@@ -1,6 +1,8 @@
 const axios = require("axios");
-const { users } = require("../../models");
+const { users, logs, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
   // TODO kakao 소셜로그인 구현
@@ -41,7 +43,7 @@ module.exports = async (req, res) => {
     user_info = user_info.data.kakao_account;
     data = await users.findOrCreate({
       attributes: [
-        ["id", "user_id"],
+        "id",
         "type",
         "username",
         "email",
@@ -60,6 +62,102 @@ module.exports = async (req, res) => {
       },
     });
     data = data[0].get({ plain: true });
+    const user_id = data.id;
+    const username = data.username;
+
+    // 로그에 기록
+    let log_info = await logs.findAll({
+      where: {
+        user_id: user_id,
+        type: "signin",
+      },
+      order: [["id", "DESC"]],
+      raw: true,
+    });
+    // 로그 살펴 봄
+    let log_date;
+    const today = new Date();
+    if (log_info.length !== 0) {
+      log_date = log_info[0].created_at;
+    }
+    // 오늘 로그인한 로그가 있는지 확인
+    if (
+      !log_date ||
+      !(
+        log_date.getDate() === today.getDate() &&
+        log_date.getMonth() === today.getMonth() &&
+        log_date.getFullYear() === today.getFullYear()
+      )
+    ) {
+      // 로그인 로그 추가
+      await logs.create({
+        user_id: user_id,
+        type: "signin",
+        content: `${username}님이 로그인 하였습니다.`,
+      });
+      // 킥머니 지급
+      let change = 100;
+      // 3일간 로그인 기록이 있다면
+
+      if (log_info.length >= 2) {
+        log_date = log_info[1].created_at;
+        const prev_3days = new Date(today - 3600000 * 24 * 3);
+        if (
+          log_date.getDate() === prev_3days.getDate &&
+          log_date.getMonth() === today.getMonth() &&
+          log_date.getFullYear() === today.getFullYear()
+        ) {
+          change = 200;
+        }
+      }
+
+      await users.update(
+        {
+          kick_money: sequelize.literal(`kick_money + ${change}`),
+        },
+        {
+          where: {
+            username: username,
+          },
+        }
+      );
+      data.kick_money += change;
+      // 킥머니 지급 로그 추가
+      await logs.create({
+        user_id: user_id,
+        type: "kick_money",
+        content: `${change} 킥머니를 받았습니다.`,
+      });
+      // 킥머니 지급 알림 추가
+      await alarms.create({
+        user_id: user_id,
+        type: "alarms",
+        content: `로그인으로 ${change} 킥머니를 받았습니다.`,
+      });
+      // 토큰 발급
+      const access_token = jwt.sign(
+        {
+          type: data.type,
+          username: data.username,
+        },
+        process.env.ACCESS_SECRET,
+        {
+          expiresIn: "3d",
+        }
+      );
+      delete data.user_id;
+
+      return res
+        .status(200)
+        .cookie(
+          "token",
+          { access_token },
+          {
+            httpOnly: true,
+          }
+        )
+        .json({ data: data, message: "first login" });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: null, message: "데이터베이스 에러" });
