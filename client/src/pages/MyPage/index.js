@@ -66,7 +66,6 @@ export default function MyPage() {
   useEffect(() => {
     getFavorites(null, 10, postsearch.selectPage)
       .then((data) => {
-        console.log(data);
         dispatch(getFavoritesAction(data.data));
       })
       .catch((err) => console.log(err.response));

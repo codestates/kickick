@@ -58,7 +58,6 @@ export { default as InputForm } from "./organisms/SignupForm";
 export { default as CardBox } from "./organisms/CardBox";
 export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList";
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
-export { default as BoardBottom } from "./organisms/BoardBottom";
 export { default as BoardTop } from "./organisms/BoardTop";
 export { default as DetailBoardTop } from "./organisms/DetailBoardTop";
 export { default as PostComment } from "./organisms/PostComment";

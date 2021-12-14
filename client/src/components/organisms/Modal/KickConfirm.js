@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -6,7 +6,13 @@ import { useNavigate } from "react-router";
 import { Profile, Common, Chart } from "../../../components";
 
 import { purchaseKicks } from "../../../apis/kicks";
+import { getComments } from "../../../apis/comments";
+
 import { modalOffAction } from "../../../store/actions/kickboard";
+import {
+  getCommentsAction,
+  resetCommentsAction,
+} from "../../../store/actions/comments";
 
 import kickmoney from "../../../assets/images/icon/kickmoney.png";
 import reviewicon from "../../../assets/images/icon/reviewicon.png";
@@ -20,22 +26,29 @@ export default function KickConfirm() {
   const [errMsg, setErrMsg] = useState();
   const { modalState, modalInfo } = useSelector((state) => state.kickboard);
   const { isLogin, isPoint } = useSelector((state) => state.login);
-  console.log(modalInfo);
+  const { data } = useSelector((state) => state.comments);
+
   const handleKickChange = () => {
     if (!isLogin) {
       setErrMsg("로그인 후 이용가능합니다");
       return;
     }
-    purchaseKicks(modalInfo.kick.id)
+    purchaseKicks(modalInfo.kick.kick_id)
       .then(() => {
         dispatch(modalOffAction());
         dispatch(isPointAction(isPoint - modalInfo.cost));
-        navigate(`/detailkick/${modalInfo.post_id}/${modalInfo.kick.id}`);
+        navigate(`/detailkick/${modalInfo.post_id}/${modalInfo.kick.kick_id}`);
       })
       .catch((err) => {
         setErrMsg(err.response.data.message);
       });
   };
+
+  useEffect(() => {
+    getComments(modalInfo.post_id, 20)
+      .then((data) => dispatch(getCommentsAction(data.data)))
+      .catch((err) => console.log(err));
+  }, [modalInfo.post_id, dispatch]);
 
   return (
     <>
@@ -44,6 +57,7 @@ export default function KickConfirm() {
         visible={modalState}
         onClick={(e) => {
           dispatch(modalOffAction());
+          dispatch(resetCommentsAction());
         }}
       >
         <ModalInner onClick={(e) => e.stopPropagation()}>
@@ -66,12 +80,12 @@ export default function KickConfirm() {
               <h3>댓글</h3>
             </KickSubtitle>
             <KickConfirmReview>
-              {modalInfo.comments.length === 0 ? (
+              {data.length === 0 ? (
                 <NoCommentContainer>
                   <h3>댓글이 없습니다</h3>
                 </NoCommentContainer>
               ) : (
-                modalInfo.comments.map((el) => (
+                data.map((el) => (
                   <KickConfirmUser key={el.comment_id}>
                     <Profile type="confirm" src={el.user.profile} />
                     <span className="username">{el.user.username}</span>

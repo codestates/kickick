@@ -56,10 +56,6 @@ export default function EditKickBoard() {
     dispatch(getContentAction(e.target.value));
   };
 
-  // const handleThumbnail = (thumbnail) => {
-  //   dispatch(getThumbnailAction(thumbnail));
-  // };
-
   const handleContent = () => {
     dispatch(getKickContentAction(content));
   };
