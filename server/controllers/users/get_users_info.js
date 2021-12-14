@@ -89,6 +89,8 @@ module.exports = async (req, res) => {
     }
     return res.status(200).json({ data: data, message: "guest login" });
   }
+
+  // 토큰으로 유저정보 조회 guest가 아닐 때
   try {
     data = await users.findOne({
       attributes: [
@@ -178,6 +180,29 @@ module.exports = async (req, res) => {
           type: "alarms",
           content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
+        // 토큰 발급
+        const access_token = jwt.sign(
+          {
+            type: data.type,
+            username: data.username,
+          },
+          process.env.ACCESS_SECRET,
+          {
+            expiresIn: "3d",
+          }
+        );
+        delete data.user_id;
+
+        return res
+          .status(200)
+          .cookie(
+            "token",
+            { access_token },
+            {
+              httpOnly: true,
+            }
+          )
+          .json({ data: data, message: "first login" });
       }
     }
   } catch (err) {

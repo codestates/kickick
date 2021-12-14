@@ -47,6 +47,9 @@ module.exports = async (req, res) => {
     });
     const user_id = user_info.user_id;
 
+    // where_obj 에 user_id 추가
+    where_obj.user_id = user_id;
+
     let log_info = await logs.findAndCountAll({
       model: logs,
       attributes: [["id", "log_id"], "type", "content", "created_at"],

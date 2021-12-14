@@ -154,6 +154,64 @@ module.exports = async (req, res) => {
         }
       );
     }
+    // 요청에 email이 포함되어있으면
+    if (req.body.email) {
+      // 이메일 보냄
+
+      const CLIENT_URL = process.env.CLIENT_URL;
+      const redirect = `${CLIENT_URL}/mailauth/${req.body.username}`;
+
+      let email_template;
+      ejs.renderFile(
+        __dirname + "/email_template.ejs",
+        { redirect },
+        (err, data) => {
+          if (err) {
+            console.log(err);
+          }
+          email_template = data;
+        }
+      );
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.NODEMAILER_EMAIL,
+          pass: process.env.NODEMAILER_PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: `"KICKICK 관리자" <${process.env.NODEMAILER_EMAIL}>`,
+        to: req.body.email,
+        subject: "KICKICK 회원가입 인증 메일입니다.",
+        html: email_template,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      // update 시 type email auth required로 변경
+      update_obj = {
+        ...update_obj,
+        type: "email auth required",
+      };
+      // 유저 정보 수정
+      await users.update(
+        {
+          ...update_obj,
+        },
+        {
+          where: {
+            username: username,
+          },
+        }
+      );
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

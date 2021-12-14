@@ -17,7 +17,11 @@ module.exports = async (req, res) => {
     ...req.cookies,
     is_visited: is_visited,
   };
-  delete data.token;
+
+  if (data.token) {
+    delete data.token;
+    data.token = true;
+  }
 
   return res
     .status(200)
