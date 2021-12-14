@@ -56,7 +56,10 @@ const logoList = [
 export default function MyPageAside() {
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
-  const { logo, color, text } = logoList.find((el) => el.type === isLogin.type);
+  const logoFind = logoList.find((el) => el.type === isLogin.type);
+
+  const { logo, color, text } = logoFind;
+
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));
