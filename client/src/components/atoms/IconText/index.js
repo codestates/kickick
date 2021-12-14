@@ -16,6 +16,7 @@ import {
   FaDollarSign,
   FaRegWindowClose,
   FaBirthdayCake,
+  FaStar,
 } from "react-icons/fa";
 
 import { ImGift } from "react-icons/im";
@@ -46,6 +47,7 @@ export const iconList = [
   { icon: <FaRegWindowClose />, label: "완료한 이벤트", category: "이벤트" },
   { icon: <VscMegaphone />, label: "뉴스", category: "공지" },
   { icon: <ImGift />, label: "이벤트", category: "공지" },
+  { icon: <FaStar />, label: "구매함", category: "킥보드" },
 ];
 
 export default function IconText({ label, handleClick, board }) {
@@ -156,6 +158,19 @@ const Container = styled.div`
     css`
       font-size: 1.2rem;
 
+      svg {
+        margin-left: 0.3rem;
+        font-size: 1rem;
+      }
+    `}
+
+    ${({ category }) =>
+    category === "킥보드" &&
+    css`
+      font-size: 0.8rem;
+      color: #f0bb62;
+      border: 2px solid #f0bb62;
+      border-radius: 0.5rem;
       svg {
         margin-left: 0.3rem;
         font-size: 1rem;

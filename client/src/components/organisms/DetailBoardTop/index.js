@@ -1,18 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { IconBox, Profile, AlienPortion } from "../../../components";
-
-import { createLikes } from "../../../apis/likes";
-
-import astronautImg from "../../../assets/images/astronaut.svg";
-import alienImg from "../../../assets/images/alien.svg";
-import star from "../../../assets/images/icon/contenticon.png";
+import { IconBox, Profile, Vote } from "../../../components";
 
 export default function DetailBoardTop({ postInfo, type }) {
-  console.log(postInfo);
   return (
     <Container>
       <TopContainer>
@@ -52,7 +45,7 @@ export default function DetailBoardTop({ postInfo, type }) {
       </Content>
       {type === "kick" ? (
         <VotesContainer>
-          <AlienPortion
+          <Vote
             likes={postInfo.likes}
             is_liked={postInfo.is_liked}
             postId={postInfo.post_id}
@@ -64,16 +57,16 @@ export default function DetailBoardTop({ postInfo, type }) {
 }
 
 const Container = styled.div`
-  /* width: 60vw; */
+  padding-top: 5rem;
 `;
 
 const TopContainer = styled.div`
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 2px dashed #c4c4c4;
 `;
 
 const Title = styled.div`
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   padding: 0.5rem;
 `;
@@ -120,34 +113,5 @@ const VotesContainer = styled.div`
     width: 2.2rem;
     height: 2.2rem;
     object-fit: contain;
-  }
-`;
-
-const Astronaut = styled.div`
-    position: relative;
-  display: flex;
-  gap: 0.5rem;
-  > .star {
-    position: absolute;
-    left: -1rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  > .astronaut {
-    cursor: pointer;
-`;
-
-const Alien = styled.div`
-  position: relative;
-  display: flex;
-  gap: 0.5rem;
-  > .star {
-    position: absolute;
-    right: -1rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  > :nth-child(2) {
-    cursor: pointer;
   }
 `;

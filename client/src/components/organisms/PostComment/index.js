@@ -132,15 +132,15 @@ export default function PostComment({ post_id }) {
 
   return (
     <Container>
-      <H3>댓글달기</H3>
+      <h3>댓글달기</h3>
       <PostCommentInput
         handleClick={handleClick}
         value={value}
         handleChange={handleChange}
       />
-      <H3>
+      <h3>
         댓글 <strong>{cmt.count + plusCmt}</strong>
-      </H3>
+      </h3>
       {cmt.data.map((el, idx) => (
         <PostCommentItem
           key={idx}
@@ -157,15 +157,14 @@ export default function PostComment({ post_id }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 1rem 2rem;
 
+  h3 {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
   strong {
     color: skyblue;
   }
-`;
-
-const H3 = styled.div`
-  margin: 1rem 0;
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
 `;

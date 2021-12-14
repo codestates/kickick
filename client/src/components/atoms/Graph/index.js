@@ -5,7 +5,7 @@ import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
 import { createLikes } from "../../../apis/likes";
 
-export default function AlienPortion({ likes, is_liked, postId }) {
+export default function Vote({ likes, is_liked, postId }) {
   const [alien, setAlien] = useState(likes.true + 1);
   const [astronaut, setAstronaut] = useState(likes.false + 1);
 
@@ -28,44 +28,38 @@ export default function AlienPortion({ likes, is_liked, postId }) {
 
   return (
     <Container>
-      <img src={Alien} onClick={() => handleClick("true")} />
-      <Portion alien={alien} astronaut={astronaut}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </Portion>
-      <img src={Astronaut} onClick={() => handleClick("false")} />
+      <div>
+        <img src={Alien} onClick={() => handleClick("true")} alt="" />
+        <span className="vote alien">괴짜 {alien}</span>
+      </div>
+      <div>
+        <span className="vote astronaut">혁신 {astronaut}</span>
+        <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
+
   img {
     width: 2rem;
     height: 2rem;
     cursor: pointer;
   }
-`;
-
-const Portion = styled.div`
-  display: flex;
-  align-items: center;
-  div {
-    height: 1rem;
+  .vote {
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    font-size: 1rem;
   }
-  > :nth-child(1) {
-    width: 5rem;
-    background: red;
-    flex: ${({ alien }) => alien};
+  .alien {
+    color: green;
+    border: 2px solid green;
   }
-  > :nth-child(2) {
-    width: 1rem;
-    background: linear-gradient(to right, red, blue);
-  }
-  > :nth-child(3) {
-    width: 5rem;
-    background: blue;
-    flex: ${({ astronaut }) => astronaut};
+  .astronaut {
+    color: blue;
+    border: 2px solid blue;
   }
 `;

@@ -26,7 +26,7 @@ export default function MyKick({ data }) {
 const Container = styled.div`
   display: flex;
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #eee;
   cursor: pointer;
 

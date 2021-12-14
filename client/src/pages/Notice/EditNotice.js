@@ -55,7 +55,7 @@ export default function EditNotice() {
       uploadSingleImage(formData, "post").then((data) => {
         const location = data.data.data.location;
         createNotices({
-          type: category === "이벤트" ? "event" : "notice",
+          type: category === "이벤트" ? "events" : "notices",
           notice_name: postAdd.post_name,
           summary: postAdd.content,
           thumbnail: location,
