@@ -10,13 +10,20 @@ import { isLoginAction, isPointAction } from "../../../store/actions/login";
 
 import kakaologo from "../../../assets/images/authlogo/kakaologo.png";
 import naverlogo from "../../../assets/images/authlogo/naverlogo.png";
+import googlelogo from "../../../assets/images/authlogo/googlelogo.png";
 import generallogo from "../../../assets/images/Traveler.png";
 import adminlogo from "../../../assets/images/Admin.png";
+import generallogo2 from "../../../assets/images/Traveler.png";
 
 const logoList = [
-  { type: "admin", logo: adminlogo, color: "#000000", text: "관리자" },
   {
-    type: "Traveler",
+    type: "admin",
+    logo: adminlogo,
+    color: "#000000",
+    text: "관리자로 로그인 중",
+  },
+  {
+    type: "general",
     logo: generallogo,
     color: "#000000",
     text: "이메일로 로그인 중",
@@ -33,11 +40,26 @@ const logoList = [
     color: "#58D62E",
     text: "네이버로 로그인 중",
   },
+  {
+    type: "google",
+    logo: googlelogo,
+    color: "#58D62E",
+    text: "구글로 로그인 중",
+  },
+  {
+    type: "email auth required",
+    logo: generallogo2,
+    color: "#58D62E",
+    text: "이메일 인증이 필요",
+  },
 ];
 export default function MyPageAside() {
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
-  const { logo, color, text } = logoList.find((el) => el.type === isLogin.type);
+  const logoFind = logoList.find((el) => el.type === isLogin.type);
+
+  const { logo, color, text } = logoFind;
+
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));

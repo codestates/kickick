@@ -10,7 +10,7 @@ const postList = [
   {
     reducer: ["mypage", "favorites"],
     type: "mypagefavorites",
-    label: ["태그", "제목", "글쓴이", "조회수", "스크랩삭제"],
+    label: ["게시판", "제목", "글쓴이", "조회수", "좋아요삭제"],
   },
   {
     reducer: ["mypage", "mypost"],
@@ -132,8 +132,8 @@ const PostListContainer = styled.div`
   flex-direction: column;
 
   .columnName {
-    background: linear-gradient(to bottom, #fff 25%, #eee 100%);
-    box-shadow: 1px 1px 5px #eee;
+    background: ${({ theme }) => theme.color.gradient};
+    box-shadow: 1px 1px 5px ${({ theme }) => theme.color.shadow};
     font-weight: bold;
 
     @media ${({ theme }) => theme.device.mobileL} {
@@ -143,7 +143,7 @@ const PostListContainer = styled.div`
 
   > div {
     display: flex;
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid ${({ theme }) => theme.color.border};
 
     > div {
       margin: auto 0;

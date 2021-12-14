@@ -35,7 +35,6 @@ export const createNotices = ({
   summary,
   content,
 }) => {
-  console.log(type, notice_name, thumbnail, summary, content);
   return api.post(`/notices/info`, {
     type,
     notice_name,

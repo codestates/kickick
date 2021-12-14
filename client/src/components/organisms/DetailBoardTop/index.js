@@ -11,23 +11,24 @@ import astronautImg from "../../../assets/images/astronaut.svg";
 import alienImg from "../../../assets/images/alien.svg";
 import star from "../../../assets/images/icon/contenticon.png";
 
-export default function DetailBoardTop({ state, type }) {
+export default function DetailBoardTop({ postInfo, type }) {
+  console.log(postInfo);
   return (
     <Container>
       <TopContainer>
-        <Title>{state.post_name}</Title>
+        <Title>{postInfo.post_name}</Title>
         <UserAndCountContainer>
           <UserContainer>
-            <Profile src={state.user.profile} type="post" />
-            {state.user.username}
+            <Profile src={postInfo.user.profile} type="post" />
+            {postInfo.user.username}
           </UserContainer>
           <UserContainer>
             <IconBox label="count" />
-            {state.view_count}
+            {postInfo.view_count}
           </UserContainer>
         </UserAndCountContainer>
         <TagContainer>
-          {state.tags.map((tag) => (
+          {postInfo.tags.map((tag) => (
             <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
               # {tag.content}
             </span>
@@ -35,14 +36,26 @@ export default function DetailBoardTop({ state, type }) {
         </TagContainer>
       </TopContainer>
       <Content>
-        <ReactQuill value={state.content} readOnly={true} theme={"bubble"} />
+        {type === "kick" ? (
+          <ReactQuill
+            value={postInfo.kick_content}
+            readOnly={true}
+            theme={"bubble"}
+          />
+        ) : (
+          <ReactQuill
+            value={postInfo.content}
+            readOnly={true}
+            theme={"bubble"}
+          />
+        )}
       </Content>
       {type === "kick" ? (
         <VotesContainer>
           <AlienPortion
-            likes={state.likes}
-            is_liked={state.is_liked}
-            postId={state.post_id}
+            likes={postInfo.likes}
+            is_liked={postInfo.is_liked}
+            postId={postInfo.post_id}
           />
         </VotesContainer>
       ) : null}

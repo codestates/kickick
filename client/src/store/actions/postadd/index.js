@@ -3,7 +3,6 @@ export const GET_POST_NAME = "GET_POST_NAME";
 export const GET_CONTENT = "GET_CONTENT";
 export const GET_THUMBNAIL = "GET_THUMBNAIL";
 export const GET_KICK_CONTENT = "GET_KICK_CONTENT";
-export const GET_POST_INFO = "GET_POST_INFO";
 export const CHANGE_WRITE_MODE = "CHANGE_WRITE_MODE";
 export const RESET_POSTADD = "RESET_POSTADD";
 export const GO_BACK = "GO_BACK";
@@ -47,12 +46,6 @@ export const changeWriteModeAction = (mode) => {
   return {
     type: CHANGE_WRITE_MODE,
     payload: { mode },
-  };
-};
-export const getPostInfoAction = (data) => {
-  return {
-    type: GET_POST_INFO,
-    payload: data,
   };
 };
 

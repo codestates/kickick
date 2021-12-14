@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { IconBox } from "../../../components";
+import { delFavorites } from "../../../apis/favorites";
+import { refreshSearchAction } from "../../../store/actions/postsearch";
 const postItemList = [
   {
     type: "freepost",
@@ -71,9 +75,6 @@ export function MyPageMyPost({ data }) {
   return (
     <Container>
       <div>
-        {/* {data.tags.map((el) => (
-          <span># {el.content}</span>
-        ))} */}
         <span>#어질어질</span>
         <span>#어질어질</span>
       </div>
@@ -100,15 +101,17 @@ export function MyPageMyComment({ data }) {
 }
 
 export function MyPageFavorites({ data }) {
+  const dispatch = useDispatch();
+  const handleDelFavorites = () => {
+    delFavorites(data.post.post_id)
+      .then(() => {
+        dispatch(refreshSearchAction());
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <Container>
-      <div>
-        {/* {data.tags.map((el) => (
-          <span># {el.content}</span>
-        ))} */}
-        <span>#어질어질</span>
-        <span>#어질어질</span>
-      </div>
+      <div>{data.post.category.slice(0, -3)}</div>
       <div>
         <Link to={`/detailboard/${data.post.post_id}`}>
           {data.post.post_name}
@@ -116,7 +119,8 @@ export function MyPageFavorites({ data }) {
       </div>
       <div>{data.post.user.username}</div>
       <div>{data.post.view_count}</div>
-      <div>{data.post.view_count}</div>
+
+      <IconBox label="cmtDel" handleClick={handleDelFavorites} />
     </Container>
   );
 }
@@ -132,7 +136,7 @@ export function MyPageLogs({ data }) {
 }
 
 const Container = styled.div`
-  color: #666;
+  color: ${({ theme }) => theme.color.subfont};
   font-size: 0.9rem;
   div:nth-of-type(2) {
     text-align: start;
@@ -143,7 +147,7 @@ const Container = styled.div`
     margin: 0 0.2rem;
     font-weight: bold;
     font-size: 0.8rem;
-    color: #f90716;
+    color: ${({ theme }) => theme.color.tag};
   }
 
   a {

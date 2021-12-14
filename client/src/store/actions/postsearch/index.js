@@ -6,7 +6,7 @@ export const SELECT_PAGE = "SELECT_PAGE";
 export const SELECT_DIV_PAGE = "SELECT_DIV_PAGE";
 export const RESET_PAGINATION = "RESET_PAGINATION";
 export const RESET_SEARCH_REDUCER = "RESET_SEARCH_REDUCER";
-
+export const REFRESH_SEARCH = "REFRESH_SEARCH";
 export const boardAlignAction = (align) => {
   return {
     type: BOARD_ALIGN,
@@ -57,5 +57,12 @@ export const resetSearchReducerAction = (align) => {
   return {
     type: RESET_SEARCH_REDUCER,
     payload: { align },
+  };
+};
+
+export const refreshSearchAction = (refresh) => {
+  return {
+    type: REFRESH_SEARCH,
+    payload: { refresh: Math.random() },
   };
 };

@@ -24,7 +24,7 @@ const Container = styled.button`
   height: 2.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: #0c0c42;
+  background-color: ${({ theme }) => theme.color.basicBtn};
 
   font-weight: bold;
   color: #ffffff;
@@ -57,7 +57,7 @@ const Container = styled.button`
       width: 5rem;
 
       &:hover {
-        background-color: gray;
+        background-color: ${({ theme }) => theme.color.hoverBasicBtn};
       }
     `}
 
@@ -98,13 +98,13 @@ const Container = styled.button`
     ${({ type }) =>
     type === "confirm" &&
     css`
-      background-color: skyblue;
+      background-color: ${({ theme }) => theme.color.confirmBtn};
     `}
 
     ${({ type }) =>
     type === "error" &&
     css`
-      background-color: red;
+      background-color: ${({ theme }) => theme.color.confirmBtnError};
       animation: 0.3s linear ${shake};
     `}
 
