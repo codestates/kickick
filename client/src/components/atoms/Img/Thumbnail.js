@@ -7,7 +7,7 @@ export default function Thumbnail({ type = "post", src }) {
   return (
     <Container
       type={type}
-      src={src === "picture.jpg" ? default_thumbnail : src}
+      src={src === "picture.jpg" || src === null ? default_thumbnail : src}
       alt=""
     />
   );
@@ -29,6 +29,16 @@ const Container = styled.img`
       object-fit: cover;
       object-position: center top;
       height: 8.5rem;
+      opacity: 0.8;
+    `}
+
+    ${({ type }) =>
+    type === "kick" &&
+    css`
+      object-fit: cover;
+      object-position: center top;
+      height: 6rem;
+      width: 10rem;
       opacity: 0.8;
     `}
 `;

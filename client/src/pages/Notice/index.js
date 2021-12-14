@@ -16,9 +16,7 @@ import {
 import { getNoticesInfo, getNoticesList } from "../../apis/notices";
 
 import { getListAction } from "../../store/actions/postlist";
-import { getPostInfoAction } from "../../store/actions/postadd";
-
-import event_sample from "../../assets/images/event_sample_landscape.png";
+import { getPostInfoAction } from "../../store/actions/postinfo";
 
 const noticeList = [
   { category: "소식", component: <News /> },
@@ -26,12 +24,18 @@ const noticeList = [
 ];
 
 export default function Notice() {
+  const navigate = useNavigate();
   const { category } = useParams();
+  if (category !== "소식" && category !== "이벤트") {
+    navigate("/error");
+    return <div></div>;
+  }
+
   const { component } = noticeList.find((el) => el.category === category);
 
   return (
     <>
-      {/* <BoardTop /> */}
+      <BoardTop />
       <Container>
         <NavContainer>
           <h3>공지</h3>
@@ -60,6 +64,7 @@ export function News() {
   const handleNewPost = () => {
     navigate("edit");
   };
+
   useEffect(() => {
     getNoticesList({
       type: "notice",
@@ -149,6 +154,7 @@ const Container = styled.div`
   width: 90rem;
   margin: 3rem auto;
   gap: 1rem;
+  min-height: 30vh;
 
   @media ${({ theme }) => theme.device.notebookL} {
     width: 64rem;

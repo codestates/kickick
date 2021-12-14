@@ -10,7 +10,7 @@ const postList = [
   {
     reducer: ["mypage", "favorites"],
     type: "mypagefavorites",
-    label: ["태그", "제목", "글쓴이", "조회수", "스크랩삭제"],
+    label: ["게시판", "제목", "글쓴이", "조회수", "좋아요삭제"],
   },
   {
     reducer: ["mypage", "mypost"],
