@@ -274,14 +274,16 @@ module.exports = async (req, res) => {
       // user_id 로 샀는지 안샀는지 확인하고 값 추가
       // post.kick.kick_id로 확인
       post.is_purchased = false;
-      if (user_id && post.kick.users_kicks.length !== 0) {
-        for (let el of post.kick.users_kicks) {
-          if (el.user_id === user_id) {
-            post.is_purchased = true;
-            break;
+      if (post.kick) {
+        if (user_id && post.kick.users_kicks.length !== 0) {
+          for (let el of post.kick.users_kicks) {
+            if (el.user_id === user_id) {
+              post.is_purchased = true;
+              break;
+            }
           }
+          delete post.kick.users_kicks;
         }
-        delete post.kick.users_kicks;
       }
     });
   } catch (err) {
