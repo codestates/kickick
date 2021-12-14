@@ -20,10 +20,10 @@ import { resetSearchReducerAction } from "../../store/actions/postsearch";
 export default function Board() {
   const { category } = useParams();
   const dispatch = useDispatch();
-
   const apiCategory = useSelector((state) => state.postAdd.category);
   const { postsearch, onoff } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
+  const path = window.location.pathname.split("/")[1];
 
   useEffect(() => {
     dispatch(getCategoryAction(category));
@@ -34,6 +34,11 @@ export default function Board() {
     dispatch(resetListAction());
     dispatch(goBack(false));
   }, [category, postsearch.align, dispatch]);
+
+  useEffect(() => {
+    dispatch(getCategoryAction(category));
+    dispatch(resetSearchReducerAction());
+  }, [path, category, dispatch]);
 
   useEffect(() => {
     getPostsList({

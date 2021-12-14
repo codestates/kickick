@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { set, throttle } from "lodash";
 
 import {
@@ -9,10 +9,12 @@ import {
   delComments,
 } from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
+import { commentSocketAction } from "../../../store/actions/socket";
 
 export default function PostComment({ post_id }) {
+  const dispatch = useDispatch();
   const test = useRef();
-  const { login } = useSelector((state) => state);
+  const { login, socket } = useSelector((state) => state);
   const { postInfo } = useSelector((state) => state.persist);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,7 @@ export default function PostComment({ post_id }) {
         setCmt({ ...cmt, data: dummy });
       })
       .then(() => setPlusCmt(plusCmt + 1))
+      .then(() => dispatch(commentSocketAction(!socket.comment)))
       .catch((err) => console.log(err.response));
     setValue("");
   };
