@@ -34,30 +34,38 @@ module.exports = async (req, res) => {
   let count;
 
   try {
+    // 토큰의 username으로 user_id 구함
+    let user_info = await users.findOne({
+      attributes: [["id", "user_id"]],
+      where: {
+        username: username,
+      },
+      raw: true,
+    });
+    const user_id = user_info.user_id;
+
     const favorite_info = await favorites.findAndCountAll({
       attributes: [["id", "favorite_id"]],
       offset: limit * (page_num - 1),
       limit: limit,
       distinct: true,
       order: [["id", "DESC"]],
+      where: {
+        user_id: user_id,
+      },
       include: [
         {
           model: posts,
           attributes: [
             ["id", "post_id"],
-            // "user_id",
             "category",
             "post_name",
             "view_count",
           ],
-          required: true,
           include: [
             {
               model: users,
               attributes: ["username", "profile"],
-              where: {
-                username: username,
-              },
             },
           ],
         },

@@ -43,7 +43,7 @@ const GlobalStyles = createGlobalStyle`
     /* img {
         pointer-events:none;
     } */
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     width: 0.5rem;
   }
   ::-webkit-scrollbar-thumb {
@@ -54,7 +54,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: grey;
     border-radius: 0.5rem;
     
-  }
+  } */
    
 `;
 

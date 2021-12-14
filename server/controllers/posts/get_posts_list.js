@@ -2,6 +2,7 @@ const {
   users,
   posts,
   kicks,
+  users_kicks,
   comments,
   likes,
   posts_tags,
@@ -129,6 +130,28 @@ module.exports = async (req, res) => {
 
   // TODO 쿼리가 존재하면 쿼리로 검색
 
+  // 토큰이 있으면 샀는지 안샀는지 확인을 위해 user_id 구함
+  let user_id;
+  if (req.cookies.token) {
+    const token = req.cookies.token.access_token;
+    let decoded;
+
+    try {
+      decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+      const { username } = decoded;
+      let user_info = await users.findOne({
+        attributes: [["id", "user_id"]],
+        where: {
+          username: username,
+        },
+        raw: true,
+      });
+      user_id = user_info.user_id;
+    } catch (err) {
+      user_id = null;
+    }
+  }
+
   // 포함검색 구현 query 상황에 따라 where_obj 분기
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
@@ -201,18 +224,18 @@ module.exports = async (req, res) => {
         },
         {
           model: kicks,
-          attributes: ["id", "thumbnail"],
+          attributes: [["id", "kick_id"], "thumbnail"],
+          include: [
+            {
+              model: users_kicks,
+              attributes: ["user_id"],
+            },
+          ],
         },
         {
           model: comments,
           attributes: [["id", "comment_id"], "content"],
           order: [["id", "DESC"]],
-          include: [
-            {
-              model: users,
-              attributes: ["username", "profile", "created_at"],
-            },
-          ],
         },
         {
           model: posts_tags,
@@ -229,7 +252,7 @@ module.exports = async (req, res) => {
     data = post_info.rows.map((el) => el.get({ plain: true }));
 
     // 각 게시물에 접근
-    data.forEach((post) => {
+    data.forEach(async (post) => {
       // likes 가공
       let likes_obj = {
         true: 0,
@@ -247,10 +270,26 @@ module.exports = async (req, res) => {
       // tags 가공
       post.tags = post.posts_tags.map((tag) => tag.tag.content);
       delete post.posts_tags;
+
+      // user_id 로 샀는지 안샀는지 확인하고 값 추가
+      // post.kick.kick_id로 확인
+      post.is_purchased = false;
+      if (post.kick) {
+        if (user_id && post.kick.users_kicks.length !== 0) {
+          for (let el of post.kick.users_kicks) {
+            if (el.user_id === user_id) {
+              post.is_purchased = true;
+              break;
+            }
+          }
+          delete post.kick.users_kicks;
+        }
+      }
     });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
+
   return res.status(200).json({ count: count, data: data, message: "ok" });
 };
