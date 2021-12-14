@@ -128,6 +128,7 @@ export default function EditQuill({
           height: image === false ? "32rem" : "40rem",
           display: "flex",
           flexDirection: "column",
+          color: "white",
         }}
         modules={modules}
         formats={formats}
