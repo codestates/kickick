@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import styled, { css } from "styled-components";
 import { useSelector } from "react-redux";
@@ -12,7 +12,6 @@ export default function AlarmBtn({ fontSize = "xl" }) {
 
   const [alarmOpen, setAlarmOpen] = useState(false);
   const [isOver, setIsOver] = useState(false);
-
   
   const alarmOpner = () => {
       return setAlarmOpen(!alarmOpen);
@@ -21,9 +20,9 @@ export default function AlarmBtn({ fontSize = "xl" }) {
   const moveRefer = (obj) => {
     if (obj.reference) {
       const middleLink =
-        obj.reference.table === "post"
+        obj.reference.table === "posts"
           ? "detailboard"
-          : obj.reference.table === "notice"
+          : obj.reference.table === "notices"
           ? "notice"
             : "event";
       
@@ -42,18 +41,18 @@ export default function AlarmBtn({ fontSize = "xl" }) {
       >
         <AlarmFrame fontSize={fontSize}>
           <AlarmCounter
-            alarmLength={alarmList.length}
+            alarmLength={alarmList.count}
             isOver={isOver}
             fontSize={fontSize}
           >
-            {alarmList.length > 9 ? "+9" : alarmList.length}
+            {alarmList.count > 9 ? "+9" : alarmList.count}
           </AlarmCounter>
           <FaBell />
         </AlarmFrame>
       </AlarmContainer>
       <Dropdown dropdownOpen={alarmOpen} fontSize={fontSize} top="2.3rem">
-        {alarmList.length ? (
-          alarmList.map((el) => (
+        {alarmList.count ? (
+          alarmList.data.map((el) => (
             <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
               <DropdownContext>{el.content}</DropdownContext>
               {dateConverter(el.created_at).includes("전") ? (

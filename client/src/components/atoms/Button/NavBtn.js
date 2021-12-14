@@ -124,8 +124,8 @@ const SubNav = styled.div`
 const NotNotice = styled(SubNav)`
   left: ${({ size }) => `-${size.split("rem")[0] * 6}rem`};
   display: ${({ isSubNav, isHover, mylocation, pathname }) =>
-    (isSubNav && mylocation && !isHover && pathname !== "notice") ||
-    (isSubNav && isHover === pathname && pathname !== "notice")
+    (isSubNav && mylocation && !isHover && pathname !== "notice/소식") ||
+    (isSubNav && isHover === pathname && pathname !== "notice/소식")
       ? "flex"
       : "none"};
 `;
@@ -133,8 +133,8 @@ const NotNotice = styled(SubNav)`
 const NowNotice = styled(SubNav)`
   left: ${({ size }) => `-${size.split("rem")[0] * 1.5}rem`};
   display: ${({ isSubNav, isHover, mylocation, pathname }) =>
-    (isSubNav && mylocation && !isHover && pathname === "notice") ||
-    (isSubNav && isHover === pathname && pathname === "notice")
+    (isSubNav && mylocation && !isHover && pathname === "notice/소식") ||
+    (isSubNav && isHover === pathname && pathname === "notice/소식")
       ? "flex"
       : "none"};
 `;

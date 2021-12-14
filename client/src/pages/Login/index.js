@@ -50,7 +50,7 @@ const Fail = styled.p`
   font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
   color: red;
   transform: rotate(-28deg);
-  z-index: 2;
+  z-index: 5;
 `;
 
 const Frame = styled.div`
