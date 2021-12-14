@@ -62,6 +62,12 @@ module.exports = async (req, res) => {
             "post_name",
             "view_count",
           ],
+          include: [
+            {
+              model: users,
+              attributes: ["username", "profile"],
+            },
+          ],
         },
       ],
     });
