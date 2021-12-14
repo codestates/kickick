@@ -43,7 +43,18 @@ const GlobalStyles = createGlobalStyle`
     /* img {
         pointer-events:none;
     } */
-
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #0c0c52;
+    border-radius: 0.5rem;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 0.5rem;
+    
+  }
    
 `;
 

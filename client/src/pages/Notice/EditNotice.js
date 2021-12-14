@@ -61,7 +61,7 @@ export default function EditNotice() {
           thumbnail: location,
           content: postAdd.kick_content,
         })
-          .then(() => navigate(`/notice${category}`))
+          .then(() => navigate(`/notice/${category}`))
           .catch((err) => console.log(err));
       });
     }

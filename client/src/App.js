@@ -114,7 +114,10 @@ export default function App() {
               element={<MyEditBoard />}
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
-            <Route path="detailkick" element={<DetailKickBoard />} />
+            <Route
+              path="detailkick/:post_id/:kick_id"
+              element={<DetailKickBoard />}
+            />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route path="notice/:category" element={<Notice />}>

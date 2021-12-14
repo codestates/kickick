@@ -41,10 +41,6 @@ const Container = styled.div`
     box-shadow: none;
   }
 
-  img {
-    background-color: yellow;
-  }
-
   .event_name {
     font-size: 1rem;
     margin-bottom: 2rem;

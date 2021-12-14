@@ -30,6 +30,7 @@ export { default as KickBoardPost } from "./molecules/Card/KickBoardPost";
 export { default as PostStatics } from "./molecules/Card/PostStatics";
 export { default as EventPost } from "./molecules/Card/EventPost";
 export { default as NewsPost } from "./molecules/Card/NewsPost";
+export { default as MyKick } from "./molecules/Card/MyKick";
 export { default as Align } from "./molecules/Align";
 export { default as InputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as SignupInputBox } from "./molecules/InputBox/SignupInputBox";

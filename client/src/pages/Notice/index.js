@@ -16,7 +16,7 @@ import {
 import { getNoticesInfo, getNoticesList } from "../../apis/notices";
 
 import { getListAction } from "../../store/actions/postlist";
-import { getPostInfoAction } from "../../store/actions/postadd";
+import { getPostInfoAction } from "../../store/actions/postinfo";
 
 const noticeList = [
   { category: "소식", component: <News /> },
@@ -24,8 +24,13 @@ const noticeList = [
 ];
 
 export default function Notice() {
+  const navigate = useNavigate();
   const { category } = useParams();
-  if (category !== "소식" && category !== "이벤트") return <div>에러</div>;
+  if (category !== "소식" && category !== "이벤트") {
+    navigate("/error");
+    return <div></div>;
+  }
+
   const { component } = noticeList.find((el) => el.category === category);
 
   return (

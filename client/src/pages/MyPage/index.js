@@ -9,6 +9,7 @@ import {
   TabBox,
   ProfileEditForm,
   PostList,
+  CardBox,
 } from "../../components";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -63,35 +64,35 @@ export default function MyPage() {
   const { isLogin } = useSelector((state) => state.login);
 
   useEffect(() => {
-    getFavorites(null, null, postsearch.selectPage)
+    getFavorites(null, 10, postsearch.selectPage)
       .then((data) => {
-        dispatch(getFavoritesAction(data));
+        console.log(data);
+        dispatch(getFavoritesAction(data.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
 
     getPostsList({ page_num: postsearch.selectPage })
       .then((data) => {
-        dispatch(getMyPostAction(data));
+        dispatch(getMyPostAction(data.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
 
     getComments(null, null, postsearch.selectPage)
       .then((data) => {
-        dispatch(getMyCommentAction(data));
+        dispatch(getMyCommentAction(data.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
     getKicksList(10, postsearch.selectPage)
       .then((data) => {
-        dispatch(getPurchasedKickAction(data));
+        dispatch(getPurchasedKickAction(data.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
     getLogs("kick_money", 10, postsearch.selectPage)
       .then((data) => {
-        console.log(data);
-        dispatch(getKickmoneylogAction(data));
+        dispatch(getKickmoneylogAction(data.data));
       })
-      .catch((err) => console.log(err));
-  }, [dispatch, postsearch.selectPage]);
+      .catch((err) => console.log(err.response));
+  }, [dispatch, postsearch.selectPage, postsearch.refresh]);
 
   if (!isLogin) return <div>d</div>;
   return (
@@ -166,7 +167,7 @@ export function MyComment() {
 }
 
 export function PurchasedKick() {
-  return <PostList type="mypagemycomment" />;
+  return <CardBox type="mykick" />;
 }
 
 export function KickmoneyLog() {
