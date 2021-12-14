@@ -141,6 +141,9 @@ const Container = styled.div`
   div:nth-of-type(2) {
     text-align: start;
     font-size: 0.95rem;
+    a {
+      color: ${({ theme }) => theme.color.font};
+    }
   }
 
   span {

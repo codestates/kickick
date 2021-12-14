@@ -25,9 +25,9 @@ export default function TitleInput({
 const Title = styled.input`
   width: 30rem;
   font-size: 1.2rem;
-  border-bottom: 3px solid #eee;
+  border-bottom: 3px solid ${({ theme }) => theme.color.select};
   &:focus {
-    border-bottom: 3px solid skyblue;
+    border-bottom: 3px solid ${({ theme }) => theme.color.font};
   }
 
   ${({ type }) =>
@@ -37,11 +37,18 @@ const Title = styled.input`
       font-size: 1.2rem;
       height: 2.5rem;
       padding: 0.5rem;
+      color: ${({ theme }) => theme.color.font};
+      caret-color: ${({ theme }) => theme.color.font};
+      background: ${({ theme }) => theme.color.back};
     `}
 
   ${({ type }) =>
     type === "tag" &&
     css`
       width: 10rem;
+      padding: 0.5rem;
+      color: ${({ theme }) => theme.color.font};
+      caret-color: ${({ theme }) => theme.color.font};
+      background: ${({ theme }) => theme.color.back};
     `}
 `;

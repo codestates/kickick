@@ -64,7 +64,7 @@ export default function PostList({ type }) {
   const navigate = useNavigate();
 
   const handleMovePage = () => {
-    if (!isLogin) {
+    if (!isLogin || isLogin.type === "email auth required") {
       setModal(true);
       disableScroll.on();
     } else {
@@ -125,6 +125,7 @@ const NoPostContainer = styled.div`
   height: 8rem;
   font-size: 1.5rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
 `;
 
 const PostListContainer = styled.div`
@@ -135,6 +136,7 @@ const PostListContainer = styled.div`
     background: ${({ theme }) => theme.color.gradient};
     box-shadow: 1px 1px 5px ${({ theme }) => theme.color.shadow};
     font-weight: bold;
+    color: ${({ theme }) => theme.color.font};
 
     @media ${({ theme }) => theme.device.mobileL} {
       display: none;
@@ -197,7 +199,6 @@ const PostListContainer = styled.div`
         > div:nth-of-type(2) {
           flex: 4;
           padding-left: 4rem;
-          color: black;
         }
         > div:nth-of-type(3) {
           flex: 2;

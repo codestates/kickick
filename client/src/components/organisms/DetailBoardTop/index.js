@@ -5,14 +5,7 @@ import "react-quill/dist/quill.bubble.css";
 
 import { IconBox, Profile, AlienPortion } from "../../../components";
 
-import { createLikes } from "../../../apis/likes";
-
-import astronautImg from "../../../assets/images/astronaut.svg";
-import alienImg from "../../../assets/images/alien.svg";
-import star from "../../../assets/images/icon/contenticon.png";
-
 export default function DetailBoardTop({ postInfo, type }) {
-  console.log(postInfo);
   return (
     <Container>
       <TopContainer>
@@ -76,6 +69,7 @@ const Title = styled.div`
   font-size: 2rem;
   font-weight: bold;
   padding: 0.5rem;
+  color: ${({ theme }) => theme.color.font};
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
@@ -106,6 +100,7 @@ const TagContainer = styled.div`
 const Content = styled.div`
   height: auto;
   padding: 2rem 0;
+  color: ${({ theme }) => theme.color.font};
 `;
 
 const VotesContainer = styled.div`

@@ -60,7 +60,7 @@ export default function TagInput({ tagArr, setTagArr, category, readOnly }) {
 
 const Container = styled.div`
   display: flex;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   gap: 1rem;
   height: 3.3rem;
 `;

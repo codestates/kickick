@@ -70,14 +70,16 @@ const iconList = [
   },
 ];
 
-export default function IconBox({ label = "arrow", handleClick }) {
+export default function IconBox({ label = "arrow", handleClick, themeCode }) {
   const { icon, color, category } = iconList.find((el) => el.label === label);
+
   return (
     <Container
       label={label}
       color={color}
       onClick={category === "postInfo" ? null : () => handleClick(label)}
       category={category}
+      themeCode={themeCode}
     >
       {icon}
     </Container>
@@ -104,19 +106,42 @@ const Container = styled.div`
       height: 2.5rem;
       border: 1px solid ${color};
       color: ${color};
-
       border-radius: 10px;
       svg {
         font-size: 1.5rem;
       }
     `}
 
-${({ label }) =>
+  ${({ label }) =>
     label === "arrow" &&
     css`
       :hover {
         color: #fff;
-        background-color: #0c0c42;
+        background-color: ${({ theme }) => theme.color.hoverArrow};
       }
+    `}
+    
+  ${({ label }) =>
+    label === "edit" &&
+    css`
+      box-shadow: inset
+        ${({ themeCode }) =>
+          themeCode === "dark" ? "0 0 1rem rgba(39, 60, 86, 1)" : null};
+    `}
+  
+  ${({ label }) =>
+    label === "postDel" &&
+    css`
+      box-shadow: inset
+        ${({ themeCode }) =>
+          themeCode === "dark" ? "0 0 1rem rgba(255, 0, 0, 1)" : null};
+    `}
+
+  ${({ label }) =>
+    (label === "red" || label === "heart") &&
+    css`
+      box-shadow: inset
+        ${({ themeCode }) =>
+          themeCode === "dark" ? "0 0 1rem rgba(255,175,175, 1)" : null};
     `}
 `;

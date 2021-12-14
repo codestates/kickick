@@ -11,7 +11,7 @@ import {
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
 import { commentSocketAction } from "../../../store/actions/socket";
 
-export default function PostComment({ post_id }) {
+export default function PostComment({ post_id, themeCode }) {
   const dispatch = useDispatch();
   const test = useRef();
   const { login, socket } = useSelector((state) => state);
@@ -140,6 +140,7 @@ export default function PostComment({ post_id }) {
         handleClick={handleClick}
         value={value}
         handleChange={handleChange}
+        themeCode={themeCode}
       />
       <H3>
         댓글 <strong>{cmt.count + plusCmt}</strong>
@@ -171,4 +172,5 @@ const H3 = styled.div`
   padding: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
 `;

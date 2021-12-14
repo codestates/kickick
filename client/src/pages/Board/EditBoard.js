@@ -19,7 +19,7 @@ import {
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
 
-export default function EditBoard() {
+export default function EditBoard({ themeCode }) {
   const { category } = useParams();
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
@@ -63,7 +63,12 @@ export default function EditBoard() {
               category={category}
             />
           </TitleContainer>
-          <EditQuill image={false} content={content} setContent={setContent} />
+          <EditQuill
+            image={false}
+            content={content}
+            setContent={setContent}
+            themeCode={themeCode}
+          />
 
           <BtnContainer>
             <IconBox label="arrow" handleClick={handleMovePage} />
@@ -79,7 +84,11 @@ export default function EditBoard() {
             value={content}
             readOnly={true}
             theme={"bubble"}
-            style={{ widht: "43rem", paddingTop: "0.5rem" }}
+            style={{
+              widht: "43rem",
+              paddingTop: "0.5rem",
+              color: themeCode === "light" ? "black" : "white",
+            }}
           />
         </DividBox>
       </QullContainer>
@@ -117,4 +126,5 @@ const TitleBox = styled.div`
   padding-top: 0.5rem;
   font-size: 2.8rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
 `;

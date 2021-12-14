@@ -9,7 +9,7 @@ import { getPostsInfo } from "../../apis/posts";
 
 import { getPostInfoAction } from "../../store/actions/postinfo";
 
-export default function DetailBoard({ type }) {
+export default function DetailBoard({ type, themeCode }) {
   const { postInfo } = useSelector((state) => state.persist);
   const dispatch = useDispatch();
   const { post_id } = useParams();
@@ -28,10 +28,10 @@ export default function DetailBoard({ type }) {
 
   return (
     <Container>
-      <IconContainer />
+      <IconContainer themeCode={themeCode} />
       <RightContainer>
         <DetailBoardTop postInfo={postInfo} type={type} />
-        <PostComment post_id={post_id} />
+        <PostComment post_id={post_id} themeCode={themeCode} />
       </RightContainer>
     </Container>
   );

@@ -9,7 +9,7 @@ import { createFavorites, delFavorites } from "../../../apis/favorites";
 import { goBack } from "../../../store/actions/postadd";
 import { IconBox, Modal } from "../../../components";
 
-export default function IconContainer() {
+export default function IconContainer({ themeCode }) {
   const [modal, setModal] = useState(false);
   const { post_id } = useParams();
   const { board, login } = useSelector((state) => state);
@@ -72,18 +72,34 @@ export default function IconContainer() {
       <IconBox label="arrow" handleClick={handleClick} />
       {postInfo.user.username === login.isLogin.username ? (
         <>
-          <IconBox label="edit" handleClick={handleClick} />
-          <IconBox label="postDel" handleClick={handleModalOn} />
+          <IconBox
+            label="edit"
+            handleClick={handleClick}
+            themeCode={themeCode}
+          />
+          <IconBox
+            label="postDel"
+            handleClick={handleModalOn}
+            themeCode={themeCode}
+          />
         </>
       ) : (
         login.isLogin.type === "admin" && (
-          <IconBox label="postDel" handleClick={handleModalOn} />
+          <IconBox
+            label="postDel"
+            handleClick={handleModalOn}
+            themeCode={themeCode}
+          />
         )
       )}
       {postInfo.user.username === login.isLogin.username ? null : heart ? (
-        <IconBox label="red" handleClick={handleClick} />
+        <IconBox label="red" handleClick={handleClick} themeCode={themeCode} />
       ) : (
-        <IconBox label="heart" handleClick={handleClick} />
+        <IconBox
+          label="heart"
+          handleClick={handleClick}
+          themeCode={themeCode}
+        />
       )}
       {modal ? (
         <Modal

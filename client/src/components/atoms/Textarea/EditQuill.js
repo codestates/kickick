@@ -12,6 +12,7 @@ export default function EditQuill({
   content,
   setContent,
   handleContent,
+  themeCode,
 }) {
   const quill = useRef(null);
   const tempImage = useRef([]);
@@ -128,7 +129,7 @@ export default function EditQuill({
           height: image === false ? "32rem" : "40rem",
           display: "flex",
           flexDirection: "column",
-          color: "white",
+          color: themeCode === "light" ? "black" : "white",
         }}
         modules={modules}
         formats={formats}

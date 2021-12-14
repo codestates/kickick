@@ -91,7 +91,7 @@ const Container = styled.button`
       width: 10rem;
 
       &:hover {
-        background-color: gray;
+        background-color: ${({ theme }) => theme.color.hoverBasicBtn};
       }
     `}
 

@@ -17,7 +17,7 @@ import {
 } from "../../store/actions/postadd";
 import { resetSearchReducerAction } from "../../store/actions/postsearch";
 
-export default function Board() {
+export default function Board({ themeCode }) {
   const { category } = useParams();
   const dispatch = useDispatch();
   const apiCategory = useSelector((state) => state.postAdd.category);
@@ -69,7 +69,7 @@ export default function Board() {
   if (loading) return <BoardSkeleton />;
   return (
     <>
-      <BoardTop />
+      <BoardTop themeCode={themeCode} />
       <Container>
         <BoardContainer>
           <TotalSearch />

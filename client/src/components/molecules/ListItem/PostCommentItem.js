@@ -70,12 +70,13 @@ const Container = styled.div`
 
 const UserInfoContainer = styled.div`
   display: flex;
-
+  align-items: center;
   font-weight: bold;
   line-height: 2;
 
   .username {
     margin-left: 0.5rem;
+    color: ${({ theme }) => theme.color.font};
   }
 
   .datetime {

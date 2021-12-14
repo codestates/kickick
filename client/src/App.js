@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
@@ -67,9 +63,7 @@ export default function App() {
       })
       .then((message) =>
         message === "first login"
-          ? window.location.replace(
-              `/modal/calendar`
-            )
+          ? window.location.replace(`/modal/calendar`)
           : null
       )
       .catch(() => dispatch(isLoginAction(false)));
@@ -97,8 +91,6 @@ export default function App() {
       ...socketChange.alarmPage,
     });
   });
-  
-  
 
   return (
     <ThemeProvider theme={theme[0]}>
@@ -128,12 +120,21 @@ export default function App() {
             <Route path="signup" element={<SignupSelect />} />
             <Route path="signup/:type" element={<Signup />} />
             <Route path="mailauth/:username" element={<MailAuth />} />
-            <Route path="board/:category" element={<Board />} />
-            <Route path="detailboard/:post_id" element={<DetailBoard />} />
-            <Route path="editboard/:category" element={<EditBoard />} />
+            <Route
+              path="board/:category"
+              element={<Board themeCode={theme[1]} />}
+            />
+            <Route
+              path="detailboard/:post_id"
+              element={<DetailBoard themeCode={theme[1]} />}
+            />
+            <Route
+              path="editboard/:category"
+              element={<EditBoard themeCode={theme[1]} />}
+            />
             <Route
               path="myeditboard/:category/:post_id"
-              element={<MyEditBoard />}
+              element={<MyEditBoard themeCode={theme[1]} />}
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
