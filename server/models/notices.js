@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       notice_name: DataTypes.STRING,
       thumbnail: DataTypes.STRING,
       summary: DataTypes.STRING,
-      content: DataTypes.STRING,
+      content: DataTypes.TEXT,
     },
     {
       sequelize,

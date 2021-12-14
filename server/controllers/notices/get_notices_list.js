@@ -17,8 +17,9 @@ module.exports = async (req, res) => {
     };
 
   let data;
+  let count;
   try {
-    data = await notices.findAll({
+    let notice_info = await notices.findAndCountAll({
       attributes: [
         ["id", "notice_id"],
         "user_id",
@@ -26,7 +27,6 @@ module.exports = async (req, res) => {
         "notice_name",
         "thumbnail",
         "summary",
-        // "content",
         "created_at",
       ],
       where: where_obj,
@@ -37,6 +37,8 @@ module.exports = async (req, res) => {
       offset: limit * (page_num - 1),
       limit: limit,
     });
+    data = notice_info.rows;
+    count = notice_info.count;
 
     // id 명시적으로
     // data = data.map((el) => {
@@ -50,5 +52,5 @@ module.exports = async (req, res) => {
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });
   }
 
-  return res.status(200).json({ data: data, message: "ok" });
+  return res.status(200).json({ count: count, data: data, message: "ok" });
 };

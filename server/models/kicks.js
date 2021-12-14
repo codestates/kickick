@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       post_id: DataTypes.INTEGER,
       thumbnail: DataTypes.STRING,
-      content: DataTypes.STRING,
+      content: DataTypes.TEXT,
     },
     {
       sequelize,

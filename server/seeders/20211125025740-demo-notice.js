@@ -7,7 +7,6 @@ module.exports = {
         user_id: 1,
         type: "notice",
         notice_name: "킥머니 이벤트",
-        thumbnail: "picture.jpg",
         summary:
           "여러분들의 성원에 힘입어 킥머니 이벤트를 진행하게 되었습니다.",
         content:
