@@ -5,32 +5,35 @@ import { useNavigate } from "react-router";
 
 import { Profile, Common, Chart } from "../../../components";
 
-import { putUserInfo } from "../../../apis/users";
+import { purchaseKicks } from "../../../apis/kicks";
 import { modalOffAction } from "../../../store/actions/kickboard";
 
 import kickmoney from "../../../assets/images/icon/kickmoney.png";
 import reviewicon from "../../../assets/images/icon/reviewicon.png";
 import introicon from "../../../assets/images/icon/introicon.png";
 import staticsicon from "../../../assets/images/icon/staticsicon.png";
+import { isPointAction } from "../../../store/actions/login";
 
 export default function KickConfirm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errMsg, setErrMsg] = useState();
   const { modalState, modalInfo } = useSelector((state) => state.kickboard);
-  const { isLogin } = useSelector((state) => state.login);
-
+  const { isLogin, isPoint } = useSelector((state) => state.login);
+  console.log(modalInfo);
   const handleKickChange = () => {
     if (!isLogin) {
       setErrMsg("로그인 후 이용가능합니다");
       return;
     }
-    putUserInfo({ kick_money: `-${modalInfo.cost}` })
+    purchaseKicks(modalInfo.kick.id)
       .then(() => {
-        navigate(`/detailkick/${modalInfo.post_id}`);
+        dispatch(modalOffAction());
+        dispatch(isPointAction(isPoint - modalInfo.cost));
+        navigate(`/detailkick/${modalInfo.post_id}/${modalInfo.kick.id}`);
       })
       .catch((err) => {
-        setErrMsg("킥머니가 부족합니다");
+        setErrMsg(err.response.data.message);
       });
   };
 
@@ -82,7 +85,7 @@ export default function KickConfirm() {
               <h3>{modalInfo.cost}</h3>
             </KickConfirmKickMoney>
             <Common
-              type={"error"}
+              type={errMsg ? "error" : "confirm"}
               label={errMsg ? errMsg : "보기"}
               handleClick={handleKickChange}
             />
@@ -118,7 +121,7 @@ const ModalOverlay = styled.div`
 const ModalInner = styled.div`
   position: relative;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.modalBack};
   border-radius: 0.5rem;
   width: 30rem;
   height: 50rem;
@@ -134,6 +137,7 @@ const ModalInner = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: ${({ theme }) => theme.color.font};
   }
 
   h3 {
@@ -178,8 +182,8 @@ const KickConfirmUser = styled.div`
 
 const KickConfirmIntroduction = styled.div`
   padding: 1rem;
-  background-color: #faffff;
-  border: 1px solid #eee;
+  background-color: ${({ theme }) => theme.color.modalSubBack};
+  /* border: 1px solid #eee; */
   border-radius: 0.5rem;
   min-height: 5rem;
 
@@ -199,10 +203,10 @@ const KickConfirmReview = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   padding: 1rem;
-  background-color: #faffff;
-  border: 1px solid #eee;
+  background-color: ${({ theme }) => theme.color.modalSubBack};
+  /* border: 1px solid #eee; */
   border-radius: 0.5rem;
-  min-height: 14.5rem;
+  height: 14.5rem;
   overflow-y: auto;
 
   .username {

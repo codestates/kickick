@@ -22,6 +22,8 @@ const list = [
   { label: "economy", src: economy, category: "경제", color: "#DE5C8A" },
   { label: "travel", src: trip, category: "여행", color: "#D04E3E" },
   { label: "art", src: art, category: "예술", color: "#EED548" },
+  { label: "notice", src: null, category: "소식", color: "#EED548" },
+  { label: "event", src: null, category: "이벤트", color: "#EED548" },
   // { label: "", src: "", category: "default", color: "#000000" },
 ];
 

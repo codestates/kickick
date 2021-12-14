@@ -49,7 +49,7 @@ const Selected = styled.div`
 
   width: 7rem;
   border-radius: 0.1rem;
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: ${({ theme }) => theme.color.select};
   cursor: pointer;
   svg {
     margin-left: auto;

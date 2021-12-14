@@ -13,7 +13,7 @@ import {
   IconBox,
 } from "../../components";
 
-import { getPostInfoAction } from "../../store/actions/postadd";
+import { getPostInfoAction } from "../../store/actions/postinfo";
 import { getPostsInfo, putPost } from "../../apis/posts";
 import { delTags, createTags } from "../../apis/tags";
 

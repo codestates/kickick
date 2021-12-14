@@ -3,7 +3,7 @@ import api from "./";
  *  @param {number} kick_id required
  **/
 export const getKicksInfo = (kick_id) => {
-  return api.get(`/kicks/info?kick_id =${kick_id}`);
+  return api.get(`/kicks/info?kick_id=${kick_id}`);
 };
 /**
  *  @param {number} limit option
@@ -38,4 +38,10 @@ export const putKicks = (kick_id, thumbnail, content) => {
  **/
 export const delKicks = (kick_id) => {
   return api.delete(`/kicks/info/${kick_id}`);
+};
+/**
+ *  @param {number} kick_id required
+ **/
+export const purchaseKicks = (kick_id) => {
+  return api.post(`/kicks/purchase`, { kick_id });
 };

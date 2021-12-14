@@ -7,10 +7,10 @@ import { DetailBoardTop, PostComment, IconContainer } from "../../components";
 
 import { getPostsInfo } from "../../apis/posts";
 
-import { getPostInfoAction } from "../../store/actions/postadd";
+import { getPostInfoAction } from "../../store/actions/postinfo";
 
 export default function DetailBoard({ type }) {
-  const state = useSelector((state) => state.persist.postInfo);
+  const { postInfo } = useSelector((state) => state.persist);
   const dispatch = useDispatch();
   const { post_id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -22,17 +22,17 @@ export default function DetailBoard({ type }) {
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
-  }, [dispatch, post_id]);
+  }, [dispatch, post_id, type]);
 
   if (loading) return <Temporary />;
 
   return (
     <Container>
-      {type === "kick" ? null : <IconContainer />}
-      <RigthContainer>
-        <DetailBoardTop state={state} type={type} />
+      <IconContainer />
+      <RightContainer>
+        <DetailBoardTop postInfo={postInfo} type={type} />
         <PostComment post_id={post_id} />
-      </RigthContainer>
+      </RightContainer>
     </Container>
   );
 }
@@ -43,9 +43,22 @@ const Container = styled.div`
   gap: 1rem;
   width: 48rem;
   margin: 0 auto;
+
+  .event_name {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .event_info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: gray;
+  }
 `;
 
-const RigthContainer = styled.div`
+const RightContainer = styled.div`
   width: 40.5rem;
   z-index: 1;
 `;

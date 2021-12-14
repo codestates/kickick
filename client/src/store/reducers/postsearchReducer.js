@@ -7,6 +7,7 @@ import {
   TAG_SEARCH,
   WRITER_SEARCH,
   RESET_SEARCH_REDUCER,
+  REFRESH_SEARCH,
 } from "../actions/postsearch";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   writer: "",
   selectPage: 1,
   limitPage: 10,
+  refresh: false,
 };
 
 export default function postserachReducer(state = initialState, action) {
@@ -33,6 +35,8 @@ export default function postserachReducer(state = initialState, action) {
     case TAG_SEARCH:
       return { ...state, ...action.payload };
     case WRITER_SEARCH:
+      return { ...state, ...action.payload };
+    case REFRESH_SEARCH:
       return { ...state, ...action.payload };
     case RESET_SEARCH_REDUCER:
       return { ...initialState, ...action.payload };
