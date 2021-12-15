@@ -4,13 +4,15 @@ import styled, { css } from "styled-components";
 import { useSelector,useDispatch } from "react-redux";
 
 import { FaBell } from "react-icons/fa";
+import { postAlarm } from "../../../apis/alarm"
 import { dateConverter } from "../../../commons/utils/dateConverter"
 import { alarmPageAction } from "../../../store/actions/socket";
 
-export default function AlarmBtn({ fontSize = "xl" }) {
+export default function AlarmBtn({ fontSize = "xl", socketClient }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchSection = useRef();
+  const isLogin = useSelector((state) => state.login.isLogin);
   const alarmList = useSelector((state) => state.alarmList);
   const socketChange = useSelector((state) => state.socket);
 
@@ -30,8 +32,16 @@ export default function AlarmBtn({ fontSize = "xl" }) {
           ? "notice"
           : "event";
 
-      navigate(`/${middleLink}/${obj.reference.id}`);
-      setAlarmOpen(false);
+      postAlarm(obj.alarm_id,1)
+        .then(() => {
+          socketClient.emit("alarms", {
+            username: isLogin.username,
+            ...socketChange.alarmPage,
+          });
+          navigate(`/${middleLink}/${obj.reference.id}`);
+          setAlarmOpen(false);
+        })
+        .catch(() => navigate(`/err`));
     }
   };
 
@@ -58,7 +68,7 @@ export default function AlarmBtn({ fontSize = "xl" }) {
     },
     [alarmList]
   );
-  
+
   useEffect(() => {
     const options = {
       root: null,
@@ -103,10 +113,7 @@ export default function AlarmBtn({ fontSize = "xl" }) {
       >
         {alarmList.count ? (
           alarmList.data.map((el) => (
-            <DropdownList
-              onClick={() => moveRefer(el)}
-              key={el.alarm_id}
-            >
+            <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
               <DropdownContext>{el.content}</DropdownContext>
               {dateConverter(el.created_at).includes("전") ? (
                 <DropdownCreated>

@@ -79,7 +79,7 @@ export default function Nav({ themeCode, socketClient }) {
             />
           </LoginChanger>
           <LoginChanger isLogin={isLogin && isLogin.type !== "guest"}>
-            <AlarmBtn />
+            <AlarmBtn socketClient={socketClient} />
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
               context="로그아웃"
