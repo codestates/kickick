@@ -36,7 +36,8 @@ export default function Nav({ themeCode, socketClient }) {
   useEffect(() => {
     if (isLogin) {
       socketClient.emit("alarms", {
-        username: isLogin.username,
+        username: socketChange.targetId,
+        // 여기서 상대방 아이디가 와야된다.
         ...socketChange.alarmPage,
       });
     }
