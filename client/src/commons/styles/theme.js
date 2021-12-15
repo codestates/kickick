@@ -56,7 +56,7 @@ export const light = {
   ...common,
   color: {
     back: "#ffffff",
-    navBack: "#ffffff",
+    navBack: "#2980b9",
     main: "#0c0c42",
     alarm: "#0c0c42",
     font: "#222222",
@@ -97,7 +97,7 @@ export const dark = {
   ...common,
   color: {
     back: "#1E1F21",
-    navBack: "#292A2D",
+    navBack: "#1E1F21",
     alarm: "#ffffff",
     tag: "#f90716",
     font: "#ffffff",

@@ -92,7 +92,7 @@ const Container = styled.div`
   height: 12rem;
   justify-content: center;
   gap: 1rem;
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
   /* background-image: url(${({ image }) => image}); */
   /* object-fit: cover; */
   font-size: 4rem;
