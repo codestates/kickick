@@ -94,7 +94,7 @@ export const dark = {
   color: {
     back: "#1E1F21",
     navBack: "#292A2D",
-    alarm: "#ffffff",
+    alarm: "#444444",
     tag: "#f90716",
     font: "#ffffff",
     subfont: "#959191",
