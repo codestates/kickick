@@ -207,16 +207,20 @@ const Container = styled.div`
   display: flex;
 `;
 const WritePage = styled.div`
-  width: calc(50% - 2rem);
+  width: 50%;
 
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
   gap: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
 `;
 
 const ViewPage = styled.div`
-  width: calc(50% - 2rem);
+  width: 50%;
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
@@ -243,6 +247,10 @@ const ViewPage = styled.div`
     margin: 2rem 0;
     min-height: 4.5rem;
     line-height: 1.5;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    display: none;
   }
 `;
 

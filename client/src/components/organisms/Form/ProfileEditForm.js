@@ -7,7 +7,7 @@ import { ProfileInput, Common, Modal } from "../../../components";
 
 import { putUserInfo, delUserInfo } from "../../../apis/users";
 import { uploadSingleImage } from "../../../apis/upload";
-import { signOut } from "../../../apis/auth";
+import { signOut, duplicationCheck } from "../../../apis/auth";
 
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
 
@@ -18,26 +18,28 @@ export default function ProfileEditForm() {
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.login);
 
-  const [disabled, setDisabled] = useState(false);
-  const [username, setUsername] = useState(isLogin.username);
-  const [profile, setProfile] = useState(isLogin.profile);
+  const [disabled, setDisabled] = useState(true);
+  const [username, setUsername] = useState();
+  const [profile, setProfile] = useState();
   const [rawProfile, setRawProfile] = useState();
-  const [email, setEmail] = useState(isLogin.email);
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errEmailMsg, setErrEmailMsg] = useState();
   const [errNameMsg, setErrNameMsg] = useState();
   const [errPWMsg, setErrPWMsg] = useState();
+  const [emailDupChecked, setEmailDupChecked] = useState(false);
+  const [nameDupChecked, setNameDupChecked] = useState(false);
   const [modal, setModal] = useState(false);
 
   const handleUsername = (e) => {
     const { message, isValid } = validation("username", e.target.value);
     if (!isValid) {
       setErrNameMsg(message);
-      setDisabled(true);
     } else {
       setErrNameMsg(null);
-      setDisabled(false);
     }
+    setNameDupChecked(false);
+    setDisabled(true);
     setUsername(e.target.value);
   };
 
@@ -45,11 +47,12 @@ export default function ProfileEditForm() {
     const { message, isValid } = validation("email", e.target.value);
     if (!isValid) {
       setErrEmailMsg(message);
-      setDisabled(true);
+      setEmailDupChecked(false);
     } else {
       setErrEmailMsg(null);
-      setDisabled(false);
     }
+    setEmailDupChecked(false);
+    setDisabled(true);
     setEmail(e.target.value);
   };
 
@@ -71,7 +74,6 @@ export default function ProfileEditForm() {
     setPassword(e.target.value);
   };
   const handleProfile = (raw, base64) => {
-    console.log("ee");
     setRawProfile(raw);
     setProfile(base64);
   };
@@ -84,6 +86,7 @@ export default function ProfileEditForm() {
       value: username,
       handler: handleUsername,
       err: errNameMsg,
+      dup: nameDupChecked,
     },
     {
       head: "이메일",
@@ -92,6 +95,7 @@ export default function ProfileEditForm() {
       value: email,
       handler: handleEmail,
       err: errEmailMsg,
+      dup: emailDupChecked,
     },
     {
       head: "비밀번호 수정",
@@ -161,12 +165,32 @@ export default function ProfileEditForm() {
   const handleModal = () => {
     setModal(!modal);
   };
+
+  const handleDupCheck = (type) => {
+    if (type === "email") {
+      duplicationCheck({ email })
+        .then(() => {
+          setErrEmailMsg(null);
+          setEmailDupChecked(true);
+          setDisabled(false);
+        })
+        .catch((err) => setErrEmailMsg("중복된 이메일입니다"));
+    } else {
+      duplicationCheck({ username })
+        .then(() => {
+          setErrNameMsg(null);
+          setNameDupChecked(true);
+          setDisabled(false);
+        })
+        .catch((err) => setErrNameMsg("중복된 유저네임입니다"));
+    }
+  };
   return (
     <>
       <Container>
         <ListContainer>
           {profileInputList.map((el) => (
-            <>
+            <ProfileContainer>
               <ProfileInput
                 key={el.head}
                 head={el.head}
@@ -176,7 +200,20 @@ export default function ProfileEditForm() {
                 handler={el.handler}
                 err={el.err}
               />
-            </>
+              {(el.type === "email" || el.type === "text") &&
+                !el.err &&
+                !el.dup &&
+                el.value && (
+                  <button
+                    className="duplication"
+                    onClick={() => {
+                      handleDupCheck(el.type);
+                    }}
+                  >
+                    중복체크
+                  </button>
+                )}
+            </ProfileContainer>
           ))}
         </ListContainer>
       </Container>
@@ -188,9 +225,6 @@ export default function ProfileEditForm() {
       />
       <ResignContainer>
         <h2>회원탈퇴</h2>
-        <p>
-          저희 이거 책임 못집니다. 포인트 다 잃어요 괜찮아요? 하... 후회할텐데
-        </p>
         <Common type="resign" label="회원탈퇴" handleClick={handleModal} />
         {modal && (
           <Modal
@@ -221,6 +255,16 @@ const ListContainer = styled.div`
   }
   @media ${({ theme }) => theme.device.tablet} {
     height: 45rem;
+  }
+`;
+
+const ProfileContainer = styled.div`
+  position: relative;
+  .duplication {
+    position: absolute;
+    top: 2.7rem;
+    right: 1rem;
+    font-weight: bold;
   }
 `;
 

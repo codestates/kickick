@@ -35,6 +35,7 @@ export { default as PostStatics } from "./molecules/Card/PostStatics";
 export { default as EventPost } from "./molecules/Card/EventPost";
 export { default as NewsPost } from "./molecules/Card/NewsPost";
 export { default as MyKick } from "./molecules/Card/MyKick";
+export { default as Attendance } from "./molecules/Card/Attendance";
 export { default as Align } from "./molecules/Align";
 export { default as InputChamber } from "./molecules/InputBox/LoginInputChamber";
 export { default as SignupInputBox } from "./molecules/InputBox/SignupInputBox";
@@ -56,7 +57,7 @@ export { default as MainRecommend } from "./organisms/MainSection/MainRecommend"
 export { default as MainEvent } from "./organisms/MainSection/MainEvent";
 export { default as InputForm } from "./organisms/SignupForm";
 export { default as CardBox } from "./organisms/CardBox";
-export { default as PostStaticsList } from "./organisms/CardBox/PostStaticsList";
+export { default as SmallCardBox } from "./organisms/CardBox/SmallCardBox";
 export { default as TotalSearch } from "./organisms/TotalSearch/TotalSearch";
 export { default as BoardTop } from "./organisms/BoardTop";
 export { default as DetailBoardTop } from "./organisms/DetailBoardTop";

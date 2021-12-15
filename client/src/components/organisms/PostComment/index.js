@@ -162,7 +162,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
-  background: #fafafa;
+  background: #fbfbfb;
   margin: 5rem 0;
   border-radius: 0.5rem;
 
