@@ -108,6 +108,7 @@ const ContentFrame = styled.div`
   position: relative;
   left: ${({ isSelect }) => `-${isSelect * 80}vw`};
   display: flex;
+  min-height: 9vw;
   animation-name: ${({ isSelect }) =>
     isSelect === 1 ? "zeroToOne" : isSelect === 2 ? "oneToTwo" : "twoToOne"};
   animation-duration: 0.3s;

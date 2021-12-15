@@ -1,12 +1,16 @@
 import React from "react";
 import { useLocation } from "react-router-dom"
 import styled from "styled-components";
+import disableScroll from "disable-scroll";
+
 
 import { FirstEnter, Calendar } from "../../../components";
 
 export default function CommonModal() {
   const location = useLocation();
   const modalName = location.pathname.split("/")[2];
+
+  disableScroll.on();
   return (
     <Container>
       {modalName === "firstenter" ? (

@@ -8,7 +8,7 @@ export default function NavBtn({
   context = "버튼",
   pathname = "",
   size = "1rem",
-  color = "#000000",
+  color = "",
   fontFamily = `'Jua', sans-serif`,
   backgroundColor,
   func = () => {
@@ -105,7 +105,7 @@ const MainBtn = styled.div`
   padding: 0.5rem;
   font-size: ${({ size }) => size};
   font-family: ${({ fontFamily }) => fontFamily};
-  color: ${({ color }) => color};
+  color: ${({ color, theme }) => (color ? color : theme.color.font)};
   border-radius: ${({ size }) => `${size.replace("rem", "") / 2}rem`};
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;

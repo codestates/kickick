@@ -7,6 +7,7 @@ import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
+
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
@@ -41,8 +42,12 @@ export default function Nav({ themeCode, socketClient }) {
     }
   }, [socketChange, isLogin]);
 
+  // console.log("pageYOffset",window.pageYOffset);
+  // console.log("screenY",window.screenY);
+
   return (
     <Container
+      scroll={scroll}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -75,7 +80,7 @@ export default function Nav({ themeCode, socketClient }) {
             />
           </LoginChanger>
           <LoginChanger isLogin={isLogin && isLogin.type !== "guest"}>
-            <AlarmBtn />
+            <AlarmBtn socketClient={socketClient} />
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
               context="로그아웃"
@@ -106,18 +111,20 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
+  background-color: transparent;
   z-index: 999;
 `;
 
 const Frame = styled(VerticalAlign)`
   position: relative;
   top: ${({ scroll, isHover }) =>
-    scroll.scrollDirection === "up" && !isHover ? "-8rem" : 0};
+    scroll.scrollDirection === "up" && !isHover && window.pageYOffset !== 0
+      ? "-8rem"
+      : 0};
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
   background-color: ${({ theme }) => theme.color.back};
-  /* background-color: rgb(255, 255, 255, 0.7); */
   transition: top 0.5s;
 `;
 

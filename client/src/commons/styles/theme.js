@@ -58,6 +58,7 @@ export const light = {
     back: "#ffffff",
     navBack: "#ffffff",
     main: "#0c0c42",
+    alarm: "#0c0c42",
     font: "#222222",
     subfont: "#666",
     border: "#d8d8d8",
@@ -83,6 +84,7 @@ export const dark = {
   color: {
     back: "#1E1F21",
     navBack: "#292A2D",
+    alarm: "#ffffff",
     tag: "#f90716",
     font: "#ffffff",
     subfont: "#959191",

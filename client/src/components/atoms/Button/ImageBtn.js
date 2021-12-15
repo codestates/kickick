@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux";
+import disableScroll from "disable-scroll";
 
 import { firstEnter } from "../../../apis/cookie"
 import alien from "../../../assets/images/alien.svg"
@@ -40,6 +41,7 @@ export default function ImageBtn({
               .then((res) => {
                 dispatch(isLoginAction(res.data.data));
                 dispatch(isPointAction(res.data.data.kick_money));
+                disableScroll.off();
               })
               .then(() => navigate(pathname, { replace: true }))
               .catch(() => navigate("/err", { replace: true }));
@@ -51,7 +53,10 @@ export default function ImageBtn({
 
   const neverSeeNext = () => {
     firstEnter(true)
-      .then(() => navigate(pathname, { replace: true }))
+      .then(() => {
+        disableScroll.off();
+        navigate(pathname, { replace: true })
+      })
       .catch(() =>navigate("/err", { replace: true }));
   }
   return (
