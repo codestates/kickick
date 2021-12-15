@@ -41,8 +41,12 @@ export default function Nav({ themeCode, socketClient }) {
     }
   }, [socketChange, isLogin]);
 
+  // console.log("pageYOffset",window.pageYOffset);
+  // console.log("screenY",window.screenY);
+
   return (
     <Container
+      scroll={scroll}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -106,18 +110,20 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
+  background-color: transparent;
   z-index: 999;
 `;
 
 const Frame = styled(VerticalAlign)`
   position: relative;
   top: ${({ scroll, isHover }) =>
-    scroll.scrollDirection === "up" && !isHover ? "-8rem" : 0};
+    scroll.scrollDirection === "up" && !isHover && window.pageYOffset !== 0
+      ? "-8rem"
+      : 0};
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
   background-color: ${({ theme }) => theme.color.back};
-  /* background-color: rgb(255, 255, 255, 0.7); */
   transition: top 0.5s;
 `;
 
