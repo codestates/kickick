@@ -19,7 +19,9 @@ export default function SearchInput({ handleSearch, handleInput, word }) {
             handleSearch(e);
         }}
       />
-      <FaSearch style={{ cursor: "pointer" }} onClick={handleSearch} />
+      <IconContainer>
+        <FaSearch style={{ cursor: "pointer" }} onClick={handleSearch} />
+      </IconContainer>
     </Container>
   );
 }
@@ -34,11 +36,15 @@ const Search = styled.input`
   width: 100%;
   height: 80%;
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid ${({ theme }) => theme.color.select};
   font-size: 1rem;
   background-color: transparent;
-
+  color: ${({ theme }) => theme.color.font};
+  caret-color: ${({ theme }) => theme.color.font};
   &:focus {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid ${({ theme }) => theme.color.font};
   }
+`;
+const IconContainer = styled.div`
+  color: ${({ theme }) => theme.color.font};
 `;

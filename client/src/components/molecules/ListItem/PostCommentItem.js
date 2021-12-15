@@ -66,7 +66,7 @@ const Container = styled.div`
     width: 100%;
     margin: 1rem 0;
     font-size: 0.9rem;
-    color: #333;
+    color: ${({ theme }) => theme.color.font};
     word-break: break-all;
     line-height: 1.2;
   }
@@ -79,10 +79,12 @@ const Container = styled.div`
 const UserInfoContainer = styled.div`
   display: flex;
   align-items: center;
+  font-weight: bold;
+  line-height: 2;
 
   .username {
     margin-left: 0.5rem;
-    font-weight: bold;
+    color: ${({ theme }) => theme.color.font};
   }
 
   .datetime {

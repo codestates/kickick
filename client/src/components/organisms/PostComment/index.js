@@ -1,22 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   getComments,
   createComments,
   delComments,
 } from "../../../apis/comments";
+import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
+import { commentSocketAction } from "../../../store/actions/socket";
 
-import {
-  PostCommentInput,
-  PostCommentItem,
-  RectLoading,
-} from "../../../components";
-
-export default function PostComment({ post_id }) {
+export default function PostComment({ post_id, themeCode }) {
+  const dispatch = useDispatch();
   const test = useRef();
-  const { login } = useSelector((state) => state);
+  const { login, socket } = useSelector((state) => state);
   const { postInfo } = useSelector((state) => state.persist);
   const [cmt, setCmt] = useState({ data: [] });
   const [loading, setLoading] = useState(true);
@@ -46,6 +43,7 @@ export default function PostComment({ post_id }) {
         setCmt({ ...cmt, data: dummy });
       })
       .then(() => setPlusCmt(plusCmt + 1))
+      .then(() => dispatch(commentSocketAction(!socket.comment)))
       .catch((err) => console.log(err.response));
     setValue("");
   };
@@ -141,6 +139,7 @@ export default function PostComment({ post_id }) {
         handleClick={handleClick}
         value={value}
         handleChange={handleChange}
+        themeCode={themeCode}
       />
       <h3>
         댓글 <strong>{cmt.count + plusCmt}</strong>
@@ -162,7 +161,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
-  background: #fbfbfb;
+  background-color: ${({ theme }) => theme.color.commentBox};
   margin: 5rem 0;
   border-radius: 0.5rem;
 
@@ -170,6 +169,7 @@ const Container = styled.div`
     margin: 1rem 0;
     padding: 0.5rem;
     font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.font};
   }
   strong {
     color: skyblue;

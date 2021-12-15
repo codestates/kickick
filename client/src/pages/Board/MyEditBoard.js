@@ -17,7 +17,7 @@ import { getPostInfoAction } from "../../store/actions/postinfo";
 import { getPostsInfo, putPost } from "../../apis/posts";
 import { delTags, createTags } from "../../apis/tags";
 
-export default function MyEditBoard() {
+export default function MyEditBoard({ themeCode }) {
   const navigate = useNavigate();
   const state = useSelector((state) => state.persist.postInfo);
 
@@ -58,7 +58,7 @@ export default function MyEditBoard() {
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
-        dispatch(getPostInfoAction(data.data));
+        dispatch(getPostInfoAction(data.data.data));
       })
       .then(setLoading(false))
       .catch((err) => console.log(err.response));
@@ -86,6 +86,7 @@ export default function MyEditBoard() {
             content={content}
             setContent={setContent}
             handleQuill={handleQuill}
+            themeCode={themeCode}
           />
           <BtnContainer>
             <IconBox
@@ -104,7 +105,11 @@ export default function MyEditBoard() {
             value={content}
             readOnly={true}
             theme={"bubble"}
-            style={{ widht: "43rem", paddingTop: "0.5rem" }}
+            style={{
+              widht: "43rem",
+              paddingTop: "0.5rem",
+              color: themeCode === "light" ? "#222" : "#fff",
+            }}
           />
         </DividBox>
       </QullContainer>
@@ -118,6 +123,7 @@ const Container = styled.div`
 `;
 const TitleContainer = styled.div`
   margin-top: 2rem;
+  color: ${({ theme }) => theme.color.font};
 `;
 const BtnContainer = styled.div`
   display: flex;

@@ -19,7 +19,7 @@ import {
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
 
-export default function EditBoard() {
+export default function EditBoard({ themeCode }) {
   const { category } = useParams();
   const navigate = useNavigate();
   const state = useSelector((state) => state.postAdd);
@@ -57,7 +57,12 @@ export default function EditBoard() {
         <WriteBox>
           <TitleInput handleChange={handleChange} type="title" />
           <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
-          <EditQuill image={false} content={content} setContent={setContent} />
+          <EditQuill
+            image={false}
+            content={content}
+            setContent={setContent}
+            themeCode={themeCode}
+          />
           <BtnContainer>
             <IconBox label="arrow" handleClick={handleMovePage} />
             <Common label="등 록" type="bigger" handleClick={handleClick} />
@@ -66,7 +71,16 @@ export default function EditBoard() {
 
         <ViewBox>
           <TitleBox>{title}</TitleBox>
-          <ReactQuill value={content} readOnly={true} theme={"bubble"} />
+          <ReactQuill
+            value={content}
+            readOnly={true}
+            theme={"bubble"}
+            style={{
+              widht: "43rem",
+              paddingTop: "0.5rem",
+              color: themeCode === "light" ? "black" : "white",
+            }}
+          />
         </ViewBox>
       </QullContainer>
     </Container>
@@ -117,4 +131,5 @@ const TitleBox = styled.div`
   padding-top: 0.5rem;
   font-size: 2.8rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
 `;
