@@ -81,6 +81,10 @@ export const light = {
     hoverArrow: "#0c0c42",
     commentBox: "#fbfbfb",
     tagBox: "#ececec",
+    blockquote: "#fafafa",
+    blockquoteColor: "gray",
+    tabBack: "white",
+    tabHover: "#eee",
   },
 };
 
@@ -107,6 +111,10 @@ export const dark = {
     boardTopBack: "#1E1F21",
     hoverArrow: "#333638",
     commentBox: "#444444",
-    tagBox: "red",
+    tagBox: "#555",
+    blockquote: "#555",
+    blockquoteColor: "#efefef",
+    tabBack: "gray",
+    tabHover: "#333638",
   },
 };

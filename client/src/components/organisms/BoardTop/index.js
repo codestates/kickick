@@ -143,9 +143,8 @@ const Container = styled.div`
 const Lists = styled.div`
   position: relative;
 
-  width: 30rem;
   height: 4.8rem;
-
+  text-align: center;
   overflow: hidden;
   img {
     width: 4.5rem;

@@ -139,12 +139,18 @@ export default function App() {
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
               path="detailkick/:post_id/:kick_id"
-              element={<DetailKickBoard />}
+              element={<DetailKickBoard themeCode={theme[1]} />}
             />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
-            <Route path="notice/:category" element={<Notice />}>
-              <Route path=":notice_id" element={<NoticeDetail />} />
+            <Route
+              path="notice/:category"
+              element={<Notice themeCode={theme[1]} />}
+            >
+              <Route
+                path=":notice_id"
+                element={<NoticeDetail themeCode={theme[1]} />}
+              />
               <Route path="edit" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
@@ -159,7 +165,7 @@ const Container = styled.div`
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  padding-top:4rem;
+  padding-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
 `;
 

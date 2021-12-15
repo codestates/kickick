@@ -31,7 +31,7 @@ const Container = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: #eee;
+    background: ${({ theme }) => theme.color.tabHover};
   }
 `;
 const Description = styled.div`

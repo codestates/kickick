@@ -135,7 +135,7 @@ const Container = styled.div`
       svg {
         margin-right: 1rem;
         font-size: 1.5rem;
-        color: #555;
+        color: ${({ theme }) => theme.color.mypageSvg};
       }
     `}
 

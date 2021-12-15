@@ -13,7 +13,7 @@ import {
   getKickInfoAction,
 } from "../../store/actions/postinfo";
 
-export default function DetailBoard() {
+export default function DetailBoard({ themeCode }) {
   const dispatch = useDispatch();
   const { postInfo } = useSelector((state) => state.persist);
   const { post_id, kick_id } = useParams();
@@ -39,7 +39,7 @@ export default function DetailBoard() {
   return (
     <Container>
       <RigthContainer>
-        <DetailBoardTop postInfo={postInfo} type="kick" />
+        <DetailBoardTop postInfo={postInfo} type="kick" themeCode={themeCode} />
         <PostComment post_id={post_id} />
       </RigthContainer>
     </Container>
