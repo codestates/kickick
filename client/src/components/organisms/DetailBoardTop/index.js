@@ -5,7 +5,7 @@ import "react-quill/dist/quill.bubble.css";
 
 import { IconBox, Profile, Thumbnail, Vote } from "../../../components";
 
-export default function DetailBoardTop({ postInfo, type }) {
+export default function DetailBoardTop({ postInfo, type, themeCode }) {
   return (
     <Container>
       <TopContainer>
@@ -42,6 +42,7 @@ export default function DetailBoardTop({ postInfo, type }) {
             value={postInfo.content}
             readOnly={true}
             theme={"bubble"}
+            style={{ color: themeCode === "light" ? "#222" : "#fff" }}
           />
         )}
       </Content>
@@ -66,6 +67,7 @@ const Title = styled.div`
   font-size: 2.8rem;
   font-weight: bold;
   padding: 0.5rem;
+  color: ${({ theme }) => theme.color.font};
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
@@ -93,7 +95,7 @@ const TagContainer = styled.div`
     font-weight: bold;
     color: #f15f5f;
     padding: 0.3rem 0.5rem;
-    background: #ececec;
+    background-color: ${({ theme }) => theme.color.tagBox};
     border-radius: 0.5rem;
   }
 `;

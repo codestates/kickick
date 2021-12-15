@@ -50,6 +50,7 @@ const Selected = styled.div`
   width: 7rem;
   border-radius: 0.1rem;
   background-color: ${({ theme }) => theme.color.select};
+  color: ${({ theme }) => theme.color.font};
   cursor: pointer;
   svg {
     margin-left: auto;
@@ -62,15 +63,16 @@ const Options = styled.div`
   top: 2.5rem;
   width: 7rem;
 
-  background-color: white;
+  background-color: ${({ theme }) => theme.color.select};
+  color: ${({ theme }) => theme.color.font};
 
-  border-radius: 0.25rem;
-  box-shadow: 0.5px 0.5px 5px #eee;
+  /* border-radius: 0.25rem; */
+  /* box-shadow: 0.5px 0.5px 5px ${({ theme }) => theme.color.shadow}; */
 
   cursor: pointer;
 
   > div:hover {
     color: #ffffff;
-    background-color: #0c0c42;
+    background-color: ${({ theme }) => theme.color.hoverOption};
   }
 `;

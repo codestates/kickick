@@ -86,6 +86,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${({ theme }) => theme.color.font};
   gap: 0.2rem;
 `;
 
@@ -95,7 +96,8 @@ const PageNum = styled.div`
   text-align: center;
   line-height: 2rem;
   font-weight: bold;
-  color: ${({ isActive }) => (isActive ? "#ffffff" : "#222222")};
-  background-color: ${({ isActive }) => (isActive ? "#0c0c42" : "#ffffff")};
+  color: ${({ isActive, theme }) => (isActive ? "white" : theme.color.font)};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.color.basicBtn : theme.color.back};
   cursor: pointer;
 `;

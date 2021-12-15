@@ -3,6 +3,10 @@ import styled from "styled-components";
 
 import { useParams } from "react-router";
 
+import star1 from "../../../assets/images/icon/titleicon.png";
+import star2 from "../../../assets/images/icon/thumbnailicon.png";
+import star3 from "../../../assets/images/icon/kickmoney.png";
+import star4 from "../../../assets/images/icon/contenticon.png";
 import cloud2 from "../../../assets/images/cloud/cloud2.png";
 import cloud3 from "../../../assets/images/cloud/cloud3.png";
 import cloud4 from "../../../assets/images/cloud/cloud4.png";
@@ -27,7 +31,7 @@ const list = [
   // { label: "", src: "", category: "default", color: "#000000" },
 ];
 
-export default function BoardTop() {
+export default function BoardTop({ themeCode }) {
   const { category } = useParams();
   const { src, label, color } = list.find((el) => el.category === category);
   const [select, setSelect] = useState(0);
@@ -37,6 +41,23 @@ export default function BoardTop() {
   }, [category]);
   return (
     <Container image={spacebackground} color={color}>
+      {themeCode === "light" ? (
+        <>
+          <img className="cloud" src={cloud10} alt="" />
+          <img className="cloud" src={cloud2} alt="" />
+          <img className="cloud" src={cloud3} alt="" />
+          <img className="cloud" src={cloud4} alt="" />
+          <img className="cloud" src={cloud10} alt="" />
+        </>
+      ) : (
+        <>
+          <img className="star" src={star4} alt="" />
+          <img className="star" src={star2} alt="" />
+          <img className="star" src={star3} alt="" />
+          <img className="star" src={star4} alt="" />
+          <img className="star" src={star4} alt="" />
+        </>
+      )}
       <Lists>
         {category &&
           list.map((el, idx) => {
@@ -74,10 +95,10 @@ const Container = styled.div`
   gap: 1rem;
   margin: 2rem 0;
   /* background-image: url(${({ image }) => image}); */
-  object-fit: cover;
+  /* object-fit: cover; */
   font-size: 4rem;
 
-  background: linear-gradient(to top, #ffffff, #6dd5fa, #2980b9);
+  background: ${({ theme }) => theme.color.boardTopBack} !important;
 
   pointer-events: none !important;
 
@@ -100,21 +121,22 @@ const Container = styled.div`
     bottom: 0;
     z-index: 1;
   }
+  .star {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
   .cloud {
     position: absolute;
     height: 4.5rem;
   }
+
   span {
     color: #ddd;
     margin-top: 1rem;
     font-family: "Luckiest Guy", cursive;
     text-shadow: 0.4rem 0.4rem 0.3rem gray;
-  }
-  img {
-    width: 4.5rem;
-    height: 4.5rem;
-    filter: drop-shadow(0.2rem 0.2rem 0.3rem gray);
-    z-index: 5;
   }
 `;
 
@@ -125,6 +147,12 @@ const Lists = styled.div`
   height: 4.8rem;
 
   overflow: hidden;
+  img {
+    width: 4.5rem;
+    height: 4.5rem;
+    filter: drop-shadow(0.2rem 0.2rem 0.3rem gray);
+    z-index: 5;
+  }
 `;
 
 const ListContainer = styled.div`

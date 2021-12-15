@@ -6,6 +6,7 @@ export default function Textarea({
   handleClick,
   value,
   handleChange,
+  themeCode,
   ...props
 }) {
   const login = useSelector((state) => state.login);
@@ -20,6 +21,7 @@ export default function Textarea({
         onChange={handleChange}
         value={value}
         login={login.isLogin}
+        themeCode={themeCode}
       />
       <p>{value.length} / 200</p>
     </Container>
@@ -38,17 +40,20 @@ const Container = styled.div`
 const TextArea = styled.textarea`
   min-width: 100%;
   height: 7rem;
-
   padding: 1rem;
+
   border-radius: 5px;
   border: 2px solid #eeeeee;
+  background: ${({ theme }) => theme.color.back};
 
+  color: ${({ theme }) => theme.color.font};
   font-size: 1rem;
   resize: none;
 
   pointer-events: ${({ login }) => (login ? null : "none")};
 
   &:focus {
-    border: 2px solid skyblue;
+    border: ${({ themeCode }) =>
+      themeCode === "light" ? "2px solid skyblue" : "2px solid #eeeeee"};
   }
 `;

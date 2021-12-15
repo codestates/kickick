@@ -53,7 +53,7 @@ export const resetPaginationAction = () => {
   };
 };
 
-export const resetSearchReducerAction = (align) => {
+export const resetSearchReducerAction = (align = "최신") => {
   return {
     type: RESET_SEARCH_REDUCER,
     payload: { align },
