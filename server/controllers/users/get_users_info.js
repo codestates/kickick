@@ -106,6 +106,9 @@ module.exports = async (req, res) => {
         username: username,
       },
     });
+    if (!data) {
+      return res.status(500).json({ data: null, message: "데이터베이스 에러" });
+    }
     data = data.get({ plain: true });
     const user_id = data.user_id;
 

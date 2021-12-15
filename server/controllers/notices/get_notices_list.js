@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
       },
       offset: limit * (page_num - 1),
       limit: limit,
+      order: [["id", "DESC"]],
     });
     data = notice_info.rows;
     count = notice_info.count;

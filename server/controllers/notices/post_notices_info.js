@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
 
     // alarms 테이블에 추가
     await alarms.create({
-      type: "notices",
+      type: req.body.type,
       reference: JSON.stringify({ table: "notices", id: data.notice_id }),
       content: req.body.notice_name,
     });
