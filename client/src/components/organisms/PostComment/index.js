@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { set, throttle } from "lodash";
 
 import {
   getComments,
   createComments,
   delComments,
 } from "../../../apis/comments";
-import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
+
+import {
+  PostCommentInput,
+  PostCommentItem,
+  RectLoading,
+} from "../../../components";
 
 export default function PostComment({ post_id }) {
   const test = useRef();
@@ -158,6 +162,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
+  background: #fafafa;
+  margin: 5rem 0;
+  border-radius: 0.5rem;
 
   h3 {
     margin: 1rem 0;

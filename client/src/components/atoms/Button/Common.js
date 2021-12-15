@@ -118,6 +118,6 @@ const Container = styled.button`
     btnType === "resign" &&
     css`
       background-color: red;
-      width: 15rem;
+      width: 30%;
     `}
 `;

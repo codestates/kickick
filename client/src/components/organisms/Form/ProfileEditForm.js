@@ -215,6 +215,13 @@ const ListContainer = styled.div`
   gap: 2rem;
   flex-wrap: wrap;
   height: 25rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    height: 45rem;
+  }
 `;
 
 const ResignContainer = styled.div`

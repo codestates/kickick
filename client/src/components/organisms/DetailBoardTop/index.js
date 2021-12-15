@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { IconBox, Profile, Vote } from "../../../components";
+import { IconBox, Profile, Thumbnail, Vote } from "../../../components";
 
 export default function DetailBoardTop({ postInfo, type }) {
   return (
@@ -22,19 +22,21 @@ export default function DetailBoardTop({ postInfo, type }) {
         </UserAndCountContainer>
         <TagContainer>
           {postInfo.tags.map((tag) => (
-            <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
-              # {tag.content}
-            </span>
+            <span key={tag.tag_id}># {tag.content}</span>
           ))}
         </TagContainer>
       </TopContainer>
       <Content>
         {type === "kick" ? (
-          <ReactQuill
-            value={postInfo.kick_content}
-            readOnly={true}
-            theme={"bubble"}
-          />
+          <>
+            <Thumbnail src={postInfo.kick.thumbnail} />
+            <blockquote>{postInfo.content}</blockquote>
+            <ReactQuill
+              value={postInfo.kick_content}
+              readOnly={true}
+              theme={"bubble"}
+            />
+          </>
         ) : (
           <ReactQuill
             value={postInfo.content}
@@ -43,35 +45,31 @@ export default function DetailBoardTop({ postInfo, type }) {
           />
         )}
       </Content>
-      {type === "kick" ? (
-        <VotesContainer>
-          <Vote
-            likes={postInfo.likes}
-            is_liked={postInfo.is_liked}
-            postId={postInfo.post_id}
-          />
-        </VotesContainer>
-      ) : null}
+      {type === "kick" && (
+        <Vote
+          likes={postInfo.likes}
+          is_liked={postInfo.is_liked}
+          postId={postInfo.post_id}
+        />
+      )}
     </Container>
   );
 }
 
-const Container = styled.div`
-  padding-top: 5rem;
-`;
+const Container = styled.div``;
 
 const TopContainer = styled.div`
   padding-bottom: 1rem;
-  border-bottom: 2px dashed #c4c4c4;
 `;
 
 const Title = styled.div`
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: bold;
   padding: 0.5rem;
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
+  margin-top: 1rem;
 `;
 
 const UserContainer = styled.div`
@@ -93,25 +91,25 @@ const TagContainer = styled.div`
   span {
     margin-right: 1rem;
     font-weight: bold;
+    color: #f15f5f;
+    padding: 0.3rem 0.5rem;
+    background: #ececec;
+    border-radius: 0.5rem;
   }
 `;
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   height: auto;
   padding: 2rem 0;
-`;
-
-const VotesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-
-  font-size: 2.2rem;
-  font-weight: bold;
-
-  gap: 1rem;
-  img {
-    width: 2.2rem;
-    height: 2.2rem;
-    object-fit: contain;
+  blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: gray;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-left: 3px solid #0c0c42;
   }
 `;

@@ -60,14 +60,16 @@ export default function TagInput({ tagArr, setTagArr, category, readOnly }) {
 
 const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
   padding: 0.5rem;
   gap: 1rem;
   height: 3.3rem;
+  width: 40rem;
 `;
 const TagContainer = styled.div`
   padding: 0.6rem;
   font-weight: bold;
-  color: #66a14b;
+  color: #f15f5f;
   background-color: #ececec;
   border-radius: 0.5rem;
 

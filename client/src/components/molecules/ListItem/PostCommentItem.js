@@ -58,8 +58,8 @@ export default function PostCommentItem({ item, handleDelComment }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
-  border-bottom: 1px solid #eeeeee;
+  padding: 0.5rem 0;
+
   font-size: 1rem;
 
   .comment {
@@ -69,6 +69,10 @@ const Container = styled.div`
     color: #333;
     word-break: break-all;
     line-height: 1.2;
+  }
+
+  & + & {
+    border-top: 1px solid #eeeeee;
   }
 `;
 
