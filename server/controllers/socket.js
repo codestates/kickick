@@ -25,9 +25,9 @@ module.exports = (io) => {
     });
     // 알람 보내기 요청 들어오면
     socket.on("alarms", async (data) => {
-      if (!data.username) {
-        return;
-      }
+      // if (!data.username) {
+      //   return;
+      // }
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].username === data.username) {
           // 받아온 data 값 변수에 할당
