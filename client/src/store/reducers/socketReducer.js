@@ -4,6 +4,7 @@ import {
   KICK_LIKE_ALARM,
   NOTICE_ALARM,
   EVENT_ALARM,
+  TARGET_NAME,
 } from "../actions/socket";
 
 const initialState = {
@@ -11,13 +12,14 @@ const initialState = {
   comment: false,
   kickLike: false,
   notice: false,
-  event: false
+  event: false,
+  targetId: ""
 };
 
 export default function socketReducer(state = initialState, action) {
   switch (action.type) {
     case ALARM_PAGENATION:
-      return { ...state, alarmPage:action.payload };
+      return { ...state, alarmPage: action.payload };
     case COMMENT_ALARM:
       return { ...state, comment: action.payload };
     case KICK_LIKE_ALARM:
@@ -26,6 +28,8 @@ export default function socketReducer(state = initialState, action) {
       return { ...state, notice: action.payload };
     case EVENT_ALARM:
       return { ...state, event: action.payload };
+    case TARGET_NAME:
+      return { ...state, targetId: action.payload };
     default:
       return state;
   }

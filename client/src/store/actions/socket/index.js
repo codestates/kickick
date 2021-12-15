@@ -3,6 +3,7 @@ export const COMMENT_ALARM = "COMMENT_ALARM";
 export const KICK_LIKE_ALARM = "KICK_LIKE_ALARM";
 export const NOTICE_ALARM = "NOTICE_ALARM";
 export const EVENT_ALARM = "EVENT_ALARM";
+export const TARGET_NAME = "TARGET_NAME";
 
 export const alarmPageAction = (page_num,limit) => {
   return {
@@ -36,5 +37,12 @@ export const eventSocketAction = (boolean) => {
   return {
     type: EVENT_ALARM,
     payload: boolean,
+  };
+};
+
+export const targetNameAction = (targetName) => {
+  return {
+    type: TARGET_NAME,
+    payload: targetName,
   };
 };
