@@ -156,7 +156,7 @@ const ModalInner = styled.div`
 
   h3 {
     font-size: ${({ theme }) => theme.fontSizes.xl};
-    color: #0c0c52;
+    color: ${({ theme }) => theme.color.kickH3};
   }
 
   img {
@@ -182,7 +182,7 @@ const KickConfirmUser = styled.div`
   }
   .username {
     margin-left: ${({ theme }) => theme.margins.small};
-    color: black;
+    color: ${({ theme }) => theme.color.font};
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSizes.small};
   }
@@ -196,6 +196,7 @@ const KickConfirmUser = styled.div`
 
 const KickConfirmIntroduction = styled.div`
   padding: 1rem;
+  color: ${({ theme }) => theme.color.font};
   background-color: ${({ theme }) => theme.color.modalSubBack};
   /* border: 1px solid #eee; */
   border-radius: 0.5rem;
@@ -230,7 +231,7 @@ const KickConfirmReview = styled.div`
   .comment {
     margin-left: 2.5rem;
     word-break: break-all;
-    color: gray;
+    color: ${({ theme }) => theme.color.blockquoteColor};
     font-size: 0.85rem;
   }
 `;

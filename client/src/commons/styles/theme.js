@@ -86,6 +86,10 @@ export const light = {
     tabBack: "white",
     tabHover: "#eee",
     mypageSvg: "#555",
+    loginDesc: "green",
+    modalColor: "#222",
+    modalBtn: "#222",
+    kickH3: "#0c0c42",
   },
 };
 
@@ -118,5 +122,9 @@ export const dark = {
     tabBack: "gray",
     tabHover: "#333638",
     mypageSvg: "white",
+    loginDesc: "yellow",
+    modalColor: "#bfbfbf",
+    modalBtn: "#eee",
+    kickH3: "#bfbfbf",
   },
 };
