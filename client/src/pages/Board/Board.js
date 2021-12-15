@@ -17,28 +17,28 @@ import {
 } from "../../store/actions/postadd";
 import { resetSearchReducerAction } from "../../store/actions/postsearch";
 
-export default function Board({ themeCode }) {
+export default function Board({ themeCode, list }) {
   const { category } = useParams();
   const dispatch = useDispatch();
   const apiCategory = useSelector((state) => state.postAdd.category);
   const { postsearch, onoff } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
-  const path = window.location.pathname.split("/")[1];
+  // const path = window.location.pathname.split("/")[1];
 
   useEffect(() => {
     dispatch(getCategoryAction(category));
     if (!onoff) {
-      dispatch(resetSearchReducerAction(postsearch.align));
       dispatch(resetTag());
+      dispatch(resetSearchReducerAction());
     }
     dispatch(resetListAction());
     dispatch(goBack(false));
-  }, [category, postsearch.align, dispatch]);
+  }, [category, dispatch]);
 
-  useEffect(() => {
-    dispatch(getCategoryAction(category));
-    dispatch(resetSearchReducerAction());
-  }, [path, category, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCategoryAction(category));
+  //   dispatch(resetSearchReducerAction());
+  // }, [path, category, dispatch]);
 
   useEffect(() => {
     getPostsList({
@@ -66,7 +66,6 @@ export default function Board({ themeCode }) {
     postsearch.align,
   ]);
 
-  const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
   if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return <BoardSkeleton />;
   return (
