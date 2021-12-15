@@ -23,7 +23,7 @@ const noticeList = [
   { category: "이벤트", component: <Event /> },
 ];
 
-export default function Notice() {
+export default function Notice({ themeCode }) {
   const navigate = useNavigate();
   const { category } = useParams();
   if (category !== "소식" && category !== "이벤트") {
@@ -35,7 +35,7 @@ export default function Notice() {
 
   return (
     <>
-      <BoardTop />
+      <BoardTop themeCode={themeCode} />
       <Container>
         <NavContainer>
           <h3>공지</h3>
@@ -118,7 +118,7 @@ export function Event() {
   );
 }
 
-export function NoticeDetail() {
+export function NoticeDetail({ themeCode }) {
   const { notice_id } = useParams();
   const dispatch = useDispatch();
   const { postInfo } = useSelector((state) => state.persist);
@@ -143,7 +143,12 @@ export function NoticeDetail() {
         </div>
       </NoticeDetailInfo>
       <NoticeDetailContent>
-        <ReactQuill readOnly={true} theme={"bubble"} value={postInfo.content} />
+        <ReactQuill
+          readOnly={true}
+          theme={"bubble"}
+          value={postInfo.content}
+          style={{ color: themeCode === "light" ? "#222" : "#fff" }}
+        />
       </NoticeDetailContent>
     </NoticeDetailContainer>
   );
@@ -201,6 +206,7 @@ const NavContainer = styled.div`
 
   a {
     font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.font};
   }
 
   .active {
@@ -254,9 +260,13 @@ const NoticeDetailInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  h2 {
+    color: ${({ theme }) => theme.color.font};
+  }
 `;
 
 const NoticeDetailContent = styled.div`
   height: 60rem;
-  background-color: #eeeeee;
+  background-color: ${({ theme }) => theme.color.shadow};
 `;

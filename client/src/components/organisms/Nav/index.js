@@ -7,6 +7,7 @@ import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
+import { noticeSocketAction } from "../../../store/actions/socket";
 
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
@@ -34,16 +35,17 @@ export default function Nav({ themeCode, socketClient }) {
   };
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && socketChange.targetId) {
       socketClient.emit("alarms", {
-        username: isLogin.username,
+        username: socketChange.targetId,
+        // 여기서 상대방 아이디가 와야된다.
         ...socketChange.alarmPage,
       });
     }
+    if (isLogin && (socketChange.notice || socketChange.event)) {
+      socketClient.emit("broadcast", {})
+    }
   }, [socketChange, isLogin]);
-
-  // console.log("pageYOffset",window.pageYOffset);
-  // console.log("screenY",window.screenY);
 
   return (
     <Container
@@ -61,6 +63,7 @@ export default function Nav({ themeCode, socketClient }) {
           />
           <BtnChamber />
         </Separation>
+        <div onClick={() => {dispatch(noticeSocketAction(true))}}>asdasd</div>
         <Separation>
           <ThemeBtn
             src={themeCode === "light" ? themeImg[0] : themeImg[1]}

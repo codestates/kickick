@@ -31,7 +31,7 @@ const Container = styled.div`
   margin: 0.75rem;
 
   border-radius: 0.2rem;
-  box-shadow: 5px 5px 5px #ddd;
+  box-shadow: 1px 1px 10px #444;
 
   overflow: hidden;
   cursor: pointer;
