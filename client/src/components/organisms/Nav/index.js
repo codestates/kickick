@@ -7,6 +7,7 @@ import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
 import { themeModeAction } from "../../../store/actions/nav";
+
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 

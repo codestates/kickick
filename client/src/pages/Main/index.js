@@ -40,13 +40,14 @@ export default function Main() {
       .then((res) => setKickList(res.data.data))
       .then(() => setKickListLoding(true));
     // 가장 최신 공지 하나 불러오기
-    getNoticesList({ type: "notice", limit: 1, page_num:1 }).then((res) => {
+    getNoticesList({ type: "notices", limit: 1, page_num: 1 }).then((res) => {
+      console.log(res.data.data);
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
         .then(() => setNoticeLoding(true));
     });
     // 이벤트 리스트 불러오기
-    getNoticesList({ type: "event", limit: 4, page_num:1 })
+    getNoticesList({ type: "events", limit: 4, page_num:1 })
       .then((res) => {
         setEventInfo([...res.data.data]);
       })
@@ -93,7 +94,7 @@ const ContentSection = styled.section`
   flex-direction: column;
   align-items: center;
   width: 80vw;
-  margin: 2vw 0;
+  margin: 1vw 0;
 `;
 
 const Title = styled.p`

@@ -49,7 +49,7 @@ const SummaryContainer = styled.div`
   padding: 1vw;
 `;
 
-const Summary = styled.h1`
+const Summary = styled.p`
   display: -webkit-box;
   font-family: ${({ theme }) => theme.fontFamily.jua};
   font-size: 1.5vw;

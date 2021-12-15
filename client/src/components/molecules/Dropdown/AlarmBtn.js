@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom"
 import styled, { css } from "styled-components";
 import { useSelector,useDispatch } from "react-redux";
 
-import { FaBell } from "react-icons/fa";
 import { postAlarm } from "../../../apis/alarm"
 import { dateConverter } from "../../../commons/utils/dateConverter"
 import { alarmPageAction } from "../../../store/actions/socket";
+
+import { FaBell } from "react-icons/fa";
 
 export default function AlarmBtn({ fontSize = "xl", socketClient }) {
   const navigate = useNavigate();
@@ -28,17 +29,36 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
       const middleLink =
         obj.reference.table === "posts"
           ? "detailboard"
-          : obj.reference.table === "notices"
+          : obj.reference.table === "notices" && obj.type === "notices"
           ? "notice"
           : "event";
-
-      postAlarm(obj.alarm_id,1)
+      
+      if (obj.reference.table === "posts") {
+        // 댓글 알람
+        postAlarm(obj.alarm_id, 1)
+          .then(() => {
+            socketClient.emit("alarms", {
+              username: isLogin.username,
+              ...socketChange.alarmPage,
+            });
+            navigate(`/${middleLink}/${obj.reference.id}`);
+            setAlarmOpen(false);
+          })
+          .catch(() => navigate(`/err`));
+      } else {
+        // 공지 알람
+        navigate(`/${middleLink}/${obj.reference.id}`);
+        setAlarmOpen(false);
+      }
+        
+    } else {
+      // 포인트 획득 알람
+      postAlarm(obj.alarm_id, 1)
         .then(() => {
           socketClient.emit("alarms", {
             username: isLogin.username,
             ...socketChange.alarmPage,
           });
-          navigate(`/${middleLink}/${obj.reference.id}`);
           setAlarmOpen(false);
         })
         .catch(() => navigate(`/err`));
@@ -217,6 +237,7 @@ const Dropdown = styled.ul`
 const DropdownList = styled.li`
   display: flex;
   justify-content: space-between;
+  min-width: 17rem;
   margin: 0 0.4rem;
   padding: 0.5rem 0;
   font-size: 0.7rem;
