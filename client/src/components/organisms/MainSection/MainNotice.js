@@ -12,7 +12,7 @@ export default function MainNotice({ noticeInfo }) {
       onClick={() => navigate(`/notice/소식/${noticeInfo.notice_id}`)}
     >
       <Thumpnail
-        src={noticeInfo.thumbnail && default_thumbnail}
+        src={noticeInfo.thumbnail ?? default_thumbnail}
         alt="thumbnail"
       />
       <ContextContainer>
@@ -34,7 +34,7 @@ const Container = styled.div`
 
 const Thumpnail = styled.img`
   width: 40vw;
-  height: 30vw;
+  height: 25vw;
   background-color:black;
 `;
 
@@ -45,7 +45,7 @@ const ContextContainer = styled.article`
   pointer-events:none;
 `;
 
-const Title = styled.h1`
+const Title = styled.p`
   margin: 2vw 0 2vw;
   padding: 0 0 0 1vw;
   font-size: 3.3vw;

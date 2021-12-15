@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import ko from "date-fns/locale/ko";
+import disableScroll from "disable-scroll";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -27,6 +28,7 @@ export default function Calendar() {
   },[]);
 
   const closer = () => {
+    disableScroll.off();
     navigate("/", { replace: true });
   }
 
