@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { DetailBoardTop, PostComment, IconContainer } from "../../components";
-
+import Page404 from "../Error/Page404";
 import { getPostsInfo } from "../../apis/posts";
 
 import { getPostInfoAction } from "../../store/actions/postinfo";
@@ -14,16 +14,22 @@ export default function DetailBoard({ type, themeCode }) {
   const dispatch = useDispatch();
   const { post_id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
 
   useEffect(() => {
     getPostsInfo(post_id)
       .then((data) => {
+        setErr(false);
         dispatch(getPostInfoAction(data.data.data));
       })
       .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setErr(true);
+        console.log(err.response);
+      });
   }, [dispatch, post_id, type]);
 
+  if (err) return <Page404 />;
   if (loading) return <Temporary />;
 
   return (

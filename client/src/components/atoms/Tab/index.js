@@ -22,18 +22,19 @@ const Container = styled(Link)`
   height: 3rem;
   border: 1px solid #ddd;
   border-radius: 0.3rem;
-  background-color: white;
+  color: ${({ theme }) => theme.color.font};
+  background-color: ${({ theme }) => theme.color.tabBack};
   font-size: 1rem;
   font-family: Roboto, "Noto Sans KR", sans-serif;
 
   &:hover {
-    background-color: #eeeeee;
+    background-color: ${({ theme }) => theme.color.tabHover};
     > div {
       font-weight: bold;
     }
-    svg {
+    /* svg {
       color: black;
-    }
+    } */
   }
 
   > svg {

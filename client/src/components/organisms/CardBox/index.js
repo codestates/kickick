@@ -58,6 +58,7 @@ export default function CardBox({ type }) {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  color: ${({ theme }) => theme.color.font};
   /* min-height: 30vh; */
 `;
 

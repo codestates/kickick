@@ -221,7 +221,8 @@ const Container = styled.div`
   width: 64rem;
   margin: 0 auto;
   padding: 3rem 1rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.color.back};
+  color: ${({ theme }) => theme.color.font};
   border-radius: 0.5rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
