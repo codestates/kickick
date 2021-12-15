@@ -93,6 +93,12 @@ module.exports = (io) => {
         }
       }
     });
+    // broadcast 요청 들어오면
+    socket.on("broadcast", () => {
+      io.emit("broadcast", { data: "test" });
+    });
+
+    // 연결 끊김
     socket.on("disconnect", () => {
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].id === socket.id) {
