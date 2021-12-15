@@ -78,8 +78,16 @@ export default function App() {
     });
 
     socketClient.on("alarms", (data) => {
-      // console.log("난 1이야", data);
+      console.log("난 1이야", data);
       dispatch(alarmListAction(data));
+    });
+
+    socketClient.on("broadcast", () => {
+      console.log("브로드케스트");
+      socketClient.emit("alarms", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
     });
 
     socketClient.on("disconnect", () => {

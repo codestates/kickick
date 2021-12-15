@@ -43,7 +43,7 @@ export default function PostComment({ post_id, themeCode }) {
         setCmt({ ...cmt, data: dummy });
       })
       .then(() => setPlusCmt(plusCmt + 1))
-      .then(() => dispatch(commentSocketAction(!socket.comment)))
+      // .then(() => dispatch(commentSocketAction(!socket.comment)))
       .catch((err) => console.log(err.response));
     setValue("");
   };
