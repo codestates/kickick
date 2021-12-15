@@ -159,7 +159,7 @@ const Container = styled.div`
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  padding-top:4rem;
+  padding-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
 `;
 
