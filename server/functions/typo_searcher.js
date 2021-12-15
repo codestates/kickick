@@ -80,7 +80,6 @@ module.exports = (word) => {
 
     // 현재 문자를 typo_obj에 대치
     // typo_obj 의 값들로 대치시켜서 reordered에 push
-    copy = original.slice();
     // 현재 문자 - copy[i]
     // copy[i]를 type_obj 에 대치시켜봄
     if (typo_obj[copy[i]]) {
@@ -93,7 +92,6 @@ module.exports = (word) => {
     }
   }
   const result = reordered.map((el) => hangul.a(el));
-  // console.log(result);
 
   return result;
 };

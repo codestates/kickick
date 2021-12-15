@@ -146,7 +146,7 @@ module.exports = async (req, res) => {
         await logs.create({
           user_id: user_id,
           type: "kick_money",
-          content: `${change} 킥머니를 받았습니다.`,
+          content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
         // 킥머니 지급 알림 추가
         await alarms.create({
@@ -154,6 +154,30 @@ module.exports = async (req, res) => {
           type: "alarms",
           content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
+
+        // 토큰 발급
+        const access_token = jwt.sign(
+          {
+            type: data.type,
+            username: data.username,
+          },
+          process.env.ACCESS_SECRET,
+          {
+            expiresIn: "3d",
+          }
+        );
+        delete data.user_id;
+
+        return res
+          .status(200)
+          .cookie(
+            "token",
+            { access_token },
+            {
+              httpOnly: true,
+            }
+          )
+          .json({ data: data, message: "first login" });
       }
     } catch (err) {
       console.log(err);
@@ -285,6 +309,29 @@ module.exports = async (req, res) => {
           type: "alarms",
           content: `로그인으로 ${change} 킥머니를 받았습니다.`,
         });
+        // 토큰 발급
+        const access_token = jwt.sign(
+          {
+            type: data.type,
+            username: data.username,
+          },
+          process.env.ACCESS_SECRET,
+          {
+            expiresIn: "3d",
+          }
+        );
+        delete data.user_id;
+
+        return res
+          .status(200)
+          .cookie(
+            "token",
+            { access_token },
+            {
+              httpOnly: true,
+            }
+          )
+          .json({ data: data, message: "first login" });
       }
     } catch (err) {
       console.log(err);
