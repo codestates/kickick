@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function IntroTextarea({ handleTextarea }) {
-  return <Container onBlur={handleTextarea} />;
+export default function IntroTextarea({ handleTextarea, handleViewIntro }) {
+  return <Container onBlur={handleTextarea} onChange={handleViewIntro} />;
 }
 
 const Container = styled.textarea`

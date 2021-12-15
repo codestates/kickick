@@ -1,71 +1,77 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
 import { createLikes } from "../../../apis/likes";
 
-export default function AlienPortion({ likes, is_liked, postId }) {
-  const [alien, setAlien] = useState(likes.true + 1);
-  const [astronaut, setAstronaut] = useState(likes.false + 1);
+export default function Vote({ likes, is_liked, postId }) {
+  const [alien, setAlien] = useState(likes.true);
+  const [astronaut, setAstronaut] = useState(likes.false);
+  const [type, setType] = useState(is_liked);
 
   const handleClick = (item) => {
-    if (item === "true" && is_liked === "true") return;
-    if (item === "false" && is_liked === "false") return;
+    if (item === "true" && type === true) return;
+    if (item === "false" && type === false) return;
 
     if (item === "true") {
-      setAstronaut(0);
-      setAlien(1);
+      setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
+      setAlien(alien + 1);
+      setType(true);
     } else {
-      setAstronaut(1);
-      setAlien(0);
+      setAstronaut(astronaut + 1);
+      setAlien(alien === 0 ? 0 : alien - 1);
+      setType(false);
     }
 
-    createLikes(postId, item)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err.response));
+    createLikes(postId, item).catch((err) => console.log(err.response));
   };
-
   return (
-    <Container>
-      <img src={Alien} onClick={() => handleClick("true")} />
-      <Portion alien={alien} astronaut={astronaut}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </Portion>
-      <img src={Astronaut} onClick={() => handleClick("false")} />
+    <Container type={type}>
+      <img src={Alien} onClick={() => handleClick("true")} alt="" />
+      <span className="vote alien">괴짜 {alien}</span>
+      <span>VS</span>
+      <span className="vote astronaut">혁신 {astronaut}</span>
+      <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 550;
+
   img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
   }
-`;
-
-const Portion = styled.div`
-  display: flex;
-  align-items: center;
-  div {
-    height: 1rem;
+  .vote {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
   }
-  > :nth-child(1) {
-    width: 5rem;
-    background: red;
-    flex: ${({ alien }) => alien};
+  .alien {
+    color: #d3e4cd;
+    border: 2px solid #d3e4cd;
+    ${({ type }) =>
+      type === true &&
+      css`
+        color: green;
+        border: 2px solid green;
+      `}
   }
-  > :nth-child(2) {
-    width: 1rem;
-    background: linear-gradient(to right, red, blue);
-  }
-  > :nth-child(3) {
-    width: 5rem;
-    background: blue;
-    flex: ${({ astronaut }) => astronaut};
+  .astronaut {
+    color: #a2d2ff;
+    border: 2px solid #a2d2ff;
+    ${({ type }) =>
+      type === false &&
+      css`
+        color: blue;
+        border: 2px solid blue;
+      `}
   }
 `;

@@ -2,8 +2,14 @@ import React from "react";
 import styled, { css, keyframes } from "styled-components";
 
 export default function Common({ label, type, handleClick, disabled }) {
+  const btnType = type;
   return (
-    <Container onClick={handleClick} type={type} disabled={disabled}>
+    <Container
+      type="button"
+      onClick={handleClick}
+      btnType={btnType}
+      disabled={disabled}
+    >
       {label}
     </Container>
   );
@@ -37,8 +43,8 @@ const Container = styled.button`
       background-color: gray;
     `}
 
-  ${({ type }) =>
-    type === "imgedit" &&
+  ${({ btnType }) =>
+    btnType === "imgedit" &&
     css`
       width: 6rem;
       background-color: white;
@@ -50,8 +56,8 @@ const Container = styled.button`
       }
     `}
 
-  ${({ type }) =>
-    type === "register" &&
+  ${({ btnType }) =>
+    btnType === "register" &&
     css`
       margin-left: auto;
       width: 5rem;
@@ -61,8 +67,8 @@ const Container = styled.button`
       }
     `}
 
-    ${({ type, disabled }) =>
-    type === "mypage" &&
+    ${({ btnType, disabled }) =>
+    btnType === "mypage" &&
     !disabled &&
     css`
       cursor: pointer;
@@ -72,8 +78,8 @@ const Container = styled.button`
       }
     `}
 
-    ${({ type }) =>
-    type === "new" &&
+    ${({ btnType }) =>
+    btnType === "new" &&
     css`
       width: 10rem;
 
@@ -85,8 +91,8 @@ const Container = styled.button`
       }
     `}
 
-  ${({ type }) =>
-    type === "bigger" &&
+  ${({ btnType }) =>
+    btnType === "bigger" &&
     css`
       width: 10rem;
 
@@ -95,23 +101,23 @@ const Container = styled.button`
       }
     `}
 
-    ${({ type }) =>
-    type === "confirm" &&
+    ${({ btnType }) =>
+    btnType === "confirm" &&
     css`
       background-color: ${({ theme }) => theme.color.confirmBtn};
     `}
 
-    ${({ type }) =>
-    type === "error" &&
+    ${({ btnType }) =>
+    btnType === "error" &&
     css`
       background-color: ${({ theme }) => theme.color.confirmBtnError};
       animation: 0.3s linear ${shake};
     `}
 
-    ${({ type }) =>
-    type === "resign" &&
+    ${({ btnType }) =>
+    btnType === "resign" &&
     css`
       background-color: red;
-      width: 15rem;
+      width: 30%;
     `}
 `;
