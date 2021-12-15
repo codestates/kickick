@@ -72,6 +72,11 @@ const Container = styled.div`
           border: 2px solid #ff5555;
         `}
     }
+
+    @media ${({ theme }) => theme.device.notebookS} {
+      width: 100%;
+      margin: 0 auto;
+    }
   }
 
   label {
