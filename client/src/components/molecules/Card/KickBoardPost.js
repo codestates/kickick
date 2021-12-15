@@ -1,19 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+
+import { Thumbnail, Profile, IconText } from "../../../components";
 
 import { modalOnAction } from "../../../store/actions/kickboard";
-
-import { Thumbnail, Profile } from "../../../components";
 
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
 
 export default function KickBoardPost({ data }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
-    <Container onClick={() => dispatch(modalOnAction(data))}>
+    <Container
+      onClick={() => {
+        if (data.is_purchased) {
+          navigate(`/detailkick/${data.post_id}/${data.kick.kick_id}`);
+          return;
+        }
+        dispatch(modalOnAction(data));
+      }}
+    >
+      {data.is_purchased && (
+        <div className="absolute">
+          <IconText label="구매함" />
+        </div>
+      )}
       <Thumbnail src={data.kick?.thumbnail} />
       <PostDescription>
         <PostSummary>
@@ -38,6 +53,7 @@ export default function KickBoardPost({ data }) {
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -52,6 +68,13 @@ const Container = styled.div`
 
   &:hover {
     transform: scale(1.025);
+  }
+
+  .absolute {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    z-index: 10;
   }
 
   @media ${({ theme }) => theme.device.notebookS} {

@@ -101,11 +101,13 @@ export default function MyPageAside() {
 const Container = styled.aside`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   width: 20%;
 
   @media ${({ theme }) => theme.device.notebookS} {
     flex-direction: row;
+
     width: 100%;
   }
 `;
@@ -137,7 +139,6 @@ const StatusContainer = styled.div`
   gap: 2rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
-    border-left: 2px dashed #d8d8d8;
     border-top: none;
     flex-direction: row;
   }
@@ -173,6 +174,7 @@ const LoginLogo = styled.div`
 
 const AuthContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
   border-top: 2px dashed #d8d8d8;
@@ -180,8 +182,9 @@ const AuthContainer = styled.div`
   padding: 1rem 2rem;
   gap: 0.5rem;
   @media ${({ theme }) => theme.device.notebookS} {
-    border-left: 2px dashed #d8d8d8;
+    padding-top: 2rem;
     border-top: none;
     flex-direction: row;
+    justify-content: center;
   }
 `;

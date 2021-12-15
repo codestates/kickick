@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import { Common, Profile } from "../../../components";
+import { Profile } from "../../../components";
 
 import { fileReader } from "../../../commons/utils/fileReader";
 
@@ -26,9 +26,7 @@ export default function ProfileInput({
             onChange={(e) => fileReader(e, handler)}
             style={{ display: "none" }}
           />
-          <label htmlFor="file">
-            <Common type="imgedit" label="이미지 수정" />
-          </label>
+          <label htmlFor="file">이미지 수정</label>
         </form>
       </Container>
     );
@@ -74,12 +72,26 @@ const Container = styled.div`
           border: 2px solid #ff5555;
         `}
     }
+
+    @media ${({ theme }) => theme.device.notebookS} {
+      width: 100%;
+      margin: 0 auto;
+    }
   }
 
   label {
     position: relative;
-    left: 2.2rem;
+    left: 2.5rem;
     top: -0.5rem;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background: #ddd;
+    }
   }
   img {
     margin: 2rem;

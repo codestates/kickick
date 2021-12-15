@@ -27,7 +27,6 @@ import {
 import introductionicon from "../../assets/images/icon/introductionicon.png";
 import contenticon from "../../assets/images/icon/contenticon.png";
 import titileicon from "../../assets/images/icon/titleicon.png";
-import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
 import tagicon from "../../assets/images/icon/tagicon.png";
 
 import { createPost, createTag } from "../../apis/posts";
@@ -40,6 +39,7 @@ export default function EditKickBoard() {
   const { postAdd, login } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [postname, setPostname] = useState();
+  const [intro, setIntro] = useState();
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
@@ -48,6 +48,9 @@ export default function EditKickBoard() {
   const handleViewPostName = (e) => {
     setPostname(e.target.value);
   };
+  const handleViewIntro = (e) => {
+    setIntro(e.target.value);
+  };
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
@@ -55,10 +58,6 @@ export default function EditKickBoard() {
   const handleIntro = (e) => {
     dispatch(getContentAction(e.target.value));
   };
-
-  // const handleThumbnail = (thumbnail) => {
-  //   dispatch(getThumbnailAction(thumbnail));
-  // };
 
   const handleContent = () => {
     dispatch(getKickContentAction(content));
@@ -95,12 +94,14 @@ export default function EditKickBoard() {
 
   return (
     <Wrapper>
-      <h1>나만의 킥 작성 </h1>
+      <PageHeadline>
+        <img src={introductionicon} alt="" />
+        <h1>나만의 킥 작성 </h1>
+      </PageHeadline>
       <Container>
         <WritePage>
           <InfoContainer>
             <HeadlineContainer>
-              <img src={titileicon} alt="" />
               <h3>제목</h3>
               <TitleInput
                 type="title"
@@ -111,7 +112,6 @@ export default function EditKickBoard() {
           </InfoContainer>
           <InfoContainer>
             <HeadlineContainer>
-              <img src={tagicon} alt="" />
               <h3>태그</h3>
               <TagInput
                 tagArr={tagArr}
@@ -123,7 +123,6 @@ export default function EditKickBoard() {
 
           <InfoContainer>
             <HeadlineContainer>
-              <img src={thumbnailicon} alt="" />
               <h3>썸네일</h3>
             </HeadlineContainer>
             <DragDrop
@@ -132,10 +131,17 @@ export default function EditKickBoard() {
               setThumbnail={setThumbnail}
             />
           </InfoContainer>
-
           <InfoContainer>
             <HeadlineContainer>
-              <img src={contenticon} alt="" />
+              <h3>킥에 대한 한마디</h3>
+            </HeadlineContainer>
+            <IntroTextarea
+              handleTextarea={handleIntro}
+              handleViewIntro={handleViewIntro}
+            />
+          </InfoContainer>
+          <InfoContainer>
+            <HeadlineContainer>
               <h3>본문</h3>
             </HeadlineContainer>
             <EditQuill
@@ -144,15 +150,9 @@ export default function EditKickBoard() {
               handleContent={handleContent}
             />
           </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={introductionicon} alt="" />
-              <h3>소개</h3>
-            </HeadlineContainer>
-            <IntroTextarea handleTextarea={handleIntro} />
-          </InfoContainer>
+
           <BtnContainer>
-            <Common label="등 록" type="bigger" handleClick={handleClick} />
+            <Common label="등록" type="bigger" handleClick={handleClick} />
           </BtnContainer>
         </WritePage>
         <ViewPage>
@@ -168,6 +168,7 @@ export default function EditKickBoard() {
             readOnly={true}
           />
           <Thumbnail src={file} alt="" />
+          <blockquote>{intro}</blockquote>
           <ReactQuill
             readOnly={true}
             theme={"bubble"}
@@ -186,27 +187,40 @@ export default function EditKickBoard() {
 }
 const Wrapper = styled.div`
   padding: 3rem 1rem;
+`;
 
-  > h1 {
+const PageHeadline = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 5rem 3rem;
+  img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  h1 {
     font-size: 3rem;
     color: skyblue;
-    margin: 2rem 0 2rem 4rem;
   }
 `;
 const Container = styled.div`
   display: flex;
 `;
 const WritePage = styled.div`
-  width: calc(50% - 2rem);
+  width: 50%;
 
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
-  gap: 1rem;
+  gap: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
 `;
 
 const ViewPage = styled.div`
-  width: calc(50% - 2rem);
+  width: 50%;
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
@@ -214,7 +228,7 @@ const ViewPage = styled.div`
   border-left: 3px dashed #eee;
 
   > h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     height: 4.5rem;
   }
 
@@ -222,7 +236,21 @@ const ViewPage = styled.div`
     object-fit: scale-down;
     height: 20rem;
     width: 100%;
-    margin: 3rem 0 5rem 0;
+  }
+  > blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: gray;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-left: 3px solid #0c0c42;
+    margin: 2rem 0;
+    min-height: 4.5rem;
+    line-height: 1.5;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    display: none;
   }
 `;
 

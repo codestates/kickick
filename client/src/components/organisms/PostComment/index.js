@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { set, throttle } from "lodash";
 
 import {
   getComments,
@@ -135,16 +134,16 @@ export default function PostComment({ post_id, themeCode }) {
 
   return (
     <Container>
-      <H3>댓글달기</H3>
+      <h3>댓글달기</h3>
       <PostCommentInput
         handleClick={handleClick}
         value={value}
         handleChange={handleChange}
         themeCode={themeCode}
       />
-      <H3>
+      <h3>
         댓글 <strong>{cmt.count + plusCmt}</strong>
-      </H3>
+      </h3>
       {cmt.data.map((el, idx) => (
         <PostCommentItem
           key={idx}
@@ -161,16 +160,18 @@ export default function PostComment({ post_id, themeCode }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 1rem 2rem;
+  background-color: ${({ theme }) => theme.color.commentBox};
+  margin: 5rem 0;
+  border-radius: 0.5rem;
 
+  h3 {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.font};
+  }
   strong {
     color: skyblue;
   }
-`;
-
-const H3 = styled.div`
-  margin: 1rem 0;
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.color.font};
 `;

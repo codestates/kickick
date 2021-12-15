@@ -52,6 +52,7 @@ const Container = styled.div`
   gap: 1rem;
   width: 48rem;
   margin: 0 auto;
+  padding-top: 3rem;
 `;
 
 const RigthContainer = styled.div`

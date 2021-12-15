@@ -79,6 +79,8 @@ export const light = {
     hoverOption: "#0c0c42",
     boardTopBack: "linear-gradient(to top, #ffffff, #6dd5fa, #2980b9)",
     hoverArrow: "#0c0c42",
+    commentBox: "#fbfbfb",
+    tagBox: "#ececec",
   },
 };
 
@@ -104,5 +106,7 @@ export const dark = {
     hoverOption: "gray",
     boardTopBack: "#1E1F21",
     hoverArrow: "#333638",
+    commentBox: "#444444",
+    tagBox: "red",
   },
 };

@@ -54,32 +54,23 @@ export default function EditBoard({ themeCode }) {
   return (
     <Container>
       <QullContainer>
-        <DividBox>
-          <TitleContainer>
-            <TitleInput handleChange={handleChange} type="title" />
-            <TagInput
-              tagArr={tagArr}
-              setTagArr={setTagArr}
-              category={category}
-            />
-          </TitleContainer>
+        <WriteBox>
+          <TitleInput handleChange={handleChange} type="title" />
+          <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
           <EditQuill
             image={false}
             content={content}
             setContent={setContent}
             themeCode={themeCode}
           />
-
           <BtnContainer>
             <IconBox label="arrow" handleClick={handleMovePage} />
             <Common label="등 록" type="bigger" handleClick={handleClick} />
           </BtnContainer>
-        </DividBox>
+        </WriteBox>
 
-        <DividBox>
-          <TitleContainer style={{ marginBottom: "2rem" }}>
-            <TitleBox>{title}</TitleBox>
-          </TitleContainer>
+        <ViewBox>
+          <TitleBox>{title}</TitleBox>
           <ReactQuill
             value={content}
             readOnly={true}
@@ -90,19 +81,12 @@ export default function EditBoard({ themeCode }) {
               color: themeCode === "light" ? "black" : "white",
             }}
           />
-        </DividBox>
+        </ViewBox>
       </QullContainer>
     </Container>
   );
 }
-const Container = styled.div`
-  width: 90rem;
-  margin: 0 auto;
-  gap: 1rem;
-`;
-const TitleContainer = styled.div`
-  margin-top: 2rem;
-`;
+const Container = styled.div``;
 const BtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -111,14 +95,35 @@ const BtnContainer = styled.div`
 
 const QullContainer = styled.div`
   display: flex;
-  gap: 2rem;
+
   > :nth-child(2) {
-    border-left: 0.2rem solid #c8c8c8;
-    padding-left: 3rem;
+    border-left: 0.2rem dashed #d8d8d8;
   }
 `;
 
-const DividBox = styled.div``;
+const WriteBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+  padding: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
+`;
+
+const ViewBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+  padding: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    display: none;
+  }
+`;
 
 const TitleBox = styled.div`
   width: 43rem;

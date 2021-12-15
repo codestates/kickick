@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { IconBox, Profile, AlienPortion } from "../../../components";
+import { IconBox, Profile, Thumbnail, Vote } from "../../../components";
 
-export default function DetailBoardTop({ postInfo, type }) {
+export default function DetailBoardTop({ postInfo, type, themeCode }) {
   return (
     <Container>
       <TopContainer>
@@ -22,57 +22,56 @@ export default function DetailBoardTop({ postInfo, type }) {
         </UserAndCountContainer>
         <TagContainer>
           {postInfo.tags.map((tag) => (
-            <span key={tag.tag_id} style={{ color: "#f15f5f" }}>
-              # {tag.content}
-            </span>
+            <span key={tag.tag_id}># {tag.content}</span>
           ))}
         </TagContainer>
       </TopContainer>
       <Content>
         {type === "kick" ? (
-          <ReactQuill
-            value={postInfo.kick_content}
-            readOnly={true}
-            theme={"bubble"}
-          />
+          <>
+            <Thumbnail src={postInfo.kick.thumbnail} />
+            <blockquote>{postInfo.content}</blockquote>
+            <ReactQuill
+              value={postInfo.kick_content}
+              readOnly={true}
+              theme={"bubble"}
+            />
+          </>
         ) : (
           <ReactQuill
             value={postInfo.content}
             readOnly={true}
             theme={"bubble"}
+            style={{ color: themeCode === "light" ? "#222" : "#fff" }}
           />
         )}
       </Content>
-      {type === "kick" ? (
-        <VotesContainer>
-          <AlienPortion
-            likes={postInfo.likes}
-            is_liked={postInfo.is_liked}
-            postId={postInfo.post_id}
-          />
-        </VotesContainer>
-      ) : null}
+      {type === "kick" && (
+        <Vote
+          likes={postInfo.likes}
+          is_liked={postInfo.is_liked}
+          postId={postInfo.post_id}
+        />
+      )}
     </Container>
   );
 }
 
-const Container = styled.div`
-  /* width: 60vw; */
-`;
+const Container = styled.div``;
 
 const TopContainer = styled.div`
-  padding-bottom: 1.5rem;
-  border-bottom: 2px dashed #c4c4c4;
+  padding-bottom: 1rem;
 `;
 
 const Title = styled.div`
-  font-size: 2rem;
+  font-size: 2.8rem;
   font-weight: bold;
   padding: 0.5rem;
   color: ${({ theme }) => theme.color.font};
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
+  margin-top: 1rem;
 `;
 
 const UserContainer = styled.div`
@@ -94,55 +93,25 @@ const TagContainer = styled.div`
   span {
     margin-right: 1rem;
     font-weight: bold;
+    color: #f15f5f;
+    padding: 0.3rem 0.5rem;
+    background-color: ${({ theme }) => theme.color.tagBox};
+    border-radius: 0.5rem;
   }
 `;
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   height: auto;
   padding: 2rem 0;
-  color: ${({ theme }) => theme.color.font};
-`;
-
-const VotesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-
-  font-size: 2.2rem;
-  font-weight: bold;
-
-  gap: 1rem;
-  img {
-    width: 2.2rem;
-    height: 2.2rem;
-    object-fit: contain;
-  }
-`;
-
-const Astronaut = styled.div`
-    position: relative;
-  display: flex;
-  gap: 0.5rem;
-  > .star {
-    position: absolute;
-    left: -1rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  > .astronaut {
-    cursor: pointer;
-`;
-
-const Alien = styled.div`
-  position: relative;
-  display: flex;
-  gap: 0.5rem;
-  > .star {
-    position: absolute;
-    right: -1rem;
-    width: 1rem;
-    height: 1rem;
-  }
-  > :nth-child(2) {
-    cursor: pointer;
+  blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: gray;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-left: 3px solid #0c0c42;
   }
 `;
