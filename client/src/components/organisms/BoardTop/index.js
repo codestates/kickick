@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { useParams } from "react-router";
 
-import star1 from "../../../assets/images/icon/titleicon.png";
 import star2 from "../../../assets/images/icon/thumbnailicon.png";
 import star3 from "../../../assets/images/icon/kickmoney.png";
 import star4 from "../../../assets/images/icon/contenticon.png";
@@ -33,7 +32,7 @@ const list = [
 
 export default function BoardTop({ themeCode }) {
   const { category } = useParams();
-  const { src, label, color } = list.find((el) => el.category === category);
+  const { color } = list.find((el) => el.category === category);
   const [select, setSelect] = useState(0);
 
   useEffect(() => {
@@ -143,9 +142,8 @@ const Container = styled.div`
 const Lists = styled.div`
   position: relative;
 
-  width: 30rem;
   height: 4.8rem;
-
+  text-align: center;
   overflow: hidden;
   img {
     width: 4.5rem;

@@ -44,6 +44,7 @@ export default function App() {
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
   const [theme, setTheme] = useState([light, "light"]);
+  const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
 
   useEffect(() => {
     setTimeout(() => {
@@ -122,7 +123,7 @@ export default function App() {
             <Route path="mailauth/:username" element={<MailAuth />} />
             <Route
               path="board/:category"
-              element={<Board themeCode={theme[1]} />}
+              element={<Board themeCode={theme[1]} list={list} />}
             />
             <Route
               path="detailboard/:post_id"
@@ -130,21 +131,27 @@ export default function App() {
             />
             <Route
               path="editboard/:category"
-              element={<EditBoard themeCode={theme[1]} />}
+              element={<EditBoard themeCode={theme[1]} list={list} />}
             />
             <Route
               path="myeditboard/:category/:post_id"
-              element={<MyEditBoard themeCode={theme[1]} />}
+              element={<MyEditBoard themeCode={theme[1]} list={list} />}
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
               path="detailkick/:post_id/:kick_id"
-              element={<DetailKickBoard />}
+              element={<DetailKickBoard themeCode={theme[1]} />}
             />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
-            <Route path="notice/:category" element={<Notice />}>
-              <Route path=":notice_id" element={<NoticeDetail />} />
+            <Route
+              path="notice/:category"
+              element={<Notice themeCode={theme[1]} />}
+            >
+              <Route
+                path=":notice_id"
+                element={<NoticeDetail themeCode={theme[1]} />}
+              />
               <Route path="edit" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
@@ -159,7 +166,7 @@ const Container = styled.div`
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  padding-top:4rem;
+  padding-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
 `;
 

@@ -82,12 +82,10 @@ const Container = styled.button`
     btnType === "new" &&
     css`
       width: 10rem;
-
-      background-color: white;
       border: 1px solid #d8d8d8;
-      color: #aaa;
+
       &:hover {
-        background-color: #0c0c42;
+        background-color: ${({ theme }) => theme.color.hoverBasicBtn};
       }
     `}
 

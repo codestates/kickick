@@ -35,6 +35,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
               value={postInfo.kick_content}
               readOnly={true}
               theme={"bubble"}
+              style={{ color: themeCode === "light" ? "#222" : "#fff" }}
             />
           </>
         ) : (
@@ -109,9 +110,9 @@ const Content = styled.div`
   blockquote {
     font-size: 1.2rem;
     font-style: italic;
-    color: gray;
+    color: ${({ theme }) => theme.color.blockquoteColor};
     padding: 1.5rem;
-    background: #fafafa;
-    border-left: 3px solid #0c0c42;
+    background: ${({ theme }) => theme.color.blockquote};
+    border-left: 3px solid ${({ theme }) => theme.color.alarm};
   }
 `;

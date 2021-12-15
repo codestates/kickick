@@ -72,7 +72,7 @@ export default function EditQuill({
         parchment: Quill.import("parchment"),
       },
     };
-  }, []);
+  }, [image]);
 
   const formats = [
     "header",
