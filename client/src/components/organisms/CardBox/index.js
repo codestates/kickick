@@ -44,10 +44,28 @@ export default function CardBox({ type }) {
   if (type === "mykick") data = kicklist;
   else data = list;
 
-  return <Container>{data.map((el, idx) => component(idx, el))}</Container>;
+  return (
+    <Container>
+      {data.length === 0 ? (
+        <NoContentContainer>등록된 것이 없습니다</NoContentContainer>
+      ) : (
+        data.map((el, idx) => component(idx, el))
+      )}
+    </Container>
+  );
 }
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  /* min-height: 30vh; */
+`;
+
+const NoContentContainer = styled.div`
+  display: flex;
+
+  align-items: center;
+  font-size: 3rem;
+  margin: 0 auto;
+  font-weight: bold;
 `;

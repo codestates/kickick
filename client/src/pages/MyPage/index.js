@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   MyPageAside,
   Landscape,
-  PostStaticsList,
+  SmallCardBox,
   TabBox,
   ProfileEditForm,
   PostList,
   CardBox,
+  Calendar,
 } from "../../components";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -66,7 +67,6 @@ export default function MyPage() {
   useEffect(() => {
     getFavorites(null, 10, postsearch.selectPage)
       .then((data) => {
-        console.log(data);
         dispatch(getFavoritesAction(data.data));
       })
       .catch((err) => console.log(err.response));
@@ -127,7 +127,7 @@ export function Home() {
           <img src={profileinfoicon} alt="" />
           <h2>회원정보</h2>
         </Subtitle>
-        <PostStaticsList />
+        <SmallCardBox />
         <TabBox category="회원정보" />
       </ListContainer>
       <ListContainer>
@@ -153,7 +153,12 @@ export function Profile() {
 }
 
 export function Attendance() {
-  return <div>d</div>;
+  return (
+    <AttendanceContainer>
+      <SmallCardBox type="attendance" />
+      <Calendar />
+    </AttendanceContainer>
+  );
 }
 
 export function Favorites() {
@@ -271,4 +276,10 @@ const Subtitle = styled.div`
     height: 3rem;
     margin-right: 0.5rem;
   }
+`;
+
+const AttendanceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;

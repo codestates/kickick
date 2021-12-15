@@ -43,19 +43,7 @@ const Container = styled.div`
   gap: 1rem;
   width: 48rem;
   margin: 0 auto;
-
-  .event_name {
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-
-  .event_info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    color: gray;
-  }
+  padding-top: 3rem;
 `;
 
 const RightContainer = styled.div`

@@ -17,6 +17,7 @@ import {
   socketReducer,
   alarmListReducer,
   postsearchReducer,
+  commentsReducer,
 } from "./reducers";
 
 const persistConfig = {
@@ -44,11 +45,12 @@ export const store = configureStore({
     socket: socketReducer,
     alarmList: alarmListReducer,
     postsearch: postsearchReducer,
+    comments: commentsReducer,
   },
 
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({ serializableCheck: false }),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export default store;
