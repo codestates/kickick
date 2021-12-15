@@ -11,6 +11,7 @@ import {
   Common,
   TagInput,
   IconBox,
+  Profile,
 } from "../../components";
 
 import {
@@ -22,7 +23,7 @@ import { createPost, createTag } from "../../apis/posts";
 export default function EditBoard({ themeCode }) {
   const { category } = useParams();
   const navigate = useNavigate();
-  const state = useSelector((state) => state.postAdd);
+  const { postAdd, login } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
@@ -37,7 +38,7 @@ export default function EditBoard({ themeCode }) {
   };
 
   const handleClick = () => {
-    createPost(state.category, title, content)
+    createPost(postAdd.category, title, content)
       .then((data) => {
         createTag(data.data.data.post_id, [category, ...tagArr])
           .then(() => navigate(`/board/${category}`))
@@ -71,12 +72,21 @@ export default function EditBoard({ themeCode }) {
 
         <ViewBox>
           <TitleBox>{title}</TitleBox>
+          <ProfileContainer>
+            <Profile type="post" src={login.isLogin.profile} />
+            <span>{login.isLogin.username}</span>
+          </ProfileContainer>
+          <TagInput
+            tagArr={tagArr}
+            setTagArr={setTagArr}
+            category={category}
+            readOnly={true}
+          />
           <ReactQuill
             value={content}
             readOnly={true}
             theme={"bubble"}
             style={{
-              widht: "43rem",
               paddingTop: "0.5rem",
               color: themeCode === "light" ? "black" : "white",
             }}
@@ -116,7 +126,7 @@ const WriteBox = styled.div`
 const ViewBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   width: 50%;
   padding: 2rem;
 
@@ -126,10 +136,19 @@ const ViewBox = styled.div`
 `;
 
 const TitleBox = styled.div`
-  width: 43rem;
-  height: 2.8rem;
+  min-height: 4rem;
+  line-height: 1.2;
   padding-top: 0.5rem;
   font-size: 2.8rem;
   font-weight: bold;
   color: ${({ theme }) => theme.color.font};
+`;
+const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
+  img {
+    margin-right: 1rem;
+  }
 `;

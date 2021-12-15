@@ -25,9 +25,6 @@ import {
 } from "../../store/actions/postadd";
 
 import introductionicon from "../../assets/images/icon/introductionicon.png";
-import contenticon from "../../assets/images/icon/contenticon.png";
-import titileicon from "../../assets/images/icon/titleicon.png";
-import tagicon from "../../assets/images/icon/tagicon.png";
 
 import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
@@ -101,30 +98,22 @@ export default function EditKickBoard() {
       <Container>
         <WritePage>
           <InfoContainer>
-            <HeadlineContainer>
-              <h3>제목</h3>
-              <TitleInput
-                type="title"
-                handlePostName={handlePostName}
-                handleChange={handleViewPostName}
-              />
-            </HeadlineContainer>
+            <TitleInput
+              type="title"
+              handlePostName={handlePostName}
+              handleChange={handleViewPostName}
+            />
           </InfoContainer>
           <InfoContainer>
-            <HeadlineContainer>
-              <h3>태그</h3>
-              <TagInput
-                tagArr={tagArr}
-                setTagArr={setTagArr}
-                category={category}
-              />
-            </HeadlineContainer>
+            <TagInput
+              tagArr={tagArr}
+              setTagArr={setTagArr}
+              category={category}
+            />
           </InfoContainer>
+          <InfoContainer>
+            <h3>썸네일</h3>
 
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>썸네일</h3>
-            </HeadlineContainer>
             <DragDrop
               file={file}
               setFile={setFile}
@@ -132,18 +121,15 @@ export default function EditKickBoard() {
             />
           </InfoContainer>
           <InfoContainer>
-            <HeadlineContainer>
-              <h3>킥에 대한 한마디</h3>
-            </HeadlineContainer>
+            <h3>킥에 대한 한마디</h3>
+
             <IntroTextarea
               handleTextarea={handleIntro}
               handleViewIntro={handleViewIntro}
             />
           </InfoContainer>
           <InfoContainer>
-            <HeadlineContainer>
-              <h3>본문</h3>
-            </HeadlineContainer>
+            <h3>본문</h3>
             <EditQuill
               content={content}
               setContent={setContent}
@@ -267,15 +253,6 @@ const InfoContainer = styled.div`
   }
 `;
 
-const HeadlineContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  img {
-    width: 3rem;
-    height: 3rem;
-  }
-`;
 const BtnContainer = styled.div`
   margin-top: 2rem;
   text-align: center;

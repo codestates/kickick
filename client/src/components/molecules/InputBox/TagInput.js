@@ -63,7 +63,7 @@ const Container = styled.div`
   padding: 0.5rem 0.5rem 0.5rem 0;
   flex-wrap: wrap;
   gap: 1rem;
-  height: 3.3rem;
+  min-height: 3.3rem;
   width: 40rem;
 `;
 const TagContainer = styled.div`

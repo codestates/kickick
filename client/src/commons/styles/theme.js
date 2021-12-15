@@ -81,6 +81,7 @@ export const light = {
     hoverArrow: "#0c0c42",
     commentBox: "#fbfbfb",
     tagBox: "#ececec",
+    mycomment: "skyblue",
   },
 };
 
@@ -108,5 +109,7 @@ export const dark = {
     hoverArrow: "#333638",
     commentBox: "#444444",
     tagBox: "red",
+
+    mycomment: "#0c0c42",
   },
 };

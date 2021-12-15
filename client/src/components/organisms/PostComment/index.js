@@ -172,6 +172,6 @@ const Container = styled.div`
     color: ${({ theme }) => theme.color.font};
   }
   strong {
-    color: skyblue;
+    color: ${({ theme }) => theme.color.mycomment};
   }
 `;

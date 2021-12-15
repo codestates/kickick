@@ -15,12 +15,21 @@ export default function Vote({ likes, is_liked, postId }) {
     if (item === "false" && type === false) return;
 
     if (item === "true") {
-      setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
-      setAlien(alien + 1);
+      if (is_liked !== null) {
+        setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
+        setAlien(alien + 1);
+      } else {
+        setAlien(alien + 1);
+      }
+
       setType(true);
     } else {
-      setAstronaut(astronaut + 1);
-      setAlien(alien === 0 ? 0 : alien - 1);
+      if (is_liked !== null) {
+        setAstronaut(astronaut + 1);
+        setAlien(alien === 0 ? 0 : alien - 1);
+      } else {
+        setAstronaut(astronaut + 1);
+      }
       setType(false);
     }
 
