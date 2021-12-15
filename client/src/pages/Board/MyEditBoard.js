@@ -13,12 +13,12 @@ import {
   IconBox,
   Profile,
 } from "../../components";
-
+import Page404 from "../Error/Page404";
 import { getPostInfoAction } from "../../store/actions/postinfo";
 import { getPostsInfo, putPost } from "../../apis/posts";
 import { delTags, createTags } from "../../apis/tags";
 
-export default function MyEditBoard({ themeCode }) {
+export default function MyEditBoard({ themeCode, list }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { post_id, category } = useParams();
@@ -65,6 +65,7 @@ export default function MyEditBoard({ themeCode }) {
       .catch((err) => console.log(err.response));
   }, [dispatch, post_id]);
 
+  if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return "";
   return (
     <Container>

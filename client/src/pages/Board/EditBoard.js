@@ -13,14 +13,14 @@ import {
   IconBox,
   Profile,
 } from "../../components";
-
+import Page404 from "../Error/Page404";
 import {
   getCategoryAction,
   resetPostAddAction,
 } from "../../store/actions/postadd";
 import { createPost, createTag } from "../../apis/posts";
 
-export default function EditBoard({ themeCode }) {
+export default function EditBoard({ themeCode, list }) {
   const { category } = useParams();
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
@@ -51,7 +51,7 @@ export default function EditBoard({ themeCode }) {
     dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
   }, [category, dispatch]);
-
+  if (!list.find((el) => el === category)) return <Page404 />;
   return (
     <Container>
       <QullContainer>

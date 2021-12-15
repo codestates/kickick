@@ -82,6 +82,11 @@ export const light = {
     commentBox: "#fbfbfb",
     tagBox: "#ececec",
     mycomment: "skyblue",
+    blockquote: "#fafafa",
+    blockquoteColor: "gray",
+    tabBack: "white",
+    tabHover: "#eee",
+    mypageSvg: "#555",
   },
 };
 
@@ -108,8 +113,12 @@ export const dark = {
     boardTopBack: "#1E1F21",
     hoverArrow: "#333638",
     commentBox: "#444444",
-    tagBox: "red",
-
     mycomment: "#0c0c42",
+    tagBox: "#555",
+    blockquote: "#555",
+    blockquoteColor: "#efefef",
+    tabBack: "gray",
+    tabHover: "#333638",
+    mypageSvg: "white",
   },
 };

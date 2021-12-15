@@ -8,7 +8,10 @@ import {
   delComments,
 } from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
-import { commentSocketAction } from "../../../store/actions/socket";
+import {
+  commentSocketAction,
+  targetNameAction,
+} from "../../../store/actions/socket";
 
 export default function PostComment({ post_id, themeCode }) {
   const dispatch = useDispatch();
@@ -43,7 +46,8 @@ export default function PostComment({ post_id, themeCode }) {
         setCmt({ ...cmt, data: dummy });
       })
       .then(() => setPlusCmt(plusCmt + 1))
-      .then(() => dispatch(commentSocketAction(!socket.comment)))
+      .then(() => dispatch(targetNameAction(postInfo.user.username)))
+      .then(() => dispatch(targetNameAction("")))
       .catch((err) => console.log(err.response));
     setValue("");
   };
