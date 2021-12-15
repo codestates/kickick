@@ -85,6 +85,7 @@ export const light = {
     blockquoteColor: "gray",
     tabBack: "white",
     tabHover: "#eee",
+    mypageSvg: "#555",
   },
 };
 
@@ -116,5 +117,6 @@ export const dark = {
     blockquoteColor: "#efefef",
     tabBack: "gray",
     tabHover: "#333638",
+    mypageSvg: "white",
   },
 };

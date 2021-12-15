@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { TotalSearch, BoardTop, PostList } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
-
+import Page404 from "../Error/Page404";
 import { getPostsList } from "../../apis/posts";
 
 import { getListAction, resetListAction } from "../../store/actions/postlist";
@@ -66,6 +66,8 @@ export default function Board({ themeCode }) {
     postsearch.align,
   ]);
 
+  const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
+  if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return <BoardSkeleton />;
   return (
     <>
