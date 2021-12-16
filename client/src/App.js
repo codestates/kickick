@@ -11,15 +11,16 @@ import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board/Board";
-import DetailBoard from "./pages/Board/DetailBoard";
-import EditBoard from "./pages/Board/EditBoard";
-import MyEditBoard from "./pages/Board/MyEditBoard";
 import KickBoard from "./pages/KickBoard";
-import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
-import EditKickBoard from "./pages/KickBoard/EditKickBoard";
+import Notice from "./pages/Notice";
+import DetailBoard from "./pages/Post/DetailBoard";
+import DetailKickBoard from "./pages/Post/DetailKickBoard";
+import DetailNotice from "./pages/Post/DetailNotice";
+import EditBoard from "./pages/Write/EditBoard";
+import MyEditBoard from "./pages/Write/MyEditBoard";
+import EditKickBoard from "./pages/Write/EditKickBoard";
+import EditNotice from "./pages/Write/EditNotice";
 import MyPage from "./pages/MyPage";
-import Notice, { NoticeDetail } from "./pages/Notice";
-import EditNotice from "./pages/Notice/EditNotice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
@@ -32,7 +33,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction,themeModeAction } from "./store/actions/nav";
+import { alarmListAction, themeModeAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -52,7 +53,7 @@ export default function App() {
         dispatch(themeModeAction([light, "light"]));
       } else {
         dispatch(themeModeAction([dark, "dark"]));
-      };
+      }
     }, 580);
 
     nowImLogin(todayLogin)
@@ -70,7 +71,6 @@ export default function App() {
           : null
       )
       .catch(() => dispatch(isLoginAction(false)));
-    
   }, [preThemeMode]);
 
   socketClient.on("connect", () => {
@@ -150,7 +150,7 @@ export default function App() {
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
-              path="detailkick/:post_id/:kick_id"
+              path="detailkick/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
             <Route path="editkick/:category" element={<EditKickBoard />} />
@@ -161,7 +161,7 @@ export default function App() {
             >
               <Route
                 path=":notice_id"
-                element={<NoticeDetail themeCode={themeMode[1]} />}
+                element={<DetailNotice themeCode={themeMode[1]} />}
               />
               <Route path="edit" element={<EditNotice />} />
             </Route>

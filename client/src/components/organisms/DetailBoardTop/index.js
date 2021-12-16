@@ -20,10 +20,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
               조회 수 <strong>{postInfo.view_count}</strong>
             </span>
             <span>
-              댓글 <strong>{postInfo.view_count}</strong>
-            </span>
-            <span>
-              좋아요 <strong>{postInfo.view_count}</strong>
+              좋아요 <strong>{postInfo.like_count}</strong>
             </span>
           </CountContainer>
         </UserAndCountContainer>
@@ -39,7 +36,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
             <Thumbnail src={postInfo.kick.thumbnail} />
             <blockquote>{postInfo.content}</blockquote>
             <ReactQuill
-              value={postInfo.kick_content}
+              value={postInfo.main_content || ""}
               readOnly={true}
               theme={"bubble"}
               style={{ color: themeCode === "light" ? "#222" : "#fff" }}

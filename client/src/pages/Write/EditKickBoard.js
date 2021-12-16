@@ -198,7 +198,7 @@ const ViewPage = styled.div`
     background: #fafafa;
     border-left: 3px solid #0c0c42;
     margin: 1rem 0;
-    min-height: 4.5rem;
+    min-height: 5rem;
     line-height: 1.5;
   }
 
