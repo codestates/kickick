@@ -82,25 +82,6 @@ export default function App() {
         ...socketChange.alarmPage,
       });
 
-<<<<<<< HEAD
-      socketClient.on("alarms", (data) => {
-        console.log("난 1이야", data);
-        dispatch(alarmListAction(data));
-      });
-
-      socketClient.on("broadcast", () => {
-        console.log("브로드케스트");
-        socketClient.emit("alarms", {
-          username: isLogin.username,
-          ...socketChange.alarmPage,
-        });
-      });
-
-      socketClient.on("disconnect", () => {
-        console.log("disconnection");
-      });
-
-=======
     socketClient.on("alarms", (data) => {
       // console.log("난 1이야", data);
       dispatch(alarmListAction(data));
@@ -108,15 +89,11 @@ export default function App() {
 
     socketClient.on("broadcast", () => {
       // console.log("브로드케스트");
->>>>>>> cc0c806615a9aa2583da0d6eff423d679f28b38c
       socketClient.emit("alarms", {
         username: isLogin.username,
         ...socketChange.alarmPage,
       });
     });
-<<<<<<< HEAD
-  }
-=======
 
     socketClient.on("disconnect", () => {
       // console.log("disconnection");
@@ -127,7 +104,6 @@ export default function App() {
       ...socketChange.alarmPage,
     });
   });
->>>>>>> cc0c806615a9aa2583da0d6eff423d679f28b38c
 
   return (
     <ThemeProvider theme={themeMode[0]}>
