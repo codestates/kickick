@@ -95,7 +95,7 @@ export default function KickBoard() {
     </Container>
   );
 }
-
+//
 const Container = styled.div`
   margin: 0 auto;
   padding: 10rem 0;
