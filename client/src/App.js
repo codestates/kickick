@@ -82,99 +82,100 @@ export default function App() {
         ...socketChange.alarmPage,
       });
 
-    socketClient.on("alarms", (data) => {
-      // console.log("난 1이야", data);
-      dispatch(alarmListAction(data));
-    });
+      socketClient.on("alarms", (data) => {
+        // console.log("난 1이야", data);
+        dispatch(alarmListAction(data));
+      });
 
-    socketClient.on("broadcast", () => {
-      // console.log("브로드케스트");
+      socketClient.on("broadcast", () => {
+        // console.log("브로드케스트");
+        socketClient.emit("alarms", {
+          username: isLogin.username,
+          ...socketChange.alarmPage,
+        });
+      });
+
+      socketClient.on("disconnect", () => {
+        // console.log("disconnection");
+      });
+
       socketClient.emit("alarms", {
         username: isLogin.username,
         ...socketChange.alarmPage,
       });
     });
+  }
 
-    socketClient.on("disconnect", () => {
-      // console.log("disconnection");
-    });
-
-    socketClient.emit("alarms", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
-  });
-
-  return (
-    <ThemeProvider theme={themeMode[0]}>
-      <Router>
-        <Container>
-          <PageUp />
-          {preThemeMode === "light" ? (
-            <LightChanger preThemeMode={preThemeMode}>
-              <DarkBox />
-              <Theme src={darkToLight} />
-            </LightChanger>
-          ) : (
-            <DarkChanger preThemeMode={preThemeMode}>
-              <Theme src={lightToDark} />
-              <DarkBox />
-            </DarkChanger>
-          )}
-          <Nav socketClient={socketClient} />
-          <Routes>
-            <Route path="/" element={<Main />}>
-              <Route path="kakao" element={<KakaoAuth />} />
-              <Route path="naver" element={<NaverAuth />} />
-              <Route path="google" element={<GoogleAuth />} />
-              <Route path="modal/:modal" element={<CommonModal />} />
-            </Route>
-            <Route path="login" element={<Login />} />
-            {/* <Route path="signup" element={<SignupSelect />} /> */}
-            <Route path="signup" element={<Signup />} />
-            <Route path="mailauth/:username" element={<MailAuth />} />
-            <Route
-              path="board/:category"
-              element={<Board themeCode={themeMode[1]} list={list} />}
-            />
-            <Route
-              path="detailboard/:post_id"
-              element={<DetailBoard themeCode={themeMode[1]} />}
-            />
-            <Route
-              path="editboard/:category"
-              element={<EditBoard themeCode={themeMode[1]} list={list} />}
-            />
-            <Route
-              path="myeditboard/:category/:post_id"
-              element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
-            />
-            <Route path="kickboard/:category" element={<KickBoard />} />
-            <Route
-              path="detailkick/:post_id/:kick_id"
-              element={<DetailKickBoard themeCode={themeMode[1]} />}
-            />
-            <Route path="editkick/:category" element={<EditKickBoard />} />
-            <Route path="mypage/:category" element={<MyPage />} />
-            <Route
-              path="notice/:category"
-              element={<Notice themeCode={themeMode[1]} />}
-            >
+    return (
+      <ThemeProvider theme={themeMode[0]}>
+        <Router>
+          <Container>
+            <PageUp />
+            {preThemeMode === "light" ? (
+              <LightChanger preThemeMode={preThemeMode}>
+                <DarkBox />
+                <Theme src={darkToLight} />
+              </LightChanger>
+            ) : (
+                <DarkChanger preThemeMode={preThemeMode}>
+                  <Theme src={lightToDark} />
+                  <DarkBox />
+                </DarkChanger>
+              )}
+            <Nav socketClient={socketClient} />
+            <Routes>
+              <Route path="/" element={<Main />}>
+                <Route path="kakao" element={<KakaoAuth />} />
+                <Route path="naver" element={<NaverAuth />} />
+                <Route path="google" element={<GoogleAuth />} />
+                <Route path="modal/:modal" element={<CommonModal />} />
+              </Route>
+              <Route path="login" element={<Login />} />
+              {/* <Route path="signup" element={<SignupSelect />} /> */}
+              <Route path="signup" element={<Signup />} />
+              <Route path="mailauth/:username" element={<MailAuth />} />
               <Route
-                path=":notice_id"
-                element={<NoticeDetail themeCode={themeMode[1]} />}
+                path="board/:category"
+                element={<Board themeCode={themeMode[1]} list={list} />}
               />
-              <Route path="edit" element={<EditNotice />} />
-            </Route>
-            <Route path="*" element={<Error />} />
-          </Routes>
-          <Footer />
-        </Container>
-      </Router>
-    </ThemeProvider>
-  );
-}
-const Container = styled.div`
+              <Route
+                path="detailboard/:post_id"
+                element={<DetailBoard themeCode={themeMode[1]} />}
+              />
+              <Route
+                path="editboard/:category"
+                element={<EditBoard themeCode={themeMode[1]} list={list} />}
+              />
+              <Route
+                path="myeditboard/:category/:post_id"
+                element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
+              />
+              <Route path="kickboard/:category" element={<KickBoard />} />
+              <Route
+                path="detailkick/:post_id/:kick_id"
+                element={<DetailKickBoard themeCode={themeMode[1]} />}
+              />
+              <Route path="editkick/:category" element={<EditKickBoard />} />
+              <Route path="mypage/:category" element={<MyPage />} />
+              <Route
+                path="notice/:category"
+                element={<Notice themeCode={themeMode[1]} />}
+              >
+                <Route
+                  path=":notice_id"
+                  element={<NoticeDetail themeCode={themeMode[1]} />}
+                />
+                <Route path="edit" element={<EditNotice />} />
+              </Route>
+              <Route path="*" element={<Error />} />
+            </Routes>
+            <Footer />
+          </Container>
+        </Router>
+      </ThemeProvider>
+    );
+  }
+  const Container = styled.div`
   position: relative;
   width: 100vw;
   min-height: 100vh;
@@ -182,19 +183,19 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.color.back};
 `;
 
-const Theme = styled.img`
+  const Theme = styled.img`
   position: relative;
   height: 100vh;
 `;
 
-const DarkBox = styled.div`
+  const DarkBox = styled.div`
   position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
-const ModeChanger = styled.div`
+  const ModeChanger = styled.div`
   position: fixed;
   top: 0rem;
   right: 100vw;
@@ -214,10 +215,10 @@ const ModeChanger = styled.div`
   }
 `;
 
-const LightChanger = styled(ModeChanger)`
+  const LightChanger = styled(ModeChanger)`
   animation-duration: 2s;
 `;
 
-const DarkChanger = styled(ModeChanger)`
+  const DarkChanger = styled(ModeChanger)`
   animation-duration: 2.2s;
 `;
