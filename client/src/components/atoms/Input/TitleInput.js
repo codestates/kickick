@@ -23,20 +23,19 @@ export default function TitleInput({
   );
 }
 const Title = styled.input`
-  width: 30rem;
   font-size: 1.2rem;
-  border-bottom: 3px solid ${({ theme }) => theme.color.select};
+  /* border-bottom: 3px solid ${({ theme }) => theme.color.select}; */
   &:focus {
-    border-bottom: 3px solid ${({ theme }) => theme.color.font};
+    /* border-bottom: 3px solid ${({ theme }) => theme.color.font}; */
   }
 
   ${({ type }) =>
     type === "title" &&
     css`
-      width: 24rem;
-      font-size: 1.2rem;
-      height: 2.5rem;
+      font-size: 2.8rem;
+      height: 4rem;
       padding: 0.5rem;
+      font-weight: bold;
       color: ${({ theme }) => theme.color.font};
       caret-color: ${({ theme }) => theme.color.font};
       background: ${({ theme }) => theme.color.back};
