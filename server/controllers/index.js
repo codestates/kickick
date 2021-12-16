@@ -22,6 +22,7 @@ module.exports = {
   put_posts_info: require("./posts/put_posts_info"),
   delete_posts_info: require("./posts/delete_posts_info"),
   get_posts_recommended: require("./posts/get_posts_recommended"),
+  get_posts_classification: require("./posts/get_posts_classification"),
   // notices
   get_notices_info: require("./notices/get_notices_info"),
   post_notices_info: require("./notices/post_notices_info"),
