@@ -108,8 +108,6 @@ export const dark = {
     alarm: "#ffffff",
     red: "#FF5655",
     main: "#0c0c42",
-    // navBack: "#292A2D",
-    // alarm: "#444444",
     tag: "#f90716",
     font: "#ffffff",
     navBtn: "#333333",
