@@ -85,7 +85,7 @@ const TagContainer = styled.div`
 const Alarm = styled.span`
   padding: 0.5rem;
   font-weight: bold;
-  color: #e02401;
+  color: ${({ theme }) => theme.color.tagAlarm};
   opacity: ${({ tag }) => (tag.length === 2 ? 1 : 0)};
   transition: all 0.3s linear;
 `;

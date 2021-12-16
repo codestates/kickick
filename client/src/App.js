@@ -74,37 +74,38 @@ export default function App() {
       .catch(() => dispatch(isLoginAction(false)));
   }, [preThemeMode]);
 
-  socketClient.on("connect", () => {
-    // console.log("connection server");
+  if (isLogin) {
+    socketClient.on("connect", () => {
+      // console.log("connection server");
 
-    socketClient.emit("signin", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
+      socketClient.emit("signin", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
 
-    socketClient.on("alarms", (data) => {
-      // console.log("난 1이야", data);
-      dispatch(alarmListAction(data));
-    });
+      socketClient.on("alarms", (data) => {
+        // console.log("난 1이야", data);
+        dispatch(alarmListAction(data));
+      });
 
-    socketClient.on("broadcast", () => {
-      // console.log("브로드케스트");
+      socketClient.on("broadcast", () => {
+        // console.log("브로드케스트");
+        socketClient.emit("alarms", {
+          username: isLogin.username,
+          ...socketChange.alarmPage,
+        });
+      });
+
+      socketClient.on("disconnect", () => {
+        // console.log("disconnection");
+      });
+
       socketClient.emit("alarms", {
         username: isLogin.username,
         ...socketChange.alarmPage,
       });
     });
-
-    socketClient.on("disconnect", () => {
-      // console.log("disconnection");
-    });
-
-    socketClient.emit("alarms", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
-  });
-
+  }
   return (
     <ThemeProvider theme={themeMode[0]}>
       <Router>
@@ -154,7 +155,10 @@ export default function App() {
               path="detailkick/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
-            <Route path="editkick/:category" element={<EditKickBoard />} />
+            <Route
+              path="editkick/:category"
+              element={<EditKickBoard themeCode={themeMode[1]} />}
+            />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route
               path="notice/:category"

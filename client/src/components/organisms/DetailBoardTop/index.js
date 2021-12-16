@@ -6,6 +6,7 @@ import "react-quill/dist/quill.bubble.css";
 import { Profile, Thumbnail, Vote } from "../../../components";
 
 export default function DetailBoardTop({ postInfo, type, themeCode }) {
+  console.log(postInfo);
   return (
     <Container>
       <TopContainer>
@@ -17,10 +18,14 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
           </UserContainer>
           <CountContainer>
             <span>
-              조회 수 <strong>{postInfo.view_count}</strong>
+              게시일 <strong>{postInfo.created_at.split("T")[0]}</strong>
             </span>
             <span>
-              좋아요 <strong>{postInfo.like_count}</strong>
+              {/* 좋아요 <strong>{postInfo.like_count}</strong> */}
+              조회<strong>{postInfo.view_count}</strong>
+            </span>
+            <span>
+              좋아요 <strong>{postInfo.favorite_count}</strong>
             </span>
           </CountContainer>
         </UserAndCountContainer>

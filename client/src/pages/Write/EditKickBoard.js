@@ -28,7 +28,7 @@ import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
 import { uploadSingleImage } from "../../apis/upload";
 
-export default function EditKickBoard() {
+export default function EditKickBoard({ themeCode }) {
   const { category } = useParams();
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
@@ -117,6 +117,7 @@ export default function EditKickBoard() {
             content={content}
             setContent={setContent}
             handleContent={handleContent}
+            themeCode={themeCode}
           />
         </InfoContainer>
 
@@ -143,10 +144,11 @@ export default function EditKickBoard() {
           theme={"bubble"}
           value={content}
           style={{
-            backgroundColor: "#eee",
+            backgroundColor: themeCode === "light" ? "#eee" : "#1E1F21",
             padding: "1rem 0",
             borderRadius: "0.5rem",
             height: "40rem",
+            color: themeCode === "light" ? "black" : "white",
           }}
         />
       </ViewPage>
@@ -193,10 +195,10 @@ const ViewPage = styled.div`
   > blockquote {
     font-size: 1.2rem;
     font-style: italic;
-    color: gray;
+    color: ${({ theme }) => theme.color.blockquoteColor};
     padding: 1.5rem;
-    background: #fafafa;
-    border-left: 3px solid #0c0c42;
+    background: ${({ theme }) => theme.color.blockquote};
+    border-left: 3px solid ${({ theme }) => theme.color.alarm};
     margin: 1rem 0;
     min-height: 5rem;
     line-height: 1.5;
@@ -229,6 +231,7 @@ const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
   img {
     margin-right: 1rem;
   }

@@ -21,7 +21,8 @@ export default function Nav({ socketClient }) {
   const socketChange = useSelector((state) => state.socket);
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
-
+  const path = window.location.pathname.split("/")[1];
+  const yIndex = window.scrollY;
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));
@@ -42,9 +43,11 @@ export default function Nav({ socketClient }) {
       });
     }
     if (isLogin && (socketChange.notice || socketChange.event)) {
-      socketClient.emit("broadcast", {})
+      socketClient.emit("broadcast", {});
     }
-    return () => { socketClient.disconnect() };
+    return () => {
+      socketClient.disconnect();
+    };
   }, [socketChange, isLogin]);
 
   return (
@@ -53,7 +56,7 @@ export default function Nav({ socketClient }) {
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Frame scroll={scroll} isHover={isHover}>
+      <Frame scroll={scroll} isHover={isHover} path={path} yIndex={yIndex}>
         <Separation>
           <NavBtn
             context="KICK"
@@ -100,7 +103,7 @@ export default function Nav({ socketClient }) {
 
 const Point = styled.div`
   margin: 0.2rem;
-  color:${({ theme }) => theme.color.font};
+  color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
 `;
 
@@ -114,6 +117,7 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
+  /* background-color: ${({ theme }) => theme.color.navBack}; */
   background-color: transparent;
   z-index: 999;
 `;
@@ -127,7 +131,8 @@ const Frame = styled(VerticalAlign)`
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
-  background-color: ${({ theme }) => theme.color.back};
+  background-color: ${({ path, theme, yIndex }) =>
+    path === "board" && yIndex === 0 ? theme.color.navBack : theme.color.back};
   transition: top 0.5s;
 `;
 

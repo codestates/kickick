@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   // query user_id와 username 으로 검색하는건 관리자만 차후 구현
 
   // 토큰으로 내 로그 정보 조회
+  console.log(req.query);
 
   // page_num과 limit 기본값 설정
   const page_num = Number(req.query.page_num) || 1;

@@ -1,6 +1,6 @@
 const { users, posts, likes, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
-const post_alarms_info = require("../alarms/post_alarms_info");
+const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
   // TODO 좋아요 생성 및 수정
@@ -82,6 +82,19 @@ module.exports = async (req, res) => {
       data.like_id = data.id;
       delete data.id;
     }
+
+    // like_count 업데이트
+    await posts.update(
+      {
+        like_count: sequelize.literal(`like_count + 1`),
+      },
+      {
+        where: {
+          id: post_id,
+        },
+      }
+    );
+
     // post_id 로 like_info 가져와서 투표수 총합 확인
     let like_info = await likes.findAndCountAll({
       attributes: [["id", "like_id"]],
@@ -89,9 +102,7 @@ module.exports = async (req, res) => {
         post_id: post_id,
       },
     });
-    console.log(like_info);
     const like_count = like_info.count;
-    console.log(like_count);
 
     // 총 투표수가 10이상이면 alarm 생성
     if (like_count === 10) {
