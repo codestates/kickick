@@ -57,6 +57,7 @@ export const light = {
   type: "light",
   color: {
     back: "#ffffff",
+    smallFooterBack: "#0c0c42",
     navBack: "#2980b9",
     main: "#0c0c42",
     alarm: "#0c0c42",
@@ -66,7 +67,7 @@ export const light = {
     navBtn: "#350480",
     basicBtn: "#0c0c42",
     hoverBasicBtn: "gray",
-    modalBtn: "#82B0F5",
+    // modalBtn: "#82B0F5",
     comment: "#3467ce",
     tag: "#f90716",
     placeholderGray: "#5A5A5A",
@@ -105,6 +106,7 @@ export const dark = {
   type: "dark",
   color: {
     back: "#1E1F21",
+    smallFooterBack: "#555555",
     navBack: "#1E1F21",
     alarm: "#444444",
     red: "#FF5655",

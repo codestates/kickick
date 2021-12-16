@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 
 import { NavBtn, AlarmBtn, BtnChamber } from "../../../components";
@@ -13,6 +14,7 @@ import moon from "../../../assets/images/moon.png";
 
 export default function Nav({ socketClient }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
   const preThemeMode = useSelector((state) => state.persist.preThemeMode);
@@ -21,6 +23,7 @@ export default function Nav({ socketClient }) {
   const socketChange = useSelector((state) => state.socket);
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const path = window.location.pathname.split("/")[1];
   const yIndex = window.scrollY;
   const logoutHanlder = () => {
@@ -34,6 +37,10 @@ export default function Nav({ socketClient }) {
     if (preThemeMode === "light") dispatch(preThemeModeAction("dark"));
     else dispatch(preThemeModeAction("light"));
   };
+
+  const editMover = (path) => {
+    navigate(`/write/${path}`, { state: { category: "학습" } });
+  }
 
   useEffect(() => {
     if (isLogin && socketChange.targetId) {
@@ -86,6 +93,33 @@ export default function Nav({ socketClient }) {
           </LoginChanger>
           <LoginChanger isLogin={isLogin && isLogin.type !== "guest"}>
             <AlarmBtn socketClient={socketClient} />
+            <EditBoardContainer>
+              <EditBoard onClick={() => setIsOpen(!isOpen)}>글쓰기</EditBoard>
+              <Arrow isOpen={isOpen} />
+              <DropdownContainer
+                isOpen={isOpen}
+                onMouseLeave={() => setIsOpen(false)}
+              >
+                <DropdownList onClick={() => editMover("board")}>
+                  게시판
+                </DropdownList>
+                <DropdownList onClick={() => editMover("kickboard")}>
+                  킥 게시판
+                </DropdownList>
+                <DropdownList
+                  onClick={() => editMover("notice")}
+                  loginType={isLogin.type}
+                >
+                  소식
+                </DropdownList>
+                <DropdownList
+                  onClick={() => editMover("notice")}
+                  loginType={isLogin.type}
+                >
+                  이벤트
+                </DropdownList>
+              </DropdownContainer>
+            </EditBoardContainer>
             <NavBtn context="마이페이지" pathname="/mypage/home" />
             <NavBtn
               context="로그아웃"
@@ -117,9 +151,12 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
-  /* background-color: ${({ theme }) => theme.color.navBack}; */
   background-color: transparent;
   z-index: 999;
+
+  /* @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  } */
 `;
 
 const Frame = styled(VerticalAlign)`
@@ -153,6 +190,56 @@ const ThemeBtn = styled.img`
   margin-right: 0.3rem;
   border-radius: 3rem;
   cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
+`;
+
+const EditBoardContainer = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
+
+const EditBoard = styled.div`
+  margin: 0 0.3rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-family: "Jua", sans-serif;
+  color: ${({ theme }) => theme.color.font};
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
+`;
+const Arrow = styled.div`
+  position: absolute;
+  top: 2.8rem;
+  display:${ ({isOpen})=> isOpen ? "default": "none"};
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(45deg);
+  background-color: ${({ theme }) => theme.color.alarm};
+`;
+
+const DropdownContainer = styled.ul`
+  position: absolute;
+  top: 3.3rem;
+  display: ${({ isOpen }) => (isOpen ? "default" : "none")};
+  padding: 0.2rem 0.7rem;
+  color: white;
+  background-color: ${({ theme }) => theme.color.alarm};
+`;
+
+const DropdownList = styled.li`
+  display: ${({ loginType }) => !loginType || loginType === "admin" ? "default" : "none"};
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  font-family: "Jua", sans-serif;
+  cursor:pointer;
 
   :hover {
     opacity: 0.8;

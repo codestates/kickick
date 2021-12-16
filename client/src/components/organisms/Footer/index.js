@@ -58,25 +58,40 @@ export default function Footer() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  @media ${({ theme }) => theme.device.tablet} {
+    position:fixed;
+    top:80vh;
+  }
 `;
 
 const TreeImg = styled.img`
   position: relative;
   top: 0.01rem;
-  display:${({theme})=> theme.type === "dark" ? "none":"default"};
+  display: ${({ theme }) => (theme.type === "dark" ? "none" : "default")};
   width: 100vw;
   pointer-events: none;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display:none;
+  }
 `;
 
 const ContextContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100vw;
   height: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 17}rem`};
   padding: 0 ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 6}rem`};
   color: ${({ theme }) => theme.color.footerFont};
   background-color: ${({ theme }) => theme.color.footerBack};
   overflow: hidden;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    height: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 7}rem`};
+    background-color: ${({ theme }) => theme.color.smallFooterBack};
+    padding: 0;
+  }
 `;
 
 const Frame = styled.div`
@@ -92,6 +107,12 @@ const Untouchable = styled.div`
 const Logo = styled.p`
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 6}rem`};
   font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    color: ${({ theme }) => theme.color.back};
+    font-size: ${({ theme }) =>
+      `${theme.fontSizes.base.split("rem")[0] * 3}rem`};
+  }
 `;
 
 const IntroduceTitle = styled.p`
@@ -99,16 +120,28 @@ const IntroduceTitle = styled.p`
     `${theme.fontSizes.base.split("rem")[0] * 0.5}rem`};
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-family: ${({ theme }) => theme.fontFamily.jua};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const IntroduceContent = styled(IntroduceTitle)`
   padding-bottom: ${({ theme }) =>
     `${theme.fontSizes.base.split("rem")[0] * 1.5}rem`};
   font-size: ${({ theme }) => theme.fontSizes.xl};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const CopyRight = styled.p`
   font-family: ${({ theme }) => theme.fontFamily.jua};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const MemberBox = styled.a`
@@ -116,6 +149,10 @@ const MemberBox = styled.a`
   align-items: center;
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 2}rem`};
   color: ${({ theme }) => theme.color.footerFont};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const MemberInfo = styled.div`
