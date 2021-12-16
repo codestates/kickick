@@ -32,7 +32,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction,themeModeAction } from "./store/actions/nav";
+import { alarmListAction, themeModeAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -52,7 +52,7 @@ export default function App() {
         dispatch(themeModeAction([light, "light"]));
       } else {
         dispatch(themeModeAction([dark, "dark"]));
-      };
+      }
     }, 580);
 
     nowImLogin(todayLogin)
@@ -70,7 +70,6 @@ export default function App() {
           : null
       )
       .catch(() => dispatch(isLoginAction(false)));
-    
   }, [preThemeMode]);
 
   if (isLogin) {
@@ -82,29 +81,29 @@ export default function App() {
         ...socketChange.alarmPage,
       });
 
-    socketClient.on("alarms", (data) => {
-      // console.log("난 1이야", data);
-      dispatch(alarmListAction(data));
-    });
+      socketClient.on("alarms", (data) => {
+        // console.log("난 1이야", data);
+        dispatch(alarmListAction(data));
+      });
 
-    socketClient.on("broadcast", () => {
-      // console.log("브로드케스트");
+      socketClient.on("broadcast", () => {
+        // console.log("브로드케스트");
+        socketClient.emit("alarms", {
+          username: isLogin.username,
+          ...socketChange.alarmPage,
+        });
+      });
+
+      socketClient.on("disconnect", () => {
+        // console.log("disconnection");
+      });
+
       socketClient.emit("alarms", {
         username: isLogin.username,
         ...socketChange.alarmPage,
       });
     });
-
-    socketClient.on("disconnect", () => {
-      // console.log("disconnection");
-    });
-
-    socketClient.emit("alarms", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
-  });
-
+  }
   return (
     <ThemeProvider theme={themeMode[0]}>
       <Router>
@@ -154,7 +153,10 @@ export default function App() {
               path="detailkick/:post_id/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
-            <Route path="editkick/:category" element={<EditKickBoard />} />
+            <Route
+              path="editkick/:category"
+              element={<EditKickBoard themeCode={themeMode[1]} />}
+            />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route
               path="notice/:category"
