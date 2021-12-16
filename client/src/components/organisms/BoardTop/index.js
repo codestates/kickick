@@ -70,7 +70,7 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   font-size: 4rem;
-  background: ${({ theme }) => theme.color.boardTopBack} !important;
+  background: ${({ theme }) => theme.color.Back} !important;
 
   pointer-events: none !important;
 
