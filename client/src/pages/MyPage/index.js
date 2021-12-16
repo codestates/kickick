@@ -178,8 +178,7 @@ export function MyComment() {
 
 export function PurchasedKick() {
   const { count } = useSelector((state) => state.mypage.kick);
-  const postsearch = useSelector((state) => state.postsearch);
-  console.log(postsearch.selectPage);
+
   return (
     <>
       <CardBox type="mykick" />

@@ -86,7 +86,10 @@ export default function KickBoard() {
     <>
       <BoardTop />
       <Container>
-        <Common handleClick={() => navigate(`/editkick/${category}`)} />
+        <Common
+          label="글쓰기"
+          handleClick={() => navigate(`/editkick/${category}`)}
+        />
         <TotalSearch />
         <CardBox type="kickboard" />
         {kickboard.modalState && <KickConfirm />}
@@ -110,5 +113,9 @@ const Container = styled.div`
   }
   @media ${({ theme }) => theme.device.mobileL} {
     width: 100%;
+  }
+
+  button {
+    margin-left: auto;
   }
 `;
