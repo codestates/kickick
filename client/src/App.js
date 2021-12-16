@@ -45,7 +45,6 @@ export default function App() {
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
-  console.log("themeMode", themeMode);
 
   useEffect(() => {
     setTimeout(() => {
@@ -75,7 +74,7 @@ export default function App() {
   }, [preThemeMode]);
 
   socketClient.on("connect", () => {
-    console.log("connection server");
+    // console.log("connection server");
 
     socketClient.emit("signin", {
       username: isLogin.username,
@@ -83,12 +82,12 @@ export default function App() {
     });
 
     socketClient.on("alarms", (data) => {
-      console.log("난 1이야", data);
+      // console.log("난 1이야", data);
       dispatch(alarmListAction(data));
     });
 
     socketClient.on("broadcast", () => {
-      console.log("브로드케스트");
+      // console.log("브로드케스트");
       socketClient.emit("alarms", {
         username: isLogin.username,
         ...socketChange.alarmPage,
@@ -96,7 +95,7 @@ export default function App() {
     });
 
     socketClient.on("disconnect", () => {
-      console.log("disconnection");
+      // console.log("disconnection");
     });
 
     socketClient.emit("alarms", {
@@ -130,8 +129,8 @@ export default function App() {
               <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
             <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignupSelect />} />
-            <Route path="signup/:type" element={<Signup />} />
+            {/* <Route path="signup" element={<SignupSelect />} /> */}
+            <Route path="signup" element={<Signup />} />
             <Route path="mailauth/:username" element={<MailAuth />} />
             <Route
               path="board/:category"

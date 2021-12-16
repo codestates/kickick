@@ -26,17 +26,17 @@ export default function MainRecommend({
   // console.log("kick", Object.keys(kickListInfo));
   return (
     <Container>
-      <BtnContainer>
-        {/* <PageBtn onClick={() => selectHandler("left")}>왼쪽</PageBtn> */}
+      {/* <BtnContainer>
+        <PageBtn onClick={() => selectHandler("left")}>왼쪽</PageBtn>
         <PageBtn onClick={() => setTimeout(() => selectHandler("right"), 300)}>
           <FaChevronRight />
         </PageBtn>
-      </BtnContainer>
+      </BtnContainer> */}
       <ContentContainer>
         <ContentFrame isSelect={isSelect}>
           {Object.keys(kickListInfo).length > 1 ? (
             <>
-              {kickListInfo.data_by_tags.length ? (
+              {/* {kickListInfo.data_by_tags.length ? (
                 <ContentPage name="tags">
                   {kickListInfo.data_by_tags.map((el, idx) => (
                     <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
@@ -44,14 +44,14 @@ export default function MainRecommend({
                     </KickBtn>
                   ))}
                 </ContentPage>
-              ) : null}
-              <ContentPage name="3days">
+              ) : null} */}
+              {/* <ContentPage name="3days">
                 {kickListInfo.data_by_3days.map((el, idx) => (
                   <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}
-              </ContentPage>
+              </ContentPage> */}
               <ContentPage name="time">
                 {kickListInfo.data_by_time.map((el, idx) => (
                   <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
@@ -59,13 +59,13 @@ export default function MainRecommend({
                   </KickBtn>
                 ))}
               </ContentPage>
-              <ContentPage name="tags">
+              {/* <ContentPage name="tags">
                 {kickListInfo.data_by_tags.map((el, idx) => (
                   <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}
-              </ContentPage>
+              </ContentPage> */}
             </>
           ) : (
             <ContentPage>
@@ -84,7 +84,6 @@ const Container = styled.div`
   flex-direction:column;
   width: 80vw;
   font-family: ${({ theme }) => theme.fontFamily.jua};
-  /* background-color: yellow; */
   overflow:hidden;
 `;
 
@@ -155,7 +154,6 @@ const KickBtn = styled.p`
   margin: 0.3vw;
   padding: 0.3vw;
   font-size: 1.3vw;
-  /* text-align: center; */
   background-color: #cccccc;
   cursor:pointer;
 `;

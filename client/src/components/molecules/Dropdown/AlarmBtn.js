@@ -30,8 +30,8 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
         obj.reference.table === "posts"
           ? "detailboard"
           : obj.reference.table === "notices" && obj.type === "notices"
-          ? "notice"
-          : "event";
+          ? "notice/소식"
+          : "notice/이벤트";
       
       if (obj.reference.table === "posts") {
         // 댓글 알람
@@ -242,7 +242,7 @@ const DropdownList = styled.li`
   font-size: 0.7rem;
   font-family: ${({ theme }) => theme.fontFamily.jua};
   cursor: pointer;
-  border-top: 0.01rem solid #2e2e2e;
+  border-top: 0.01rem solid ${({ theme }) => theme.color.border};
 
   :first-child {
     border-top: none;
