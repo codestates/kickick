@@ -1,8 +1,9 @@
-const { users, logs } = require("../../models");
+const { users } = require("../../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
 const ejs = require("ejs");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // TODO 회원가입 구현
@@ -15,7 +16,9 @@ module.exports = async (req, res) => {
       type: "guest",
       kick_money: 300,
     });
+
     data.get({ plain: true });
+
     await users.update(
       {
         username: `guest ${data.id}`,
@@ -26,6 +29,7 @@ module.exports = async (req, res) => {
         },
       }
     );
+
     data = await users.findOne({
       attributes: ["type", "username", "kick_money"],
       where: {
@@ -33,10 +37,31 @@ module.exports = async (req, res) => {
       },
     });
 
-    return res.status(201).json({
-      data: data,
-      message: "guest 회원가입",
-    });
+    // 토큰 발급
+    const access_token = jwt.sign(
+      {
+        type: data.type,
+        username: data.username,
+      },
+      process.env.ACCESS_SECRET,
+      {
+        expiresIn: "3d",
+      }
+    );
+
+    return res
+      .status(201)
+      .cookie(
+        "token",
+        { access_token },
+        {
+          httpOnly: true,
+        }
+      )
+      .json({
+        data: data,
+        message: "guest 회원가입",
+      });
   }
   if (!(req.body.username && req.body.email && req.body.password)) {
     return res.status(400).json({

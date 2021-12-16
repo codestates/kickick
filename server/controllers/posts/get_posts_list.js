@@ -50,6 +50,15 @@ module.exports = async (req, res) => {
     let { username } = decoded;
 
     try {
+      // username으로 user_id 구함
+      let user_info = await users.findOne({
+        attributes: [["id", "user_id"]],
+        where: {
+          username: username,
+        },
+        raw: true,
+      });
+      const user_id = user_info.user_id;
       const post_info = await posts.findAndCountAll({
         attributes: [
           ["id", "post_id"],
@@ -66,6 +75,9 @@ module.exports = async (req, res) => {
         limit: limit,
         distinct: true,
         order: [["id", "DESC"]],
+        where: {
+          user_id: user_id,
+        },
         include: [
           {
             model: users,
