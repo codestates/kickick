@@ -9,6 +9,7 @@ import {
   KickConfirm,
   Common,
   InfiniteScroll,
+  BoardTop,
 } from "../../components";
 
 import { getPostsList } from "../../apis/posts";
@@ -56,18 +57,14 @@ export default function KickBoard() {
       .then((data) => {
         if (data.data.data.length === 0) {
           setOnScroll(false);
-          if (postsearch.selectPage === 1) {
-            dispatch(getListAction(data.data));
-          } else {
-            dispatch(getListStackAction(data.data));
-          }
         } else {
           setOnScroll(true);
-          if (postsearch.selectPage === 1) {
-            dispatch(getListAction(data.data));
-          } else {
-            dispatch(getListStackAction(data.data));
-          }
+        }
+
+        if (postsearch.selectPage === 1) {
+          dispatch(getListAction(data.data));
+        } else {
+          dispatch(getListStackAction(data.data));
         }
       })
       .then(() => setLoading(false))
@@ -86,19 +83,24 @@ export default function KickBoard() {
   if (loading) return <div>d</div>;
 
   return (
-    <Container>
-      <Common handleClick={() => navigate(`/editkick/${category}`)} />
-      <TotalSearch />
-      <CardBox type="kickboard" />
-      {kickboard.modalState && <KickConfirm />}
-      {onScroll && <InfiniteScroll callback={handleLimit} />}
-    </Container>
+    <>
+      <BoardTop />
+      <Container>
+        <Common
+          label="글쓰기"
+          handleClick={() => navigate(`/editkick/${category}`)}
+        />
+        <TotalSearch />
+        <CardBox type="kickboard" />
+        {kickboard.modalState && <KickConfirm />}
+        {onScroll && <InfiniteScroll callback={handleLimit} />}
+      </Container>
+    </>
   );
 }
 //
 const Container = styled.div`
   margin: 0 auto;
-  padding: 10rem 0;
 
   @media ${({ theme }) => theme.device.desktop} {
     width: 88rem;
@@ -111,5 +113,9 @@ const Container = styled.div`
   }
   @media ${({ theme }) => theme.device.mobileL} {
     width: 100%;
+  }
+
+  button {
+    margin-left: auto;
   }
 `;

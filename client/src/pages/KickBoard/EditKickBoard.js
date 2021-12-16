@@ -24,11 +24,6 @@ import {
   resetPostAddAction,
 } from "../../store/actions/postadd";
 
-import introductionicon from "../../assets/images/icon/introductionicon.png";
-import contenticon from "../../assets/images/icon/contenticon.png";
-import titileicon from "../../assets/images/icon/titleicon.png";
-import tagicon from "../../assets/images/icon/tagicon.png";
-
 import { createPost, createTag } from "../../apis/posts";
 import { createKicks } from "../../apis/kicks";
 import { uploadSingleImage } from "../../apis/upload";
@@ -82,7 +77,9 @@ export default function EditKickBoard() {
           });
         }
 
-        createTag(post_id, [category]).catch((err) => console.log(err));
+        createTag(post_id, [category, ...tagArr]).catch((err) =>
+          console.log(err)
+        );
       })
       .catch((err) => console.log(err.response));
   };
@@ -93,118 +90,73 @@ export default function EditKickBoard() {
   }, [dispatch, category]);
 
   return (
-    <Wrapper>
-      <PageHeadline>
-        <img src={introductionicon} alt="" />
-        <h1>나만의 킥 작성 </h1>
-      </PageHeadline>
-      <Container>
-        <WritePage>
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>제목</h3>
-              <TitleInput
-                type="title"
-                handlePostName={handlePostName}
-                handleChange={handleViewPostName}
-              />
-            </HeadlineContainer>
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>태그</h3>
-              <TagInput
-                tagArr={tagArr}
-                setTagArr={setTagArr}
-                category={category}
-              />
-            </HeadlineContainer>
-          </InfoContainer>
+    <Container>
+      <WritePage>
+        <TitleInput
+          type="title"
+          handlePostName={handlePostName}
+          handleChange={handleViewPostName}
+        />
+        <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
+        <InfoContainer>
+          <h3>썸네일</h3>
 
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>썸네일</h3>
-            </HeadlineContainer>
-            <DragDrop
-              file={file}
-              setFile={setFile}
-              setThumbnail={setThumbnail}
-            />
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>킥에 대한 한마디</h3>
-            </HeadlineContainer>
-            <IntroTextarea
-              handleTextarea={handleIntro}
-              handleViewIntro={handleViewIntro}
-            />
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <h3>본문</h3>
-            </HeadlineContainer>
-            <EditQuill
-              content={content}
-              setContent={setContent}
-              handleContent={handleContent}
-            />
-          </InfoContainer>
+          <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
+        </InfoContainer>
+        <InfoContainer>
+          <h3>킥에 대한 한마디</h3>
 
-          <BtnContainer>
-            <Common label="등록" type="bigger" handleClick={handleClick} />
-          </BtnContainer>
-        </WritePage>
-        <ViewPage>
-          <h1>{postname}</h1>
-          <ProfileContainer>
-            <Profile type="post" src={login.isLogin.profile} />
-            <span>{login.isLogin.username}</span>
-          </ProfileContainer>
-          <TagInput
-            tagArr={tagArr}
-            setTagArr={setTagArr}
-            category={category}
-            readOnly={true}
+          <IntroTextarea
+            handleTextarea={handleIntro}
+            handleViewIntro={handleViewIntro}
           />
-          <Thumbnail src={file} alt="" />
-          <blockquote>{intro}</blockquote>
-          <ReactQuill
-            readOnly={true}
-            theme={"bubble"}
-            value={content}
-            style={{
-              backgroundColor: "#eee",
-              padding: "1rem 0",
-              borderRadius: "0.5rem",
-              height: "40rem",
-            }}
+        </InfoContainer>
+        <InfoContainer>
+          <h3>본문</h3>
+          <EditQuill
+            content={content}
+            setContent={setContent}
+            handleContent={handleContent}
           />
-        </ViewPage>
-      </Container>
-    </Wrapper>
+        </InfoContainer>
+
+        <BtnContainer>
+          <Common label="등록" type="bigger" handleClick={handleClick} />
+        </BtnContainer>
+      </WritePage>
+      <ViewPage>
+        <h1>{postname}</h1>
+        <ProfileContainer>
+          <Profile type="post" src={login.isLogin.profile} />
+          <span>{login.isLogin.username}</span>
+        </ProfileContainer>
+        <TagInput
+          tagArr={tagArr}
+          setTagArr={setTagArr}
+          category={category}
+          readOnly={true}
+        />
+        <Thumbnail src={file} alt="" />
+        <blockquote>{intro}</blockquote>
+        <ReactQuill
+          readOnly={true}
+          theme={"bubble"}
+          value={content}
+          style={{
+            backgroundColor: "#eee",
+            padding: "1rem 0",
+            borderRadius: "0.5rem",
+            height: "40rem",
+          }}
+        />
+      </ViewPage>
+    </Container>
   );
 }
-const Wrapper = styled.div`
-  padding: 3rem 1rem;
-`;
 
-const PageHeadline = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 2rem 0 5rem 3rem;
-  img {
-    width: 3rem;
-    height: 3rem;
-    margin-right: 1rem;
-  }
-  h1 {
-    font-size: 3rem;
-    color: skyblue;
-  }
-`;
 const Container = styled.div`
   display: flex;
+  padding: 3rem 1rem;
 `;
 const WritePage = styled.div`
   width: 50%;
@@ -212,7 +164,7 @@ const WritePage = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
-  gap: 2rem;
+  gap: 0.5rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
     width: 100%;
@@ -224,12 +176,13 @@ const ViewPage = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
-  gap: 1rem;
+  gap: 0.5rem;
   border-left: 3px dashed #eee;
 
   > h1 {
     font-size: 2.8rem;
     height: 4.5rem;
+    padding: 0.5rem;
   }
 
   > img {
@@ -244,7 +197,7 @@ const ViewPage = styled.div`
     padding: 1.5rem;
     background: #fafafa;
     border-left: 3px solid #0c0c42;
-    margin: 2rem 0;
+    margin: 1rem 0;
     min-height: 4.5rem;
     line-height: 1.5;
   }
@@ -257,25 +210,16 @@ const ViewPage = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
-  gap: 1rem;
+  margin-top: 2rem;
+  gap: 0.5rem;
 
   h3 {
-    font-size: 1.5rem;
-    color: gray;
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.font};
     margin-right: 1rem;
   }
 `;
 
-const HeadlineContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  img {
-    width: 3rem;
-    height: 3rem;
-  }
-`;
 const BtnContainer = styled.div`
   margin-top: 2rem;
   text-align: center;

@@ -11,6 +11,7 @@ import {
   Common,
   TagInput,
   IconBox,
+  Profile,
 } from "../../components";
 import Page404 from "../Error/Page404";
 import { getPostInfoAction } from "../../store/actions/postinfo";
@@ -19,10 +20,10 @@ import { delTags, createTags } from "../../apis/tags";
 
 export default function MyEditBoard({ themeCode, list }) {
   const navigate = useNavigate();
-  const state = useSelector((state) => state.persist.postInfo);
-
-  const { post_id, category } = useParams();
   const dispatch = useDispatch();
+  const { post_id, category } = useParams();
+  const state = useSelector((state) => state.persist.postInfo);
+  const { postAdd, login } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState(state.post_name);
   const [content, setContent] = useState(state.content);
@@ -39,7 +40,7 @@ export default function MyEditBoard({ themeCode, list }) {
   };
 
   const handleClick = () => {
-    putPost(`${category}_자유`, title, content, null, post_id)
+    putPost(postAdd.category, title, content, null, post_id)
       .then(() => {
         state.tags
           .filter((el) => el.content !== category)
@@ -69,19 +70,9 @@ export default function MyEditBoard({ themeCode, list }) {
   return (
     <Container>
       <QullContainer>
-        <DividBox>
-          <TitleContainer>
-            <TitleInput
-              handleChange={handleChange}
-              type="title"
-              title={title}
-            />
-            <TagInput
-              tagArr={tagArr}
-              setTagArr={setTagArr}
-              category={category}
-            />
-          </TitleContainer>
+        <WriteBox>
+          <TitleInput handleChange={handleChange} type="title" title={title} />
+          <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
           <EditQuill
             image={false}
             content={content}
@@ -96,36 +87,35 @@ export default function MyEditBoard({ themeCode, list }) {
             />
             <Common label="수 정" type="bigger" handleClick={handleClick} />
           </BtnContainer>
-        </DividBox>
-
-        <DividBox>
-          <TitleContainer style={{ marginBottom: "2rem" }}>
-            <TitleBox>{title}</TitleBox>
-          </TitleContainer>
+        </WriteBox>
+        <ViewBox>
+          <TitleBox>{title}</TitleBox>
+          <ProfileContainer>
+            <Profile type="post" src={login.isLogin.profile} />
+            <span>{login.isLogin.username}</span>
+          </ProfileContainer>
+          <TagInput
+            tagArr={tagArr}
+            setTagArr={setTagArr}
+            category={category}
+            readOnly={true}
+          />
           <ReactQuill
             value={content}
             readOnly={true}
             theme={"bubble"}
             style={{
-              widht: "43rem",
               paddingTop: "0.5rem",
               color: themeCode === "light" ? "#222" : "#fff",
             }}
           />
-        </DividBox>
+        </ViewBox>
       </QullContainer>
     </Container>
   );
 }
-const Container = styled.div`
-  width: 90rem;
-  margin: 0 auto;
-  gap: 1rem;
-`;
-const TitleContainer = styled.div`
-  margin-top: 2rem;
-  color: ${({ theme }) => theme.color.font};
-`;
+const Container = styled.div``;
+
 const BtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -134,15 +124,50 @@ const BtnContainer = styled.div`
 
 const QullContainer = styled.div`
   display: flex;
-  gap: 2rem;
+
+  > :nth-child(2) {
+    border-left: 0.2rem dashed #d8d8d8;
+  }
 `;
 
-const DividBox = styled.div``;
+const WriteBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+  padding: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
+`;
+
+const ViewBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+  padding: 2rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    display: none;
+  }
+`;
 
 const TitleBox = styled.div`
-  width: 43rem;
-  height: 2.8rem;
+  min-height: 4rem;
+  line-height: 1.2;
   padding-top: 0.5rem;
   font-size: 2.8rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
+`;
+const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
+  img {
+    margin-right: 1rem;
+  }
 `;

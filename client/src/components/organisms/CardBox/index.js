@@ -59,14 +59,13 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   color: ${({ theme }) => theme.color.font};
-  /* min-height: 30vh; */
 `;
 
 const NoContentContainer = styled.div`
   display: flex;
-
   align-items: center;
   font-size: 3rem;
   margin: 0 auto;
   font-weight: bold;
+  min-height: 35vh;
 `;
