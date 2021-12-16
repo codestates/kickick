@@ -109,7 +109,7 @@ export default function PostComment({ post_id, themeCode }) {
         setLoading(false);
       })
       .catch((err) => console.error(err.response));
-  }, [limit]);
+  }, [limit, postInfo.post_id]);
 
   useEffect(() => {
     const options = {
