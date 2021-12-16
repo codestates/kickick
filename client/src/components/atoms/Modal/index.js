@@ -56,7 +56,6 @@ const Container = styled.div`
   left: 0;
   bottom: 0;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
 `;
 const Alarm = styled.div`
   position: absolute;
@@ -69,9 +68,11 @@ const Alarm = styled.div`
   height: 16rem;
   gap: 1rem;
   font-size: 1.6rem;
-  background-color: white;
   transform: translate(-50%, -150%);
   padding: 1.5rem 2rem;
+  color: ${({ theme }) => theme.color.modalColor};
+  background-color: ${({ theme }) => theme.color.back};
+  border: 3px solid ${({ theme }) => theme.color.mypageSvg};
   border-radius: 0.5rem;
   animation: 0.25s linear ${shake};
 
@@ -99,7 +100,13 @@ const Alarm = styled.div`
     ${({ type }) =>
       type === "login" &&
       css`
-        color: #0c0c42;
+        color: ${({ theme }) => theme.color.loginDesc};
+      `}
+
+    ${({ type }) =>
+      type === "del" &&
+      css`
+        color: red;
       `}
   }
 `;
@@ -116,6 +123,8 @@ const ButtonContainer = styled.div`
     border-radius: 0.5rem;
     cursor: pointer;
     font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.modalBtn};
+    background-color: ${({ theme }) => theme.color.tabBack};
     :hover {
       transform: scale(1.05);
     }
