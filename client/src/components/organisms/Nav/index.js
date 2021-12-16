@@ -6,15 +6,16 @@ import { NavBtn, AlarmBtn, BtnChamber } from "../../../components";
 import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
-import { themeModeAction } from "../../../store/actions/nav";
+import { preThemeModeAction } from "../../../store/actions/nav";
 
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
-export default function Nav({ themeCode, socketClient }) {
+export default function Nav({ socketClient }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
+  const preThemeMode = useSelector((state) => state.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const userPoint = useSelector((state) => state.login.isPoint);
   const socketChange = useSelector((state) => state.socket);
@@ -30,22 +31,24 @@ export default function Nav({ themeCode, socketClient }) {
   };
 
   const themeChanger = () => {
-    if (themeMode === "light") dispatch(themeModeAction("dark"));
-    else dispatch(themeModeAction("light"));
+    if (preThemeMode === "light") dispatch(preThemeModeAction("dark"));
+    else dispatch(preThemeModeAction("light"));
   };
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && socketChange.targetId) {
       socketClient.emit("alarms", {
         username: socketChange.targetId,
-        // 여기서 상대방 아이디가 와야된다.
         ...socketChange.alarmPage,
       });
     }
+    if (isLogin && (socketChange.notice || socketChange.event)) {
+      socketClient.emit("broadcast", {});
+    }
+    return () => {
+      socketClient.disconnect();
+    };
   }, [socketChange, isLogin]);
-
-  // console.log("pageYOffset",window.pageYOffset);
-  // console.log("screenY",window.screenY);
 
   return (
     <Container
@@ -65,7 +68,7 @@ export default function Nav({ themeCode, socketClient }) {
         </Separation>
         <Separation>
           <ThemeBtn
-            src={themeCode === "light" ? themeImg[0] : themeImg[1]}
+            src={themeMode[1] === "light" ? themeImg[0] : themeImg[1]}
             onClick={themeChanger}
             alt="themeBtn"
           />
@@ -100,6 +103,7 @@ export default function Nav({ themeCode, socketClient }) {
 
 const Point = styled.div`
   margin: 0.2rem;
+  color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
 `;
 
@@ -113,6 +117,7 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
+  /* background-color: ${({ theme }) => theme.color.navBack}; */
   background-color: transparent;
   z-index: 999;
 `;

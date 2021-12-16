@@ -63,6 +63,7 @@ const Container = styled.div`
 const TreeImg = styled.img`
   position: relative;
   top: 0.01rem;
+  display:${({theme})=> theme.type === "dark" ? "none":"default"};
   width: 100vw;
   pointer-events: none;
 `;
@@ -73,8 +74,8 @@ const ContextContainer = styled.div`
   align-items: center;
   height: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 17}rem`};
   padding: 0 ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 6}rem`};
-  color: ${({ theme }) => theme.color.main};
-  background-color: #629d4b;
+  color: ${({ theme }) => theme.color.footerFont};
+  background-color: ${({ theme }) => theme.color.footerBack};
   overflow: hidden;
 `;
 
@@ -114,7 +115,7 @@ const MemberBox = styled.a`
   display: flex;
   align-items: center;
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 2}rem`};
-  color: ${({ theme }) => theme.color.main};
+  color: ${({ theme }) => theme.color.footerFont};
 `;
 
 const MemberInfo = styled.div`

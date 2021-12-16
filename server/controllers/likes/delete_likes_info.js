@@ -1,4 +1,4 @@
-const { users, likes } = require("../../models");
+const { users, posts, likes } = require("../../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
@@ -39,6 +39,18 @@ module.exports = async (req, res) => {
         post_id: post_id,
       },
     });
+
+    // like_count 업데이트
+    await posts.update(
+      {
+        like_count: sequelize.literal(`like_count - 1`),
+      },
+      {
+        where: {
+          id: post_id,
+        },
+      }
+    );
   } catch (err) {
     console.log(err);
     return res.status(500).json({ data: err, message: "데이터베이스 에러" });

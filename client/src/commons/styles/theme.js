@@ -54,6 +54,7 @@ const common = {
 
 export const light = {
   ...common,
+  type: "light",
   color: {
     back: "#ffffff",
     navBack: "#2980b9",
@@ -81,6 +82,7 @@ export const light = {
     hoverArrow: "#0c0c42",
     commentBox: "#fbfbfb",
     tagBox: "#ececec",
+    mycomment: "skyblue",
     blockquote: "#fafafa",
     blockquoteColor: "gray",
     tabBack: "white",
@@ -90,19 +92,30 @@ export const light = {
     modalColor: "#222",
     modalBtn: "#222",
     kickH3: "#0c0c42",
+    red: "#FF5655",
+    conditionHover: "#fafafa",
+    footerBack: "#629d4b",
+    footerFont: "#0c0c42",
   },
 };
 
 export const dark = {
   ...common,
+  type: "dark",
   color: {
     back: "#1E1F21",
     navBack: "#1E1F21",
     alarm: "#ffffff",
+    red: "#FF5655",
+    main: "#0c0c42",
+    // navBack: "#292A2D",
+    // alarm: "#444444",
     tag: "#f90716",
     font: "#ffffff",
+    navBtn: "#333333",
     subfont: "#959191",
     gradient: "linear-gradient(to bottom, #757575 25%, #2c2d30 100%)",
+    placeholderGray: "white",
     shadow: "#757575",
     border: "#757575",
     basicBtn: "gray",
@@ -116,6 +129,7 @@ export const dark = {
     boardTopBack: "#1E1F21",
     hoverArrow: "#333638",
     commentBox: "#444444",
+    mycomment: "#0c0c42",
     tagBox: "#555",
     blockquote: "#555",
     blockquoteColor: "#efefef",
@@ -126,5 +140,8 @@ export const dark = {
     modalColor: "#bfbfbf",
     modalBtn: "#eee",
     kickH3: "#bfbfbf",
+    conditionHover: "#444444",
+    footerBack: "#C94A3A",
+    footerFont: "white",
   },
 };

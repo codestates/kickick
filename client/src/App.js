@@ -32,25 +32,27 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction } from "./store/actions/nav";
+import { alarmListAction, themeModeAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
 export default function App() {
   const dispatch = useDispatch();
-  const socketClient = io("http://localhost:4000");
+  const socketClient = io(`${process.env.REACT_APP_API_URL}`);
   const isLogin = useSelector((state) => state.login.isLogin);
   const todayLogin = useSelector((state) => state.login.todayLogin);
+  const preThemeMode = useSelector((state) => state.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
-  const [theme, setTheme] = useState([light, "light"]);
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
 
   useEffect(() => {
     setTimeout(() => {
-      if (themeMode === "light") {
-        setTheme([light, "light"]);
-      } else setTheme([dark, "dark"]);
+      if (preThemeMode === "light") {
+        dispatch(themeModeAction([light, "light"]));
+      } else {
+        dispatch(themeModeAction([dark, "dark"]));
+      }
     }, 580);
 
     nowImLogin(todayLogin)
@@ -68,48 +70,57 @@ export default function App() {
           : null
       )
       .catch(() => dispatch(isLoginAction(false)));
-  }, [themeMode]);
+  }, [preThemeMode]);
 
-  socketClient.on("connect", () => {
-    // console.log("connection server");
+  if (isLogin) {
+    socketClient.on("connect", () => {
+      // console.log("connection server");
 
-    socketClient.emit("signin", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
+      socketClient.emit("signin", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
+
+      socketClient.on("alarms", (data) => {
+        // console.log("난 1이야", data);
+        dispatch(alarmListAction(data));
+      });
+
+      socketClient.on("broadcast", () => {
+        // console.log("브로드케스트");
+        socketClient.emit("alarms", {
+          username: isLogin.username,
+          ...socketChange.alarmPage,
+        });
+      });
+
+      socketClient.on("disconnect", () => {
+        // console.log("disconnection");
+      });
+
+      socketClient.emit("alarms", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
     });
-
-    socketClient.on("alarms", (data) => {
-      // console.log("난 1이야", data);
-      dispatch(alarmListAction(data));
-    });
-
-    socketClient.on("disconnect", () => {
-      console.log("disconnection");
-    });
-
-    socketClient.emit("alarms", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
-  });
-
+  }
   return (
-    <ThemeProvider theme={theme[0]}>
+    <ThemeProvider theme={themeMode[0]}>
       <Router>
         <Container>
           <PageUp />
-          {themeMode === "light" ? (
-            <LightChanger themeMode={themeMode}>
+          {preThemeMode === "light" ? (
+            <LightChanger preThemeMode={preThemeMode}>
               <DarkBox />
               <Theme src={darkToLight} />
             </LightChanger>
           ) : (
-            <DarkChanger themeMode={themeMode}>
+            <DarkChanger preThemeMode={preThemeMode}>
               <Theme src={lightToDark} />
               <DarkBox />
             </DarkChanger>
           )}
-          <Nav themeCode={theme[1]} socketClient={socketClient} />
+          <Nav socketClient={socketClient} />
           <Routes>
             <Route path="/" element={<Main />}>
               <Route path="kakao" element={<KakaoAuth />} />
@@ -118,39 +129,39 @@ export default function App() {
               <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
             <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignupSelect />} />
-            <Route path="signup/:type" element={<Signup />} />
+            {/* <Route path="signup" element={<SignupSelect />} /> */}
+            <Route path="signup" element={<Signup />} />
             <Route path="mailauth/:username" element={<MailAuth />} />
             <Route
               path="board/:category"
-              element={<Board themeCode={theme[1]} list={list} />}
+              element={<Board themeCode={themeMode[1]} list={list} />}
             />
             <Route
               path="detailboard/:post_id"
-              element={<DetailBoard themeCode={theme[1]} />}
+              element={<DetailBoard themeCode={themeMode[1]} />}
             />
             <Route
               path="editboard/:category"
-              element={<EditBoard themeCode={theme[1]} list={list} />}
+              element={<EditBoard themeCode={themeMode[1]} list={list} />}
             />
             <Route
               path="myeditboard/:category/:post_id"
-              element={<MyEditBoard themeCode={theme[1]} list={list} />}
+              element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
               path="detailkick/:post_id/:kick_id"
-              element={<DetailKickBoard themeCode={theme[1]} />}
+              element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
             <Route path="editkick/:category" element={<EditKickBoard />} />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route
               path="notice/:category"
-              element={<Notice themeCode={theme[1]} />}
+              element={<Notice themeCode={themeMode[1]} />}
             >
               <Route
                 path=":notice_id"
-                element={<NoticeDetail themeCode={theme[1]} />}
+                element={<NoticeDetail themeCode={themeMode[1]} />}
               />
               <Route path="edit" element={<EditNotice />} />
             </Route>

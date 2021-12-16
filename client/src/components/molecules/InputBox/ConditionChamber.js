@@ -27,11 +27,12 @@ const Container = styled.div`
   flex-direction: column;
   width: ${({ width }) => `${width}rem`};
   margin-top: ${({ height }) => `${height}rem`};
-  border-bottom: ${({ height }) => `${height / 30}rem solid #E6E6E6`};
+  border-bottom: ${({ height,theme }) => `${height / 25}rem solid ${theme.color.border}`};
 `;
 
 const InputTitle = styled.div`
   margin: ${({ height }) => `${height / 5}rem 0 ${height / 4}rem 0`};
   font-size: ${({ height }) => `${height / 2}rem`};
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
+  color: ${({ theme }) => theme.color.font};
 `;

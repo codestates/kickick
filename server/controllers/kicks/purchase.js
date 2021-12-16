@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { users, posts, kicks, users_kicks, logs } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
@@ -42,8 +29,6 @@ module.exports = async (req, res) => {
 
   const { username } = decoded;
   const kick_id = req.body.kick_id;
-  console.log(typeof kick_id);
-  console.log(kick_id);
   let data;
 
   try {
@@ -76,7 +61,6 @@ module.exports = async (req, res) => {
       },
     });
     data = kick_info[0].get({ plain: true });
-    console.log(data);
     delete data.id;
     delete data.kickId;
     delete data.userId;
@@ -139,14 +123,14 @@ module.exports = async (req, res) => {
     await logs.create({
       user_id: writer_id,
       type: "kick_money",
-      content: `킥판매로 ${Math.abs(change)} 킥머니를 얻었습니다.`,
+      content: `킥 판매로 ${Math.abs(change)} 킥머니를 얻었습니다.`,
     });
 
     // log에 기록
     await logs.create({
       user_id: user_id,
       type: "kick_money",
-      content: `킥구매로 ${Math.abs(change)} 킥머니를 사용했습니다.`,
+      content: `킥 구매로 ${Math.abs(change)} 킥머니를 사용했습니다.`,
     });
   } catch (err) {
     console.log(err);

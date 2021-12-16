@@ -8,25 +8,23 @@ module.exports = (io) => {
     console.log("connection");
     // 사용자 socket 로그인 clients 배열에 저장
     socket.on("signin", (data) => {
-      console.log(`소켓 로그인 진행`);
       let client_info = new Object();
       client_info.username = data.username;
       client_info.id = socket.id;
-      if (!client_info.username) return;
+      // if (!client_info.username) return;
       let is_signed = false;
-      for (let el of clients) {
-        if (el.username === client_info.username) {
-          el.id = client_info.id;
-          is_signed = true;
-          break;
-        }
-      }
+      // for (let el of clients) {
+      //   if (el.username === client_info.username) {
+      //     el.id = client_info.id;
+      //     is_signed = true;
+      //     break;
+      //   }
+      // }
       if (!is_signed) clients.push(client_info);
       console.log(clients);
     });
     // 알람 보내기 요청 들어오면
     socket.on("alarms", async (data) => {
-      console.log("dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ여기로 안오는데?");
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].username === data.username) {
           // 받아온 data 값 변수에 할당
@@ -89,10 +87,16 @@ module.exports = (io) => {
 
           // 원하는 클라이언트에 실시간 알림
           io.to(clients[i].id).emit("alarms", { count: count, data: data });
-          console.log(`${clients[i].username}에 알람`);
         }
       }
     });
+    // broadcast 요청 들어오면
+    socket.on("broadcast", () => {
+      console.log("broadcast");
+      io.emit("broadcast", { data: "test" });
+    });
+
+    // 연결 끊김
     socket.on("disconnect", () => {
       for (let i = 0; i < clients.length; i++) {
         if (clients[i].id === socket.id) {
