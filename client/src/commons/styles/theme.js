@@ -66,7 +66,6 @@ export const light = {
     navBtn: "#350480",
     basicBtn: "#0c0c42",
     hoverBasicBtn: "gray",
-    modalBtn: "#82B0F5",
     comment: "#3467ce",
     tag: "#f90716",
     placeholderGray: "#5A5A5A",
