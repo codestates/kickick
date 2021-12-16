@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ import {
 
 import { FaArrowLeft } from "react-icons/fa";
 
-import { getPostsList } from "../../apis/posts";
+import { getPostsList, getClassifiedPost } from "../../apis/posts";
 import { getComments } from "../../apis/comments";
 import { getFavorites } from "../../apis/favorites";
 import { getLogs } from "../../apis/logs";
@@ -116,6 +116,17 @@ export default function MyPage() {
 
 export function Home() {
   const { isLogin } = useSelector((state) => state.login);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getClassifiedPost()
+      .then((data) => {
+        setData(data.data.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  }, []);
+  if (loading) return <div>d</div>;
   return (
     <HomeWrapper>
       {isLogin.type === "admin" && (
@@ -132,7 +143,7 @@ export function Home() {
           <img src={profileinfoicon} alt="" />
           <h2>회원정보</h2>
         </Subtitle>
-        <SmallCardBox />
+        <SmallCardBox type="statics" data={data} />
         <TabBox category="회원정보" />
       </ListContainer>
       <ListContainer>

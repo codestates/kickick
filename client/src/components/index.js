@@ -23,6 +23,7 @@ export { default as RectLoading } from "./atoms/LoadingSpinner/RectLoading";
 export { default as Modal } from "./atoms/Modal";
 export { default as InfiniteScroll } from "./atoms/InfiniteScroll";
 export { default as Vote } from "./atoms/Graph";
+export { default as NoPost } from "./atoms/NoPost";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";

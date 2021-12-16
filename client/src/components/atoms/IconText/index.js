@@ -17,6 +17,7 @@ import {
   FaRegWindowClose,
   FaBirthdayCake,
   FaStar,
+  FaArrowDown,
 } from "react-icons/fa";
 
 import { ImGift } from "react-icons/im";
@@ -41,6 +42,7 @@ export const iconList = [
   { icon: <FiUserCheck />, label: "유저관리", category: "마이페이지" },
   { icon: <VscMegaphone />, label: "게시글 신고 목록", category: "마이페이지" },
   { icon: <BsBell />, label: "공지 적기", category: "마이페이지" },
+  { icon: <FaArrowDown />, label: "자세히보기", category: "드롭다운" },
   { icon: <FaBirthdayCake />, label: "생일", category: "유저" },
   { icon: <AiOutlineMail />, label: "이메일", category: "유저" },
   { icon: <ImGift />, label: "진행중인 이벤트", category: "이벤트" },
@@ -175,6 +177,24 @@ const Container = styled.div`
       svg {
         margin-left: 0.3rem;
         font-size: 1rem;
+      }
+    `}
+
+    ${({ category }) =>
+    category === "드롭다운" &&
+    css`
+      color: gray;
+      margin-left: auto;
+      font-weight: bold;
+      cursor: pointer;
+      width: 7rem;
+      font-size: 0.8rem;
+      &:hover {
+        color: black;
+      }
+      svg {
+        margin-left: 0.3rem;
+        font-size: 0.9rem;
       }
     `}
 `;

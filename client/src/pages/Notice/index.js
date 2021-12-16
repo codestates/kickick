@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Outlet, useNavigate } from "react-router";
+import { useParams, Outlet, useNavigate, useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
-import {
-  CardBox,
-  BoardTop,
-  IconText,
-  Common,
-  Thumbnail,
-} from "../../components";
 
-import { getNoticesInfo, getNoticesList } from "../../apis/notices";
+import { CardBox, BoardTop, IconText, Common } from "../../components";
+
+import { getNoticesList } from "../../apis/notices";
 
 import { getListAction } from "../../store/actions/postlist";
-import { getPostInfoAction } from "../../store/actions/postinfo";
 
 const noticeList = [
   { category: "소식", component: <News /> },
@@ -56,6 +48,7 @@ export default function Notice({ themeCode }) {
 }
 
 export function News() {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postsearch, login } = useSelector((state) => state);
@@ -74,7 +67,8 @@ export function News() {
       dispatch(getListAction(data.data));
       setLoading(false);
     });
-  }, [postsearch.selectPage, dispatch]);
+  }, [postsearch.selectPage, dispatch, pathname]);
+
   if (loading) return <div>d</div>;
   return (
     <NewsContainer>
@@ -87,6 +81,7 @@ export function News() {
 }
 
 export function Event() {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postsearch, login } = useSelector((state) => state);
@@ -105,7 +100,7 @@ export function Event() {
       dispatch(getListAction(data.data));
       setLoading(false);
     });
-  }, [postsearch.selectPage, dispatch]);
+  }, [postsearch.selectPage, dispatch, pathname]);
   if (loading) return <div>d</div>;
 
   return (
@@ -115,42 +110,6 @@ export function Event() {
       )}
       <CardBox type="event" />
     </EventContainer>
-  );
-}
-
-export function NoticeDetail({ themeCode }) {
-  const { notice_id } = useParams();
-  const dispatch = useDispatch();
-  const { postInfo } = useSelector((state) => state.persist);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getNoticesInfo(notice_id).then((data) => {
-      dispatch(getPostInfoAction(data.data.data));
-      setLoading(false);
-    });
-  }, [notice_id, dispatch]);
-
-  if (loading) return <div></div>;
-  return (
-    <NoticeDetailContainer>
-      <NoticeDetailInfo>
-        <Thumbnail src={postInfo.thumbnail} alt="" />
-        <h2>{postInfo.notice_name}</h2>
-        <div className="subinfo">
-          <span>{postInfo.user.username}</span>
-          <span>{postInfo.created_at}</span>
-        </div>
-      </NoticeDetailInfo>
-      <NoticeDetailContent>
-        <ReactQuill
-          readOnly={true}
-          theme={"bubble"}
-          value={postInfo.content}
-          style={{ color: themeCode === "light" ? "#222" : "#fff" }}
-        />
-      </NoticeDetailContent>
-    </NoticeDetailContainer>
   );
 }
 
@@ -230,43 +189,4 @@ const NewsContainer = styled.div`
   flex-direction: column;
   width: 48rem;
   margin: 0 auto;
-`;
-
-const NoticeDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  width: 48rem;
-  margin: 0 auto;
-
-  h2 {
-    font-size: 2rem;
-  }
-
-  span {
-    margin-right: 1rem;
-    color: gray;
-  }
-
-  @media ${({ theme }) => theme.device.notebookS} {
-    width: 48rem;
-  }
-  @media ${({ theme }) => theme.device.tablet} {
-    width: 100%;
-  }
-`;
-
-const NoticeDetailInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  h2 {
-    color: ${({ theme }) => theme.color.font};
-  }
-`;
-
-const NoticeDetailContent = styled.div`
-  height: 60rem;
-  background-color: ${({ theme }) => theme.color.shadow};
 `;
