@@ -62,13 +62,13 @@ module.exports = async (req, res) => {
       await logs.create({
         user_id: user_info.user_id,
         type: "kick_money",
-        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
+        content: `이메일 인증으로 1500 킥머니를 받았습니다.`,
       });
       // 킥머니 지급 알림 추가
       await alarms.create({
         user_id: user_info.user_id,
         type: "alarms",
-        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
+        content: `이메일 인증으로 1500 킥머니를 받았습니다.`,
       });
     }
   } catch (err) {
