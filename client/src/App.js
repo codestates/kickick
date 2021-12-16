@@ -153,7 +153,10 @@ export default function App() {
               path="detailkick/:post_id/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
-            <Route path="editkick/:category" element={<EditKickBoard />} />
+            <Route
+              path="editkick/:category"
+              element={<EditKickBoard themeCode={themeMode[1]} />}
+            />
             <Route path="mypage/:category" element={<MyPage />} />
             <Route
               path="notice/:category"
