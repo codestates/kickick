@@ -96,6 +96,7 @@ export const light = {
     conditionHover: "#fafafa",
     footerBack: "#629d4b",
     footerFont: "#0c0c42",
+    tagAlarm: "red",
   },
 };
 
@@ -141,5 +142,6 @@ export const dark = {
     conditionHover: "#444444",
     footerBack: "#C94A3A",
     footerFont: "white",
+    tagAlarm: "yellow",
   },
 };
