@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
-import { CardBox } from "../../../components"
+import { CardBox } from "../../../components";
 
-export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }] }) {
+export default function MainEvent({
+  eventInfo = [{ thumbnail: "", summary: "" }],
+}) {
   const navigate = useNavigate();
-console.log(eventInfo)
+
   return (
     <Container>
-      {eventInfo.length
+      <CardBox type="event" />
+      {/* {eventInfo.length
         ? eventInfo.map((el, idx) => (
             // <EventContainer
             //   key={idx}
@@ -26,7 +29,7 @@ console.log(eventInfo)
             // </EventContainer>
             <CardBox type="event" />
           ))
-        : null}
+        : null} */}
     </Container>
   );
 }
@@ -40,9 +43,9 @@ const EventContainer = styled.article`
   width: 18vw;
   margin: 1vw;
   border-radius: 1vw;
-  box-shadow: 0.1vw 0.1vw 0.1vw 0.1vw #F4F4F4;
+  box-shadow: 0.1vw 0.1vw 0.1vw 0.1vw #f4f4f4;
   overflow: hidden;
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const SummaryContainer = styled.div`

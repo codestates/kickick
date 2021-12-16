@@ -11,15 +11,17 @@ import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board/Board";
-import DetailBoard from "./pages/Board/DetailBoard";
-import EditBoard from "./pages/Board/EditBoard";
-import MyEditBoard from "./pages/Board/MyEditBoard";
 import KickBoard from "./pages/KickBoard";
-import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
-import EditKickBoard from "./pages/KickBoard/EditKickBoard";
+import Notice from "./pages/Notice";
+import DetailBoard from "./pages/Post/DetailBoard";
+import DetailKickBoard from "./pages/Post/DetailKickBoard";
+import DetailNotice from "./pages/Post/DetailNotice";
+import EditBoard from "./pages/Write/EditBoard";
+import MyEditBoard from "./pages/Write/MyEditBoard";
+import EditKickBoard from "./pages/Write/EditKickBoard";
+import EditNotice from "./pages/Write/EditNotice";
+import Write from "./pages/Write";
 import MyPage from "./pages/MyPage";
-import Notice, { NoticeDetail } from "./pages/Notice";
-import EditNotice from "./pages/Notice/EditNotice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
@@ -150,7 +152,7 @@ export default function App() {
             />
             <Route path="kickboard/:category" element={<KickBoard />} />
             <Route
-              path="detailkick/:post_id/:kick_id"
+              path="detailkick/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
             />
             <Route
@@ -164,9 +166,14 @@ export default function App() {
             >
               <Route
                 path=":notice_id"
-                element={<NoticeDetail themeCode={themeMode[1]} />}
+                element={<DetailNotice themeCode={themeMode[1]} />}
               />
-              <Route path="edit" element={<EditNotice />} />
+            </Route>
+            <Route path="notice/:category/edit" element={<EditNotice />} />
+            <Route path="write" element={<Write />}>
+              <Route path="board" element={<EditBoard />} />
+              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route path="notice" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
           </Routes>

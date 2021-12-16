@@ -51,7 +51,7 @@ export default function KickBoard() {
       username: postsearch.writer,
       tag: postsearch.tag,
       limit: 10,
-      favorite_count: postsearch.align === "인기" ? 1 : null,
+      like_count: postsearch.align === "인기" ? 1 : null,
       page_num: postsearch.selectPage,
     })
       .then((data) => {
@@ -113,9 +113,5 @@ const Container = styled.div`
   }
   @media ${({ theme }) => theme.device.mobileL} {
     width: 100%;
-  }
-
-  button {
-    margin-left: auto;
   }
 `;

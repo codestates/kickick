@@ -21,6 +21,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
               게시일 <strong>{postInfo.created_at.split("T")[0]}</strong>
             </span>
             <span>
+              {/* 좋아요 <strong>{postInfo.like_count}</strong> */}
               조회<strong>{postInfo.view_count}</strong>
             </span>
             <span>
@@ -40,7 +41,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
             <Thumbnail src={postInfo.kick.thumbnail} />
             <blockquote>{postInfo.content}</blockquote>
             <ReactQuill
-              value={postInfo.kick_content}
+              value={postInfo.main_content || ""}
               readOnly={true}
               theme={"bubble"}
               style={{ color: themeCode === "light" ? "#222" : "#fff" }}
