@@ -42,9 +42,11 @@ export default function Nav({ socketClient }) {
       });
     }
     if (isLogin && (socketChange.notice || socketChange.event)) {
-      socketClient.emit("broadcast", {})
+      socketClient.emit("broadcast", {});
     }
-    return () => { socketClient.disconnect() };
+    return () => {
+      socketClient.disconnect();
+    };
   }, [socketChange, isLogin]);
 
   return (
@@ -100,7 +102,7 @@ export default function Nav({ socketClient }) {
 
 const Point = styled.div`
   margin: 0.2rem;
-  color:${({ theme }) => theme.color.font};
+  color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
 `;
 

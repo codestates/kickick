@@ -73,13 +73,14 @@ export default function App() {
     
   }, [preThemeMode]);
 
-  socketClient.on("connect", () => {
-    // console.log("connection server");
+  if (isLogin) {
+    socketClient.on("connect", () => {
+      // console.log("connection server");
 
-    socketClient.emit("signin", {
-      username: isLogin.username,
-      ...socketChange.alarmPage,
-    });
+      socketClient.emit("signin", {
+        username: isLogin.username,
+        ...socketChange.alarmPage,
+      });
 
     socketClient.on("alarms", (data) => {
       // console.log("난 1이야", data);

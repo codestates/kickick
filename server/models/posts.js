@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       cost: DataTypes.INTEGER,
       view_count: DataTypes.INTEGER,
       favorite_count: DataTypes.INTEGER,
+      like_count: DataTypes.INTEGER,
     },
     {
       sequelize,
