@@ -34,12 +34,14 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
           locale={ko}
           dateFormat="yyyy년 MM월 dd일"
           showPopperArrow={false}
-          fixedHeight
+          showMonthDropdown
+          showYearDropdown
+          // dropdownMode="select"
           selected={selectDate}
           onChange={(date) => {
             setSelectDate(date);
             setIsDateOpen(false);
-            inputHandler("birthday",date);
+            inputHandler("birthday", date);
           }}
           disabledKeyboardNavigation
           inline
@@ -65,6 +67,17 @@ const Container = styled.div`
   .react-datepicker__day--selected {
     color: white;
     background-color: black;
+  }
+
+  .react-datepicker__year-dropdown {
+    border: none;
+    background-color: ${({ theme }) => theme.color.commentBox};
+  }
+
+  .react-datepicker__navigation-icon--previous::before,
+  .react-datepicker__navigation-icon--next::before,
+  .react-datepicker__current-month {
+    display: none;
   }
 `;
 

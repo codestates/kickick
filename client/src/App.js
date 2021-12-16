@@ -10,15 +10,17 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board/Board";
-import DetailBoard from "./pages/Board/DetailBoard";
-import EditBoard from "./pages/Board/EditBoard";
-import MyEditBoard from "./pages/Board/MyEditBoard";
 import KickBoard from "./pages/KickBoard";
-import DetailKickBoard from "./pages/KickBoard/DetailKickBoard";
-import EditKickBoard from "./pages/KickBoard/EditKickBoard";
+import Notice from "./pages/Notice";
+import DetailBoard from "./pages/Post/DetailBoard";
+import DetailKickBoard from "./pages/Post/DetailKickBoard";
+import DetailNotice from "./pages/Post/DetailNotice";
+import EditBoard from "./pages/Write/EditBoard";
+import MyEditBoard from "./pages/Write/MyEditBoard";
+import EditKickBoard from "./pages/Write/EditKickBoard";
+import EditNotice from "./pages/Write/EditNotice";
+import Write from "./pages/Write";
 import MyPage from "./pages/MyPage";
-import Notice, { NoticeDetail } from "./pages/Notice";
-import EditNotice from "./pages/Notice/EditNotice";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
@@ -31,7 +33,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "./store/actions/login";
-import { alarmListAction,themeModeAction } from "./store/actions/nav";
+import { alarmListAction, themeModeAction } from "./store/actions/nav";
 import lightToDark from "./assets/images/lightToDark.png";
 import darkToLight from "./assets/images/darkToLight.png";
 
@@ -51,7 +53,7 @@ export default function App() {
         dispatch(themeModeAction([light, "light"]));
       } else {
         dispatch(themeModeAction([dark, "dark"]));
-      };
+      }
     }, 580);
 
     nowImLogin(todayLogin)
@@ -69,7 +71,6 @@ export default function App() {
           : null
       )
       .catch(() => dispatch(isLoginAction(false)));
-    
   }, [preThemeMode]);
 
   if (isLogin) {
@@ -104,77 +105,84 @@ export default function App() {
       });
     });
   }
-
-    return (
-      <ThemeProvider theme={themeMode[0]}>
-        <Router>
-          <Container>
-            <PageUp />
-            {preThemeMode === "light" ? (
-              <LightChanger preThemeMode={preThemeMode}>
-                <DarkBox />
-                <Theme src={darkToLight} />
-              </LightChanger>
-            ) : (
-                <DarkChanger preThemeMode={preThemeMode}>
-                  <Theme src={lightToDark} />
-                  <DarkBox />
-                </DarkChanger>
-              )}
-            <Nav socketClient={socketClient} />
-            <Routes>
-              <Route path="/" element={<Main />}>
-                <Route path="kakao" element={<KakaoAuth />} />
-                <Route path="naver" element={<NaverAuth />} />
-                <Route path="google" element={<GoogleAuth />} />
-                <Route path="modal/:modal" element={<CommonModal />} />
-              </Route>
-              <Route path="login" element={<Login />} />
-              {/* <Route path="signup" element={<SignupSelect />} /> */}
-              <Route path="signup" element={<Signup />} />
-              <Route path="mailauth/:username" element={<MailAuth />} />
+  return (
+    <ThemeProvider theme={themeMode[0]}>
+      <Router>
+        <Container>
+          <PageUp />
+          {preThemeMode === "light" ? (
+            <LightChanger preThemeMode={preThemeMode}>
+              <DarkBox />
+              <Theme src={darkToLight} />
+            </LightChanger>
+          ) : (
+            <DarkChanger preThemeMode={preThemeMode}>
+              <Theme src={lightToDark} />
+              <DarkBox />
+            </DarkChanger>
+          )}
+          <Nav socketClient={socketClient} />
+          <Routes>
+            <Route path="/" element={<Main />}>
+              <Route path="kakao" element={<KakaoAuth />} />
+              <Route path="naver" element={<NaverAuth />} />
+              <Route path="google" element={<GoogleAuth />} />
+              <Route path="modal/:modal" element={<CommonModal />} />
+            </Route>
+            <Route path="login" element={<Login />} />
+            {/* <Route path="signup" element={<SignupSelect />} /> */}
+            <Route path="signup" element={<Signup />} />
+            <Route path="mailauth/:username" element={<MailAuth />} />
+            <Route
+              path="board/:category"
+              element={<Board themeCode={themeMode[1]} list={list} />}
+            />
+            <Route
+              path="detailboard/:post_id"
+              element={<DetailBoard themeCode={themeMode[1]} />}
+            />
+            <Route
+              path="editboard/:category"
+              element={<EditBoard themeCode={themeMode[1]} list={list} />}
+            />
+            <Route
+              path="myeditboard/:category/:post_id"
+              element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
+            />
+            <Route path="kickboard/:category" element={<KickBoard />} />
+            <Route
+              path="detailkick/:kick_id"
+              element={<DetailKickBoard themeCode={themeMode[1]} />}
+            />
+            <Route
+              path="editkick/:category"
+              element={<EditKickBoard themeCode={themeMode[1]} />}
+            />
+            <Route path="mypage/:category" element={<MyPage />} />
+            <Route
+              path="notice/:category"
+              element={<Notice themeCode={themeMode[1]} />}
+            >
               <Route
-                path="board/:category"
-                element={<Board themeCode={themeMode[1]} list={list} />}
+                path=":notice_id"
+                element={<DetailNotice themeCode={themeMode[1]} />}
               />
-              <Route
-                path="detailboard/:post_id"
-                element={<DetailBoard themeCode={themeMode[1]} />}
-              />
-              <Route
-                path="editboard/:category"
-                element={<EditBoard themeCode={themeMode[1]} list={list} />}
-              />
-              <Route
-                path="myeditboard/:category/:post_id"
-                element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
-              />
-              <Route path="kickboard/:category" element={<KickBoard />} />
-              <Route
-                path="detailkick/:post_id/:kick_id"
-                element={<DetailKickBoard themeCode={themeMode[1]} />}
-              />
-              <Route path="editkick/:category" element={<EditKickBoard />} />
-              <Route path="mypage/:category" element={<MyPage />} />
-              <Route
-                path="notice/:category"
-                element={<Notice themeCode={themeMode[1]} />}
-              >
-                <Route
-                  path=":notice_id"
-                  element={<NoticeDetail themeCode={themeMode[1]} />}
-                />
-                <Route path="edit" element={<EditNotice />} />
-              </Route>
-              <Route path="*" element={<Error />} />
-            </Routes>
-            <Footer />
-          </Container>
-        </Router>
-      </ThemeProvider>
-    );
-  }
-  const Container = styled.div`
+            </Route>
+            <Route path="notice/:category/edit" element={<EditNotice />} />
+            <Route path="write" element={<Write />}>
+              <Route path="board" element={<EditBoard />} />
+              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route path="notice" element={<EditNotice />} />
+            </Route>
+            <Route path="*" element={<Error />} />
+          </Routes>
+          <Footer />
+        </Container>
+      </Router>
+    </ThemeProvider>
+  );
+}
+const Container = styled.div`
   position: relative;
   width: 100vw;
   min-height: 100vh;

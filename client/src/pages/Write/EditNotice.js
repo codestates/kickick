@@ -11,11 +11,12 @@ import {
   Common,
   IntroTextarea,
   DragDrop,
-  Profile,
   Thumbnail,
-  TagInput,
+  Profile,
 } from "../../components";
 
+import { createNotices } from "../../apis/notices";
+import { uploadSingleImage } from "../../apis/upload";
 import {
   getCategoryAction,
   getPostNameAction,
@@ -24,32 +25,31 @@ import {
   resetPostAddAction,
 } from "../../store/actions/postadd";
 
-import { createPost, createTag } from "../../apis/posts";
-import { createKicks } from "../../apis/kicks";
-import { uploadSingleImage } from "../../apis/upload";
+import {
+  noticeSocketAction,
+  eventSocketAction,
+} from "../../store/actions/socket";
 
-export default function EditKickBoard() {
-  const { category } = useParams();
-  const navigate = useNavigate();
-  const { postAdd, login } = useSelector((state) => state);
+export default function EditNotice() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { category } = useParams();
+  const { postAdd, login } = useSelector((state) => state);
   const [postname, setPostname] = useState();
   const [intro, setIntro] = useState();
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
-  const [tagArr, setTagArr] = useState([]);
 
+  const handlePostName = (e) => {
+    dispatch(getPostNameAction(e.target.value));
+  };
   const handleViewPostName = (e) => {
     setPostname(e.target.value);
   };
   const handleViewIntro = (e) => {
     setIntro(e.target.value);
   };
-  const handlePostName = (e) => {
-    dispatch(getPostNameAction(e.target.value));
-  };
-
   const handleIntro = (e) => {
     dispatch(getContentAction(e.target.value));
   };
@@ -59,57 +59,56 @@ export default function EditKickBoard() {
   };
 
   const handleClick = () => {
-    createPost(postAdd.category, postAdd.post_name, postAdd.content)
-      .then((data) => {
-        const post_id = data.data.data.post_id;
-        if (thumbnail) {
-          const formData = new FormData();
-          formData.append("img", thumbnail);
-          uploadSingleImage(formData, "post").then((data) => {
-            const location = data.data.data.location;
-            createKicks(post_id, location, postAdd.kick_content).then(() => {
-              navigate(`/kickboard/${category}`);
-            });
-          });
-        } else {
-          createKicks(post_id, null, postAdd.kick_content).then(() => {
-            navigate(`/kickboard/${category}`);
-          });
-        }
-
-        createTag(post_id, [category, ...tagArr]).catch((err) =>
-          console.log(err)
-        );
-      })
-      .catch((err) => console.log(err.response));
+    if (thumbnail) {
+      const formData = new FormData();
+      formData.append("img", thumbnail);
+      uploadSingleImage(formData, "post").then((data) => {
+        const location = data.data.data.location;
+        createNotices({
+          type: category === "이벤트" ? "events" : "notices",
+          notice_name: postAdd.post_name,
+          summary: postAdd.content,
+          thumbnail: location,
+          content: postAdd.kick_content,
+        })
+          .then(() =>
+            dispatch(
+              category === "이벤트"
+                ? eventSocketAction(true)
+                : noticeSocketAction(true)
+            )
+          )
+          .then(() =>
+            dispatch(
+              category === "이벤트"
+                ? eventSocketAction(false)
+                : noticeSocketAction(false)
+            )
+          )
+          .then(() => navigate(-1))
+          .catch((err) => console.log(err));
+      });
+    }
   };
 
   useEffect(() => {
     dispatch(resetPostAddAction());
-    dispatch(getCategoryAction(category, "킥"));
+    dispatch(getCategoryAction(category));
   }, [dispatch, category]);
 
   return (
     <Container>
       <WritePage>
-        <TitleInput
-          type="title"
-          handlePostName={handlePostName}
-          handleChange={handleViewPostName}
-        />
-        <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
         <InfoContainer>
-          <h3>썸네일</h3>
-
-          <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
+          <TitleInput
+            type="title"
+            handleChange={handleViewPostName}
+            handlePostName={handlePostName}
+          />
         </InfoContainer>
         <InfoContainer>
-          <h3>킥에 대한 한마디</h3>
-
-          <IntroTextarea
-            handleTextarea={handleIntro}
-            handleViewIntro={handleViewIntro}
-          />
+          <h3>썸네일</h3>
+          <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
         </InfoContainer>
         <InfoContainer>
           <h3>본문</h3>
@@ -119,24 +118,24 @@ export default function EditKickBoard() {
             handleContent={handleContent}
           />
         </InfoContainer>
-
+        <InfoContainer>
+          <h3>공지 소개글</h3>
+          <IntroTextarea
+            handleViewIntro={handleViewIntro}
+            handleTextarea={handleIntro}
+          />
+        </InfoContainer>
         <BtnContainer>
-          <Common label="등록" type="bigger" handleClick={handleClick} />
+          <Common label="등 록" type="bigger" handleClick={handleClick} />
         </BtnContainer>
       </WritePage>
       <ViewPage>
         <h1>{postname}</h1>
+        <Thumbnail src={file} alt="" />
         <ProfileContainer>
           <Profile type="post" src={login.isLogin.profile} />
           <span>{login.isLogin.username}</span>
         </ProfileContainer>
-        <TagInput
-          tagArr={tagArr}
-          setTagArr={setTagArr}
-          category={category}
-          readOnly={true}
-        />
-        <Thumbnail src={file} alt="" />
         <blockquote>{intro}</blockquote>
         <ReactQuill
           readOnly={true}
@@ -156,7 +155,7 @@ export default function EditKickBoard() {
 
 const Container = styled.div`
   display: flex;
-  padding: 3rem 1rem;
+  padding: 1rem;
 `;
 const WritePage = styled.div`
   width: 50%;
@@ -198,7 +197,7 @@ const ViewPage = styled.div`
     background: #fafafa;
     border-left: 3px solid #0c0c42;
     margin: 1rem 0;
-    min-height: 4.5rem;
+    min-height: 5rem;
     line-height: 1.5;
   }
 
