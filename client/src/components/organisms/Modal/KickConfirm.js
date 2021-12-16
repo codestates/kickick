@@ -37,7 +37,7 @@ export default function KickConfirm() {
       .then(() => {
         dispatch(modalOffAction());
         dispatch(isPointAction(isPoint - modalInfo.cost));
-        navigate(`/detailkick/${modalInfo.post_id}/${modalInfo.kick.kick_id}`);
+        navigate(`/detailkick/${modalInfo.kick.kick_id}`);
       })
       .catch((err) => {
         setErrMsg(err.response.data.message);

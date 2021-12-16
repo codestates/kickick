@@ -1,5 +1,5 @@
 export const GET_POST_INFO = "GET_POST_INFO";
-export const GET_KICK_INFO = "GET_KICK_INFO";
+export const GET_MAIN_INFO = "GET_MAIN_INFO";
 
 export const getPostInfoAction = (data) => {
   return {
@@ -9,7 +9,7 @@ export const getPostInfoAction = (data) => {
 };
 export const getKickInfoAction = (data) => {
   return {
-    type: GET_KICK_INFO,
-    payload: { kick_content: data },
+    type: GET_MAIN_INFO,
+    payload: { main_content: data },
   };
 };

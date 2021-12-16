@@ -96,7 +96,7 @@ export default function EditBoard({ themeCode, list }) {
 }
 const Container = styled.div`
   display: flex;
-  padding: 3rem 1rem;
+  padding: 1rem;
 `;
 
 const WriteBox = styled.div`
