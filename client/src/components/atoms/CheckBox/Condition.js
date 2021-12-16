@@ -50,11 +50,13 @@ export default function Condition({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items:center;
-  background-color: ${({ isChecked }) => (isChecked ? "#fafafa" : "default")};
+  align-items: center;
+  color: ${({ theme }) => theme.color.font};
+  background-color: ${({ isChecked, theme }) =>
+    isChecked ? theme.color.conditionHover : "default"};
 
   :hover {
-    background-color: #fafafa;
+    background-color: ${({ theme }) => theme.color.conditionHover};
   }
 `;
 
@@ -63,7 +65,8 @@ const InputContainer = styled.div`
   justify-content: space-between;
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
-  border-top: ${({ height }) => `${height / 30}rem solid #E6E6E6`};
+  border-top: ${({ height, theme }) =>
+    `${height / 25}rem solid ${theme.color.border}`};
   font-size: ${({ height }) => `${height / 3}rem`};
 
   input[type="checkbox"] {
@@ -93,6 +96,6 @@ const Description = styled.div`
   margin-bottom: ${({ height }) => `${height / 3}rem`};
 
   :hover {
-    background-color: #fafafa;
+    background-color: ${({ theme }) => theme.color.conditionHover};
   }
 `;

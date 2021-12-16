@@ -90,9 +90,9 @@ const Container = styled.div`
       : isChange === true && !isValidation
       ? //한번이라도 입력한 후, 벨리데이션을 통과함.
         "blue"
-      : theme.color.font};
+      : "#222222"};
   border-radius: ${({ height }) => `${height * 0.08}rem`};
-  background-color: ${({ theme }) => theme.color.back};
+  background-color: #ffffff;
   overflow: hidden;
 `;
 

@@ -21,6 +21,7 @@ export default function SignupInput({
 }) {
   const [inputValue, setInputValue] = useState("");
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [isFocus, setFocus] = useState(false);
 
   const contextHandler = (e) => {
     setIsChange(true);
@@ -60,10 +61,13 @@ export default function SignupInput({
         isChange={isChange}
         validation={validation}
         inputValue={inputValue}
+        isFocus={isFocus}
       >
         <Input
           onChange={contextHandler}
           onKeyPress={(e) => enterHanlder(e, moveNextInput)}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
           type={type}
           value={inputValue}
           height={height}
@@ -74,6 +78,8 @@ export default function SignupInput({
           onClick={() => duplicate(part, inputValue)}
           part={part}
           height={height}
+          vaildMessage={validation(inputValue).message}
+          isDuplicate={isDuplicate}
         >
           중복체크
         </Duplication>
@@ -105,15 +111,15 @@ const Container = styled.div`
   height: ${({ height }) => `${height}rem`};
   margin: 0.5rem 0 0.2rem 0;
   padding: ${({ height }) => `${height * 0.08}rem`};
-  border: 0.12rem solid;
-  border-color: ${({ isChange, validation, inputValue, theme }) =>
-    isChange && validation(inputValue).isValid
-      ? "blue"
-      : isChange && !validation(inputValue).isValid
-      ? "red"
-      : theme.color.font};
+  border: 0.15rem solid;
+  border-color: ${({ isChange, validation, inputValue, isFocus, theme }) =>
+    isChange && validation(inputValue).isValid && isFocus
+      ? "#44AA00"
+      : isChange && !validation(inputValue).isValid && isFocus
+      ? "#FF5655"
+      : theme.color.border};
   border-radius: ${({ height }) => `${height * 0.04}rem`};
-  background-color: ${({ theme }) => theme.color.back};
+  background-color: ${({ theme }) => theme.color.modalBack};
   overflow: hidden;
 `;
 
@@ -123,30 +129,38 @@ const Input = styled.input`
   width: inherit;
   font-size: ${({ height }) => `${height * 0.6}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  color: ${({ theme }) => theme.color.font};
+  background-color: ${({ theme }) => theme.color.modalBack};
 
   ::placeholder {
     opacity: 0.7;
+    color: ${({ theme }) => theme.color.placeholderGray};
   }
 `;
 
 const Warning = styled.div`
   padding-left: ${({ height }) => `${height / 15}rem`};
   visibility: ${({ isChange, validation, inputValue, isDuplicate, part }) =>
-    !isChange || (validation(inputValue).isValid && (isDuplicate || part === "password"))
+    !isChange ||
+    (validation(inputValue).isValid && (isDuplicate || part === "password"))
       ? "hidden"
       : "visible"};
   font-family: ${({ theme }) => theme.fontFamily.jua};
-  color: red;
+  color: #ff5655;
 `;
 
 
 const Duplication = styled.button`
   position: absolute;
   right: 0;
-  bottom: ${({ height }) => `${height / 4}rem`};
-  display: ${({ part }) => (part !== "password" ? "default" : "none")};
+  bottom: ${({ height }) => `${height / 4.5}rem`};
+  display: ${({ part, vaildMessage, isDuplicate }) =>
+    part !== "password" && vaildMessage === "pass" && !isDuplicate
+      ? "default"
+      : "none"};
   width: ${({ height }) => `${height * 1.5}rem`};
   font-size: ${({ height }) => `${height / 3}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  color: ${({ theme }) => theme.color.font};
   cursor: pointer;
 `;

@@ -54,6 +54,7 @@ const common = {
 
 export const light = {
   ...common,
+  type: "light",
   color: {
     back: "#ffffff",
     navBack: "#ffffff",
@@ -86,19 +87,28 @@ export const light = {
     tabBack: "white",
     tabHover: "#eee",
     mypageSvg: "#555",
+    red: "#FF5655",
+    conditionHover: "#fafafa",
+    footerBack: "#629d4b",
+    footerFont: "#0c0c42",
   },
 };
 
 export const dark = {
   ...common,
+  type: "dark",
   color: {
     back: "#1E1F21",
+    red: "#FF5655",
+    main: "#0c0c42",
     navBack: "#292A2D",
-    alarm: "#ffffff",
+    alarm: "#444444",
     tag: "#f90716",
     font: "#ffffff",
+    navBtn: "#333333",
     subfont: "#959191",
     gradient: "linear-gradient(to bottom, #757575 25%, #2c2d30 100%)",
+    placeholderGray: "white",
     shadow: "#757575",
     border: "#757575",
     basicBtn: "gray",
@@ -118,5 +128,8 @@ export const dark = {
     tabBack: "gray",
     tabHover: "#333638",
     mypageSvg: "white",
+    conditionHover: "#444444",
+    footerBack: "#C94A3A",
+    footerFont: "white",
   },
 };

@@ -54,4 +54,5 @@ const InputTitle = styled.div`
   margin-top: ${({ height }) => `${height / 5}rem`};
   font-size: ${({ height }) => `${height / 2}rem`};
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
+  color: ${({ theme }) => theme.color.font};
 `;
