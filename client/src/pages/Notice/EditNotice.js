@@ -10,7 +10,8 @@ import {
   IntroTextarea,
   DragDrop,
 } from "../../components";
-
+import { createNotices } from "../../apis/notices";
+import { uploadSingleImage } from "../../apis/upload";
 import {
   getCategoryAction,
   getPostNameAction,
@@ -19,13 +20,15 @@ import {
   resetPostAddAction,
 } from "../../store/actions/postadd";
 
+import {
+  noticeSocketAction,
+  eventSocketAction,
+} from "../../store/actions/socket";
+
 import introductionicon from "../../assets/images/icon/introductionicon.png";
 import contenticon from "../../assets/images/icon/contenticon.png";
 import titileicon from "../../assets/images/icon/titleicon.png";
 import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
-
-import { createNotices } from "../../apis/notices";
-import { uploadSingleImage } from "../../apis/upload";
 
 export default function EditNotice() {
   const { category } = useParams();
@@ -61,6 +64,20 @@ export default function EditNotice() {
           thumbnail: location,
           content: postAdd.kick_content,
         })
+          .then(() =>
+            dispatch(
+              category === "이벤트"
+                ? eventSocketAction(true)
+                : noticeSocketAction(true)
+            )
+          )
+          .then(() =>
+            dispatch(
+              category === "이벤트"
+                ? eventSocketAction(false)
+                : noticeSocketAction(false)
+            )
+          )
           .then(() => navigate(`/notice/${category}`))
           .catch((err) => console.log(err));
       });

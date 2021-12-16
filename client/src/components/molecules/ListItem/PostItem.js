@@ -51,7 +51,7 @@ export function Freepost({ data }) {
     <Container>
       <div>
         {data.tags.length === 1
-          ? data.tags.map((tag) => <span># {tag}</span>)
+          ? "-"
           : data.tags
               .filter((el) => el !== category)
               .map((tag) => <span> # {tag}</span>)}
@@ -72,11 +72,15 @@ export function Freepost({ data }) {
 }
 
 export function MyPageMyPost({ data }) {
+  console.log(data);
   return (
     <Container>
       <div>
-        <span>#어질어질</span>
-        <span>#어질어질</span>
+        {data.tags.length === 1
+          ? "-"
+          : data.tags
+              .filter((el, idx) => idx !== 0)
+              .map((tag) => <span> # {tag}</span>)}
       </div>
       <div>
         <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
