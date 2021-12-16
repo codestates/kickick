@@ -44,13 +44,9 @@ export default function Nav({ socketClient }) {
     if (isLogin && (socketChange.notice || socketChange.event)) {
       socketClient.emit("broadcast", {});
     }
-<<<<<<< HEAD
     return () => {
       socketClient.disconnect();
     };
-=======
-    return () => { socketClient.disconnect() };
->>>>>>> cc0c806615a9aa2583da0d6eff423d679f28b38c
   }, [socketChange, isLogin]);
 
   return (
@@ -69,16 +65,6 @@ export default function Nav({ socketClient }) {
           />
           <BtnChamber />
         </Separation>
-<<<<<<< HEAD
-        <div
-          onClick={() => {
-            dispatch(noticeSocketAction(true));
-          }}
-        >
-          asdasd
-        </div>
-=======
->>>>>>> cc0c806615a9aa2583da0d6eff423d679f28b38c
         <Separation>
           <ThemeBtn
             src={themeMode[1] === "light" ? themeImg[0] : themeImg[1]}
@@ -116,7 +102,7 @@ export default function Nav({ socketClient }) {
 
 const Point = styled.div`
   margin: 0.2rem;
-  color:${({ theme }) => theme.color.font};
+  color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
 `;
 
