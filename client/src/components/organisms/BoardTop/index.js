@@ -9,6 +9,8 @@ import life from "../../../assets/images/planet/life.png";
 import economy from "../../../assets/images/planet/economy.png";
 import trip from "../../../assets/images/planet/trip.png";
 import art from "../../../assets/images/planet/art.png";
+import sun from "../../../assets/images/sun.png";
+import moon from "../../../assets/images/moon.png";
 import cloud from "../../../assets/images/cloud.png";
 import star from "../../../assets/images/stars.png";
 import spacebackground from "../../../assets/images/space_background.jpg";
@@ -20,8 +22,8 @@ const list = [
   { label: "economy", src: economy, category: "경제", color: "#DE5C8A" },
   { label: "travel", src: trip, category: "여행", color: "#D04E3E" },
   { label: "art", src: art, category: "예술", color: "#EED548" },
-  { label: "notice", src: null, category: "소식", color: "#EED548" },
-  { label: "event", src: null, category: "이벤트", color: "#EED548" },
+  { label: "notice", src: sun, category: "소식", color: "#EED548" },
+  { label: "event", src: moon, category: "이벤트", color: "#EED548" },
   // { label: "", src: "", category: "default", color: "#000000" },
 ];
 
