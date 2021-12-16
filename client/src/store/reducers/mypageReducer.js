@@ -21,14 +21,8 @@ export default function mypageReducer(state = initialState, action) {
     case GET_FAVORITES:
       return { ...state, ...action.payload };
     case GET_MY_POST:
-      action.payload.mypost.data.forEach((el) => {
-        el.created_at = logDateConverter(el.created_at);
-      });
       return { ...state, ...action.payload };
     case GET_MY_COMMENT:
-      action.payload.mycomment.data.forEach((el) => {
-        el.created_at = logDateConverter(el.created_at);
-      });
       return { ...state, ...action.payload };
     case GET_PURCHASED_KICK:
       return { ...state, ...action.payload };

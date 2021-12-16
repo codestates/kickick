@@ -11,7 +11,6 @@ import {
   PostList,
   CardBox,
   Calendar,
-  Pagination,
 } from "../../components";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -64,10 +63,6 @@ export default function MyPage() {
   const dispatch = useDispatch();
   const postsearch = useSelector((state) => state.postsearch);
   const { isLogin } = useSelector((state) => state.login);
-
-  useEffect(() => {
-    dispatch(selectPageAction(1));
-  }, [category, dispatch]);
 
   useEffect(() => {
     getFavorites(null, 10, postsearch.selectPage)
@@ -177,14 +172,7 @@ export function MyComment() {
 }
 
 export function PurchasedKick() {
-  const { count } = useSelector((state) => state.mypage.kick);
-
-  return (
-    <>
-      <CardBox type="mykick" />
-      <Pagination count={count} />
-    </>
-  );
+  return <CardBox type="mykick" />;
 }
 
 export function KickmoneyLog() {

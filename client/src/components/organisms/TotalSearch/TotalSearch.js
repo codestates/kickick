@@ -50,7 +50,6 @@ export default function TotalSearch() {
   };
   const handleClick = (idx, label) => {
     dispatch(delTagAction(idx));
-    dispatch(resetPaginationAction());
 
     if ("제목" === label) {
       dispatch(titleSearchAction());

@@ -15,7 +15,7 @@ export default function InfiniteScroll({ callback }) {
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: "-100px",
+      rootMargin: "-300px",
       threshold: 0.1,
     };
 
@@ -35,5 +35,5 @@ export default function InfiniteScroll({ callback }) {
 const Container = styled.div`
   position: relative;
 
-  top: -20vh;
+  top: -50vh;
 `;

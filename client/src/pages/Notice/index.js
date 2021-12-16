@@ -67,7 +67,7 @@ export function News() {
 
   useEffect(() => {
     getNoticesList({
-      type: "notices",
+      type: "notice",
       limit: 10,
       page_num: postsearch.selectPage,
     }).then((data) => {
@@ -138,8 +138,8 @@ export function NoticeDetail({ themeCode }) {
         <Thumbnail src={postInfo.thumbnail} alt="" />
         <h2>{postInfo.notice_name}</h2>
         <div className="subinfo">
-          <span>{postInfo.user.username}</span>
-          <span>{postInfo.created_at}</span>
+          <span>운영자 석</span>
+          <span>6달전</span>
         </div>
       </NoticeDetailInfo>
       <NoticeDetailContent>

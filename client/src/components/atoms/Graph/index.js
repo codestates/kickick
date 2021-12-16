@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { useDispatch } from "react-redux";
+
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
-
 import { createLikes } from "../../../apis/likes";
 
-import { targetNameAction } from "../../../store/actions/socket";
-
-export default function Vote({ likes, is_liked, postId, username }) {
-  const dispatch = useDispatch();
+export default function Vote({ likes, is_liked, postId }) {
   const [alien, setAlien] = useState(likes.true);
   const [astronaut, setAstronaut] = useState(likes.false);
   const [type, setType] = useState(is_liked);
@@ -19,28 +15,16 @@ export default function Vote({ likes, is_liked, postId, username }) {
     if (item === "false" && type === false) return;
 
     if (item === "true") {
-      if (is_liked !== null) {
-        setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
-        setAlien(alien + 1);
-      } else {
-        setAlien(alien + 1);
-      }
-
+      setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
+      setAlien(alien + 1);
       setType(true);
     } else {
-      if (is_liked !== null) {
-        setAstronaut(astronaut + 1);
-        setAlien(alien === 0 ? 0 : alien - 1);
-      } else {
-        setAstronaut(astronaut + 1);
-      }
+      setAstronaut(astronaut + 1);
+      setAlien(alien === 0 ? 0 : alien - 1);
       setType(false);
     }
 
-    createLikes(postId, item)
-      .then(() => dispatch(targetNameAction(username)))
-      .then(() => dispatch(targetNameAction("")))
-      .catch((err) => console.log(err.response));
+    createLikes(postId, item).catch((err) => console.log(err.response));
   };
   return (
     <Container type={type}>
