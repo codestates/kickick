@@ -81,19 +81,18 @@ module.exports = async (req, res) => {
       // id 명시적으로
       data.like_id = data.id;
       delete data.id;
-    }
-
-    // like_count 업데이트
-    await posts.update(
-      {
-        like_count: sequelize.literal(`like_count + 1`),
-      },
-      {
-        where: {
-          id: post_id,
+      // like_count 업데이트
+      await posts.update(
+        {
+          like_count: sequelize.literal(`like_count + 1`),
         },
-      }
-    );
+        {
+          where: {
+            id: post_id,
+          },
+        }
+      );
+    }
 
     // post_id 로 like_info 가져와서 투표수 총합 확인
     let like_info = await likes.findAndCountAll({

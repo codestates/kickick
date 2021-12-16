@@ -50,6 +50,15 @@ module.exports = async (req, res) => {
     let { username } = decoded;
 
     try {
+      // username으로 user_id 구함
+      let user_info = await users.findOne({
+        attributes: [["id", "user_id"]],
+        where: {
+          username: username,
+        },
+        raw: true,
+      });
+      const user_id = user_info.user_id;
       const post_info = await posts.findAndCountAll({
         attributes: [
           ["id", "post_id"],
@@ -66,6 +75,9 @@ module.exports = async (req, res) => {
         limit: limit,
         distinct: true,
         order: [["id", "DESC"]],
+        where: {
+          user_id: user_id,
+        },
         include: [
           {
             model: users,
@@ -102,6 +114,9 @@ module.exports = async (req, res) => {
       console.log(err);
       return res.status(500).json({ data: err, message: "데이터베이스 에러" });
     }
+    const alien = [];
+    const astronaut = [];
+    const common = [];
 
     // 각 게시물에 접근
     data.forEach((post) => {
@@ -125,7 +140,21 @@ module.exports = async (req, res) => {
 
       // comments 카운트
       post.comments = post.comments.length;
+
+      // 우주인 글 외계인 글 분리
+      if (likes_obj.true + likes_obj.false < 5) {
+        common.push(post);
+      } else {
+        if (likes_obj.true > likes_obj.false) {
+          alien.push(post);
+        } else if (likes_obj.true < likes_obj.false) {
+          astronaut.push(post);
+        } else {
+          common.push(post);
+        }
+      }
     });
+    data = { alien, astronaut, common };
 
     return res.status(200).json({ count: count, data: data, message: "ok" });
   }
