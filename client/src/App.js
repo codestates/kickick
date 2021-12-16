@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import { io } from "socket.io-client";
 import { Nav, Footer, PageUp, CommonModal } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
-import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board/Board";
@@ -41,7 +40,7 @@ export default function App() {
   const socketClient = io(`${process.env.REACT_APP_API_URL}`);
   const isLogin = useSelector((state) => state.login.isLogin);
   const todayLogin = useSelector((state) => state.login.todayLogin);
-  const preThemeMode = useSelector((state) => state.preThemeMode);
+  const preThemeMode = useSelector((state) => state.persist.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];

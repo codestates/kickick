@@ -18,7 +18,6 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
   //     new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
   //   );
   // };
-
   return (
     <Container width={width}>
       <InputTitle height={height}>생년월일</InputTitle>

@@ -28,6 +28,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   postInfo: postInfoReducer,
+  preThemeMode: preThemeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -42,7 +43,6 @@ export const store = configureStore({
     tag: tagReducer,
     login: loginReducer,
     themeMode: themeReducer,
-    preThemeMode: preThemeReducer,
     mypage: mypageReducer,
     socket: socketReducer,
     alarmList: alarmListReducer,

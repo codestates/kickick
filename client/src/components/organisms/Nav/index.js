@@ -15,7 +15,7 @@ export default function Nav({ socketClient }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
-  const preThemeMode = useSelector((state) => state.preThemeMode);
+  const preThemeMode = useSelector((state) => state.persist.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const userPoint = useSelector((state) => state.login.isPoint);
   const socketChange = useSelector((state) => state.socket);
