@@ -179,7 +179,7 @@ const AuthContainer = styled.div`
   align-items: center;
   border-top: 2px dashed #d8d8d8;
 
-  padding: 1rem;
+  padding: 1rem 2rem;
   gap: 0.5rem;
   @media ${({ theme }) => theme.device.notebookS} {
     padding-top: 2rem;

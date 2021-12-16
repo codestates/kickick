@@ -44,15 +44,7 @@ export default function PostCommentItem({ item, handleDelComment }) {
           </Del>
         ) : null}
       </UserInfoContainer>
-      <p
-        className={
-          postInfo.user.username === item.user.username
-            ? "comment mycomment"
-            : "comment"
-        }
-      >
-        {item.content}
-      </p>
+      <p className="comment">{item.content}</p>
       {modal ? (
         <Modal
           handleModal={handleModalOff}
@@ -79,11 +71,6 @@ const Container = styled.div`
     line-height: 1.2;
   }
 
-  .mycomment {
-    /* font-weight: bold; */
-    /* color: ${({ theme }) => theme.color.mycomment}; */
-  }
-
   & + & {
     border-top: 1px solid #eeeeee;
   }
@@ -107,10 +94,10 @@ const UserInfoContainer = styled.div`
   }
 
   .writer {
+    color: skyblue;
     font-weight: bold;
     font-size: 0.8rem;
     margin-left: 0.5rem;
-    color: ${({ theme }) => theme.color.mycomment};
   }
 `;
 

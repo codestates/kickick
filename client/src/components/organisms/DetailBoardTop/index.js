@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { Profile, Thumbnail, Vote } from "../../../components";
+import { IconBox, Profile, Thumbnail, Vote } from "../../../components";
 
 export default function DetailBoardTop({ postInfo, type, themeCode }) {
   return (
@@ -15,17 +15,10 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
             <Profile src={postInfo.user.profile} type="post" />
             {postInfo.user.username}
           </UserContainer>
-          <CountContainer>
-            <span>
-              조회 수 <strong>{postInfo.view_count}</strong>
-            </span>
-            <span>
-              댓글 <strong>{postInfo.view_count}</strong>
-            </span>
-            <span>
-              좋아요 <strong>{postInfo.view_count}</strong>
-            </span>
-          </CountContainer>
+          <UserContainer>
+            <IconBox label="count" />
+            {postInfo.view_count}
+          </UserContainer>
         </UserAndCountContainer>
         <TagContainer>
           {postInfo.tags.map((tag) => (
@@ -59,7 +52,6 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
           likes={postInfo.likes}
           is_liked={postInfo.is_liked}
           postId={postInfo.post_id}
-          username={postInfo.user.username}
         />
       )}
     </Container>
@@ -69,9 +61,6 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
 const Container = styled.div``;
 
 const TopContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
   padding-bottom: 1rem;
 `;
 
@@ -83,6 +72,7 @@ const Title = styled.div`
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
+  margin-top: 1rem;
 `;
 
 const UserContainer = styled.div`
@@ -97,18 +87,7 @@ const UserContainer = styled.div`
     margin-right: 0.5rem;
   }
 `;
-const CountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  font-size: 0.9rem;
-  color: #aaa;
-  gap: 0.5rem;
-  strong {
-    color: ${({ theme }) => theme.color.font};
-    margin: 0 0.5rem;
-  }
-`;
+
 const TagContainer = styled.div`
   padding: 0.5rem;
 
