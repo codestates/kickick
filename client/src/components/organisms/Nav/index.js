@@ -24,8 +24,7 @@ export default function Nav({ socketClient }) {
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const path = window.location.pathname.split("/")[1];
-  const yIndex = window.scrollY;
+
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));
@@ -63,7 +62,7 @@ export default function Nav({ socketClient }) {
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Frame scroll={scroll} isHover={isHover} path={path} yIndex={yIndex}>
+      <Frame scroll={scroll} isHover={isHover}>
         <Separation>
           <NavBtn
             context="KICK"
@@ -168,9 +167,7 @@ const Frame = styled(VerticalAlign)`
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
-  background-color: ${({ path, theme, yIndex }) =>
-    path === "board" && yIndex === 0 ? theme.color.navBack : theme.color.back};
-  transition: top 0.5s;
+  background-color: ${({ theme }) => theme.color.back};
 `;
 
 const Separation = styled(VerticalAlign)`

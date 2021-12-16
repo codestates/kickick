@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
   // 토큰은 유효, 토큰으로 유저정보 수정
   const { username, type } = decoded;
   const change = Number(req.body.kick_money);
+  console.log(decoded);
 
   try {
     // type이 "guest"면 인증메일 보내야 함
@@ -39,43 +40,6 @@ module.exports = async (req, res) => {
           message: "email, username, password 중 누락된 항목이 있습니다.",
         });
       }
-      const CLIENT_URL = process.env.CLIENT_URL;
-      const redirect = `${CLIENT_URL}/mailauth/${req.body.username}`;
-
-      let email_template;
-      ejs.renderFile(
-        __dirname + "/email_template.ejs",
-        { redirect },
-        (err, data) => {
-          if (err) {
-            console.log(err);
-          }
-          email_template = data;
-        }
-      );
-
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.NODEMAILER_EMAIL,
-          pass: process.env.NODEMAILER_PASSWORD,
-        },
-      });
-
-      const mailOptions = {
-        from: `"KICKICK 관리자" <${process.env.NODEMAILER_EMAIL}>`,
-        to: req.body.email,
-        subject: "KICKICK 회원가입 인증 메일입니다.",
-        html: email_template,
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-      });
     }
 
     // 유저 정보 업데이트 전에 킥머니 변경이 이루어지는지 확인
@@ -128,6 +92,7 @@ module.exports = async (req, res) => {
             .status(500)
             .json({ data: null, message: "데이터베이스 에러" });
         }
+        console.log(hash);
 
         await users.update(
           {
@@ -200,17 +165,6 @@ module.exports = async (req, res) => {
         ...update_obj,
         type: "email auth required",
       };
-      // 유저 정보 수정
-      await users.update(
-        {
-          ...update_obj,
-        },
-        {
-          where: {
-            username: username,
-          },
-        }
-      );
     }
   } catch (err) {
     console.log(err);

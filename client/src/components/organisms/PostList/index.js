@@ -70,7 +70,11 @@ export default function PostList({ type }) {
   const navigate = useNavigate();
 
   const handleMovePage = () => {
-    if (!isLogin || isLogin.type === "email auth required") {
+    if (
+      !isLogin ||
+      isLogin.type === "email auth required" ||
+      isLogin.type === "guest"
+    ) {
       setModal(true);
       disableScroll.on();
     } else {
