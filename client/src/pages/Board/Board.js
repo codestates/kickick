@@ -69,7 +69,7 @@ export default function Board({ themeCode, list }) {
   if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return <BoardSkeleton />;
   return (
-    <>
+    <BigContainer>
       <BoardTop themeCode={themeCode} />
       <Container>
         <BoardContainer>
@@ -77,9 +77,11 @@ export default function Board({ themeCode, list }) {
           <PostList type="freepost" />
         </BoardContainer>
       </Container>
-    </>
+    </BigContainer>
   );
 }
+
+const BigContainer = styled.div``;
 const Container = styled.div`
   display: flex;
   margin: 0 auto;

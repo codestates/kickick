@@ -14,7 +14,8 @@ const Container = styled.div`
   align-items: center;
   height: 12rem;
   justify-content: center;
-  background: linear-gradient(to top, #ffffff, #6dd5fa, #2980b9);
+  background: ${({ theme }) => theme.color.boardTopBack}linear-gradient
+    (to top, #ffffff, #6dd5fa, #2980b9);
   div {
     height: 4.8rem;
     width: 12rem;

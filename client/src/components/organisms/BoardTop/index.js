@@ -3,19 +3,14 @@ import styled from "styled-components";
 
 import { useParams } from "react-router";
 
-import star2 from "../../../assets/images/icon/thumbnailicon.png";
-import star3 from "../../../assets/images/icon/kickmoney.png";
-import star4 from "../../../assets/images/icon/contenticon.png";
-import cloud2 from "../../../assets/images/cloud/cloud2.png";
-import cloud3 from "../../../assets/images/cloud/cloud3.png";
-import cloud4 from "../../../assets/images/cloud/cloud4.png";
-import cloud10 from "../../../assets/images/cloud/cloud10.png";
 import study from "../../../assets/images/planet/studyplanet.png";
 import leisure from "../../../assets/images/planet/leisure.png";
 import life from "../../../assets/images/planet/life.png";
 import economy from "../../../assets/images/planet/economy.png";
 import trip from "../../../assets/images/planet/trip.png";
 import art from "../../../assets/images/planet/art.png";
+import cloud from "../../../assets/images/cloud.png";
+import star from "../../../assets/images/stars.png";
 import spacebackground from "../../../assets/images/space_background.jpg";
 
 const list = [
@@ -39,23 +34,11 @@ export default function BoardTop({ themeCode }) {
     setSelect(list.findIndex((el) => category === el.category));
   }, [category]);
   return (
-    <Container image={spacebackground} color={color}>
+    <Container image={spacebackground} color={color} cloud={cloud}>
       {themeCode === "light" ? (
-        <>
-          <img className="cloud" src={cloud10} alt="" />
-          <img className="cloud" src={cloud2} alt="" />
-          <img className="cloud" src={cloud3} alt="" />
-          <img className="cloud" src={cloud4} alt="" />
-          <img className="cloud" src={cloud10} alt="" />
-        </>
+        <img className="cloud" src={cloud} alt="" />
       ) : (
-        <>
-          <img className="star" src={star4} alt="" />
-          <img className="star" src={star2} alt="" />
-          <img className="star" src={star3} alt="" />
-          <img className="star" src={star4} alt="" />
-          <img className="star" src={star4} alt="" />
-        </>
+        <img className="star" src={star} alt="" />
       )}
       <Lists>
         {category &&
@@ -74,15 +57,6 @@ export default function BoardTop({ themeCode }) {
       </Lists>
     </Container>
   );
-  // <Container>
-  //   <img className="cloud" src={cloud10} alt="" />
-  //   <img className="cloud" src={cloud2} alt="" />
-  //   <img className="cloud" src={cloud3} alt="" />
-  //   <img className="cloud" src={cloud4} alt="" />
-  //   <img className="cloud" src={cloud10} alt="" />
-  //   <img className="icon" src={title.image} alt="" />
-  //   <Category c={title.color}>{title.label}</Category>
-  // </Container>
 }
 
 const Container = styled.div`
@@ -90,45 +64,19 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   height: 12rem;
+
   justify-content: center;
   gap: 1rem;
-  /* margin: 2rem 0; */
-  /* background-image: url(${({ image }) => image}); */
-  /* object-fit: cover; */
   font-size: 4rem;
-
   background: ${({ theme }) => theme.color.boardTopBack} !important;
 
   pointer-events: none !important;
 
-  > :nth-child(1) {
-    left: 5rem;
-    bottom: 1rem;
-  }
-  > :nth-child(2) {
-    left: 27rem;
-    top: 1rem;
-  }
-  > :nth-child(3) {
-    right: 30rem;
-  }
-  > :nth-child(4) {
-    right: 10rem;
-    top: 1rem;
-  }
-  > :nth-child(5) {
-    bottom: 0;
-    z-index: 1;
-  }
-  .star {
+  > img {
     position: absolute;
-    width: 2rem;
-    height: 2rem;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-  }
-  .cloud {
-    position: absolute;
-    height: 4.5rem;
   }
 
   span {

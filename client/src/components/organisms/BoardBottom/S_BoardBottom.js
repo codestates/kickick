@@ -32,15 +32,15 @@ export default function S_BoardBottom() {
 const Container = styled.div`
   span {
     display: inline-block;
-    width: 100%;
-    height: 1.2rem;
+    height: 0.5rem;
+    border-radius: 0.5rem;
     background: linear-gradient(
         to right,
         rgba(255, 255, 255, 0),
         rgba(255, 255, 255, 0.5) 50%,
         rgba(255, 255, 255, 0) 80%
       ),
-      lightgray;
+      gray;
     background-repeat: repeat-y;
     background-size: 500px 100%;
     background-position: 0 0;
@@ -73,19 +73,35 @@ const List = styled.div`
   border-bottom: 1px solid gray;
   > div:nth-of-type(1) {
     flex: 2;
+    span {
+      width: 4rem;
+    }
   }
   > div:nth-of-type(2) {
     flex: 4;
     padding-left: 4rem;
+    text-align: start;
+    span {
+      width: 10rem;
+    }
   }
   > div:nth-of-type(3) {
     flex: 2;
+    span {
+      width: 5rem;
+    }
   }
   > div:nth-of-type(4) {
     flex: 1.25;
+    span {
+      width: 3rem;
+    }
   }
   > div:nth-of-type(5) {
     flex: 0.75;
+    span {
+      width: 3rem;
+    }
   }
 `;
 
@@ -109,7 +125,7 @@ const IconContainer = styled.div`
       rgba(255, 255, 255, 0.5) 50%,
       rgba(255, 255, 255, 0) 80%
     ),
-    lightgray;
+    gray;
   background-repeat: repeat-y;
   background-size: 500px 100%;
   background-position: 0 0;
@@ -132,7 +148,7 @@ const Common = styled.div`
       rgba(255, 255, 255, 0.5) 50%,
       rgba(255, 255, 255, 0) 80%
     ),
-    lightgray;
+    gray;
   background-repeat: repeat-y;
   background-size: 500px 100%;
   background-position: 0 0;
