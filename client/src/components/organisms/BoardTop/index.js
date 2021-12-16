@@ -11,7 +11,7 @@ import trip from "../../../assets/images/planet/trip.png";
 import art from "../../../assets/images/planet/art.png";
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
-import cloud from "../../../assets/images/cloud.png";
+import cloud from "../../../assets/images/colorCloud.png";
 import star from "../../../assets/images/stars.png";
 import spacebackground from "../../../assets/images/space_background.jpg";
 

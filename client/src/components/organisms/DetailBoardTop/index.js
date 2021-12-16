@@ -6,7 +6,6 @@ import "react-quill/dist/quill.bubble.css";
 import { Profile, Thumbnail, Vote } from "../../../components";
 
 export default function DetailBoardTop({ postInfo, type, themeCode }) {
-  console.log(postInfo);
   return (
     <Container>
       <TopContainer>
