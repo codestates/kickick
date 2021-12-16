@@ -10,7 +10,7 @@ import { getKicksInfo } from "../../apis/kicks";
 
 import {
   getPostInfoAction,
-  getKickInfoAction,
+  getMainInfoAction,
 } from "../../store/actions/postinfo";
 
 export default function DetailBoard({ themeCode }) {
@@ -19,11 +19,12 @@ export default function DetailBoard({ themeCode }) {
   const { postInfo } = useSelector((state) => state.persist);
   const [loading, setLoading] = useState(true);
   const [postId, setPostId] = useState();
-
+  console.log(postInfo);
   useEffect(() => {
     getKicksInfo(kick_id)
       .then((data) => {
-        dispatch(getKickInfoAction(data.data.data.content));
+        dispatch(getMainInfoAction(data.data.data.content));
+
         setPostId(data.data.data.post_id);
         getPostsInfo(data.data.data.post_id)
           .then((data) => {
