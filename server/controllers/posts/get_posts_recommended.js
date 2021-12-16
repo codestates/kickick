@@ -106,6 +106,7 @@ module.exports = async (req, res) => {
                 "cost",
                 "view_count",
                 "favorite_count",
+                "like_count",
                 "created_at",
               ],
               where: {

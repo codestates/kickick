@@ -58,6 +58,8 @@ module.exports = async (req, res) => {
           "content",
           "cost",
           "view_count",
+          "favorite_count",
+          "like_count",
           "created_at",
         ],
         offset: limit * (page_num - 1),
@@ -153,6 +155,7 @@ module.exports = async (req, res) => {
   }
 
   // 포함검색 구현 query 상황에 따라 where_obj 분기
+
   let where_obj = {};
   if (req.query.category) where_obj.category = req.query.category;
   if (req.query.post_name) {
@@ -181,8 +184,14 @@ module.exports = async (req, res) => {
       [Op.gte]: Number(req.query.favorite_count),
     };
   }
+  // like_count 검색 추가
+  if (req.query.like_count) {
+    where_obj.like_count = {
+      [Op.gte]: Number(req.query.like_count),
+    };
+  }
 
-  // 글쓴이 태그 검색 추가 필요
+  // 글쓴이 태그 검색 추가
   let users_where_obj = {};
   if (req.query.username) {
     users_where_obj.username = req.query.username;
@@ -205,6 +214,7 @@ module.exports = async (req, res) => {
         "cost",
         "view_count",
         "favorite_count",
+        "like_count",
         "created_at",
       ],
       distinct: true,

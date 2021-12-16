@@ -1,17 +1,4 @@
-const {
-  users,
-  posts,
-  kicks,
-  comments,
-  likes,
-  favorites,
-  users_kicks,
-  posts_tags,
-  tags,
-  alarms,
-  logs,
-  notices,
-} = require("../../models");
+const { users, posts, kicks, users_kicks, logs } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
@@ -42,8 +29,6 @@ module.exports = async (req, res) => {
 
   const { username } = decoded;
   const kick_id = req.body.kick_id;
-  console.log(typeof kick_id);
-  console.log(kick_id);
   let data;
 
   try {
@@ -76,7 +61,6 @@ module.exports = async (req, res) => {
       },
     });
     data = kick_info[0].get({ plain: true });
-    console.log(data);
     delete data.id;
     delete data.kickId;
     delete data.userId;

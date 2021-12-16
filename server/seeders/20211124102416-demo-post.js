@@ -9,6 +9,7 @@ module.exports = {
         post_name: "테스트용 게시글",
         content: "테스트 게시글 내용",
         favorite_count: 1,
+        like_count: 1,
         created_at: new Date(),
         updated_at: new Date(),
       },
