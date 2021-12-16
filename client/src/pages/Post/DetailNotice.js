@@ -10,7 +10,7 @@ import { Thumbnail } from "../../components";
 import { getNoticesInfo } from "../../apis/notices";
 import { getPostInfoAction } from "../../store/actions/postinfo";
 
-export function DetailNotice({ themeCode }) {
+export default function DetailNotice({ themeCode }) {
   const { notice_id } = useParams();
   const dispatch = useDispatch();
   const { postInfo } = useSelector((state) => state.persist);

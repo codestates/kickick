@@ -156,7 +156,7 @@ export default function EditKickBoard() {
 
 const Container = styled.div`
   display: flex;
-  padding: 3rem 1rem;
+  padding: 1rem;
 `;
 const WritePage = styled.div`
   width: 50%;

@@ -20,6 +20,7 @@ import EditBoard from "./pages/Write/EditBoard";
 import MyEditBoard from "./pages/Write/MyEditBoard";
 import EditKickBoard from "./pages/Write/EditKickBoard";
 import EditNotice from "./pages/Write/EditNotice";
+import Write from "./pages/Write";
 import MyPage from "./pages/MyPage";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
@@ -163,7 +164,12 @@ export default function App() {
                 path=":notice_id"
                 element={<DetailNotice themeCode={themeMode[1]} />}
               />
-              <Route path="edit" element={<EditNotice />} />
+            </Route>
+            <Route path="notice/:category/edit" element={<EditNotice />} />
+            <Route path="write" element={<Write />}>
+              <Route path="board" element={<EditBoard />} />
+              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route path="notice" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
           </Routes>

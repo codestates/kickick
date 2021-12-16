@@ -67,6 +67,7 @@ export default function MyEditBoard({ themeCode, list }) {
 
   if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return "";
+
   return (
     <Container>
       <QullContainer>

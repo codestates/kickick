@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 
 import {
   EditQuill,
@@ -9,7 +11,10 @@ import {
   Common,
   IntroTextarea,
   DragDrop,
+  Thumbnail,
+  Profile,
 } from "../../components";
+
 import { createNotices } from "../../apis/notices";
 import { uploadSingleImage } from "../../apis/upload";
 import {
@@ -25,16 +30,13 @@ import {
   eventSocketAction,
 } from "../../store/actions/socket";
 
-import introductionicon from "../../assets/images/icon/introductionicon.png";
-import contenticon from "../../assets/images/icon/contenticon.png";
-import titileicon from "../../assets/images/icon/titleicon.png";
-import thumbnailicon from "../../assets/images/icon/thumbnailicon.png";
-
 export default function EditNotice() {
-  const { category } = useParams();
-  const navigate = useNavigate();
-  const { postAdd } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { category } = useParams();
+  const { postAdd, login } = useSelector((state) => state);
+  const [postname, setPostname] = useState();
+  const [intro, setIntro] = useState();
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
@@ -42,7 +44,12 @@ export default function EditNotice() {
   const handlePostName = (e) => {
     dispatch(getPostNameAction(e.target.value));
   };
-
+  const handleViewPostName = (e) => {
+    setPostname(e.target.value);
+  };
+  const handleViewIntro = (e) => {
+    setIntro(e.target.value);
+  };
   const handleIntro = (e) => {
     dispatch(getContentAction(e.target.value));
   };
@@ -78,7 +85,7 @@ export default function EditNotice() {
                 : noticeSocketAction(false)
             )
           )
-          .then(() => navigate(`/notice/${category}`))
+          .then(() => navigate(-1))
           .catch((err) => console.log(err));
       });
     }
@@ -90,98 +97,138 @@ export default function EditNotice() {
   }, [dispatch, category]);
 
   return (
-    <Wrapper>
-      <h1>공지 작성 </h1>
-      <Container>
-        <WritePage>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={titileicon} alt="" />
-              <h3>제목</h3>
-              <TitleInput type="title" handlePostName={handlePostName} />
-            </HeadlineContainer>
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={thumbnailicon} alt="" />
-              <h3>썸네일</h3>
-            </HeadlineContainer>
-            <DragDrop
-              file={file}
-              setFile={setFile}
-              setThumbnail={setThumbnail}
-            />
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={contenticon} alt="" />
-              <h3>본문</h3>
-            </HeadlineContainer>
-            <EditQuill
-              content={content}
-              setContent={setContent}
-              handleContent={handleContent}
-            />
-          </InfoContainer>
-          <InfoContainer>
-            <HeadlineContainer>
-              <img src={introductionicon} alt="" />
-              <h3>소개</h3>
-            </HeadlineContainer>
-            <IntroTextarea handleTextarea={handleIntro} />
-          </InfoContainer>
-          <BtnContainer>
-            <Common label="등 록" type="bigger" handleClick={handleClick} />
-          </BtnContainer>
-        </WritePage>
-      </Container>
-    </Wrapper>
+    <Container>
+      <WritePage>
+        <InfoContainer>
+          <TitleInput
+            type="title"
+            handleChange={handleViewPostName}
+            handlePostName={handlePostName}
+          />
+        </InfoContainer>
+        <InfoContainer>
+          <h3>썸네일</h3>
+          <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
+        </InfoContainer>
+        <InfoContainer>
+          <h3>본문</h3>
+          <EditQuill
+            content={content}
+            setContent={setContent}
+            handleContent={handleContent}
+          />
+        </InfoContainer>
+        <InfoContainer>
+          <h3>공지 소개글</h3>
+          <IntroTextarea
+            handleViewIntro={handleViewIntro}
+            handleTextarea={handleIntro}
+          />
+        </InfoContainer>
+        <BtnContainer>
+          <Common label="등 록" type="bigger" handleClick={handleClick} />
+        </BtnContainer>
+      </WritePage>
+      <ViewPage>
+        <h1>{postname}</h1>
+        <Thumbnail src={file} alt="" />
+        <ProfileContainer>
+          <Profile type="post" src={login.isLogin.profile} />
+          <span>{login.isLogin.username}</span>
+        </ProfileContainer>
+        <blockquote>{intro}</blockquote>
+        <ReactQuill
+          readOnly={true}
+          theme={"bubble"}
+          value={content}
+          style={{
+            backgroundColor: "#eee",
+            padding: "1rem 0",
+            borderRadius: "0.5rem",
+            height: "40rem",
+          }}
+        />
+      </ViewPage>
+    </Container>
   );
 }
-const Wrapper = styled.div`
-  padding: 3rem 1rem;
 
-  > h1 {
-    font-size: 3rem;
-    color: skyblue;
-    margin: 2rem 0 2rem 4rem;
-  }
-`;
 const Container = styled.div`
   display: flex;
-  width: 64rem;
+  padding: 1rem;
 `;
 const WritePage = styled.div`
+  width: 50%;
+
   display: flex;
   flex-direction: column;
   padding: 0 4rem;
-  gap: 1rem;
-  width: 64rem;
+  gap: 0.5rem;
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    width: 100%;
+  }
+`;
+
+const ViewPage = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4rem;
+  gap: 0.5rem;
+  border-left: 3px dashed #eee;
+
+  > h1 {
+    font-size: 2.8rem;
+    height: 4.5rem;
+    padding: 0.5rem;
+  }
+
+  > img {
+    object-fit: scale-down;
+    height: 20rem;
+    width: 100%;
+  }
+  > blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: gray;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-left: 3px solid #0c0c42;
+    margin: 1rem 0;
+    min-height: 5rem;
+    line-height: 1.5;
+  }
+
+  @media ${({ theme }) => theme.device.notebookS} {
+    display: none;
+  }
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
-  gap: 1rem;
+  margin-top: 2rem;
+  gap: 0.5rem;
 
   h3 {
-    font-size: 1.5rem;
-    color: gray;
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.color.font};
     margin-right: 1rem;
   }
 `;
 
-const HeadlineContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  img {
-    width: 3rem;
-    height: 3rem;
-  }
-`;
 const BtnContainer = styled.div`
   margin-top: 2rem;
   text-align: center;
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  img {
+    margin-right: 1rem;
+  }
 `;
