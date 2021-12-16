@@ -1,4 +1,4 @@
-const { users } = require("../../models");
+const { users, logs } = require("../../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
     data.get({ plain: true });
     await users.update(
       {
-        username: `guest${data.id}`,
+        username: `guest ${data.id}`,
       },
       {
         where: {

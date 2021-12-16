@@ -135,7 +135,6 @@ export default function SignupForm() {
     }
   }
 
-  console.log(isDuplicate);
   return (
     <Container>
       {ArrInfo.map((el, idx) => (
@@ -163,7 +162,7 @@ export default function SignupForm() {
         height={height}
         conditonChecker={conditonChecker}
       />
-      <SubmitContainer>
+      <SubmitContainer width={width}>
         <SubmitBtn onClick={submitHandler}>가입하기</SubmitBtn>
       </SubmitContainer>
     </Container>
@@ -182,17 +181,20 @@ const Container = styled.div`
 const SubmitContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 20rem;
-  height: 3rem;
+  width: ${({ width }) => `${width}rem`};
   margin-top: 1.5rem;
 `;
 
 const SubmitBtn = styled.button`
   height: 2.4rem;
-  padding-top:0.24rem;
+  padding-top: 0.24rem;
   border-radius: 0.3rem;
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
-  color: ${({ theme }) => theme.color.back};
-  background-color: ${({ theme }) => theme.color.main};
+  color: white;
+  background-color: ${({ theme }) => theme.color.navBtn};
+
+  :hover {
+    opacity: 0.9;
+  }
 `;

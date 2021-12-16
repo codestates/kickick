@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +11,12 @@ import {
   PostList,
   CardBox,
   Calendar,
+  Pagination,
 } from "../../components";
 
 import { FaArrowLeft } from "react-icons/fa";
 
-import { getPostsList } from "../../apis/posts";
+import { getPostsList, getClassifiedPost } from "../../apis/posts";
 import { getComments } from "../../apis/comments";
 import { getFavorites } from "../../apis/favorites";
 import { getLogs } from "../../apis/logs";
@@ -65,6 +66,10 @@ export default function MyPage() {
   const { isLogin } = useSelector((state) => state.login);
 
   useEffect(() => {
+    dispatch(selectPageAction(1));
+  }, [category, dispatch]);
+
+  useEffect(() => {
     getFavorites(null, 10, postsearch.selectPage)
       .then((data) => {
         dispatch(getFavoritesAction(data.data));
@@ -111,6 +116,17 @@ export default function MyPage() {
 
 export function Home() {
   const { isLogin } = useSelector((state) => state.login);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getClassifiedPost()
+      .then((data) => {
+        setData(data.data.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  }, []);
+  if (loading) return <div>d</div>;
   return (
     <HomeWrapper>
       {isLogin.type === "admin" && (
@@ -127,7 +143,7 @@ export function Home() {
           <img src={profileinfoicon} alt="" />
           <h2>회원정보</h2>
         </Subtitle>
-        <SmallCardBox />
+        <SmallCardBox type="statics" data={data} />
         <TabBox category="회원정보" />
       </ListContainer>
       <ListContainer>
@@ -172,7 +188,14 @@ export function MyComment() {
 }
 
 export function PurchasedKick() {
-  return <CardBox type="mykick" />;
+  const { count } = useSelector((state) => state.mypage.kick);
+
+  return (
+    <>
+      <CardBox type="mykick" />
+      <Pagination count={count} />
+    </>
+  );
 }
 
 export function KickmoneyLog() {
@@ -221,7 +244,8 @@ const Container = styled.div`
   width: 64rem;
   margin: 0 auto;
   padding: 3rem 1rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.color.back};
+  color: ${({ theme }) => theme.color.font};
   border-radius: 0.5rem;
 
   @media ${({ theme }) => theme.device.notebookS} {

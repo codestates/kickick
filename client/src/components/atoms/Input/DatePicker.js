@@ -73,6 +73,7 @@ const InputTitle = styled.div`
   margin-top: ${({ height }) => `${height / 5}rem`};
   font-size: ${({ height }) => `${height / 2}rem`};
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
+  color: ${({ theme }) => theme.color.font};
 `;
 
 const DatePieckerContainer = styled.div`
@@ -92,7 +93,9 @@ const DatePickerInput = styled.input`
   height: ${({ height }) => `${height}rem`};
   margin: 0.5rem 0 0.2rem 0;
   padding: ${({ height }) => `${height * 0.08}rem`};
+  border: 0.15rem solid ${({ theme }) => theme.color.border};
   font-size: ${({ height }) => `${(height * 2) / 3}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
-  border: 1px solid black;
+  color: ${({ theme }) => theme.color.font};
+  background-color: ${({ theme }) => theme.color.modalBack};
 `;

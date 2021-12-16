@@ -6,21 +6,23 @@ import { NavBtn, AlarmBtn, BtnChamber } from "../../../components";
 import { signOut } from "../../../apis/auth";
 import { useScroll } from "../../../hooks/useScroll";
 import { isLoginAction, isPointAction } from "../../../store/actions/login";
-import { themeModeAction } from "../../../store/actions/nav";
+import { preThemeModeAction } from "../../../store/actions/nav";
 
 import sun from "../../../assets/images/sun.png";
 import moon from "../../../assets/images/moon.png";
 
-export default function Nav({ themeCode, socketClient }) {
+export default function Nav({ socketClient }) {
   const dispatch = useDispatch();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
+  const preThemeMode = useSelector((state) => state.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const userPoint = useSelector((state) => state.login.isPoint);
   const socketChange = useSelector((state) => state.socket);
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
-
+  const path = window.location.pathname.split("/")[1];
+  const yIndex = window.scrollY;
   const logoutHanlder = () => {
     signOut().then(() => {
       dispatch(isLoginAction(false));
@@ -29,21 +31,24 @@ export default function Nav({ themeCode, socketClient }) {
   };
 
   const themeChanger = () => {
-    if (themeMode === "light") dispatch(themeModeAction("dark"));
-    else dispatch(themeModeAction("light"));
+    if (preThemeMode === "light") dispatch(preThemeModeAction("dark"));
+    else dispatch(preThemeModeAction("light"));
   };
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && socketChange.targetId) {
       socketClient.emit("alarms", {
-        username: isLogin.username,
+        username: socketChange.targetId,
         ...socketChange.alarmPage,
       });
     }
+    if (isLogin && (socketChange.notice || socketChange.event)) {
+      socketClient.emit("broadcast", {});
+    }
+    return () => {
+      socketClient.disconnect();
+    };
   }, [socketChange, isLogin]);
-
-  // console.log("pageYOffset",window.pageYOffset);
-  // console.log("screenY",window.screenY);
 
   return (
     <Container
@@ -51,7 +56,7 @@ export default function Nav({ themeCode, socketClient }) {
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Frame scroll={scroll} isHover={isHover}>
+      <Frame scroll={scroll} isHover={isHover} path={path} yIndex={yIndex}>
         <Separation>
           <NavBtn
             context="KICK"
@@ -63,7 +68,7 @@ export default function Nav({ themeCode, socketClient }) {
         </Separation>
         <Separation>
           <ThemeBtn
-            src={themeCode === "light" ? themeImg[0] : themeImg[1]}
+            src={themeMode[1] === "light" ? themeImg[0] : themeImg[1]}
             onClick={themeChanger}
             alt="themeBtn"
           />
@@ -98,6 +103,7 @@ export default function Nav({ themeCode, socketClient }) {
 
 const Point = styled.div`
   margin: 0.2rem;
+  color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
 `;
 
@@ -111,6 +117,7 @@ const Container = styled(VerticalAlign)`
   top: 0;
   width: 100vw;
   height: 4rem;
+  /* background-color: ${({ theme }) => theme.color.navBack}; */
   background-color: transparent;
   z-index: 999;
 `;
@@ -124,7 +131,8 @@ const Frame = styled(VerticalAlign)`
   justify-content: space-between;
   width: 100vw;
   height: 4rem;
-  background-color: ${({ theme }) => theme.color.back};
+  background-color: ${({ path, theme, yIndex }) =>
+    path === "board" && yIndex === 0 ? theme.color.navBack : theme.color.back};
   transition: top 0.5s;
 `;
 

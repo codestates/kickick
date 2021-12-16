@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { TotalSearch, BoardTop, PostList } from "../../components";
 import BoardSkeleton from "./BoardSkeleton";
-
+import Page404 from "../Error/Page404";
 import { getPostsList } from "../../apis/posts";
 
 import { getListAction, resetListAction } from "../../store/actions/postlist";
@@ -17,28 +17,28 @@ import {
 } from "../../store/actions/postadd";
 import { resetSearchReducerAction } from "../../store/actions/postsearch";
 
-export default function Board({ themeCode }) {
+export default function Board({ themeCode, list }) {
   const { category } = useParams();
   const dispatch = useDispatch();
   const apiCategory = useSelector((state) => state.postAdd.category);
   const { postsearch, onoff } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
-  const path = window.location.pathname.split("/")[1];
+  // const path = window.location.pathname.split("/")[1];
 
   useEffect(() => {
     dispatch(getCategoryAction(category));
     if (!onoff) {
-      dispatch(resetSearchReducerAction(postsearch.align));
       dispatch(resetTag());
+      dispatch(resetSearchReducerAction());
     }
     dispatch(resetListAction());
     dispatch(goBack(false));
-  }, [category, postsearch.align, dispatch]);
+  }, [category, dispatch]);
 
-  useEffect(() => {
-    dispatch(getCategoryAction(category));
-    dispatch(resetSearchReducerAction());
-  }, [path, category, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCategoryAction(category));
+  //   dispatch(resetSearchReducerAction());
+  // }, [path, category, dispatch]);
 
   useEffect(() => {
     getPostsList({
@@ -66,9 +66,10 @@ export default function Board({ themeCode }) {
     postsearch.align,
   ]);
 
+  if (!list.find((el) => el === category)) return <Page404 />;
   if (loading) return <BoardSkeleton />;
   return (
-    <>
+    <BigContainer>
       <BoardTop themeCode={themeCode} />
       <Container>
         <BoardContainer>
@@ -76,9 +77,11 @@ export default function Board({ themeCode }) {
           <PostList type="freepost" />
         </BoardContainer>
       </Container>
-    </>
+    </BigContainer>
   );
 }
+
+const BigContainer = styled.div``;
 const Container = styled.div`
   display: flex;
   margin: 0 auto;

@@ -63,14 +63,16 @@ const Container = styled.div`
   padding: 0.5rem 0.5rem 0.5rem 0;
   flex-wrap: wrap;
   gap: 1rem;
-  height: 3.3rem;
+  min-height: 3.3rem;
   width: 40rem;
 `;
 const TagContainer = styled.div`
-  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
   font-weight: bold;
   color: #f15f5f;
-  background-color: #ececec;
+  background-color: ${({ theme }) => theme.color.tagBox};
   border-radius: 0.5rem;
 
   cursor: pointer;
@@ -83,7 +85,7 @@ const TagContainer = styled.div`
 const Alarm = styled.span`
   padding: 0.5rem;
   font-weight: bold;
-  color: #e02401;
+  color: ${({ theme }) => theme.color.tagAlarm};
   opacity: ${({ tag }) => (tag.length === 2 ? 1 : 0)};
   transition: all 0.3s linear;
 `;

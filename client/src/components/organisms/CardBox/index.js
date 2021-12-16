@@ -7,6 +7,7 @@ import {
   NewsPost,
   EventPost,
   MyKick,
+  NoPost,
 } from "../../../components";
 
 const cardlist = [
@@ -47,7 +48,7 @@ export default function CardBox({ type }) {
   return (
     <Container>
       {data.length === 0 ? (
-        <NoContentContainer>등록된 것이 없습니다</NoContentContainer>
+        <NoPost />
       ) : (
         data.map((el, idx) => component(idx, el))
       )}
@@ -58,14 +59,5 @@ export default function CardBox({ type }) {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  /* min-height: 30vh; */
-`;
-
-const NoContentContainer = styled.div`
-  display: flex;
-
-  align-items: center;
-  font-size: 3rem;
-  margin: 0 auto;
-  font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
 `;

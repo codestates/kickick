@@ -25,10 +25,9 @@ export default function MainNotice({ noticeInfo }) {
 
 const Container = styled.div`
   display: flex;
-  /* gap: 2vw; */
   margin-top: 1vw;
-  /* border: 1px solid black; */
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  color: ${({ theme }) => theme.color.font};
   cursor: pointer;
 `;
 

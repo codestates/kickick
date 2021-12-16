@@ -8,7 +8,10 @@ import {
   delComments,
 } from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
-import { commentSocketAction } from "../../../store/actions/socket";
+import {
+  commentSocketAction,
+  targetNameAction,
+} from "../../../store/actions/socket";
 
 export default function PostComment({ post_id, themeCode }) {
   const dispatch = useDispatch();
@@ -43,7 +46,8 @@ export default function PostComment({ post_id, themeCode }) {
         setCmt({ ...cmt, data: dummy });
       })
       .then(() => setPlusCmt(plusCmt + 1))
-      .then(() => dispatch(commentSocketAction(!socket.comment)))
+      .then(() => dispatch(targetNameAction(postInfo.user.username)))
+      .then(() => dispatch(targetNameAction("")))
       .catch((err) => console.log(err.response));
     setValue("");
   };
@@ -162,7 +166,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 1rem 2rem;
   background-color: ${({ theme }) => theme.color.commentBox};
-  margin: 5rem 0;
+  margin: 3rem 0;
   border-radius: 0.5rem;
 
   h3 {
@@ -172,6 +176,6 @@ const Container = styled.div`
     color: ${({ theme }) => theme.color.font};
   }
   strong {
-    color: skyblue;
+    color: ${({ theme }) => theme.color.mycomment};
   }
 `;

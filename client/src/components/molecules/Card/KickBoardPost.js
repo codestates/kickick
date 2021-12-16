@@ -18,7 +18,7 @@ export default function KickBoardPost({ data }) {
     <Container
       onClick={() => {
         if (data.is_purchased) {
-          navigate(`/detailkick/${data.post_id}/${data.kick.kick_id}`);
+          navigate(`/detailkick/${data.kick.kick_id}`);
           return;
         }
         dispatch(modalOnAction(data));
@@ -61,7 +61,7 @@ const Container = styled.div`
   margin: ${({ theme }) => theme.margins.xxl};
 
   border-radius: 0.5rem;
-  box-shadow: 1px 1px 10px #dddddd;
+  box-shadow: 1px 1px 10px ${({ theme }) => theme.color.shadow};
 
   overflow: hidden;
   cursor: pointer;
@@ -119,7 +119,7 @@ const PostUser = styled.div`
   }
   .username {
     margin-left: ${({ theme }) => theme.margins.small};
-    color: black;
+    color: ${({ theme }) => theme.color.font} !important;
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSizes.small};
     line-height: 1.5;

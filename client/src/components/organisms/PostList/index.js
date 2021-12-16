@@ -4,7 +4,13 @@ import disableScroll from "disable-scroll";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 
-import { PostItem, Pagination, Common, Modal } from "../../../components";
+import {
+  PostItem,
+  Pagination,
+  Common,
+  Modal,
+  NoPost,
+} from "../../../components";
 
 const postList = [
   {

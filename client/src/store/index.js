@@ -18,6 +18,7 @@ import {
   alarmListReducer,
   postsearchReducer,
   commentsReducer,
+  preThemeReducer,
 } from "./reducers";
 
 const persistConfig = {
@@ -41,6 +42,7 @@ export const store = configureStore({
     tag: tagReducer,
     login: loginReducer,
     themeMode: themeReducer,
+    preThemeMode: preThemeReducer,
     mypage: mypageReducer,
     socket: socketReducer,
     alarmList: alarmListReducer,

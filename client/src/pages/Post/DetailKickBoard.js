@@ -13,34 +13,35 @@ import {
   getKickInfoAction,
 } from "../../store/actions/postinfo";
 
-export default function DetailBoard() {
+export default function DetailBoard({ themeCode }) {
   const dispatch = useDispatch();
+  const { kick_id } = useParams();
   const { postInfo } = useSelector((state) => state.persist);
-  const { post_id, kick_id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [postId, setPostId] = useState();
 
   useEffect(() => {
-    getPostsInfo(post_id)
+    getKicksInfo(kick_id)
       .then((data) => {
-        dispatch(getPostInfoAction(data.data.data));
-        getKicksInfo(kick_id)
+        dispatch(getKickInfoAction(data.data.data.content));
+        setPostId(data.data.data.post_id);
+        getPostsInfo(data.data.data.post_id)
           .then((data) => {
-            dispatch(getKickInfoAction(data.data.data.content));
+            dispatch(getPostInfoAction(data.data.data));
           })
-
-          .catch((err) => console.log(err.response));
+          .catch((err) => console.log(err));
       })
       .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
-  }, [dispatch, post_id, kick_id]);
+  }, [dispatch, kick_id]);
 
   if (loading) return <Temporary />;
 
   return (
     <Container>
       <RigthContainer>
-        <DetailBoardTop postInfo={postInfo} type="kick" />
-        <PostComment post_id={post_id} />
+        <DetailBoardTop postInfo={postInfo} type="kick" themeCode={themeCode} />
+        <PostComment post_id={postId} />
       </RigthContainer>
     </Container>
   );

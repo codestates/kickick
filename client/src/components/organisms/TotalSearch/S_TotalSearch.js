@@ -9,6 +9,7 @@ export default function S_TotalSearch() {
       </PostAlign>
       <SearchContainer>
         <div></div>
+        <div></div>
       </SearchContainer>
     </Container>
   );
@@ -17,6 +18,25 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 1rem 1rem 1rem;
+  justify-content: space-between;
+  div div {
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 80%
+      ),
+      lightgray;
+    background-repeat: repeat-y;
+    background-size: 500px 100%;
+    background-position: 0 0;
+    animation: move 1s infinite;
+  }
+  @keyframes move {
+    to {
+      background-position: 100% 0, 0 0;
+    }
+  }
 `;
 
 const PostAlign = styled.div`
@@ -25,44 +45,17 @@ const PostAlign = styled.div`
   div {
     height: 2.7rem;
     width: 5.4rem;
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0) 80%
-      ),
-      lightgray;
-    background-repeat: repeat-y;
-    background-size: 500px 100%;
-    background-position: 0 0;
-    animation: move 1s infinite;
-  }
-  @keyframes move {
-    to {
-      background-position: 100% 0, 0 0;
-    }
   }
 `;
 const SearchContainer = styled.div`
-  margin-left: auto;
-  div {
-    width: 21rem;
+  display: flex;
+  gap: 1rem;
+  > :nth-child(1) {
+    width: 7rem;
     height: 2.7rem;
-    background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0) 80%
-      ),
-      lightgray;
-    background-repeat: repeat-y;
-    background-size: 500px 100%;
-    background-position: 0 0;
-    animation: move 1s infinite;
   }
-  @keyframes move {
-    to {
-      background-position: 100% 0, 0 0;
-    }
+  > :nth-child(2) {
+    width: 15rem;
+    height: 2.7rem;
   }
 `;

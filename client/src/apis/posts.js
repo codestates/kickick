@@ -11,6 +11,7 @@ export const getPostsInfo = (post_id) =>
  *  @param {string} tag option
  *  @param {string} content option
  *  @param {number} favorite_count option
+ * @param {number} like_count option
  *  @param {number} limit option
  *  @param {number} page_num option
  **/
@@ -21,6 +22,7 @@ export const getPostsList = ({
   tag,
   content,
   favorite_count,
+  like_count,
   limit,
   page_num,
 }) => {
@@ -32,6 +34,7 @@ export const getPostsList = ({
   if (tag) query += `tag=${tag}&`;
   if (content) query += `content=${content}&`;
   if (favorite_count) query += `favorite_count=${favorite_count}&`;
+  if (like_count) query += `like_count=${like_count}&`;
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 
@@ -72,7 +75,15 @@ export const putPost = (category, post_name, content, cost, post_id) => {
 export const delPost = (post_id) => {
   return api.delete(`/posts/info/${post_id}`);
 };
-
+/**
+ *
+ **/
 export const recommendedPost = () => {
   return api.get("/posts/recommended");
+};
+/**
+ *
+ **/
+export const getClassifiedPost = () => {
+  return api.get("/posts/classification");
 };
