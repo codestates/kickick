@@ -2,7 +2,6 @@ const axios = require("axios");
 const { users, logs, alarms } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
-const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
   // TODO google 소셜로그인 구현
@@ -59,8 +58,21 @@ module.exports = async (req, res) => {
     if (is_created) {
       await logs.create({
         user_id: data.id,
-        type: "signup",
-        content: "회원가입으로 1500 킥머니를 받았습니다.",
+        type: "email auth",
+        content: "이메일 인증",
+      });
+
+      // 킥머니 지급 로그 추가
+      await logs.create({
+        user_id: data.id,
+        type: "kick_money",
+        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
+      });
+      // 킥머니 지급 알림 추가
+      await alarms.create({
+        user_id: data.id,
+        type: "alarms",
+        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
       });
     }
 

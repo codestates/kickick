@@ -1,4 +1,4 @@
-const { users, logs } = require("../../models");
+const { users, logs, alarms } = require("../../models");
 const sequelize = require("sequelize");
 
 module.exports = async (req, res) => {
@@ -28,15 +28,15 @@ module.exports = async (req, res) => {
         .json({ data: null, message: "이미 인증되었습니다." });
     }
 
-    // 로그에서 signup이 있는지 확인
+    // 로그에서 email auth가 있는지 확인
     let log_info = await logs.findOne({
       where: {
         user_id: user_info.user_id,
-        type: "signup",
+        type: "email auth",
       },
     });
 
-    // 로그 살펴보고 signup이 없으면
+    // 로그 살펴보고 email auth가 없으면
     if (!log_info) {
       // 유저정보 수정
       await users.update(
@@ -51,11 +51,24 @@ module.exports = async (req, res) => {
         }
       );
 
-      // 회원가입 로그 추가
+      // 생성일 때 회원가입 로그 추가
       await logs.create({
-        user_id: data.id,
-        type: "signup",
-        content: "회원가입으로 1500 킥머니를 받았습니다.",
+        user_id: user_info.user_id,
+        type: "email auth",
+        content: "이메일 인증",
+      });
+
+      // 킥머니 지급 로그 추가
+      await logs.create({
+        user_id: user_info.user_id,
+        type: "kick_money",
+        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
+      });
+      // 킥머니 지급 알림 추가
+      await alarms.create({
+        user_id: user_info.user_id,
+        type: "alarms",
+        content: `이메일 인증으로 ${change} 킥머니를 받았습니다.`,
       });
     }
   } catch (err) {

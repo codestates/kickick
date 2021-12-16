@@ -123,14 +123,14 @@ module.exports = async (req, res) => {
     await logs.create({
       user_id: writer_id,
       type: "kick_money",
-      content: `킥판매로 ${Math.abs(change)} 킥머니를 얻었습니다.`,
+      content: `킥 판매로 ${Math.abs(change)} 킥머니를 얻었습니다.`,
     });
 
     // log에 기록
     await logs.create({
       user_id: user_id,
       type: "kick_money",
-      content: `킥구매로 ${Math.abs(change)} 킥머니를 사용했습니다.`,
+      content: `킥 구매로 ${Math.abs(change)} 킥머니를 사용했습니다.`,
     });
   } catch (err) {
     console.log(err);
