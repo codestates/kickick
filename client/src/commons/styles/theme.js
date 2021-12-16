@@ -106,7 +106,7 @@ export const dark = {
   color: {
     back: "#1E1F21",
     navBack: "#1E1F21",
-    alarm: "#ffffff",
+    alarm: "#444444",
     red: "#FF5655",
     main: "#0c0c42",
     tag: "#f90716",
