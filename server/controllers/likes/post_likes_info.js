@@ -1,4 +1,4 @@
-const { users, posts, likes, alarms } = require("../../models");
+const { users, posts, likes, alarms, kicks } = require("../../models");
 const jwt = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
@@ -81,19 +81,18 @@ module.exports = async (req, res) => {
       // id 명시적으로
       data.like_id = data.id;
       delete data.id;
-    }
-
-    // like_count 업데이트
-    await posts.update(
-      {
-        like_count: sequelize.literal(`like_count + 1`),
-      },
-      {
-        where: {
-          id: post_id,
+      // like_count 업데이트
+      await posts.update(
+        {
+          like_count: sequelize.literal(`like_count + 1`),
         },
-      }
-    );
+        {
+          where: {
+            id: post_id,
+          },
+        }
+      );
+    }
 
     // post_id 로 like_info 가져와서 투표수 총합 확인
     let like_info = await likes.findAndCountAll({
@@ -112,14 +111,24 @@ module.exports = async (req, res) => {
         where: {
           id: post_id,
         },
+        include: [
+          {
+            model: kicks,
+            attributes: ["id", "kick_id"],
+          },
+        ],
       });
-      const post_user_id = post_info.get({ plain: true }).user_id;
+      post_info = post_info.get({ plain: true });
+
+      const post_user_id = post_info.user_id;
+      const kick_id = post_info.kick_id;
+
       await alarms.create({
         user_id: post_user_id,
         type: "likes",
         reference: JSON.stringify({
-          table: posts,
-          id: post_id,
+          table: "kicks",
+          id: kick_id,
         }),
         content: `내 게시글이 추천을 10개 받았습니다.`,
       });
