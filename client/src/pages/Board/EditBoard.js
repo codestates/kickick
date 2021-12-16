@@ -54,69 +54,57 @@ export default function EditBoard({ themeCode, list }) {
   if (!list.find((el) => el === category)) return <Page404 />;
   return (
     <Container>
-      <QullContainer>
-        <WriteBox>
-          <TitleInput handleChange={handleChange} type="title" />
-          <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
-          <EditQuill
-            image={false}
-            content={content}
-            setContent={setContent}
-            themeCode={themeCode}
-          />
-          <BtnContainer>
-            <IconBox label="arrow" handleClick={handleMovePage} />
-            <Common label="등 록" type="bigger" handleClick={handleClick} />
-          </BtnContainer>
-        </WriteBox>
+      <WriteBox>
+        <TitleInput handleChange={handleChange} type="title" />
+        <TagInput tagArr={tagArr} setTagArr={setTagArr} category={category} />
+        <EditQuill
+          image={false}
+          content={content}
+          setContent={setContent}
+          themeCode={themeCode}
+        />
+        <BtnContainer>
+          <IconBox label="arrow" handleClick={handleMovePage} />
+          <Common label="등 록" type="bigger" handleClick={handleClick} />
+        </BtnContainer>
+      </WriteBox>
 
-        <ViewBox>
-          <TitleBox>{title}</TitleBox>
-          <ProfileContainer>
-            <Profile type="post" src={login.isLogin.profile} />
-            <span>{login.isLogin.username}</span>
-          </ProfileContainer>
-          <TagInput
-            tagArr={tagArr}
-            setTagArr={setTagArr}
-            category={category}
-            readOnly={true}
-          />
-          <ReactQuill
-            value={content}
-            readOnly={true}
-            theme={"bubble"}
-            style={{
-              paddingTop: "0.5rem",
-              color: themeCode === "light" ? "black" : "white",
-            }}
-          />
-        </ViewBox>
-      </QullContainer>
+      <ViewBox>
+        <TitleBox>{title}</TitleBox>
+        <ProfileContainer>
+          <Profile type="post" src={login.isLogin.profile} />
+          <span>{login.isLogin.username}</span>
+        </ProfileContainer>
+        <TagInput
+          tagArr={tagArr}
+          setTagArr={setTagArr}
+          category={category}
+          readOnly={true}
+        />
+        <ReactQuill
+          value={content}
+          readOnly={true}
+          theme={"bubble"}
+          style={{
+            paddingTop: "0.5rem",
+            color: themeCode === "light" ? "black" : "white",
+          }}
+        />
+      </ViewBox>
     </Container>
   );
 }
-const Container = styled.div``;
-const BtnContainer = styled.div`
+const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-`;
-
-const QullContainer = styled.div`
-  display: flex;
-
-  > :nth-child(2) {
-    border-left: 0.2rem dashed #d8d8d8;
-  }
+  padding: 3rem 1rem;
 `;
 
 const WriteBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   width: 50%;
-  padding: 2rem;
+  padding: 0 4rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
     width: 100%;
@@ -128,8 +116,8 @@ const ViewBox = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 50%;
-  padding: 2rem;
-
+  padding: 0 4rem;
+  border-left: 0.2rem dashed #d8d8d8;
   @media ${({ theme }) => theme.device.notebookS} {
     display: none;
   }
@@ -151,4 +139,9 @@ const ProfileContainer = styled.div`
   img {
     margin-right: 1rem;
   }
+`;
+const BtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
 `;

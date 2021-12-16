@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-
+import { useDispatch } from "react-redux";
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
+
 import { createLikes } from "../../../apis/likes";
 
-export default function Vote({ likes, is_liked, postId }) {
+import { targetNameAction } from "../../../store/actions/socket";
+
+export default function Vote({ likes, is_liked, postId, username }) {
+  const dispatch = useDispatch();
   const [alien, setAlien] = useState(likes.true);
   const [astronaut, setAstronaut] = useState(likes.false);
   const [type, setType] = useState(is_liked);
@@ -33,7 +37,10 @@ export default function Vote({ likes, is_liked, postId }) {
       setType(false);
     }
 
-    createLikes(postId, item).catch((err) => console.log(err.response));
+    createLikes(postId, item)
+      .then(() => dispatch(targetNameAction(username)))
+      .then(() => dispatch(targetNameAction("")))
+      .catch((err) => console.log(err.response));
   };
   return (
     <Container type={type}>

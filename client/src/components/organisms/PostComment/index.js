@@ -166,7 +166,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 1rem 2rem;
   background-color: ${({ theme }) => theme.color.commentBox};
-  margin: 5rem 0;
+  margin: 3rem 0;
   border-radius: 0.5rem;
 
   h3 {

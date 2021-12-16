@@ -51,7 +51,7 @@ export default function TagInput({ tagArr, setTagArr, category, readOnly }) {
             val={value}
             type="tag"
           />
-          {/* <Alarm tag={tagArr}>태그는 2개까지 입력 가능합니다.</Alarm> */}
+          <Alarm tag={tagArr}>태그는 2개까지 입력 가능합니다.</Alarm>
         </>
       )}
     </Container>
@@ -82,10 +82,10 @@ const TagContainer = styled.div`
   }
 `;
 
-// const Alarm = styled.span`
-//   padding: 0.5rem;
-//   font-weight: bold;
-//   color: #e02401;
-//   opacity: ${({ tag }) => (tag.length === 2 ? 1 : 0)};
-//   transition: all 0.3s linear;
-// `;
+const Alarm = styled.span`
+  padding: 0.5rem;
+  font-weight: bold;
+  color: #e02401;
+  opacity: ${({ tag }) => (tag.length === 2 ? 1 : 0)};
+  transition: all 0.3s linear;
+`;

@@ -80,8 +80,8 @@ const Container = styled.div`
   }
 
   .mycomment {
-    font-weight: bold;
-    color: ${({ theme }) => theme.color.mycomment};
+    /* font-weight: bold; */
+    /* color: ${({ theme }) => theme.color.mycomment}; */
   }
 
   & + & {
