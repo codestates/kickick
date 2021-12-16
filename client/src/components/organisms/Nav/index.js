@@ -43,8 +43,11 @@ export default function Nav({ themeCode, socketClient }) {
       });
     }
     if (isLogin && (socketChange.notice || socketChange.event)) {
-      socketClient.emit("broadcast", {})
+      socketClient.emit("broadcast", {});
     }
+    return () => {
+      socketClient.disconnect();
+    };
   }, [socketChange, isLogin]);
 
   return (
@@ -63,7 +66,13 @@ export default function Nav({ themeCode, socketClient }) {
           />
           <BtnChamber />
         </Separation>
-        <div onClick={() => {dispatch(noticeSocketAction(true))}}>asdasd</div>
+        <div
+          onClick={() => {
+            dispatch(noticeSocketAction(true));
+          }}
+        >
+          asdasd
+        </div>
         <Separation>
           <ThemeBtn
             src={themeCode === "light" ? themeImg[0] : themeImg[1]}

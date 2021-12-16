@@ -8,19 +8,18 @@ module.exports = (io) => {
     console.log("connection");
     // 사용자 socket 로그인 clients 배열에 저장
     socket.on("signin", (data) => {
-      // console.log(`소켓 로그인 진행`);
       let client_info = new Object();
       client_info.username = data.username;
       client_info.id = socket.id;
-      if (!client_info.username) return;
+      // if (!client_info.username) return;
       let is_signed = false;
-      for (let el of clients) {
-        if (el.username === client_info.username) {
-          el.id = client_info.id;
-          is_signed = true;
-          break;
-        }
-      }
+      // for (let el of clients) {
+      //   if (el.username === client_info.username) {
+      //     el.id = client_info.id;
+      //     is_signed = true;
+      //     break;
+      //   }
+      // }
       if (!is_signed) clients.push(client_info);
       console.log(clients);
     });
@@ -93,6 +92,7 @@ module.exports = (io) => {
     });
     // broadcast 요청 들어오면
     socket.on("broadcast", () => {
+      console.log("broadcast");
       io.emit("broadcast", { data: "test" });
     });
 

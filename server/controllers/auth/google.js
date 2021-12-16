@@ -51,12 +51,21 @@ module.exports = async (req, res) => {
         kick_money: 1500,
       },
     });
+
+    let is_created = data[1];
     data = data[0].get({ plain: true });
+
+    // 생성일 때 회원가입 로그 추가
+    if (is_created) {
+      await logs.create({
+        user_id: data.id,
+        type: "signup",
+        content: "회원가입으로 1500 킥머니를 받았습니다.",
+      });
+    }
+
     const user_id = data.id;
     const username = data.username;
-
-    console.log("user_id", user_id);
-    console.log("username", username);
 
     // 로그에 기록
     let log_info = await logs.findAll({
@@ -119,7 +128,7 @@ module.exports = async (req, res) => {
       await logs.create({
         user_id: user_id,
         type: "kick_money",
-        content: `${change} 킥머니를 받았습니다.`,
+        content: `로그인으로 ${change} 킥머니를 받았습니다.`,
       });
       // 킥머니 지급 알림 추가
       await alarms.create({
