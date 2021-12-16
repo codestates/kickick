@@ -98,7 +98,7 @@ export function Event() {
 
   useEffect(() => {
     getNoticesList({
-      type: "event",
+      type: "events",
       limit: 10,
       page_num: postsearch.selectPage,
     }).then((data) => {

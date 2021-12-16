@@ -126,9 +126,9 @@ const SubmitBtn = styled.button`
   margin-top: 1rem;
   border-radius: ${({ height }) => `${height * 0.08}rem`};
   font-size: ${({ height }) => `${height * 0.7}rem`};
-  color: ${({ theme }) => theme.color.back};
+  color: white;
   font-family: ${({ theme }) => theme.fontFamily.jua};
-  background-color: ${({ theme }) => theme.color.main};
+  background-color: #0c0c42;
   cursor: default;
 
   ${({ isValid }) =>

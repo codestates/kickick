@@ -35,7 +35,7 @@ const Title = styled.p`
   margin: ${({ theme }) => `${theme.fontSizes.base} 0`};
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 3}rem`};
   font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
-  color: ${({ theme }) => theme.color.font};
+  color: black;
   pointer-events: none;
   z-index: 2;
 `;
@@ -45,7 +45,6 @@ const Fail = styled.p`
   top: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 9}rem`};
   left: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 8.5}rem`};
   display: ${({ isClicked }) => (isClicked === "" ? "default" : "none")};
-  border-radius: 40%;
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 5}rem`};
   font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
   color: red;

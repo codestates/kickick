@@ -1,5 +1,6 @@
 export { default as loginReducer } from "./loginReducer";
 export { default as themeReducer } from "./themeReducer";
+export { default as preThemeReducer } from "./preThemeReducer";
 export { default as postlistReducer } from "./postlistReducer";
 export { default as postAddReducer } from "./postAddReducer";
 export { default as postInfoReducer } from "./postInfoReducer";

@@ -3,26 +3,28 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import default_thumbnail from "../../../assets/images/default/default_thumbnail.jpg";
+import { CardBox } from "../../../components"
 
 export default function MainEvent({ eventInfo = [{ thumbnail: "", summary: "" }] }) {
   const navigate = useNavigate();
-
+console.log(eventInfo)
   return (
     <Container>
       {eventInfo.length
-        ? eventInfo.map((el,idx) => (
-            <EventContainer
-              key={idx}
-              onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
-            >
-              <Thumbnail
-                src={el.thumbnail || default_thumbnail}
-                alt="thumbnail"
-              />
-              <SummaryContainer>
-                <Summary>{el.summary}</Summary>
-              </SummaryContainer>
-            </EventContainer>
+        ? eventInfo.map((el, idx) => (
+            // <EventContainer
+            //   key={idx}
+            //   onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
+            // >
+            //   <Thumbnail
+            //     src={el.thumbnail || default_thumbnail}
+            //     alt="thumbnail"
+            //   />
+            //   <SummaryContainer>
+            //     <Summary>{el.summary}</Summary>
+            //   </SummaryContainer>
+            // </EventContainer>
+            <CardBox type="event" />
           ))
         : null}
     </Container>

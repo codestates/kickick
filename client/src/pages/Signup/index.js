@@ -19,7 +19,7 @@ const Container = styled.div`
   max-width: 100%;
   min-height: 79vh;
   overflow: hidden;
-  animation-name: rightMove;
+  /* animation-name: rightMove;
   animation-duration: 1s;
   animation-direction: normal;
 
@@ -30,5 +30,5 @@ const Container = styled.div`
     100% {
       right: 0;
     }
-  }
+  } */
 `;

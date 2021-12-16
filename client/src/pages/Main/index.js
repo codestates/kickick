@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import {
@@ -11,9 +12,11 @@ import {
 import { getNoticesInfo, getNoticesList } from "../../apis/notices"
 import { recommendedPost } from "../../apis/posts";
 import { firstEnterCheck } from "../../apis/cookie"
+import { getListAction } from "../../store/actions/postlist";
 
 export default function Main() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [kickListInfo, setKickList] = useState({});
   const [noticeInfo, setNoticeInfo] = useState({})
   const [eventInfo, setEventInfo] = useState([])
@@ -50,6 +53,7 @@ export default function Main() {
     getNoticesList({ type: "events", limit: 4, page_num:1 })
       .then((res) => {
         setEventInfo([...res.data.data]);
+        dispatch(getListAction(res.data));
       })
       .then(() => setEventLoding(true));
   }, []);
@@ -98,9 +102,10 @@ const ContentSection = styled.section`
 `;
 
 const Title = styled.p`
-  align-self:flex-start;
+  align-self: flex-start;
   font-size: 2vw;
-  font-family:${({theme})=>theme.fontFamily.jua};
+  font-family: ${({ theme }) => theme.fontFamily.jua};
+  color: ${({ theme }) => theme.color.font};
 `;
 
 const ContextContainer = styled.article`
