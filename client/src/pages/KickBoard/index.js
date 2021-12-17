@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -7,7 +7,6 @@ import {
   CardBox,
   TotalSearch,
   KickConfirm,
-  Common,
   InfiniteScroll,
   BoardTop,
 } from "../../components";
@@ -28,7 +27,6 @@ import {
 export default function KickBoard() {
   const { category } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { kickboard, postsearch, postAdd } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
   const [onScroll, setOnScroll] = useState(true);
@@ -86,11 +84,7 @@ export default function KickBoard() {
     <>
       <BoardTop />
       <Container>
-        <Common
-          label="글쓰기"
-          handleClick={() => navigate(`/editkick/${category}`)}
-        />
-        <TotalSearch />
+        <TotalSearch type="kick" />
         <CardBox type="kickboard" />
         {kickboard.modalState && <KickConfirm />}
         {onScroll && <InfiniteScroll callback={handleLimit} />}

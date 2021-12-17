@@ -22,7 +22,7 @@ import {
 
 import { addTagAction, delTagAction } from "../../../store/actions/postadd";
 
-export default function TotalSearch() {
+export default function TotalSearch({ type }) {
   const { pathname } = useLocation();
   const [page, category] = decodeURI(pathname).slice(1).split("/");
   const navigate = useNavigate();
@@ -94,7 +94,11 @@ export default function TotalSearch() {
       setModal(true);
       disableScroll.on();
     } else {
-      navigate(`/editboard/${category}`);
+      if (type === "kick") {
+        navigate(`/editkick/${category}`);
+      } else {
+        navigate(`/editboard/${category}`);
+      }
     }
   };
 
