@@ -49,7 +49,8 @@ export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
 export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamber";
-
+export { default as BarChart } from "./molecules/Chart/Bar";
+export { default as DonutChart } from "./molecules/Chart/Donut";
 // organisms
 export { default as Nav } from "./organisms/Nav";
 export { default as Footer } from "./organisms/Footer";
@@ -67,7 +68,6 @@ export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
 export { default as PostList } from "./organisms/PostList";
 export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
-export { default as Chart } from "./organisms/Chart";
 export { default as Pagination } from "./organisms/Pagination";
 export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
 export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";

@@ -6,7 +6,6 @@ export default function InfiniteScroll({ callback }) {
   const handleFetch = useCallback(
     (entry) => {
       if (entry[0].isIntersecting) {
-        console.log("e");
         callback();
       }
     },
