@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 
 import { NavBtn, AlarmBtn, BtnChamber } from "../../../components";
@@ -15,6 +15,7 @@ import moon from "../../../assets/images/moon.png";
 export default function Nav({ socketClient }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const scroll = useScroll();
   const isLogin = useSelector((state) => state.login.isLogin);
   const preThemeMode = useSelector((state) => state.persist.preThemeMode);
@@ -24,6 +25,7 @@ export default function Nav({ socketClient }) {
   const themeImg = [sun, moon];
   const [isHover, setIsHover] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const categoryList = ["학습","여가","생활","경제","여행","예술"]
 
   const logoutHanlder = () => {
     signOut().then(() => {
@@ -38,7 +40,12 @@ export default function Nav({ socketClient }) {
   };
 
   const editMover = (path) => {
-    navigate(`/write/${path}`, { state: { category: "학습" } });
+    if (categoryList.includes(decodeURI(location.pathname.split("/")[2]))) {
+      return navigate(`/write/${path}`, {
+        state: { category: decodeURI(location.pathname.split("/")[2]) },
+      });
+    }
+    return navigate(`/write/${path}`); 
   }
 
   useEffect(() => {
@@ -55,6 +62,7 @@ export default function Nav({ socketClient }) {
       socketClient.disconnect();
     };
   }, [socketChange, isLogin]);
+
 
   return (
     <Container

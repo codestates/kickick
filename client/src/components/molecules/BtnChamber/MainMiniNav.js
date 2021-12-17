@@ -61,12 +61,12 @@ export default function MainMiniNav() {
       </ModeContainer>
       <ModeContainer isVisible={themeMode[1] === "dark"}>
         <StarContainer>
-          {starLocation.map((el) => (
-            <Star src={star} top={el.top} left={el.left} alt="star" />
+          {starLocation.map((el, idx) => (
+            <Star src={star} key={idx} top={el.top} left={el.left} alt="star" />
           ))}
         </StarContainer>
-        {peopleList.map((el) => (
-          <BtnFrame key={el[0]} onClick={() => navigate(`/kickboard/${el[0]}`)}>
+        {peopleList.map((el, idx) => (
+          <BtnFrame key={idx} onClick={() => navigate(`/kickboard/${el[0]}`)}>
             <BtnName>{el[0]}</BtnName>
             <Planet src={el[2]} alt="people" />
           </BtnFrame>

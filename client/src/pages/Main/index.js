@@ -29,7 +29,6 @@ export default function Main() {
   useEffect(() => {
     // 첫방문인지 체크하고 첫 방문이면 이동
     firstEnterCheck().then((res) => {
-      console.log(res.data.data);
       if (!res.data.data.token && !Object.keys(res.data.data).includes("is_visited")) {
         navigate("/modal/firstenter");
       }
@@ -44,7 +43,6 @@ export default function Main() {
       .then(() => setKickListLoding(true));
     // 가장 최신 공지 하나 불러오기
     getNoticesList({ type: "notices", limit: 1, page_num: 1 }).then((res) => {
-      console.log(res.data.data);
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
         .then(() => setNoticeLoding(true));
@@ -110,5 +108,6 @@ const Title = styled.p`
 
 const ContextContainer = styled.article`
   display: flex;
+  justify-content:center;
   width: 80vw;
 `;
