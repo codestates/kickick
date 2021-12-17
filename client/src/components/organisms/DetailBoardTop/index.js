@@ -20,11 +20,18 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
               게시일 <strong>{postInfo.created_at.split("T")[0]}</strong>
             </span>
             <span>
-              {/* 좋아요 <strong>{postInfo.like_count}</strong> */}
               조회<strong>{postInfo.view_count}</strong>
             </span>
             <span>
-              좋아요 <strong>{postInfo.favorite_count}</strong>
+              {type === "kick" ? (
+                <>
+                  추천수 <strong>{postInfo.like_count}</strong>
+                </>
+              ) : (
+                <>
+                  좋아요 <strong>{postInfo.favorite_count}</strong>
+                </>
+              )}
             </span>
           </CountContainer>
         </UserAndCountContainer>

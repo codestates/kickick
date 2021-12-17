@@ -10,7 +10,7 @@ import { getKicksInfo } from "../../apis/kicks";
 
 import {
   getPostInfoAction,
-  getKickInfoAction,
+  getMainInfoAction,
 } from "../../store/actions/postinfo";
 
 export default function DetailBoard({ themeCode }) {
@@ -23,7 +23,8 @@ export default function DetailBoard({ themeCode }) {
   useEffect(() => {
     getKicksInfo(kick_id)
       .then((data) => {
-        dispatch(getKickInfoAction(data.data.data.content));
+        dispatch(getMainInfoAction(data.data.data.content));
+
         setPostId(data.data.data.post_id);
         getPostsInfo(data.data.data.post_id)
           .then((data) => {
@@ -35,14 +36,14 @@ export default function DetailBoard({ themeCode }) {
       .catch((err) => console.log(err.response));
   }, [dispatch, kick_id]);
 
-  if (loading) return <Temporary />;
+  if (loading || !postInfo.post_id) return <Temporary />;
 
   return (
     <Container>
-      <RigthContainer>
+      <RightContainer>
         <DetailBoardTop postInfo={postInfo} type="kick" themeCode={themeCode} />
         <PostComment post_id={postId} />
-      </RigthContainer>
+      </RightContainer>
     </Container>
   );
 }
@@ -56,7 +57,7 @@ const Container = styled.div`
   padding-top: 3rem;
 `;
 
-const RigthContainer = styled.div`
+const RightContainer = styled.div`
   width: 40.5rem;
   z-index: 1;
 `;
