@@ -53,10 +53,12 @@ app.use("/alarms", alarms_router);
 app.use("/logs", logs_router);
 app.use("/bucket", bucket_router);
 app.use("/cookies", cookies_router);
+// app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/controllers/users/public"));
 
-app.get("/", (req, res) => {
-  res.status(201).send("Hello World");
-});
+// app.get("/", (req, res) => {
+//   res.status(201).send("Hello World");
+// });
 
 const HTTP_PORT = process.env.HTTP_PORT || 80;
 
