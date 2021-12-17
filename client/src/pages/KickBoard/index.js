@@ -88,13 +88,6 @@ export default function KickBoard() {
     <>
       <BoardTop />
       <Container>
-        {login.isLogin.type !== "guest" &&
-          login.isLogin.type !== "email auth required" && (
-            <Common
-              label="글쓰기"
-              handleClick={() => navigate(`/editkick/${category}`)}
-            />
-          )}
         <TotalSearch />
         <CardBox type="kickboard" />
         {kickboard.modalState && <KickConfirm />}

@@ -72,9 +72,10 @@ const Container = styled.button`
     !disabled &&
     css`
       cursor: pointer;
+      background-color: #0c0c42;
       &:hover {
         opacity: 0.8;
-        transition: all 0.25s linear;
+        transition: all 0.15s linear;
       }
     `}
 

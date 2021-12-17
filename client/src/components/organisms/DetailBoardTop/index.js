@@ -13,7 +13,7 @@ export default function DetailBoardTop({ postInfo, type, themeCode }) {
         <UserAndCountContainer>
           <UserContainer>
             <Profile src={postInfo.user.profile} type="post" />
-            {postInfo.user.username}
+            <span>{postInfo.user.username}</span>
           </UserContainer>
           <CountContainer>
             <span>
@@ -88,14 +88,21 @@ const Title = styled.div`
   font-weight: bold;
   padding: 0.5rem;
   color: ${({ theme }) => theme.color.font};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 2rem;
+  }
 `;
 const UserAndCountContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 `;
 
 const UserContainer = styled.div`
   display: flex;
   align-items: center;
+
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
@@ -104,9 +111,14 @@ const UserContainer = styled.div`
   img {
     margin-right: 0.5rem;
   }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    font-size: 0.8rem;
+  }
 `;
 const CountContainer = styled.div`
   display: flex;
+
   align-items: center;
   margin-left: auto;
   font-size: 0.9rem;
@@ -116,17 +128,29 @@ const CountContainer = styled.div`
     color: ${({ theme }) => theme.color.font};
     margin: 0 0.5rem;
   }
+
+  @media ${({ theme }) => theme.device.mobileM} {
+    font-size: 0.75rem;
+    width: 100%;
+    margin-left: 0.5rem;
+  }
 `;
 const TagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   padding: 0.5rem;
+  gap: 1rem;
 
   span {
-    margin-right: 1rem;
     font-weight: bold;
     color: #f15f5f;
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem;
     background-color: ${({ theme }) => theme.color.tagBox};
     border-radius: 0.5rem;
+
+    @media ${({ theme }) => theme.device.mobileL} {
+      font-size: 0.75rem;
+    }
   }
 `;
 

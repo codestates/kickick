@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 import { Profile, Common, BarChart } from "../../../components";
 
@@ -24,6 +24,7 @@ import staticsicon from "../../../assets/images/icon/staticsicon.png";
 export default function KickConfirm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [errMsg, setErrMsg] = useState();
   const { modalState, modalInfo } = useSelector((state) => state.kickboard);
   const { isLogin, isPoint } = useSelector((state) => state.login);
@@ -49,7 +50,17 @@ export default function KickConfirm() {
     getComments(modalInfo.post_id, 20)
       .then((data) => dispatch(getCommentsAction(data.data)))
       .catch((err) => console.log(err));
+
+    return () => {
+      dispatch(modalOffAction());
+    };
   }, [modalInfo.post_id, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(modalOffAction());
+    };
+  }, [pathname, dispatch]);
 
   return (
     <>

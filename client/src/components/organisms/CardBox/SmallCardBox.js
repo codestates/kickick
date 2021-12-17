@@ -9,7 +9,7 @@ import {
 } from "../../../components";
 export default function SmallCardBox({ type = "statics", data }) {
   const [dropdownOn, setDropDownOn] = useState(false);
-  console.log(data);
+
   return (
     <Container>
       {type === "statics" ? (

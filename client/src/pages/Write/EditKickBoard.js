@@ -185,6 +185,7 @@ const ViewPage = styled.div`
     font-size: 2.8rem;
     height: 4.5rem;
     padding: 0.5rem;
+    color: ${({ theme }) => theme.color.font};
   }
 
   > img {

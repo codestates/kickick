@@ -8,10 +8,13 @@ import {
   delComments,
 } from "../../../apis/comments";
 import { PostCommentInput, PostCommentItem, RectLoading } from "../../";
+
 import {
   commentSocketAction,
   targetNameAction,
 } from "../../../store/actions/socket";
+
+import commenticon from "../../../assets/images/icon/commenticon.png";
 
 export default function PostComment({ post_id, themeCode }) {
   const dispatch = useDispatch();
@@ -138,6 +141,7 @@ export default function PostComment({ post_id, themeCode }) {
 
   return (
     <Container>
+      <img src={commenticon} alt="" />
       <h3>댓글달기</h3>
       <PostCommentInput
         handleClick={handleClick}
@@ -162,6 +166,7 @@ export default function PostComment({ post_id, themeCode }) {
 }
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
@@ -169,13 +174,24 @@ const Container = styled.div`
   margin: 3rem 0;
   border-radius: 0.5rem;
 
+  > img {
+    position: absolute;
+    top: -2rem;
+    left: -1rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
   h3 {
     margin: 1rem 0;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     font-size: 1.2rem;
     color: ${({ theme }) => theme.color.font};
+    @media ${({ theme }) => theme.device.mobileL} {
+      font-size: 1rem;
+    }
   }
   strong {
-    color: ${({ theme }) => theme.color.mycomment};
+    color: skyblue;
   }
 `;

@@ -98,6 +98,9 @@ const UserInfoContainer = styled.div`
   .username {
     margin-left: 0.5rem;
     color: ${({ theme }) => theme.color.font};
+    @media ${({ theme }) => theme.device.mobileL} {
+      font-size: 0.8rem;
+    }
   }
 
   .datetime {

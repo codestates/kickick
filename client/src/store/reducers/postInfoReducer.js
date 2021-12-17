@@ -1,5 +1,7 @@
 import { GET_POST_INFO, GET_MAIN_INFO } from "../actions/postinfo";
 
+import { dateConverter } from "../../commons/utils/dateConverter";
+
 const initialState = {
   category: "",
   content: "",
@@ -22,6 +24,7 @@ const initialState = {
 export default function postInfoReducer(state = {}, action) {
   switch (action.type) {
     case GET_POST_INFO:
+      action.payload.created_at = dateConverter(action.payload.created_at);
       const payload = state.main_content
         ? { ...state, ...action.payload }
         : { ...action.payload };

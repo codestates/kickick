@@ -50,11 +50,20 @@ const Container = styled.div`
   width: 48rem;
   margin: 0 auto;
   padding-top: 3rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
 `;
 
 const RightContainer = styled.div`
-  width: 40.5rem;
+  width: 42rem;
   z-index: 1;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
 `;
 
 const Temporary = styled.div`
