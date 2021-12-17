@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import disableScroll from "disable-scroll";
@@ -97,6 +97,15 @@ export default function TotalSearch() {
       navigate(`/editboard/${category}`);
     }
   };
+
+  const handleDisableScroll = () => {
+    disableScroll.off();
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", handleDisableScroll);
+    return () => window.removeEventListener("popstate", handleDisableScroll);
+  }, []);
 
   return (
     <>
