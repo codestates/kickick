@@ -23,7 +23,6 @@ export default function Board({ themeCode, list }) {
   const apiCategory = useSelector((state) => state.postAdd.category);
   const { postsearch, onoff } = useSelector((state) => state);
   const [loading, setLoading] = useState(true);
-  // const path = window.location.pathname.split("/")[1];
 
   useEffect(() => {
     dispatch(getCategoryAction(category));

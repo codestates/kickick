@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
-import { DetailBoardTop, PostComment } from "../../components";
+import { DetailBoardTop, PostComment, Spinner } from "../../components";
 
 import { getPostsInfo } from "../../apis/posts";
 import { getKicksInfo } from "../../apis/kicks";
@@ -36,7 +36,7 @@ export default function DetailBoard({ themeCode }) {
       .catch((err) => console.log(err.response));
   }, [dispatch, kick_id]);
 
-  if (loading || !postInfo.post_id) return <Temporary />;
+  if (loading || !postInfo.post_id) return <Spinner />;
 
   return (
     <Container>
@@ -55,11 +55,20 @@ const Container = styled.div`
   width: 48rem;
   margin: 0 auto;
   padding-top: 3rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
 `;
 
 const RightContainer = styled.div`
-  width: 40.5rem;
+  width: 42rem;
   z-index: 1;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
 `;
 
 const Temporary = styled.div`

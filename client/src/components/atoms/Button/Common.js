@@ -61,7 +61,8 @@ const Container = styled.button`
     css`
       margin-left: auto;
       width: 5rem;
-
+      height: 2rem;
+      border-radius: 0;
       &:hover {
         background-color: ${({ theme }) => theme.color.hoverBasicBtn};
       }
@@ -72,9 +73,10 @@ const Container = styled.button`
     !disabled &&
     css`
       cursor: pointer;
+      background-color: #0c0c42;
       &:hover {
         opacity: 0.8;
-        transition: all 0.25s linear;
+        transition: all 0.15s linear;
       }
     `}
 

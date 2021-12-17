@@ -46,8 +46,10 @@ export default function Vote({ likes, is_liked, postId, username }) {
   };
   return (
     <Container type={type}>
-      {/* <img className="ballon" src={oddbubble} alt="" /> */}
-      <img src={Alien} onClick={() => handleClick("true")} alt="" />
+      <div className="imgbox">
+        <img className="ballon ballon_alien" src={oddbubble} alt="" />
+        <img src={Alien} onClick={() => handleClick("true")} alt="" />
+      </div>
       <span className="vote alien" onClick={() => handleClick("true")}>
         {alien}
       </span>
@@ -55,19 +57,22 @@ export default function Vote({ likes, is_liked, postId, username }) {
       <span className="vote astronaut" onClick={() => handleClick("false")}>
         {astronaut}
       </span>
-      <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
-      {/* <img className="ballon" src={innobubble} alt="" /> */}
+      <div className="imgbox">
+        <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
+        <img className="ballon ballon_astronaut" src={innobubble} alt="" />
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   font-weight: 550;
+
+  margin: 5rem 0;
 
   img {
     width: 2.5rem;
@@ -101,10 +106,23 @@ const Container = styled.div`
       `}
   }
 
+  .imgbox {
+    position: relative;
+  }
+
   .ballon {
-    /* display: none; */
     position: absolute;
-    width: 8rem;
-    height: 8rem;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .ballon_astronaut {
+    right: -100%;
+    top: -200%;
+  }
+
+  .ballon_alien {
+    left: -100%;
+    top: -200%;
   }
 `;
