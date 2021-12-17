@@ -34,9 +34,10 @@ export default function Footer() {
     },
   ];
   const [isOpen, setIsOpen] = useState(window.location.pathname.split("/")[1]);
-  const [isMenu, setIsMenu] = useState(false);
+  const [isMenu, setIsMenu] = useState(true);
 
   const naviOpener = (name) => {
+    setIsMenu(false);
     if (isOpen === name) {
       return setIsOpen("");
     }
@@ -55,7 +56,11 @@ export default function Footer() {
   return (
     <Container>
       <TreeImg src={tree} alt="tree" />
-      <ContextContainer scroll={scroll.scrollDirection} isOpen={isOpen}>
+      <ContextContainer
+        scroll={scroll.scrollDirection}
+        isOpen={isOpen}
+        isMenu={isMenu}
+      >
         <Frame>
           <Untouchable>
             <Logo onClick={() => navigate(`/`)}>KICK</Logo>
@@ -167,15 +172,16 @@ const FooterNav = styled.ul`
 const FooterNavBtn = styled.li`
   display: none;
   @media ${({ theme }) => theme.device.tablet} {
-    position:relative;
+    position: relative;
     display: flex;
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
     margin: ${({ theme }) =>
       `${theme.fontSizes.base.split("rem")[0] * 0.5}rem`};
     font-size: ${({ theme }) =>
       `${theme.fontSizes.base.split("rem")[0] * 1.8}rem`};
     font-family: ${({ theme }) => theme.fontFamily.jua};
+    color: white;
     white-space: nowrap;
     cursor: pointer;
   }
@@ -235,7 +241,7 @@ const MenuContainer = styled.div`
   width: 12rem;
   padding: 0.5rem;
   border-radius: 0.2rem;
-  background-color: skyblue;
+  background-color: #444444;
 `;
 
 const LoginCheck = styled.div`
@@ -267,8 +273,8 @@ const ContextContainer = styled.div`
 
   @media ${({ theme }) => theme.device.tablet} {
     position: relative;
-    bottom: ${({ isOpen, scroll, theme }) =>
-      scroll === "down"
+    bottom: ${({ isOpen, scroll, isMenu, theme }) =>
+      scroll === "down" && !isMenu
         ? `-${theme.fontSizes.base.split("rem")[0] * 7.3}rem`
         : isOpen
         ? 0
@@ -281,7 +287,7 @@ const ContextContainer = styled.div`
       `${theme.fontSizes.base.split("rem")[0] * 1}rem ${
         theme.fontSizes.base.split("rem")[0] * 1
       }rem 0 0`};
-    background-color: ${({ theme }) => theme.color.smallFooterBack};
+    background-color: #0c0c42;
     transition: bottom 0.4s;
     overflow: visible;
     z-index: 999;
@@ -306,12 +312,12 @@ const Untouchable = styled.div`
 const Logo = styled.p`
   font-size: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 6}rem`};
   font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
-  cursor:pointer;
+  cursor: pointer;
 
   @media ${({ theme }) => theme.device.tablet} {
     position: relative;
     top: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 0.7}rem`};
-    color: ${({ theme }) => theme.color.back};
+    color: white;
     font-size: ${({ theme }) =>
       `${theme.fontSizes.base.split("rem")[0] * 4}rem`};
   }

@@ -230,8 +230,10 @@ const Container = styled.div`
 
   const LightChanger = styled(ModeChanger)`
   animation-duration: 2s;
+  z-index: 99999999;
 `;
 
   const DarkChanger = styled(ModeChanger)`
-  animation-duration: 2.2s;
-`;
+    animation-duration: 2.2s;
+    z-index: 99999999;
+  `;
