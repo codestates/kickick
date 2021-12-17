@@ -9,6 +9,7 @@ import {
   KickConfirm,
   InfiniteScroll,
   BoardTop,
+  Spinner,
 } from "../../components";
 
 import { getPostsList } from "../../apis/posts";
@@ -80,7 +81,7 @@ export default function KickBoard() {
     postsearch.align,
   ]);
 
-  if (loading) return <div>d</div>;
+  if (loading) return <Spinner />;
 
   return (
     <>
