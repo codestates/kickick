@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { Profile, Common, Chart } from "../../../components";
+import { Profile, Common, BarChart } from "../../../components";
 
 import { purchaseKicks } from "../../../apis/kicks";
 import { getComments } from "../../../apis/comments";
@@ -14,11 +14,12 @@ import {
   resetCommentsAction,
 } from "../../../store/actions/comments";
 
+import { isPointAction } from "../../../store/actions/login";
+
 import kickmoney from "../../../assets/images/icon/kickmoney.png";
 import reviewicon from "../../../assets/images/icon/reviewicon.png";
 import introicon from "../../../assets/images/icon/introicon.png";
 import staticsicon from "../../../assets/images/icon/staticsicon.png";
-import { isPointAction } from "../../../store/actions/login";
 
 export default function KickConfirm() {
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ export default function KickConfirm() {
               <img src={staticsicon} alt="" />
               <h3>통계</h3>
             </KickSubtitle>
-            <Chart data={modalInfo.likes} />
+            <BarChart data={modalInfo.likes} />
             <KickSubtitle>
               <img src={reviewicon} alt="" />
               <h3>댓글</h3>

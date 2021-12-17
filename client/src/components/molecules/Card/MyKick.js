@@ -8,9 +8,7 @@ export default function MyKick({ data }) {
   const navigate = useNavigate();
 
   return (
-    <Container
-      onClick={() => navigate(`/detailkick/${data.post_id}/${data.kick_id}`)}
-    >
+    <Container onClick={() => navigate(`/detailkick/${data.kick_id}`)}>
       <Thumbnail src={data.thumbnail} type="kick" />
       <Description>
         <h3 className="post_name">{data.post_name}</h3>
