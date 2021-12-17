@@ -189,6 +189,11 @@ const Container = styled.div`
   min-height: 100vh;
   padding-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    padding-top: 0rem;
+    padding-bottom: 7rem;
+  }
 `;
 
   const Theme = styled.img`

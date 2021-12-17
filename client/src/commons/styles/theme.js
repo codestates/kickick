@@ -57,7 +57,7 @@ export const light = {
   type: "light",
   color: {
     back: "#ffffff",
-    smallFooterBack: "#0c0c42",
+    smallFooterBack: "#0c0c52",
     navBack: "#2980b9",
     main: "#0c0c42",
     alarm: "#0c0c42",

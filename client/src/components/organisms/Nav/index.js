@@ -138,6 +138,7 @@ const Point = styled.div`
   margin: 0.2rem;
   color: ${({ theme }) => theme.color.font};
   font-family: ${({ theme }) => theme.fontFamily.jua};
+  white-space: nowrap;
 `;
 
 const VerticalAlign = styled.div`
@@ -153,9 +154,9 @@ const Container = styled(VerticalAlign)`
   background-color: transparent;
   z-index: 999;
 
-  /* @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.tablet} {
     display: none;
-  } */
+  }
 `;
 
 const Frame = styled(VerticalAlign)`
@@ -168,10 +169,16 @@ const Frame = styled(VerticalAlign)`
   width: 100vw;
   height: 4rem;
   background-color: ${({ theme }) => theme.color.back};
+  transition: top 1s;
 `;
 
 const Separation = styled(VerticalAlign)`
-  margin: 0 1rem;
+  :first-child {
+    margin-left: 1rem;
+  }
+  :last-child {
+    margin-right: 1rem;
+  }
 `;
 
 const LoginChanger = styled.div`
@@ -196,16 +203,18 @@ const ThemeBtn = styled.img`
 const EditBoardContainer = styled.div`
   display:flex;
   flex-direction:column;
+  justify-content:center;
   align-items:center;
 `;
 
 const EditBoard = styled.div`
   margin: 0 0.3rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
   font-size: 1rem;
   font-family: "Jua", sans-serif;
   color: ${({ theme }) => theme.color.font};
-  border-radius: 0.5rem;
+  white-space: nowrap;
   cursor: pointer;
 
   :hover {

@@ -7,7 +7,7 @@ import ufo from "../../../assets/images/ufo.png";
 export default function NavBtn({
   context = "버튼",
   pathname = "",
-  size = "1rem",
+  size = "0.9rem",
   color = "",
   fontFamily = `'Jua', sans-serif`,
   backgroundColor,
@@ -106,6 +106,7 @@ const MainBtn = styled.div`
   font-size: ${({ size }) => size};
   font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ color, theme }) => (color ? color : theme.color.font)};
+  white-space:nowrap;
   border-radius: ${({ size }) => `${size.replace("rem", "") / 2}rem`};
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
