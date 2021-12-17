@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
-import { DetailBoardTop, PostComment } from "../../components";
+import { DetailBoardTop, PostComment, Spinner } from "../../components";
 
 import { getPostsInfo } from "../../apis/posts";
 import { getKicksInfo } from "../../apis/kicks";
 
 import {
   getPostInfoAction,
-  getKickInfoAction,
+  getMainInfoAction,
 } from "../../store/actions/postinfo";
 
 export default function DetailBoard({ themeCode }) {
@@ -23,7 +23,8 @@ export default function DetailBoard({ themeCode }) {
   useEffect(() => {
     getKicksInfo(kick_id)
       .then((data) => {
-        dispatch(getKickInfoAction(data.data.data.content));
+        dispatch(getMainInfoAction(data.data.data.content));
+
         setPostId(data.data.data.post_id);
         getPostsInfo(data.data.data.post_id)
           .then((data) => {
@@ -35,14 +36,14 @@ export default function DetailBoard({ themeCode }) {
       .catch((err) => console.log(err.response));
   }, [dispatch, kick_id]);
 
-  if (loading) return <Temporary />;
+  if (loading || !postInfo.post_id) return <Spinner />;
 
   return (
     <Container>
-      <RigthContainer>
+      <RightContainer>
         <DetailBoardTop postInfo={postInfo} type="kick" themeCode={themeCode} />
         <PostComment post_id={postId} />
-      </RigthContainer>
+      </RightContainer>
     </Container>
   );
 }
@@ -54,11 +55,20 @@ const Container = styled.div`
   width: 48rem;
   margin: 0 auto;
   padding-top: 3rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
 `;
 
-const RigthContainer = styled.div`
-  width: 40.5rem;
+const RightContainer = styled.div`
+  width: 42rem;
   z-index: 1;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
 `;
 
 const Temporary = styled.div`

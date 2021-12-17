@@ -26,13 +26,13 @@ const cardlist = [
   {
     type: "event",
     component(key, data) {
-      return <EventPost data={data} />;
+      return <EventPost key={key} data={data} />;
     },
   },
   {
     type: "mykick",
     component(key, data) {
-      return <MyKick data={data} />;
+      return <MyKick key={key} data={data} />;
     },
   },
 ];
@@ -44,6 +44,8 @@ export default function CardBox({ type }) {
   const kicklist = useSelector((state) => state.mypage.kick.data);
   if (type === "mykick") data = kicklist;
   else data = list;
+
+  if (!data) return <NoPost />;
 
   return (
     <Container>

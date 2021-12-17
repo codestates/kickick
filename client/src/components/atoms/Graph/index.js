@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch } from "react-redux";
+
 import Alien from "../../../assets/images/alien.svg";
 import Astronaut from "../../../assets/images/astronaut.svg";
-
+import innobubble from "../../../assets/images/innobubble.png";
+import oddbubble from "../../../assets/images/oddbubble.png";
 import { createLikes } from "../../../apis/likes";
 
 import { targetNameAction } from "../../../store/actions/socket";
@@ -44,11 +46,21 @@ export default function Vote({ likes, is_liked, postId, username }) {
   };
   return (
     <Container type={type}>
-      <img src={Alien} onClick={() => handleClick("true")} alt="" />
-      <span className="vote alien">괴짜 {alien}</span>
+      <div className="imgbox">
+        <img className="ballon ballon_alien" src={oddbubble} alt="" />
+        <img src={Alien} onClick={() => handleClick("true")} alt="" />
+      </div>
+      <span className="vote alien" onClick={() => handleClick("true")}>
+        {alien}
+      </span>
       <span>VS</span>
-      <span className="vote astronaut">혁신 {astronaut}</span>
-      <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
+      <span className="vote astronaut" onClick={() => handleClick("false")}>
+        {astronaut}
+      </span>
+      <div className="imgbox">
+        <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
+        <img className="ballon ballon_astronaut" src={innobubble} alt="" />
+      </div>
     </Container>
   );
 }
@@ -60,6 +72,8 @@ const Container = styled.div`
   gap: 1rem;
   font-weight: 550;
 
+  margin: 5rem 0;
+
   img {
     width: 2.5rem;
     height: 2.5rem;
@@ -69,6 +83,7 @@ const Container = styled.div`
     border-radius: 0.5rem;
     padding: 0.5rem;
     font-size: 1rem;
+    cursor: pointer;
   }
   .alien {
     color: #d3e4cd;
@@ -89,5 +104,25 @@ const Container = styled.div`
         color: blue;
         border: 2px solid blue;
       `}
+  }
+
+  .imgbox {
+    position: relative;
+  }
+
+  .ballon {
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .ballon_astronaut {
+    right: -100%;
+    top: -200%;
+  }
+
+  .ballon_alien {
+    left: -100%;
+    top: -200%;
   }
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -19,11 +19,11 @@ export default function ProfileEditForm() {
   const { isLogin } = useSelector((state) => state.login);
 
   const [disabled, setDisabled] = useState(true);
-  const [username, setUsername] = useState();
   const [profile, setProfile] = useState();
   const [rawProfile, setRawProfile] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errEmailMsg, setErrEmailMsg] = useState();
   const [errNameMsg, setErrNameMsg] = useState();
   const [errPWMsg, setErrPWMsg] = useState();
@@ -33,7 +33,7 @@ export default function ProfileEditForm() {
 
   const handleUsername = (e) => {
     const { message, isValid } = validation("username", e.target.value);
-    if (!isValid) {
+    if (!isValid && e.target.value) {
       setErrNameMsg(message);
     } else {
       setErrNameMsg(null);
@@ -45,7 +45,7 @@ export default function ProfileEditForm() {
 
   const handleEmail = (e) => {
     const { message, isValid } = validation("email", e.target.value);
-    if (!isValid) {
+    if (!isValid && e.target.value) {
       setErrEmailMsg(message);
       setEmailDupChecked(false);
     } else {
@@ -58,22 +58,18 @@ export default function ProfileEditForm() {
 
   const handlePassword = (e) => {
     const { message, isValid } = validation("password", e.target.value);
-    if (!isValid) {
+    if (!isValid && e.target.value) {
       setErrPWMsg(message);
       setDisabled(true);
     } else {
       setErrPWMsg(null);
       setDisabled(false);
     }
-    if (e.target.value === "") {
-      setPassword(null);
-      setDisabled(false);
-      setErrPWMsg(null);
-      return;
-    }
+
     setPassword(e.target.value);
   };
   const handleProfile = (raw, base64) => {
+    setDisabled(false);
     setRawProfile(raw);
     setProfile(base64);
   };
@@ -89,7 +85,7 @@ export default function ProfileEditForm() {
       dup: nameDupChecked,
     },
     {
-      head: "이메일",
+      head: "이메일 ",
       type: "email",
       placeholder: "새로운 이메일을 입력해주세요",
       value: email,
@@ -121,14 +117,19 @@ export default function ProfileEditForm() {
         const location = data.data.data.location;
         putUserInfo({ username, profile: location, email, password })
           .then(() => {
-            navigate("/mypage/home");
+            signOut()
+              .then(() => {
+                dispatch(isLoginAction(false));
+                dispatch(isPointAction(false));
+                navigate("/login", { replace: true });
+              })
+              .catch((err) => console.log(err));
             dispatch(
               isLoginAction({
                 ...isLogin,
-                username,
+                username: username === "" ? isLogin.username : username,
                 profile: location,
-                email,
-                password,
+                email: email === "" ? isLogin.email : email,
               })
             );
           })
@@ -137,13 +138,19 @@ export default function ProfileEditForm() {
     } else {
       putUserInfo({ username, email, password })
         .then(() => {
-          navigate("/mypage/home");
+          signOut()
+            .then(() => {
+              dispatch(isLoginAction(false));
+              dispatch(isPointAction(false));
+              navigate("/login", { replace: true });
+            })
+            .catch((err) => console.log(err));
+
           dispatch(
             isLoginAction({
               ...isLogin,
-              username,
-              email,
-              password,
+              username: username === "" ? isLogin.username : username,
+              email: email === "" ? isLogin.email : email,
             })
           );
         })
@@ -190,7 +197,7 @@ export default function ProfileEditForm() {
       <Container>
         <ListContainer>
           {profileInputList.map((el) => (
-            <ProfileContainer>
+            <ProfileContainer type={el.type}>
               <ProfileInput
                 key={el.head}
                 head={el.head}
@@ -248,7 +255,7 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: 2rem;
   flex-wrap: wrap;
-  height: 25rem;
+  height: 28rem;
 
   @media ${({ theme }) => theme.device.notebookS} {
     width: 100%;
@@ -265,7 +272,18 @@ const ProfileContainer = styled.div`
     top: 2.7rem;
     right: 1rem;
     font-weight: bold;
+    color: #0c0c42;
   }
+  ${({ type }) =>
+    (type === "text" || type === "email" || type === "password") &&
+    css`
+      @media ${({ theme }) => theme.device.notebookS} {
+        width: 60%;
+      }
+      @media ${({ theme }) => theme.device.tablet} {
+        width: 100%;
+      }
+    `}
 `;
 
 const ResignContainer = styled.div`

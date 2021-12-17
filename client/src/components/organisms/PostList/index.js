@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
-import disableScroll from "disable-scroll";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
 
-import {
-  PostItem,
-  Pagination,
-  Common,
-  Modal,
-  NoPost,
-} from "../../../components";
+import { PostItem, Pagination } from "../../../components";
 
 const postList = [
   {
@@ -46,11 +38,7 @@ const postList = [
 ];
 
 export default function PostList({ type }) {
-  const { isLogin } = useSelector((state) => state.login);
   const { label, reducer } = postList.find((el) => el.type === type);
-  const { pathname } = useLocation();
-  const [page, category] = decodeURI(pathname).slice(1).split("/");
-  const [modal, setModal] = useState(false);
 
   let data;
   let count;
@@ -67,28 +55,6 @@ export default function PostList({ type }) {
     count = mypage.count;
   }
 
-  const navigate = useNavigate();
-
-  const handleMovePage = () => {
-    if (!isLogin || isLogin.type === "email auth required") {
-      setModal(true);
-      disableScroll.on();
-    } else {
-      navigate(`/editboard/${category}`);
-    }
-  };
-
-  const handleModalOff = () => {
-    setModal(false);
-    disableScroll.off();
-  };
-
-  const handleModalFunc = () => {
-    setModal(false);
-    disableScroll.off();
-    navigate("/login");
-  };
-
   return (
     <Container>
       <PostListContainer type={type}>
@@ -103,17 +69,8 @@ export default function PostList({ type }) {
           data.map((el, idx) => <PostItem key={idx} data={el} type={type} />)
         )}
       </PostListContainer>
-      {type === "freepost" && (
-        <Common type="register" label="글쓰기" handleClick={handleMovePage} />
-      )}
+
       {data.length !== 0 && <Pagination count={count} />}
-      {modal ? (
-        <Modal
-          handleModal={handleModalOff}
-          handleModalFunc={handleModalFunc}
-          type="login"
-        />
-      ) : null}
     </Container>
   );
 }
@@ -238,6 +195,7 @@ const PostListContainer = styled.div`
             font-size: 1.2rem;
             font-weight: bold;
             height: 2rem;
+            padding-left: 0.5rem;
           }
           > div:nth-of-type(3) {
             flex: 1;

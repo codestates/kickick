@@ -34,7 +34,7 @@ export default function EditNotice() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { category } = useParams();
-  const { postAdd, login } = useSelector((state) => state);
+  const { postAdd, login, themeMode } = useSelector((state) => state);
   const [postname, setPostname] = useState();
   const [intro, setIntro] = useState();
   const [content, setContent] = useState("");
@@ -111,20 +111,22 @@ export default function EditNotice() {
           <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
         </InfoContainer>
         <InfoContainer>
-          <h3>본문</h3>
-          <EditQuill
-            content={content}
-            setContent={setContent}
-            handleContent={handleContent}
-          />
-        </InfoContainer>
-        <InfoContainer>
           <h3>공지 소개글</h3>
           <IntroTextarea
             handleViewIntro={handleViewIntro}
             handleTextarea={handleIntro}
           />
         </InfoContainer>
+        <InfoContainer>
+          <h3>본문</h3>
+          <EditQuill
+            content={content}
+            setContent={setContent}
+            handleContent={handleContent}
+            themeCode={themeMode[1]}
+          />
+        </InfoContainer>
+
         <BtnContainer>
           <Common label="등 록" type="bigger" handleClick={handleClick} />
         </BtnContainer>
@@ -142,10 +144,11 @@ export default function EditNotice() {
           theme={"bubble"}
           value={content}
           style={{
-            backgroundColor: "#eee",
+            backgroundColor: themeMode[1] === "light" ? "#eee" : "#1E1F21",
             padding: "1rem 0",
             borderRadius: "0.5rem",
             height: "40rem",
+            color: themeMode[1] === "light" ? "black" : "white",
           }}
         />
       </ViewPage>
@@ -192,10 +195,10 @@ const ViewPage = styled.div`
   > blockquote {
     font-size: 1.2rem;
     font-style: italic;
-    color: gray;
+    color: ${({ theme }) => theme.color.blockquoteColor};
     padding: 1.5rem;
-    background: #fafafa;
-    border-left: 3px solid #0c0c42;
+    background: ${({ theme }) => theme.color.blockquote};
+    border-left: 3px solid ${({ theme }) => theme.color.alarm};
     margin: 1rem 0;
     min-height: 5rem;
     line-height: 1.5;

@@ -33,8 +33,8 @@ export default function EditKickBoard({ themeCode }) {
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [postname, setPostname] = useState();
-  const [intro, setIntro] = useState();
+  const [postname, setPostname] = useState("");
+  const [intro, setIntro] = useState("");
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
@@ -67,12 +67,12 @@ export default function EditKickBoard({ themeCode }) {
           formData.append("img", thumbnail);
           uploadSingleImage(formData, "post").then((data) => {
             const location = data.data.data.location;
-            createKicks(post_id, location, postAdd.kick_content).then(() => {
+            createKicks(post_id, location, content).then(() => {
               navigate(`/kickboard/${category}`);
             });
           });
         } else {
-          createKicks(post_id, null, postAdd.kick_content).then(() => {
+          createKicks(post_id, null, content).then(() => {
             navigate(`/kickboard/${category}`);
           });
         }
@@ -185,6 +185,7 @@ const ViewPage = styled.div`
     font-size: 2.8rem;
     height: 4.5rem;
     padding: 0.5rem;
+    color: ${({ theme }) => theme.color.font};
   }
 
   > img {

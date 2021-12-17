@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaArrowDown } from "react-icons/fa";
 
-import { PostStatics, Attendance, IconText } from "../../../components";
+import {
+  PostStatics,
+  Attendance,
+  IconText,
+  DonutChart,
+} from "../../../components";
 export default function SmallCardBox({ type = "statics", data }) {
   const [dropdownOn, setDropDownOn] = useState(false);
+
   return (
     <Container>
       {type === "statics" ? (
@@ -14,17 +19,23 @@ export default function SmallCardBox({ type = "statics", data }) {
             <PostStatics type="우주인" num={data.astronaut} />
             <PostStatics type="중립" num={data.common} />
           </MainContainer>
-          <SubContainer dropdown={dropdownOn}>
-            <div>dddddddd</div>
-            <div onClick={() => setDropDownOn(!dropdownOn)}>
-              <IconText label="자세히보기" />
-            </div>
+          <SubContainer>
+            <StaticsContainer dropdown={dropdownOn}>
+              <DonutChart data={data} />
+            </StaticsContainer>
+            <ToggleContainer onClick={() => setDropDownOn(!dropdownOn)}>
+              {dropdownOn ? (
+                <IconText label="닫기" />
+              ) : (
+                <IconText label="통계보기" />
+              )}
+            </ToggleContainer>
           </SubContainer>
         </>
       ) : (
         <MainContainer>
-          <Attendance type="kick_money" num={100} />
-          <Attendance type="serial_attendance" num={3} />
+          <Attendance type="kick_money" num={data.kickmoney} />
+          <Attendance type="serial_attendance" num={data.serial} />
         </MainContainer>
       )}
     </Container>
@@ -45,9 +56,17 @@ const MainContainer = styled.div`
 const SubContainer = styled.div`
   border-radius: 0 0 0.5rem 0.5rem;
   border: 1px solid #d8d8d8;
-  background: #efffff;
-  padding: 0.5rem;
-  overflow: hidden;
+  background: #eee;
+`;
 
-  height: ${({ dropdown }) => (dropdown ? "15rem" : "3rem")};
+const StaticsContainer = styled.div`
+  height: ${({ dropdown }) => (dropdown ? "15rem" : "0rem")};
+  background: ${({ theme }) => theme.color.back};
+  transition: height 0.15s linear;
+  overflow: hidden;
+`;
+
+const ToggleContainer = styled.div`
+  height: 3rem;
+  padding: 0.5rem;
 `;

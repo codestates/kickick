@@ -11,5 +11,5 @@ export const getLogs = (type, limit, page_num) => {
   if (limit) query += `limit=${limit}&`;
   if (page_num) query += `page_num=${page_num}&`;
 
-  return api.get(`/logs/info${query}`);
+  return api.get(`/logs/info${query.slice(0, -1)}`);
 };

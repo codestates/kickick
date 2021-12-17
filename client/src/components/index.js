@@ -10,6 +10,7 @@ export { default as SignupInput } from "./atoms/Input/SignupInput";
 export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
+export { default as Profile2 } from "./atoms/Profile";
 export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";
@@ -24,6 +25,7 @@ export { default as Modal } from "./atoms/Modal";
 export { default as InfiniteScroll } from "./atoms/InfiniteScroll";
 export { default as Vote } from "./atoms/Graph";
 export { default as NoPost } from "./atoms/NoPost";
+export { default as Spinner } from "./atoms/LoadingSpinner";
 
 // molecules
 export { default as BtnChamber } from "./molecules/BtnChamber/BtnChamber";
@@ -49,7 +51,8 @@ export { default as Select } from "./molecules/Select";
 export { default as TabBox } from "./molecules/TabBox";
 export { default as IconContainer } from "./molecules/IconContainer";
 export { default as ConditionChamber } from "./molecules/InputBox/ConditionChamber";
-
+export { default as BarChart } from "./molecules/Chart/Bar";
+export { default as DonutChart } from "./molecules/Chart/Donut";
 // organisms
 export { default as Nav } from "./organisms/Nav";
 export { default as Footer } from "./organisms/Footer";
@@ -67,7 +70,6 @@ export { default as MyPageAside } from "./organisms/Aside";
 export { default as ProfileEditForm } from "./organisms/Form/ProfileEditForm";
 export { default as PostList } from "./organisms/PostList";
 export { default as KickConfirm } from "./organisms/Modal/KickConfirm";
-export { default as Chart } from "./organisms/Chart";
 export { default as Pagination } from "./organisms/Pagination";
 export { default as S_BoardBottom } from "./organisms/BoardBottom/S_BoardBottom";
 export { default as S_BoardTop } from "./organisms/BoardTop/S_BoardTop";

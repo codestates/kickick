@@ -30,7 +30,9 @@ import {
   getPurchasedKickAction,
 } from "../../store/actions/mypage";
 
-import { selectPageAction } from "../../store/actions/postsearch";
+import { resetPaginationAction } from "../../store/actions/postsearch";
+
+import { serialAttendacne } from "../../commons/utils/serialAttendance";
 
 import controlicon from "../../assets/images/icon/controlicon.png";
 import profileinfoicon from "../../assets/images/icon/profileinfoicon.png";
@@ -59,45 +61,14 @@ const pageList = [
 ];
 
 export default function MyPage() {
+  const dispatch = useDispatch();
   const { category } = useParams();
   const { component, title } = pageList.find((el) => el.category === category);
-  const dispatch = useDispatch();
-  const postsearch = useSelector((state) => state.postsearch);
   const { isLogin } = useSelector((state) => state.login);
 
   useEffect(() => {
-    dispatch(selectPageAction(1));
+    dispatch(resetPaginationAction());
   }, [category, dispatch]);
-
-  useEffect(() => {
-    getFavorites(null, 10, postsearch.selectPage)
-      .then((data) => {
-        dispatch(getFavoritesAction(data.data));
-      })
-      .catch((err) => console.log(err.response));
-
-    getPostsList({ page_num: postsearch.selectPage })
-      .then((data) => {
-        dispatch(getMyPostAction(data.data));
-      })
-      .catch((err) => console.log(err.response));
-
-    getComments(null, null, postsearch.selectPage)
-      .then((data) => {
-        dispatch(getMyCommentAction(data.data));
-      })
-      .catch((err) => console.log(err.response));
-    getKicksList(10, postsearch.selectPage)
-      .then((data) => {
-        dispatch(getPurchasedKickAction(data.data));
-      })
-      .catch((err) => console.log(err.response));
-    getLogs("kick_money", 10, postsearch.selectPage)
-      .then((data) => {
-        dispatch(getKickmoneylogAction(data.data));
-      })
-      .catch((err) => console.log(err.response));
-  }, [dispatch, postsearch.selectPage, postsearch.refresh]);
 
   if (!isLogin) return <div>d</div>;
   return (
@@ -169,26 +140,94 @@ export function Profile() {
 }
 
 export function Attendance() {
+  const [loading, setLoading] = useState(true);
+  const [serial, setSerial] = useState();
+  const [kickmoney, setKickmoney] = useState();
+
+  useEffect(() => {
+    getLogs("signin", 30)
+      .then((data) => {
+        setSerial(serialAttendacne(data.data.data));
+        getLogs("kick_money", 30)
+          .then((data) => {
+            setKickmoney(
+              data.data.data
+                .find((el) => el.content.slice(0, 3) === "로그인")
+                .content.split("_")[1]
+                .split(" ")[0]
+            );
+          })
+          .catch((err) => console.log(err));
+      })
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (loading) return <div>d</div>;
+
   return (
     <AttendanceContainer>
-      <SmallCardBox type="attendance" />
-      <Calendar />
+      <SmallCardBox type="attendance" data={{ serial, kickmoney }} />
+      <Calendar standardSize="1.5" unit="rem" />
     </AttendanceContainer>
   );
 }
 
 export function Favorites() {
+  const postsearch = useSelector((state) => state.postsearch);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getFavorites(null, 10, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getFavoritesAction(data.data));
+      })
+      .catch((err) => console.log(err.response));
+  }, [postsearch.selectPage, dispatch, postsearch.refresh]);
+
   return <PostList type="mypagefavorites" />;
 }
 export function MyPost() {
+  const postsearch = useSelector((state) => state.postsearch);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getPostsList({ page_num: postsearch.selectPage })
+      .then((data) => {
+        dispatch(getMyPostAction(data.data));
+      })
+      .catch((err) => console.log(err.response));
+  }, [postsearch.selectPage, dispatch]);
+
   return <PostList type="mypagemypost" />;
 }
 export function MyComment() {
+  const postsearch = useSelector((state) => state.postsearch);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getComments(null, null, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getMyCommentAction(data.data));
+      })
+      .catch((err) => console.log(err.response));
+  }, [postsearch.selectPage, dispatch]);
+
   return <PostList type="mypagemycomment" />;
 }
 
 export function PurchasedKick() {
+  const postsearch = useSelector((state) => state.postsearch);
+  const dispatch = useDispatch();
   const { count } = useSelector((state) => state.mypage.kick);
+
+  useEffect(() => {
+    getKicksList(10, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getPurchasedKickAction(data.data));
+      })
+      .catch((err) => console.log(err.response));
+  }, [postsearch.selectPage, dispatch]);
 
   return (
     <>
@@ -199,6 +238,17 @@ export function PurchasedKick() {
 }
 
 export function KickmoneyLog() {
+  const postsearch = useSelector((state) => state.postsearch);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getLogs("kick_money", 10, postsearch.selectPage)
+      .then((data) => {
+        dispatch(getKickmoneylogAction(data.data));
+      })
+      .catch((err) => console.log(err.response));
+  }, [postsearch.selectPage, dispatch]);
+
   return <PostList type="mypagelog" />;
 }
 
@@ -211,7 +261,7 @@ export function Navigator({ title }) {
       <FaArrowLeft
         onClick={() => {
           navigate(-1);
-          dispatch(selectPageAction(1));
+          dispatch(resetPaginationAction());
         }}
       />
       <h2>{title}</h2>
