@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector,useDispatch } from "react-redux";
 
 import { useScroll } from "../../../hooks/useScroll";
 import { FaGithub, FaStream } from "react-icons/fa";
 import tree from "../../../assets/images/FooterTree.png";
+import { preThemeModeAction } from "../../../store/actions/nav";
 
 export default function Footer() {
   const scroll = useScroll();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const themeMode = useSelector((state) => state.themeMode);
+  const isLogin = useSelector((state)=>state.login)
+  const preThemeMode = useSelector((state) => state.persist.preThemeMode);
   const member = [
     {
       name: "HAN TEA GYU",
@@ -25,7 +33,8 @@ export default function Footer() {
       github: "https://github.com/gozld5153",
     },
   ];
-  const [isOpen, setIsOpen] = useState("");
+  const [isOpen, setIsOpen] = useState(window.location.pathname.split("/")[1]);
+  const [isMenu, setIsMenu] = useState(false);
 
   const naviOpener = (name) => {
     if (isOpen === name) {
@@ -34,13 +43,22 @@ export default function Footer() {
     return setIsOpen(name);
   }
 
+  const moveLink = (name) => { 
+    navigate(`/${isOpen}/${name}`);
+  };
+
+  const themeChanger = () => {
+    if (preThemeMode === "light") dispatch(preThemeModeAction("dark"));
+    else dispatch(preThemeModeAction("light"));
+  };
+
   return (
     <Container>
       <TreeImg src={tree} alt="tree" />
       <ContextContainer scroll={scroll.scrollDirection} isOpen={isOpen}>
         <Frame>
           <Untouchable>
-            <Logo onClick={() => window.location.assign(`/`)}>KICK</Logo>
+            <Logo onClick={() => navigate(`/`)}>KICK</Logo>
             <IntroduceTitle>소개</IntroduceTitle>
             <IntroduceContent>
               괴벽인가,혁신인가 당신의 개성을 드러내세요!
@@ -52,22 +70,55 @@ export default function Footer() {
           <FooterNav>
             <FooterNavBtn onClick={() => naviOpener("board")}>
               게시판
-              <SpeechBubble />
-              <DropdownFooter>
-                <div>학습</div>
-                <div>여가</div>
-                <div>생활</div>
-                <div>경제</div>
-                <div>여행</div>
-                <div>예술</div>
-              </DropdownFooter>
+              <SpeechBubble isOpen={isOpen === "board"} />
             </FooterNavBtn>
-            <FooterNavBtn onClick={() => naviOpener("kick")}>
+            <FooterNavBtn onClick={() => naviOpener("kickboard")}>
               킥 배우기
+              <SpeechBubble isOpen={isOpen === "kickboard"} />
             </FooterNavBtn>
-            <FooterNavBtn onClick={() => setIsOpen("")}>
+            <FooterNavBtn
+              onClick={() => {
+                setIsOpen("");
+                setIsMenu(!isMenu);
+              }}
+            >
               <FaStream />
+              <MenuContainer isMenu={isMenu}>
+                <LoginCheck isLogin={isLogin.isLogin}>
+                  <div>{`포인트 ${isLogin.isPoint} P`}</div>
+                </LoginCheck>
+                <LoginCheck
+                  isLogin={isLogin.isLogin && isLogin.isLogin.type !== "guest"}
+                >
+                  <div onClick={() => navigate("/login")}>로그인</div>
+                  <div onClick={() => navigate("/signup")}>회원가입</div>
+                </LoginCheck>
+                <div onClick={() => navigate("/intro")}>소개</div>
+                <div onClick={() => navigate("/notice/소식")}>공지</div>
+                <LoginCheck
+                  isLogin={isLogin.isLogin && isLogin.isLogin.type !== "guest"}
+                >
+                  <div onClick={() => navigate("/write/board")}>
+                    게시판 글쓰기
+                  </div>
+                  <div onClick={() => navigate("/write/kickboard")}>
+                    킥 글쓰기
+                  </div>
+                  <div onClick={() => navigate("/mypage/home")}>마이페이지</div>
+                </LoginCheck>
+                <div onClick={themeChanger}>{`${
+                  themeMode[1] === "light" ? "라이트" : "다크"
+                } 모드`}</div>
+              </MenuContainer>
             </FooterNavBtn>
+            <DropdownFooter isOpen={isOpen}>
+              <DropdownText onClick={() => moveLink("학습")}>학습</DropdownText>
+              <DropdownText onClick={() => moveLink("여가")}>여가</DropdownText>
+              <DropdownText onClick={() => moveLink("생활")}>생활</DropdownText>
+              <DropdownText onClick={() => moveLink("경제")}>경제</DropdownText>
+              <DropdownText onClick={() => moveLink("여행")}>여행</DropdownText>
+              <DropdownText onClick={() => moveLink("예술")}>예술</DropdownText>
+            </DropdownFooter>
           </FooterNav>
           {member.map((el) => (
             <MemberBox
@@ -100,12 +151,14 @@ const Container = styled.div`
 const FooterNav = styled.ul`
   display: none;
   @media ${({ theme }) => theme.device.tablet} {
+    position: relative;
     display: flex;
     margin-top: ${({ theme }) =>
       `${theme.fontSizes.base.split("rem")[0] * 0.8}rem`};
+    font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
   }
 
-  > :last-child {
+  > :nth-child(3) {
     position: relative;
     top: -${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 0.15}rem`};
   }
@@ -132,9 +185,9 @@ const SpeechBubble = styled.div`
   display: none;
   @media ${({ theme }) => theme.device.tablet} {
     position: absolute;
-    top: 2rem;
-    left: 2rem;
-    display: flex;
+    top: 2.3rem;
+    left: 2.3rem;
+    display: ${({ isOpen }) => isOpen ? "flex" : "none"};
     width: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 1}rem`};
     height: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 1}rem`};
     background-color: white;
@@ -147,20 +200,46 @@ const DropdownFooter = styled.div`
   display: none;
   @media ${({ theme }) => theme.device.tablet} {
     position: absolute;
-    top: 2.5rem;
-    /* left: 2.5rem; */
-    display: flex;
+    top: 3.3rem;
+    left: -8rem;
+    display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
     justify-content: space-around;
     align-items: center;
     width: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 23}rem`};
     height: ${({ theme }) =>
-      `${theme.fontSizes.base.split("rem")[0] * 3.5}rem`};
+      `${theme.fontSizes.base.split("rem")[0] * 2.7}rem`};
     border-radius: ${({ theme }) =>
       `${theme.fontSizes.base.split("rem")[0] * 0.5}rem`};
     color: black;
     background-color: white;
     z-index: 9999;
   }
+`;
+
+const DropdownText = styled.div`
+  @media ${({ theme }) => theme.device.tablet} {
+    position: relative;
+    top: ${({ theme }) => `${theme.fontSizes.base.split("rem")[0] * 0.3}rem`};
+    font-size: ${({ theme }) =>
+      `${theme.fontSizes.base.split("rem")[0] * 1.3}rem`};
+    cursor: pointer;
+  }
+`;
+
+const MenuContainer = styled.div`
+  position: absolute;
+  bottom: 2.5rem;
+  right: 0rem;
+  display: ${({ isMenu }) => (isMenu ? "flex" : "none")};
+  flex-direction: column;
+  width: 12rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  background-color: skyblue;
+`;
+
+const LoginCheck = styled.div`
+  display: ${({ isLogin }) => isLogin ? "default":"none"};
 `;
 
 const TreeImg = styled.img`
@@ -204,6 +283,7 @@ const ContextContainer = styled.div`
       }rem 0 0`};
     background-color: ${({ theme }) => theme.color.smallFooterBack};
     transition: bottom 0.4s;
+    overflow: visible;
     z-index: 999;
   }
 `;

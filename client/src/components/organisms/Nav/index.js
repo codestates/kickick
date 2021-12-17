@@ -45,7 +45,7 @@ export default function Nav({ socketClient }) {
         state: { category: decodeURI(location.pathname.split("/")[2]) },
       });
     }
-    return navigate(`/write/${path}`); 
+    return navigate(`/write/${path}`);
   }
 
   useEffect(() => {
