@@ -173,7 +173,7 @@ const SearchContainer = styled.div`
     margin: 1rem 0;
     justify-content: center;
     align-items: center;
-    background-color: #eeeeee;
+    background-color: ${({ theme }) => theme.color.searchBack};
     border-radius: 20px;
     > div:nth-of-type(2) {
       width: 40%;

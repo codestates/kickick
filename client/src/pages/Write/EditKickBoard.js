@@ -67,12 +67,12 @@ export default function EditKickBoard({ themeCode }) {
           formData.append("img", thumbnail);
           uploadSingleImage(formData, "post").then((data) => {
             const location = data.data.data.location;
-            createKicks(post_id, location, postAdd.kick_content).then(() => {
+            createKicks(post_id, location, content).then(() => {
               navigate(`/kickboard/${category}`);
             });
           });
         } else {
-          createKicks(post_id, null, postAdd.kick_content).then(() => {
+          createKicks(post_id, null, content).then(() => {
             navigate(`/kickboard/${category}`);
           });
         }

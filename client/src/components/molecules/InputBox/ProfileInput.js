@@ -101,7 +101,7 @@ const Container = styled.div`
 const ErrorBox = styled.div`
   margin-top: 0.5rem;
   margin-left: 0.5rem;
-  height: 1.5rem;
+  height: 2rem;
   font-size: 0.9rem;
   color: #ff5555;
 `;

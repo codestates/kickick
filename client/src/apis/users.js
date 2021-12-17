@@ -1,3 +1,4 @@
+import { AiOutlineConsoleSql } from "react-icons/ai";
 import api from "./";
 /**
  * Query가 있으면 Query로 검색(email / username 둘 중 하나만)
@@ -23,8 +24,13 @@ export const getUserInfo = (username, email, today_login, limit, page_num) => {
 /**
  * @param {object} data required
  */
-export const putUserInfo = (data) => {
-  // data {username,email,password,profile,birthday,kick_money}
+export const putUserInfo = ({ username, email, password, profile }) => {
+  const data = {};
+  if (username !== "") data.username = username;
+  if (email !== "") data.email = email;
+  if (password !== "") data.password = password;
+  if (profile) data.profile = profile;
+
   return api.put(`users/info`, data);
 };
 /**

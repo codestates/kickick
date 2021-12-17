@@ -27,7 +27,9 @@ import {
 export default function KickBoard() {
   const { category } = useParams();
   const dispatch = useDispatch();
-  const { kickboard, postsearch, postAdd } = useSelector((state) => state);
+  const { kickboard, postsearch, postAdd, login } = useSelector(
+    (state) => state
+  );
   const [loading, setLoading] = useState(true);
   const [onScroll, setOnScroll] = useState(true);
 

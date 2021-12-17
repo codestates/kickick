@@ -195,6 +195,7 @@ const PostListContainer = styled.div`
             font-size: 1.2rem;
             font-weight: bold;
             height: 2rem;
+            padding-left: 0.5rem;
           }
           > div:nth-of-type(3) {
             flex: 1;
