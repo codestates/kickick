@@ -184,11 +184,16 @@ const SubBtn = styled.img`
 
 const SubTitle = styled.span`
   position: absolute;
-  top: ${({ size }) => `${size.split("rem")[0] * 0.7}rem`};
+  top: ${({ size, name }) =>
+    name === "이벤트"
+      ? `${size.split("rem")[0] * 0.8}rem`
+      : `${size.split("rem")[0] * 0.65}rem`};
   left: ${({ size, name }) =>
     name === "이벤트"
       ? `${size.split("rem")[0] * 0.6}rem`
-      : `${size.split("rem")[0] * 0.85}rem`};
+      : `${size.split("rem")[0] * 0.65}rem`};
+  font-size: ${({ size, name }) =>
+    name === "이벤트" ? `${size.split("rem")[0] * 0.7}rem` : "1rem"};
   font-family: ${({ theme }) => theme.fontFamily.jua};
   white-space: nowrap;
 `;

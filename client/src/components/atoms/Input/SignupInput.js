@@ -121,6 +121,11 @@ const Container = styled.div`
   border-radius: ${({ height }) => `${height * 0.04}rem`};
   background-color: ${({ theme }) => theme.color.modalBack};
   overflow: hidden;
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    justify-content: center;
+    width: inherit;
+  }
 `;
 
 const Input = styled.input`
@@ -135,6 +140,10 @@ const Input = styled.input`
   ::placeholder {
     opacity: 0.7;
     color: ${({ theme }) => theme.color.placeholderGray};
+  }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    font-size: ${({ height }) => `${height * 0.5}rem`};
   }
 `;
 

@@ -35,7 +35,13 @@ export default function MainEvent({
 
 const Container = styled.div`
   display: flex;
+  width: 80vw;
+  justify-content: flex-start;
   font-family: ${({ theme }) => theme.fontFamily.jua};
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    justify-content: center;
+  }
 `;
 
 const EventContainer = styled.article`

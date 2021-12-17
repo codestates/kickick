@@ -49,7 +49,9 @@ export default function Nav({ socketClient }) {
   }
 
   useEffect(() => {
+    // console.log("작동했음");
     if (isLogin && socketChange.targetId) {
+      // console.log("전송했음", socketChange.targetId);
       socketClient.emit("alarms", {
         username: socketChange.targetId,
         ...socketChange.alarmPage,

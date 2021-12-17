@@ -152,22 +152,23 @@ export default function SignupForm() {
   return (
     <Container>
       {ArrInfo.map((el, idx) => (
-        <SignupInputBox
-          title={el.title}
-          type={el.type}
-          part={el.part}
-          width={width}
-          height={height}
-          placeholder={el.placeholder}
-          inputHandler={inputHandler}
-          duplicateCheckHanlder={duplicateCheckHanlder}
-          moveNextInput={moveNextInput}
-          inputRef={el.inputRef}
-          validation={el.validation}
-          vaildHanlder={vaildHanlder}
-          idx={idx}
-          key={idx}
-        />
+        <div key={idx}>
+          <SignupInputBox
+            title={el.title}
+            type={el.type}
+            part={el.part}
+            width={width}
+            height={height}
+            placeholder={el.placeholder}
+            inputHandler={inputHandler}
+            duplicateCheckHanlder={duplicateCheckHanlder}
+            moveNextInput={moveNextInput}
+            inputRef={el.inputRef}
+            validation={el.validation}
+            vaildHanlder={vaildHanlder}
+            idx={idx}
+          />
+        </div>
       ))}
       <DatePicker width={width} height={height} inputHandler={inputHandler} />
       <ConditionChamber
@@ -190,6 +191,11 @@ const Container = styled.div`
   min-height: 79vh;
   align-items: center;
   width: ${({ width }) => `${width}rem`};
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: 100vw;
+    padding: 0 2vw;
+  }
 `;
 
 const SubmitContainer = styled.div`

@@ -157,9 +157,6 @@ const Container = styled.div`
 `;
 
 const AlarmContainer = styled.button`
-  position: relative;
-  top: ${({ theme, fontSize }) =>
-    `${theme.fontSizes[fontSize].split("rem")[0] / 10}rem`};
   border-radius: 50%;
   color: ${({ theme }) => theme.color.font};
   font-size: ${({ theme, fontSize }) => theme.fontSizes[fontSize]};

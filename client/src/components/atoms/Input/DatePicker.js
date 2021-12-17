@@ -66,7 +66,7 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
             isFocus={isFocus}
             width={width}
             height={height}
-            divide={3.4}
+            divide={3.3}
           >
             <span>{selectDate.year + "년"}</span>
             {isFocus === "year" ? <FaCaretUp /> : <FaCaretDown />}
@@ -75,7 +75,7 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
             onMouseLeave={() => selectOpenter("")}
             width={width}
             height={height}
-            divide={3.4}
+            divide={3.3}
             isFocus={isFocus}
             part="year"
           >
@@ -84,7 +84,7 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
                 onClick={() => inputOptionValue(el, "year")}
                 width={width}
                 height={height}
-                divide={3.4}
+                divide={3.3}
                 key={idx}
               >
                 {el + "년"}
@@ -127,7 +127,7 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
         </DatePickerSelectFrame>
         <DatePickerSelectFrame>
           <DatePickerInput
-            value={selectDate.date}
+            value={selectDate.date > 31 ? 31 : selectDate.date}
             onChange={(e) =>
               setSelectDate({
                 ...selectDate,
@@ -138,36 +138,13 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
             height={height}
             divide={3.4}
           >
-            <input type="number" max={31} />일
+            <input
+              type="number"
+              value={selectDate.date > 31 ? 31 : selectDate.date}
+              max={31}
+            />
+            일
           </DatePickerInput>
-          {/* <DatePickerSelect
-            onClick={() => selectOpenter("date")}
-            part="date"
-            isFocus={isFocus}
-            width={width}
-            height={height}
-            divide={3.4}
-          >
-            <span>{selectDate.date + "일"}</span>
-            {isFocus === "date" ? <FaCaretUp /> : <FaCaretDown />}
-          </DatePickerSelect> */}
-          {/* <DatePickerOptionContaienr
-            width={width}
-            height={height}
-            divide={3.4}
-            isFocus={isFocus}
-            part="date"
-          >
-            <DatePickerOption
-              value={18}
-              onClick={() => inputOptionValue(18, "date")}
-              width={width}
-              height={height}
-              divide={3.4}
-            >
-              {18 + "일"}
-            </DatePickerOption>
-          </DatePickerOptionContaienr> */}
         </DatePickerSelectFrame>
       </DatePickerSelectContainer>
     </Container>
@@ -176,6 +153,10 @@ export default function SignupInputBox({ width = 20, height = 3, inputHandler })
 
 const Container = styled.div`
   position: relative;
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: 96vw;
+  }
 `;
 
 const InputTitle = styled.div`
@@ -189,6 +170,10 @@ const DatePickerSelectContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: ${({ width }) => `${width}rem`};
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: 96vw;
+  }
 `;
 
 const DatePickerSelectFrame = styled.div`
@@ -197,20 +182,28 @@ const DatePickerSelectFrame = styled.div`
 
 const DatePickerSelect = styled.div`
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   width: ${({ width, divide }) => `${width / divide}rem`};
   height: ${({ height }) => `${height}rem`};
-  margin: 0.5rem 0 0.2rem 0; 
+  margin: 0.5rem 0 0.2rem 0;
   padding-left: ${({ height }) => `${height * 0.1}rem`};
   border: 0.15rem solid ${({ theme }) => theme.color.border};
-  border-bottom: ${({ isFocus, part }) => isFocus === part ? "none" : "default"};
+  border-bottom: ${({ isFocus, part }) =>
+    isFocus === part ? "none" : "default"};
   font-size: ${({ height }) => `${(height * 2) / 3}rem`};
   font-family: ${({ theme }) => theme.fontFamily.jua};
   color: ${({ theme }) => theme.color.font};
-  white-space:nowrap;
+  white-space: nowrap;
   background-color: ${({ theme }) => theme.color.modalBack};
-  cursor:pointer;
+  cursor: pointer;
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: ${({ divide }) => `${96 / divide}vw`};
+    font-size: ${({ height }) => `${height * 0.5}rem`};
+    padding-left: 1.5vw;
+    overflow: hidden;
+  }
 `;
 
 const DatePickerInput = styled.label`
@@ -235,7 +228,7 @@ const DatePickerInput = styled.label`
 
   input {
     width: ${({ width, divide }) => `${width / divide - 3}rem`};
-    height: ${({ height }) => `${height/1.2}rem`};
+    height: ${({ height }) => `${height / 1.2}rem`};
     padding-left: ${({ height }) => `${height * 0.1}rem`};
     font-size: ${({ height }) => `${(height * 2) / 3}rem`};
     font-family: ${({ theme }) => theme.fontFamily.jua};
@@ -243,6 +236,19 @@ const DatePickerInput = styled.label`
     color: ${({ theme }) => theme.color.font};
     white-space: nowrap;
     background-color: ${({ theme }) => theme.color.modalBack};
+  }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: ${({ divide }) => `${96 / divide}vw`};
+    font-size: ${({ height }) => `${height * 0.5}rem`};
+
+    input {
+      width: ${({ divide }) => `${96 / (divide + 1.7) }vw`};
+      /* height: ${96 / 1.2}vw; */
+      padding-left: ${96 * 0.1}vw;
+      font-size: ${({ height }) => `${height * 0.5}rem`};
+      font-family: ${({ theme }) => theme.fontFamily.jua};
+    }
   }
 `;
 
@@ -263,6 +269,11 @@ const DatePickerOptionContaienr = styled.div`
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+      width: ${({ divide }) => `${96 / divide}vw`};
+      font-size: ${({ height }) => `${height * 0.5}rem`};
   }
 `;
 

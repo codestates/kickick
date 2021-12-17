@@ -59,6 +59,7 @@ export default function Main() {
   // console.log("isLoding", isLoding);
   return (
     <Container>
+      <MiniTitle>KICKICK</MiniTitle>
       <ContentSection>
         <MainMiniNav />
         <MainRecommend kickListInfo={kickListInfo} />
@@ -89,6 +90,19 @@ const Container = styled.div`
   max-width: 100%;
   min-height: 79vh;
   padding: 0 5vw;
+`;
+
+
+const MiniTitle = styled.div`
+  display: none;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: inline;
+    margin-top: 1.5rem;
+    font-size: 4rem;
+    font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
+    color: ${({ theme }) => theme.color.font};
+  }
 `;
 
 const ContentSection = styled.section`

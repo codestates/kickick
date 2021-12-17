@@ -10,9 +10,7 @@ import {
   todayLoginAction,
   isPointAction,
 } from "../../../store/actions/login";
-import kakaologo from "../../../assets/images/authlogo/kakaologo.png"
-import naverlogo from "../../../assets/images/authlogo/naverlogo.png"
-import googlelogo from "../../../assets/images/authlogo/googlelogo.png";
+import { FaCheckSquare } from "react-icons/fa";
 
 export default function LoginInputChamber({
   width = 30,
@@ -90,13 +88,16 @@ export default function LoginInputChamber({
       ))}
       <AuthLogoContainer height={height}>
         <a href={kakaoURL}>
-          <AuthLogo height={height} src={kakaologo} alt="kakao" />
+          <FaCheckSquare />
+          <span>카카오 전형</span>
         </a>
         <a href={naverURL}>
-          <AuthLogo height={height} src={naverlogo} alt="naver" />
+          <FaCheckSquare />
+          <span>네이버 전형</span>
         </a>
         <a href={googleURL}>
-          <AuthLogo height={height} src={googlelogo} alt="google" />
+          <FaCheckSquare />
+          <span>구글 전형</span>
         </a>
       </AuthLogoContainer>
       <SubmitBtn
@@ -118,6 +119,10 @@ const Container = styled.div`
   align-items: center;
   width: ${({ width }) => `${width}rem`};
   z-index: 2;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 20rem;
+  }
 `;
 
 const SubmitBtn = styled.button`
@@ -130,6 +135,10 @@ const SubmitBtn = styled.button`
   font-family: ${({ theme }) => theme.fontFamily.jua};
   background-color: #0c0c42;
   cursor: default;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 20rem;
+  }
 
   ${({ isValid }) =>
     isValid.username && isValid.password
@@ -149,13 +158,23 @@ const SubmitBtn = styled.button`
 
 const AuthLogoContainer = styled.div`
   display: flex;
-  justify-content:flex-end;
-  gap: ${({ height }) => `${height / 6}rem`};
-  width:100%;
-`;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  width: 100%;
 
-const AuthLogo = styled.img`
-  width: ${({ height }) => `${height * 1}rem`};
-  height: ${({ height }) => `${height * 1}rem`};
-  border-radius:50%;
+  > a {
+    font-size: 1.5rem;
+    font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
+
+    span {
+      position: relative;
+      top: -0.15rem;
+    }
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    > a {
+      font-size: 1.2rem;
+      }
+  }
 `;

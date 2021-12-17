@@ -98,6 +98,10 @@ const Container = styled.div`
   border-radius: ${({ height }) => `${height * 0.08}rem`};
   background-color: #ffffff;
   overflow: hidden;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 20rem;
+  }
 `;
 
 const Input = styled.input`
