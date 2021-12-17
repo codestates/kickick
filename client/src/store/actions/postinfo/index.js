@@ -7,7 +7,7 @@ export const getPostInfoAction = (data) => {
     payload: data,
   };
 };
-export const getKickInfoAction = (data) => {
+export const getMainInfoAction = (data) => {
   return {
     type: GET_MAIN_INFO,
     payload: { main_content: data },

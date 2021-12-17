@@ -30,7 +30,9 @@ import {
   getPurchasedKickAction,
 } from "../../store/actions/mypage";
 
-import { selectPageAction } from "../../store/actions/postsearch";
+import { resetPaginationAction } from "../../store/actions/postsearch";
+
+import { serialAttendacne } from "../../commons/utils/serialAttendance";
 
 import controlicon from "../../assets/images/icon/controlicon.png";
 import profileinfoicon from "../../assets/images/icon/profileinfoicon.png";
@@ -66,7 +68,7 @@ export default function MyPage() {
   const { isLogin } = useSelector((state) => state.login);
 
   useEffect(() => {
-    dispatch(selectPageAction(1));
+    dispatch(resetPaginationAction());
   }, [category, dispatch]);
 
   useEffect(() => {
@@ -89,6 +91,7 @@ export default function MyPage() {
       .catch((err) => console.log(err.response));
     getKicksList(10, postsearch.selectPage)
       .then((data) => {
+        console.log(data.data);
         dispatch(getPurchasedKickAction(data.data));
       })
       .catch((err) => console.log(err.response));
@@ -169,10 +172,34 @@ export function Profile() {
 }
 
 export function Attendance() {
+  const [loading, setLoading] = useState(true);
+  const [serial, setSerial] = useState();
+  const [kickmoney, setKickmoney] = useState();
+
+  useEffect(() => {
+    getLogs("signin", 30)
+      .then((data) => {
+        setSerial(serialAttendacne(data.data.data));
+        getLogs("kick_money", 30)
+          .then((data) => {
+            setKickmoney(
+              data.data.data
+                .find((el) => el.content.slice(0, 3) === "로그인")
+                .content.split(" ")[1]
+            );
+          })
+          .catch((err) => console.log(err));
+      })
+      .then(() => setLoading(false))
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (loading) return <div>d</div>;
+
   return (
     <AttendanceContainer>
-      <SmallCardBox type="attendance" />
-      <Calendar />
+      <SmallCardBox type="attendance" data={{ serial, kickmoney }} />
+      <Calendar standardSize="1.5" unit="rem" />
     </AttendanceContainer>
   );
 }
@@ -211,7 +238,7 @@ export function Navigator({ title }) {
       <FaArrowLeft
         onClick={() => {
           navigate(-1);
-          dispatch(selectPageAction(1));
+          dispatch(resetPaginationAction());
         }}
       />
       <h2>{title}</h2>
