@@ -97,6 +97,7 @@ export const light = {
     footerFont: "#0c0c42",
     tagAlarm: "red",
     searchBack: "#eeeeee",
+    noticeBack: "#eeeeee",
   },
 };
 
@@ -144,5 +145,6 @@ export const dark = {
     footerFont: "white",
     tagAlarm: "yellow",
     searchBack: "#111111",
+    noticeBack: "#aaaaaa",
   },
 };

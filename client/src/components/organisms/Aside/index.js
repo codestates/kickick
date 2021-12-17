@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 import { Profile, Common, IconText } from "../../../components";
 
@@ -55,6 +56,8 @@ const logoList = [
 ];
 export default function MyPageAside() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { isLogin } = useSelector((state) => state.login);
   const logoFind = logoList.find((el) => el.type === isLogin.type);
 
@@ -64,6 +67,7 @@ export default function MyPageAside() {
     signOut().then(() => {
       dispatch(isLoginAction(false));
       dispatch(isPointAction(false));
+      navigate("/");
     });
   };
 
@@ -121,7 +125,12 @@ const ProfileContainer = styled.div`
   padding: 2rem 2rem 0 2rem;
 
   strong {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+  }
+
+  .username {
+    width: 8rem;
+    word-wrap: break-word;
   }
 
   @media ${({ theme }) => theme.device.notebookS} {

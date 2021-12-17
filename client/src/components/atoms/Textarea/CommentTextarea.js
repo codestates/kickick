@@ -56,4 +56,8 @@ const TextArea = styled.textarea`
     border: ${({ themeCode }) =>
       themeCode === "light" ? "2px solid skyblue" : "2px solid #eeeeee"};
   }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    font-size: 0.8rem;
+  }
 `;

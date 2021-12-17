@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
-import { Thumbnail } from "../../components";
+import { Thumbnail, Profile } from "../../components";
 
 import { getNoticesInfo } from "../../apis/notices";
 import { getPostInfoAction } from "../../store/actions/postinfo";
@@ -29,10 +29,11 @@ export default function DetailNotice({ themeCode }) {
       <NoticeDetailInfo>
         <Thumbnail src={postInfo.thumbnail} alt="" />
         <h2>{postInfo.notice_name}</h2>
-        <div className="subinfo">
+        <SubInfoContainer>
+          <Profile src={postInfo.user.profile} type="post" />
           <span>{postInfo.user.username}</span>
           <span>{postInfo.created_at}</span>
-        </div>
+        </SubInfoContainer>
       </NoticeDetailInfo>
       <NoticeDetailContent>
         <ReactQuill
@@ -81,6 +82,12 @@ const NoticeDetailInfo = styled.div`
 `;
 
 const NoticeDetailContent = styled.div`
-  height: 60rem;
-  background-color: ${({ theme }) => theme.color.shadow};
+  min-height: 30rem;
+  background-color: ${({ theme }) => theme.color.noticeBack};
+`;
+
+const SubInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;

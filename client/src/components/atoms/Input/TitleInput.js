@@ -39,6 +39,10 @@ const Title = styled.input`
       color: ${({ theme }) => theme.color.font};
       caret-color: ${({ theme }) => theme.color.font};
       background: ${({ theme }) => theme.color.back};
+
+      @media ${({ theme }) => theme.device.tablet} {
+        font-size: 1.8rem;
+      }
     `}
 
   ${({ type }) =>
@@ -49,5 +53,10 @@ const Title = styled.input`
       color: ${({ theme }) => theme.color.font};
       caret-color: ${({ theme }) => theme.color.font};
       background: ${({ theme }) => theme.color.back};
+
+      @media ${({ theme }) => theme.device.tablet} {
+        width: 100%;
+        font-size: 0.8rem;
+      }
     `}
 `;

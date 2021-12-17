@@ -33,8 +33,8 @@ export default function EditKickBoard({ themeCode }) {
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [postname, setPostname] = useState();
-  const [intro, setIntro] = useState();
+  const [postname, setPostname] = useState("");
+  const [intro, setIntro] = useState("");
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState();
   const [file, setFile] = useState();
@@ -185,6 +185,7 @@ const ViewPage = styled.div`
     font-size: 2.8rem;
     height: 4.5rem;
     padding: 0.5rem;
+    color: ${({ theme }) => theme.color.font};
   }
 
   > img {

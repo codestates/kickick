@@ -10,6 +10,7 @@ export { default as SignupInput } from "./atoms/Input/SignupInput";
 export { default as Condition } from "./atoms/CheckBox/Condition";
 export { default as TitleInput } from "./atoms/Input/TitleInput";
 export { default as Profile } from "./atoms/Img/Profile";
+export { default as Profile2 } from "./atoms/Profile";
 export { default as SearchInput } from "./atoms/Input/SearchInput";
 export { default as Thumbnail } from "./atoms/Img/Thumbnail";
 export { default as Landscape } from "./atoms/Img/Landscape";

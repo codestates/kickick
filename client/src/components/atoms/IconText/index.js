@@ -174,6 +174,7 @@ const Container = styled.div`
       font-size: 0.8rem;
       color: #f0bb62;
       border: 2px solid #f0bb62;
+      background: #fff;
       border-radius: 0.5rem;
       padding: 0.3rem;
       svg {

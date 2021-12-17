@@ -126,4 +126,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    flex-direction: row;
+    gap: 1rem;
+  }
 `;

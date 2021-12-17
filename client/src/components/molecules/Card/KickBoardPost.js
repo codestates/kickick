@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { Thumbnail, Profile, IconText } from "../../../components";
+import { Thumbnail, Profile, IconText, Profile2 } from "../../../components";
 
 import { modalOnAction } from "../../../store/actions/kickboard";
 
@@ -36,8 +36,11 @@ export default function KickBoardPost({ data }) {
           <p>{data.content}</p>
         </PostSummary>
         <PostUser>
-          <Profile type="post" src={data.user.profile} />
-          <div className="username">{data.user.username}</div>
+          <Profile2
+            type="post"
+            src={data.user.profile}
+            username={data.user.username}
+          />
           <div className="datetime">{data.created_at}</div>
           <div className="seperator">·</div>
           <div className="commentCount">{data.comments.length} 개의 댓글</div>
