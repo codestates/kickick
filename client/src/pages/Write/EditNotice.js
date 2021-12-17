@@ -111,6 +111,13 @@ export default function EditNotice() {
           <DragDrop file={file} setFile={setFile} setThumbnail={setThumbnail} />
         </InfoContainer>
         <InfoContainer>
+          <h3>공지 소개글</h3>
+          <IntroTextarea
+            handleViewIntro={handleViewIntro}
+            handleTextarea={handleIntro}
+          />
+        </InfoContainer>
+        <InfoContainer>
           <h3>본문</h3>
           <EditQuill
             content={content}
@@ -118,13 +125,7 @@ export default function EditNotice() {
             handleContent={handleContent}
           />
         </InfoContainer>
-        <InfoContainer>
-          <h3>공지 소개글</h3>
-          <IntroTextarea
-            handleViewIntro={handleViewIntro}
-            handleTextarea={handleIntro}
-          />
-        </InfoContainer>
+
         <BtnContainer>
           <Common label="등 록" type="bigger" handleClick={handleClick} />
         </BtnContainer>

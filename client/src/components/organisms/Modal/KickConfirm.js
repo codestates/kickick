@@ -16,6 +16,8 @@ import {
 
 import { isPointAction } from "../../../store/actions/login";
 
+import { FaTimes } from "react-icons/fa";
+
 import kickmoney from "../../../assets/images/icon/kickmoney.png";
 import reviewicon from "../../../assets/images/icon/reviewicon.png";
 import introicon from "../../../assets/images/icon/introicon.png";
@@ -74,7 +76,10 @@ export default function KickConfirm() {
       >
         <ModalInner onClick={(e) => e.stopPropagation()}>
           <KickConfirmSummary>
-            <h2>{modalInfo.post_name}</h2>
+            <KickTitile>
+              <h2>{modalInfo.post_name}</h2>
+              <FaTimes onClick={() => dispatch(modalOffAction())} />
+            </KickTitile>
             <KickSubtitle>
               <img src={introicon} alt="" />
               <h3>소개</h3>
@@ -175,6 +180,12 @@ const ModalInner = styled.div`
     width: 2rem;
     height: 2rem;
   }
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
 `;
 
 const KickConfirmSummary = styled.div`
@@ -210,7 +221,7 @@ const KickConfirmIntroduction = styled.div`
   padding: 1rem;
   color: ${({ theme }) => theme.color.font};
   background-color: ${({ theme }) => theme.color.modalSubBack};
-  /* border: 1px solid #eee; */
+
   border-radius: 0.5rem;
   min-height: 5rem;
 
@@ -251,6 +262,18 @@ const KickConfirmKickMoney = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const KickTitile = styled.div`
+  display: flex;
+
+  svg {
+    color: ${({ theme }) => theme.color.font};
+    margin-left: auto;
+    &:hover {
+      color: gray;
+    }
+  }
 `;
 
 const KickSubtitle = styled.div`

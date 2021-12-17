@@ -133,7 +133,7 @@ const ThumbnailDropZone = styled.div`
   align-items: center;
   justify-content: center;
   height: 20rem;
-
+  padding: 2rem;
   border: 3px dashed skyblue;
   color: gray;
   gap: 2rem;
@@ -141,10 +141,16 @@ const ThumbnailDropZone = styled.div`
 
   h2 {
     font-size: 2.5rem;
+    @media ${({ theme }) => theme.device.tablet} {
+      font-size: 1.8rem;
+    }
   }
 
   svg {
     font-size: 3rem;
+    @media ${({ theme }) => theme.device.tablet} {
+      font-size: 2rem;
+    }
   }
 
   form {
@@ -159,6 +165,9 @@ const ThumbnailDropZone = styled.div`
     border-radius: 0.5rem;
     padding: 0.5rem;
     cursor: pointer;
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 1.2rem;
   }
 `;
 const ImageSection = styled.div`
