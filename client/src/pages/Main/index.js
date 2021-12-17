@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import {
@@ -29,7 +29,6 @@ export default function Main() {
   useEffect(() => {
     // 첫방문인지 체크하고 첫 방문이면 이동
     firstEnterCheck().then((res) => {
-      console.log(res.data.data);
       if (!res.data.data.token && !Object.keys(res.data.data).includes("is_visited")) {
         navigate("/modal/firstenter");
       }
@@ -44,7 +43,6 @@ export default function Main() {
       .then(() => setKickListLoding(true));
     // 가장 최신 공지 하나 불러오기
     getNoticesList({ type: "notices", limit: 1, page_num: 1 }).then((res) => {
-      console.log(res.data.data);
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
         .then(() => setNoticeLoding(true));
@@ -61,6 +59,7 @@ export default function Main() {
   // console.log("isLoding", isLoding);
   return (
     <Container>
+      <MiniTitle>KICKICK</MiniTitle>
       <ContentSection>
         <MainMiniNav />
         <MainRecommend kickListInfo={kickListInfo} />
@@ -93,6 +92,19 @@ const Container = styled.div`
   padding: 0 5vw;
 `;
 
+
+const MiniTitle = styled.div`
+  display: none;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: inline;
+    margin-top: 1.5rem;
+    font-size: 4rem;
+    font-family: ${({ theme }) => theme.fontFamily.luckiestGuy};
+    color: ${({ theme }) => theme.color.font};
+  }
+`;
+
 const ContentSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -110,5 +122,6 @@ const Title = styled.p`
 
 const ContextContainer = styled.article`
   display: flex;
+  justify-content:center;
   width: 80vw;
 `;
