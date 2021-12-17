@@ -12,6 +12,7 @@ import {
   TagInput,
   IconBox,
   Profile,
+  Spinner,
 } from "../../components";
 import Page404 from "../Error/Page404";
 import {
@@ -21,6 +22,7 @@ import {
 import { createPost, createTag } from "../../apis/posts";
 
 export default function EditBoard({ themeCode, list }) {
+  const [loading, setLoading] = useState(true);
   const { category } = useParams();
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
@@ -50,8 +52,10 @@ export default function EditBoard({ themeCode, list }) {
   useEffect(() => {
     dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
+    setLoading(false);
   }, [category, dispatch]);
   if (!list.find((el) => el === category)) return <Page404 />;
+  if (loading) return <Spinner />;
   return (
     <Container>
       <WriteBox>
