@@ -34,7 +34,7 @@ export default function EditNotice() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { category } = useParams();
-  const { postAdd, login, preThemeMode } = useSelector((state) => state);
+  const { postAdd, login, themeMode } = useSelector((state) => state);
   const [postname, setPostname] = useState();
   const [intro, setIntro] = useState();
   const [content, setContent] = useState("");
@@ -116,7 +116,7 @@ export default function EditNotice() {
             content={content}
             setContent={setContent}
             handleContent={handleContent}
-            themeCode={preThemeMode}
+            themeCode={themeMode[1]}
           />
         </InfoContainer>
         <InfoContainer>
@@ -143,11 +143,11 @@ export default function EditNotice() {
           theme={"bubble"}
           value={content}
           style={{
-            backgroundColor: preThemeMode === "light" ? "#eee" : "#1E1F21",
+            backgroundColor: themeMode[1] === "light" ? "#eee" : "#1E1F21",
             padding: "1rem 0",
             borderRadius: "0.5rem",
             height: "40rem",
-            color: preThemeMode === "light" ? "black" : "white",
+            color: themeMode[1] === "light" ? "black" : "white",
           }}
         />
       </ViewPage>
