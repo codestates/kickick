@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-
-import { Align, Select, SearchInput, Tag } from "../../../components";
+import disableScroll from "disable-scroll";
+import { useLocation, useNavigate } from "react-router";
+import {
+  Align,
+  Select,
+  SearchInput,
+  Tag,
+  Common,
+  Modal,
+} from "../../../components";
 
 import {
   boardAlignAction,
@@ -15,6 +23,11 @@ import {
 import { addTagAction, delTagAction } from "../../../store/actions/postadd";
 
 export default function TotalSearch() {
+  const { pathname } = useLocation();
+  const [page, category] = decodeURI(pathname).slice(1).split("/");
+  const navigate = useNavigate();
+  const { isLogin } = useSelector((state) => state.login);
+  const [modal, setModal] = useState(false);
   const stateTag = useSelector((state) => state.tag);
   const dispatch = useDispatch();
 
@@ -61,10 +74,35 @@ export default function TotalSearch() {
     }
   };
 
+  const handleModalOff = () => {
+    setModal(false);
+    disableScroll.off();
+  };
+
+  const handleModalFunc = () => {
+    setModal(false);
+    disableScroll.off();
+    navigate("/login");
+  };
+
+  const handleMovePage = () => {
+    if (
+      !isLogin ||
+      isLogin.type === "email auth required" ||
+      isLogin.type === "guest"
+    ) {
+      setModal(true);
+      disableScroll.on();
+    } else {
+      navigate(`/editboard/${category}`);
+    }
+  };
+
   return (
     <>
       <Container>
         <Align handleAlign={handleAlign} />
+        <Common type="register" label="글쓰기" handleClick={handleMovePage} />
         <SearchContainer>
           <Select
             icon={icon}
@@ -89,6 +127,13 @@ export default function TotalSearch() {
           />
         ))}
       </TagContainer>
+      {modal ? (
+        <Modal
+          handleModal={handleModalOff}
+          handleModalFunc={handleModalFunc}
+          type="login"
+        />
+      ) : null}
     </>
   );
 }
@@ -96,6 +141,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 1rem 1rem 1rem;
+  align-items: center;
 `;
 const TagContainer = styled.div`
   display: flex;
@@ -107,7 +153,7 @@ const TagContainer = styled.div`
 const SearchContainer = styled.div`
   display: flex;
   gap: 0.5rem;
-  margin-left: auto;
+  margin-left: 1.5rem;
   @media ${({ theme }) => theme.device.tablet} {
     width: 200%;
     height: 8rem;
