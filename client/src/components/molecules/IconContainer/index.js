@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,6 +67,16 @@ export default function IconContainer({ themeCode }) {
       })
       .catch((err) => console.log(err.response));
   };
+
+  const handleDisableScroll = () => {
+    disableScroll.off();
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", handleDisableScroll);
+    return () => window.removeEventListener("popstate", handleDisableScroll);
+  }, []);
+
   return (
     <Container>
       <IconBox label="arrow" handleClick={handleClick} />

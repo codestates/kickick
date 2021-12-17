@@ -60,7 +60,6 @@ const Container = styled.div`
 
 const RightContainer = styled.div`
   width: 42rem;
-  z-index: 1;
   @media ${({ theme }) => theme.device.tablet} {
     width: 100%;
   }

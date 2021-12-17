@@ -61,7 +61,8 @@ const Container = styled.button`
     css`
       margin-left: auto;
       width: 5rem;
-
+      height: 2rem;
+      border-radius: 0;
       &:hover {
         background-color: ${({ theme }) => theme.color.hoverBasicBtn};
       }

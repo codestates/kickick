@@ -117,7 +117,13 @@ export default function ProfileEditForm() {
         const location = data.data.data.location;
         putUserInfo({ username, profile: location, email, password })
           .then(() => {
-            navigate("/mypage/home");
+            signOut()
+              .then(() => {
+                dispatch(isLoginAction(false));
+                dispatch(isPointAction(false));
+                navigate("/login", { replace: true });
+              })
+              .catch((err) => console.log(err));
             dispatch(
               isLoginAction({
                 ...isLogin,
@@ -132,7 +138,14 @@ export default function ProfileEditForm() {
     } else {
       putUserInfo({ username, email, password })
         .then(() => {
-          navigate("/mypage/home");
+          signOut()
+            .then(() => {
+              dispatch(isLoginAction(false));
+              dispatch(isPointAction(false));
+              navigate("/login", { replace: true });
+            })
+            .catch((err) => console.log(err));
+
           dispatch(
             isLoginAction({
               ...isLogin,

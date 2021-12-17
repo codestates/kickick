@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -7,9 +7,9 @@ import {
   CardBox,
   TotalSearch,
   KickConfirm,
-  Common,
   InfiniteScroll,
   BoardTop,
+  Spinner,
 } from "../../components";
 
 import { getPostsList } from "../../apis/posts";
@@ -28,7 +28,6 @@ import {
 export default function KickBoard() {
   const { category } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { kickboard, postsearch, postAdd, login } = useSelector(
     (state) => state
   );
@@ -82,13 +81,17 @@ export default function KickBoard() {
     postsearch.align,
   ]);
 
-  if (loading) return <div>d</div>;
+  if (loading) return <Spinner />;
 
   return (
     <>
       <BoardTop />
       <Container>
+<<<<<<< HEAD
         <TotalSearch />
+=======
+        <TotalSearch type="kick" />
+>>>>>>> fbf91090529b4965108e3c76fb8745e694799e25
         <CardBox type="kickboard" />
         {kickboard.modalState && <KickConfirm />}
         {onScroll && <InfiniteScroll callback={handleLimit} />}

@@ -32,6 +32,7 @@ module.exports = (io) => {
           const limit = Number(data.limit) || 10;
           const page_num = Number(data.page_num) || 1;
           let count;
+          let all_count;
 
           try {
             // username 으로 user_id 구함
@@ -70,9 +71,30 @@ module.exports = (io) => {
               limit: limit,
             });
 
-            // count 와 실제 데이터 배열 재할당
-            count = data.count;
+            all_count = data.count;
             data = data.rows;
+
+            // count는 공지이외의 것만, type alarms
+            count = await alarms.findAndCountAll({
+              attributes: [
+                ["id", "alarm_id"],
+                "type",
+                "reference",
+                "content",
+                "is_checked",
+                "created_at",
+              ],
+              where: {
+                [Op.or]: [
+                  {
+                    user_id: user_id,
+                  },
+                ],
+                type: "alarms",
+                is_checked: false,
+              },
+            });
+            count = count.count;
 
             // reference 필드 파싱
             data = data.map((el) => {
@@ -86,7 +108,11 @@ module.exports = (io) => {
           }
 
           // 원하는 클라이언트에 실시간 알림
-          io.to(clients[i].id).emit("alarms", { count: count, data: data });
+          io.to(clients[i].id).emit("alarms", {
+            all_count: all_count,
+            count: count,
+            data: data,
+          });
         }
       }
     });

@@ -129,7 +129,7 @@ const ProfileContainer = styled.div`
   }
 
   .username {
-    width: 6rem;
+    width: 8rem;
     word-wrap: break-word;
   }
 

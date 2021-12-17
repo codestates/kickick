@@ -45,6 +45,7 @@ module.exports = async (req, res) => {
       where: {
         user_id: user_id,
       },
+      order: [["id", "DESC"]],
       include: [
         {
           model: kicks,
