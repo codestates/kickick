@@ -87,11 +87,7 @@ export default function KickBoard() {
     <>
       <BoardTop />
       <Container>
-<<<<<<< HEAD
-        <TotalSearch />
-=======
         <TotalSearch type="kick" />
->>>>>>> fbf91090529b4965108e3c76fb8745e694799e25
         <CardBox type="kickboard" />
         {kickboard.modalState && <KickConfirm />}
         {onScroll && <InfiniteScroll callback={handleLimit} />}
