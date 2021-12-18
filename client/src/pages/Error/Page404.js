@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import lifeplanet from "../../assets/images/category/lifeplanet.png";
+import contenticon from "../../assets/images/icon/contenticon.png";
 
 export default function Page404() {
   const navigate = useNavigate();
+  const { themeMode } = useSelector((state) => state);
   return (
     <Container>
       <div className="headline">
         <span>4</span>
-        <img src={lifeplanet} alt="" />
+        <img src={themeMode[1] === "light" ? lifeplanet : contenticon} alt="" />
         <span>4</span>
       </div>
       <p className="title">
@@ -40,7 +43,7 @@ const Container = styled.div`
     gap: 0.5rem;
 
     span {
-      color: #5070b6;
+      color: ${({ theme }) => theme.color.page404};
       font-size: 9rem;
     }
     img {
@@ -51,7 +54,7 @@ const Container = styled.div`
 
   .title {
     font-size: 1.5rem;
-    color: #5070b6;
+    color: ${({ theme }) => theme.color.page404};
     text-align: center;
     line-height: 2;
   }

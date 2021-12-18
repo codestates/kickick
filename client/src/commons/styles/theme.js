@@ -103,6 +103,7 @@ export const light = {
     noticeBack: "#fafafa",
     noticeNav: "skyblue",
     boardTopKick: "#eee",
+    page404: "#5070b6",
   },
 };
 
@@ -155,5 +156,6 @@ export const dark = {
     noticeBack: "#222222",
     noticeNav: "yellow",
     boardTopKick: "#444",
+    page404: "#F3aa4C",
   },
 };
