@@ -23,7 +23,6 @@ import {
 import { createPost, createTag } from "../../apis/posts";
 
 export default function EditBoard({ themeCode, list }) {
-  const [loading, setLoading] = useState(true);
   const { category } = useParams();
   const navigate = useNavigate();
   const { postAdd, login } = useSelector((state) => state);
@@ -63,7 +62,7 @@ export default function EditBoard({ themeCode, list }) {
 
   if (loading) return <Spinner />;
   if (!list.find((el) => el === category)) return <Page404 />;
-  if (loading) return <Spinner />;
+
   return (
     <Container>
       <WriteBox>
