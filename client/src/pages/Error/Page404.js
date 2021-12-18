@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import lifeplanet from "../../assets/images/planet/lifeplanet.png";
+import lifeplanet from "../../assets/images/category/lifeplanet.png";
 
 export default function Page404() {
   const navigate = useNavigate();

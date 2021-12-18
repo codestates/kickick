@@ -72,18 +72,24 @@ export function Freepost({ data }) {
 }
 
 export function MyPageMyPost({ data }) {
-  console.log(data);
+  let link;
+  if (data.category.split("_")[1] === "자유") {
+    link = `/detailboard/${data.post_id}`;
+  } else {
+    link = `/detailkick/${data.kick?.kick_id}`;
+  }
   return (
     <Container>
-      <div>
+      {/* <div>
         {data.tags.length === 1
           ? "-"
           : data.tags
               .filter((el, idx) => idx !== 0)
               .map((tag) => <span> # {tag}</span>)}
-      </div>
+      </div> */}
+      <div>{data.category.split("_")[1]}</div>
       <div>
-        <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
+        <Link to={link}>{data.post_name}</Link>
       </div>
       <div>{data.created_at}</div>
       <div>{data.view_count}</div>
@@ -130,11 +136,12 @@ export function MyPageFavorites({ data }) {
 }
 
 export function MyPageLogs({ data }) {
+  const [type, change] = data.content.split("_");
   return (
     <Container>
       <div>{data.created_at}</div>
-      <div>{data.content}</div>
-      <div>{"출석"}</div>
+      <div>{change}</div>
+      <div>{type}</div>
     </Container>
   );
 }

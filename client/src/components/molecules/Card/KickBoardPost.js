@@ -63,7 +63,7 @@ const Container = styled.div`
   width: 20rem;
   margin: ${({ theme }) => theme.margins.xxl};
 
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   box-shadow: 1px 1px 10px ${({ theme }) => theme.color.shadow};
 
   overflow: hidden;
@@ -93,7 +93,7 @@ const PostDescription = styled.div`
 `;
 
 const PostSummary = styled.div`
-  height: 8rem;
+  height: 6rem;
 
   h3 {
     font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -120,13 +120,13 @@ const PostUser = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xs};
     line-height: 1.8;
   }
-  .username {
+  /* .username {
     margin-left: ${({ theme }) => theme.margins.small};
     color: ${({ theme }) => theme.color.font} !important;
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSizes.small};
     line-height: 1.5;
-  }
+  } */
   .seperator {
     margin: 0 ${({ theme }) => theme.margins.small};
   }

@@ -12,6 +12,7 @@ import {
   CardBox,
   Calendar,
   Pagination,
+  Spinner,
 } from "../../components";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -89,6 +90,7 @@ export function Home() {
   const { isLogin } = useSelector((state) => state.login);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     getClassifiedPost()
       .then((data) => {
@@ -97,7 +99,9 @@ export function Home() {
       })
       .catch((err) => console.log(err.response));
   }, []);
-  if (loading) return <div>d</div>;
+
+  if (loading) return <Spinner />;
+
   return (
     <HomeWrapper>
       {isLogin.type === "admin" && (
@@ -163,7 +167,7 @@ export function Attendance() {
       .catch((err) => console.log(err));
   }, []);
 
-  if (loading) return <div>d</div>;
+  if (loading) return <Spinner />;
 
   return (
     <AttendanceContainer>

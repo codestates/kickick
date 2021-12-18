@@ -15,13 +15,14 @@ export default function Vote({ likes, is_liked, postId, username }) {
   const [alien, setAlien] = useState(likes.true);
   const [astronaut, setAstronaut] = useState(likes.false);
   const [type, setType] = useState(is_liked);
+  const [clicked, setClicked] = useState(false);
 
   const handleClick = (item) => {
     if (item === "true" && type === true) return;
     if (item === "false" && type === false) return;
 
     if (item === "true") {
-      if (is_liked !== null) {
+      if (is_liked !== null || clicked) {
         setAstronaut(astronaut === 0 ? 0 : astronaut - 1);
         setAlien(alien + 1);
       } else {
@@ -30,7 +31,7 @@ export default function Vote({ likes, is_liked, postId, username }) {
 
       setType(true);
     } else {
-      if (is_liked !== null) {
+      if (is_liked !== null || clicked) {
         setAstronaut(astronaut + 1);
         setAlien(alien === 0 ? 0 : alien - 1);
       } else {
@@ -48,17 +49,43 @@ export default function Vote({ likes, is_liked, postId, username }) {
     <Container type={type}>
       <div className="imgbox">
         <img className="ballon ballon_alien" src={oddbubble} alt="" />
-        <img src={Alien} onClick={() => handleClick("true")} alt="" />
+        <img
+          src={Alien}
+          onClick={() => {
+            handleClick("true");
+            setClicked(true);
+          }}
+          alt=""
+        />
       </div>
-      <span className="vote alien" onClick={() => handleClick("true")}>
+      <span
+        className="vote alien"
+        onClick={() => {
+          handleClick("true");
+          setClicked(true);
+        }}
+      >
         {alien}
       </span>
       <span>VS</span>
-      <span className="vote astronaut" onClick={() => handleClick("false")}>
+      <span
+        className="vote astronaut"
+        onClick={() => {
+          handleClick("false");
+          setClicked(true);
+        }}
+      >
         {astronaut}
       </span>
       <div className="imgbox">
-        <img src={Astronaut} onClick={() => handleClick("false")} alt="" />
+        <img
+          src={Astronaut}
+          onClick={() => {
+            handleClick("false");
+            setClicked(true);
+          }}
+          alt=""
+        />
         <img className="ballon ballon_astronaut" src={innobubble} alt="" />
       </div>
     </Container>

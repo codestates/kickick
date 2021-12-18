@@ -150,7 +150,10 @@ export default function App() {
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
             />
-            <Route path="kickboard/:category" element={<KickBoard />} />
+            <Route
+              path="kickboard/:category"
+              element={<KickBoard themeCode={themeMode[1]} />}
+            />
             <Route
               path="detailkick/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}

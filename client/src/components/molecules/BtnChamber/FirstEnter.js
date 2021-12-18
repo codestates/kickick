@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { ImageBtn } from "../../../components"
-import earth from "../../../assets/images/planet/leisure.png"
+import { ImageBtn } from "../../../components";
+import earth from "../../../assets/images/category/lifeplanet.png";
 
 export default function FirstEnter() {
   const [locate, setLocate] = useState({ x: 0, y: 0 });
   const [firstlocate, setFirstLocate] = useState({ x: 0, y: 0 });
   const [isMouseDown, setIsMouseDowm] = useState(false);
-  
+
   const mouseMoveHanlder = (e) => {
     if (isMouseDown) {
       setLocate({
-        x: (firstlocate.x - e.clientX),
-        y: (firstlocate.y - e.clientY),
+        x: firstlocate.x - e.clientX,
+        y: firstlocate.y - e.clientY,
       });
     }
-  }
+  };
 
   // 마우스에 따라 모달창이 이동하는 로직.
 
@@ -73,7 +73,7 @@ const TitleContainer = styled.article`
   flex-direction: column;
   align-items: center;
   margin: 0 0 4vw 0;
-  pointer-events:none;
+  pointer-events: none;
 `;
 
 const Planet = styled.img`
