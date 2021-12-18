@@ -26,6 +26,7 @@ const Container = styled.div`
   margin: 2rem auto;
   font-weight: bold;
   height: 20rem;
+  color: ${({ theme }) => theme.color.font};
 
   strong {
     font-size: 3rem;
