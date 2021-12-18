@@ -22,6 +22,14 @@
      <summary>킥게시판</summary>
      <div markdown="1"></div>
 </details> 
+<details>
+     <summary>실시간 알람</summary>
+     <div markdown="1"></div>
+</details>
+<details>
+     <summary>로그인&회원가입</summary>
+     <div markdown="1"></div>
+</details>
 
 
 # 팀소개
