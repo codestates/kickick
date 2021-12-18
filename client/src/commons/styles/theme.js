@@ -44,7 +44,7 @@ const common = {
   device: {
     mobileS: `only screen and (max-width: 320px)`,
     mobileM: `only screen and (max-width: 375px)`,
-    mobileL: `only screen and (max-width: 450px)`,
+    mobileL: `only screen and (max-width: 520px)`,
     tablet: `only screen and (max-width: 768px)`,
     notebookS: `only screen and (max-width: 1024px)`,
     notebookL: `only screen and (max-width: 1440px)`,
@@ -57,6 +57,7 @@ export const light = {
   type: "light",
   color: {
     back: "#ffffff",
+    smallFooterBack: "#0c0c52",
     navBack: "#2980b9",
     main: "#0c0c42",
     alarm: "#0c0c42",
@@ -106,8 +107,9 @@ export const dark = {
   type: "dark",
   color: {
     back: "#1E1F21",
+    smallFooterBack: "#555555",
     navBack: "#1E1F21",
-    alarm: "#ffffff",
+    alarm: "#444444",
     red: "#FF5655",
     main: "#0c0c42",
     tag: "#f90716",
@@ -141,8 +143,8 @@ export const dark = {
     modalBtn: "#eee",
     kickH3: "#bfbfbf",
     conditionHover: "#444444",
-    footerBack: "#C94A3A",
-    footerFont: "white",
+    footerBack: "#9F3314",
+    footerFont: "black",
     tagAlarm: "yellow",
     searchBack: "#111111",
     noticeBack: "#aaaaaa",
