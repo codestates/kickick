@@ -198,8 +198,14 @@ export default function App() {
             </Route>
             <Route path="notice/:category/edit" element={<EditNotice />} />
             <Route path="write" element={<Write />}>
-              <Route path="board" element={<EditBoard />} />
-              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route
+                path="board"
+                element={<EditBoard themeCode={themeMode[1]} list={list} />}
+              />
+              <Route
+                path="kickboard"
+                element={<EditKickBoard themeCode={themeMode[1]} />}
+              />
               <Route path="notice" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />

@@ -12,6 +12,7 @@ import {
   TagInput,
   IconBox,
   Profile,
+  Spinner,
 } from "../../components";
 import Page404 from "../Error/Page404";
 import { getPostInfoAction } from "../../store/actions/postinfo";
@@ -66,7 +67,7 @@ export default function MyEditBoard({ themeCode, list }) {
   }, [dispatch, post_id]);
 
   if (!list.find((el) => el === category)) return <Page404 />;
-  if (loading) return "";
+  if (loading) return <Spinner />;
 
   return (
     <Container>

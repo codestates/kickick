@@ -130,8 +130,8 @@ const Container = styled.div`
     ${({ type }) =>
       type === false &&
       css`
-        color: blue;
-        border: 2px solid blue;
+        color: #42eaf5;
+        border: 2px solid #42eaf5;
       `}
   }
 

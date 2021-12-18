@@ -57,10 +57,12 @@ export default function EditBoard({ themeCode, list }) {
   useEffect(() => {
     dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
+    setLoading(false);
   }, [category, dispatch]);
 
   if (loading) return <Spinner />;
   if (!list.find((el) => el === category)) return <Page404 />;
+
   return (
     <Container>
       <WriteBox>
