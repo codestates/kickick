@@ -45,10 +45,17 @@ const Container = styled.div`
     span {
       color: ${({ theme }) => theme.color.page404};
       font-size: 9rem;
+      @media ${({ theme }) => theme.device.tablet} {
+        font-size: 6rem;
+      }
     }
     img {
       width: 7rem;
       height: 7rem;
+      @media ${({ theme }) => theme.device.tablet} {
+        width: 5rem;
+        height: 5rem;
+      }
     }
   }
 
@@ -57,6 +64,9 @@ const Container = styled.div`
     color: ${({ theme }) => theme.color.page404};
     text-align: center;
     line-height: 2;
+    @media ${({ theme }) => theme.device.tablet} {
+      font-size: 1.1rem;
+    }
   }
 
   .subtitle {
@@ -77,6 +87,11 @@ const ButtonContainer = styled.div`
     width: 10rem;
     border: 1px solid #eee;
     border-radius: 0.5rem;
+
+    @media ${({ theme }) => theme.device.tablet} {
+      font-size: 0.9rem;
+      width: 6rem;
+    }
   }
 
   .goback {
