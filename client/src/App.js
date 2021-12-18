@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
@@ -20,11 +25,21 @@ import MyEditBoard from "./pages/Write/MyEditBoard";
 import EditKickBoard from "./pages/Write/EditKickBoard";
 import EditNotice from "./pages/Write/EditNotice";
 import Write from "./pages/Write";
-import MyPage from "./pages/MyPage";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 import GoogleAuth from "./pages/Login/GoogleAuth";
+import MyPage from "./pages/MyPage";
+import {
+  Home,
+  Profile,
+  Attendance,
+  Favorites,
+  MyPost,
+  MyComment,
+  PurchasedKick,
+  KickmoneyLog,
+} from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -149,7 +164,10 @@ export default function App() {
               path="myeditboard/:category/:post_id"
               element={<MyEditBoard themeCode={themeMode[1]} list={list} />}
             />
-            <Route path="kickboard/:category" element={<KickBoard />} />
+            <Route
+              path="kickboard/:category"
+              element={<KickBoard themeCode={themeMode[1]} />}
+            />
             <Route
               path="detailkick/:kick_id"
               element={<DetailKickBoard themeCode={themeMode[1]} />}
@@ -158,7 +176,17 @@ export default function App() {
               path="editkick/:category"
               element={<EditKickBoard themeCode={themeMode[1]} />}
             />
-            <Route path="mypage/:category" element={<MyPage />} />
+            <Route path="mypage" element={<Navigate to="/mypage/home" />} />
+            <Route path="mypage" element={<MyPage />}>
+              <Route path="home" element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="attendance" element={<Attendance />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="mypost" element={<MyPost />} />
+              <Route path="mycomment" element={<MyComment />} />
+              <Route path="kick" element={<PurchasedKick />} />
+              <Route path="log" element={<KickmoneyLog />} />
+            </Route>
             <Route
               path="notice/:category"
               element={<Notice themeCode={themeMode[1]} />}
