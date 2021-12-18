@@ -231,6 +231,7 @@ const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.font};
   img {
     margin-right: 1rem;
   }

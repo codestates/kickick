@@ -170,8 +170,14 @@ export default function App() {
             </Route>
             <Route path="notice/:category/edit" element={<EditNotice />} />
             <Route path="write" element={<Write />}>
-              <Route path="board" element={<EditBoard />} />
-              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route
+                path="board"
+                element={<EditBoard themeCode={themeMode[1]} list={list} />}
+              />
+              <Route
+                path="kickboard"
+                element={<EditKickBoard themeCode={themeMode[1]} />}
+              />
               <Route path="notice" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
@@ -196,19 +202,19 @@ const Container = styled.div`
   }
 `;
 
-  const Theme = styled.img`
+const Theme = styled.img`
   position: relative;
   height: 100vh;
 `;
 
-  const DarkBox = styled.div`
+const DarkBox = styled.div`
   position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
-  const ModeChanger = styled.div`
+const ModeChanger = styled.div`
   position: fixed;
   top: 0rem;
   right: 100vw;
@@ -228,12 +234,12 @@ const Container = styled.div`
   }
 `;
 
-  const LightChanger = styled(ModeChanger)`
+const LightChanger = styled(ModeChanger)`
   animation-duration: 2s;
   z-index: 99999999;
 `;
 
-  const DarkChanger = styled(ModeChanger)`
-    animation-duration: 2.2s;
-    z-index: 99999999;
-  `;
+const DarkChanger = styled(ModeChanger)`
+  animation-duration: 2.2s;
+  z-index: 99999999;
+`;

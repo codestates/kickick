@@ -50,7 +50,9 @@ export default function PostComment({ post_id, themeCode }) {
       })
       .then(() => setPlusCmt(plusCmt + 1))
       .then(() => dispatch(targetNameAction(postInfo.user.username)))
-      .then(() => dispatch(targetNameAction("")))
+      .then(() => {
+        setTimeout(() => dispatch(targetNameAction("")), 300);
+      })
       .catch((err) => console.log(err.response));
     setValue("");
   };
