@@ -9,7 +9,7 @@ import { CardBox, BoardTop, IconText, Common, Spinner } from "../../components";
 import { getNoticesList } from "../../apis/notices";
 
 import { getListAction } from "../../store/actions/postlist";
-
+import { resetPaginationAction } from "../../store/actions/postsearch";
 const noticeList = [
   { category: "소식", component: <News /> },
   { category: "이벤트", component: <Event /> },
@@ -18,9 +18,13 @@ const noticeList = [
 export default function Notice({ themeCode }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { category } = useParams();
-
   const route = decodeURI(pathname.split("/")[2]);
+
+  useEffect(() => {
+    dispatch(resetPaginationAction());
+  }, [dispatch]);
 
   if (category !== "소식" && category !== "이벤트") {
     navigate("/error");
@@ -35,10 +39,16 @@ export default function Notice({ themeCode }) {
       <Container>
         <NavContainer>
           <h3>공지</h3>
-          <StyledLink to="/notice/소식" active={route === "소식"}>
+          <StyledLink
+            to="/notice/소식"
+            highlight={(route === "소식").toString()}
+          >
             <IconText label="뉴스" />
           </StyledLink>
-          <StyledLink to="/notice/이벤트" active={route === "이벤트"}>
+          <StyledLink
+            to="/notice/이벤트"
+            highlight={(route === "이벤트").toString()}
+          >
             <IconText label="이벤트" />
           </StyledLink>
         </NavContainer>
@@ -75,12 +85,14 @@ export function News() {
 
   if (loading) return <Spinner />;
   return (
-    <NewsContainer>
-      <CardBox type="news" />
+    <>
+      <NewsContainer>
+        <CardBox type="news" />
+      </NewsContainer>
       {login.isLogin.type === "admin" && (
         <Common type="new" label="글쓰기" handleClick={handleNewPost} />
       )}
-    </NewsContainer>
+    </>
   );
 }
 
@@ -109,12 +121,14 @@ export function Event() {
   if (loading) return <Spinner />;
 
   return (
-    <EventContainer>
-      <CardBox type="event" />
+    <>
+      <EventContainer>
+        <CardBox type="event" />
+      </EventContainer>
       {login.isLogin.type === "admin" && (
         <Common type="new" label="글쓰기" handleClick={handleNewPost} />
       )}
-    </EventContainer>
+    </>
   );
 }
 
@@ -183,8 +197,8 @@ const NavContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  ${({ active }) =>
-    active &&
+  ${({ highlight }) =>
+    highlight === "true" &&
     css`
       color: ${({ theme }) => theme.color.noticeNav} !important;
       font-weight: bold;
@@ -200,8 +214,8 @@ const EventContainer = styled.div`
 const NewsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
 
+  margin: 0 auto;
   @media ${({ theme }) => theme.device.mobileL} {
     width: 100%;
   }

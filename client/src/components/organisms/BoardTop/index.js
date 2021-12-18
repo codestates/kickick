@@ -56,6 +56,7 @@ export default function BoardTop({ themeCode }) {
           list.map((el, idx) => {
             return (
               <ListContainer
+                key={idx}
                 style={{
                   marginTop: idx === 0 ? `-${select * 5}rem` : 0,
                 }}

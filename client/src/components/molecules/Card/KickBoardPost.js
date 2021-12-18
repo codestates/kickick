@@ -7,8 +7,8 @@ import { Thumbnail, IconText, Profile2 } from "../../../components";
 
 import { modalOnAction } from "../../../store/actions/kickboard";
 
-import Alien from "../../../assets/images/alien.svg";
-import Astronaut from "../../../assets/images/astronaut.svg";
+// import Alien from "../../../assets/images/alien.svg";
+// import Astronaut from "../../../assets/images/astronaut.svg";
 
 export default function KickBoardPost({ data }) {
   const dispatch = useDispatch();
@@ -135,18 +135,18 @@ const PostUser = styled.div`
   }
 `;
 
-const Interest = styled.div`
-  display: flex;
-  border-top: 0.1rem dashed gray;
-  padding-top: ${({ theme }) => theme.paddings.small};
-  padding-bottom: ${({ theme }) => theme.paddings.small};
-  padding-left: ${({ theme }) => theme.paddings.xxl};
-  padding-right: ${({ theme }) => theme.paddings.xxl};
+// const Interest = styled.div`
+//   display: flex;
+//   border-top: 0.1rem dashed gray;
+//   padding-top: ${({ theme }) => theme.paddings.small};
+//   padding-bottom: ${({ theme }) => theme.paddings.small};
+//   padding-left: ${({ theme }) => theme.paddings.xxl};
+//   padding-right: ${({ theme }) => theme.paddings.xxl};
 
-  img {
-    width: 1.5rem;
-  }
-  .seperator {
-    width: 100%;
-  }
-`;
+//   img {
+//     width: 1.5rem;
+//   }
+//   .seperator {
+//     width: 100%;
+//   }
+// `;
