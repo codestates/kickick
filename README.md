@@ -5,7 +5,23 @@
 # 기술 스택      
      
 
-# 시연 영상      
+# 시연 영상
+<details>
+     <summary>메인페이지</summary>
+     <div markdown="1"></div>
+</details>  
+<details>
+     <summary>마이페이지</summary>
+     <div markdown="1"></div>
+</details> 
+<details>
+     <summary>자유게시판</summary>
+     <div markdown="1"></div>
+</details> 
+<details>
+     <summary>킥게시판</summary>
+     <div markdown="1"></div>
+</details> 
 
 
 # 팀소개
