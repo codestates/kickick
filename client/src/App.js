@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import { io } from "socket.io-client";
 import { Nav, Footer, PageUp, CommonModal } from "./components";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
-import SignupSelect from "./pages/Signup/SignupSelect";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
 import Board from "./pages/Board/Board";
@@ -43,7 +42,7 @@ export default function App() {
   const socketClient = io(`${process.env.REACT_APP_API_URL}`);
   const isLogin = useSelector((state) => state.login.isLogin);
   const todayLogin = useSelector((state) => state.login.todayLogin);
-  const preThemeMode = useSelector((state) => state.preThemeMode);
+  const preThemeMode = useSelector((state) => state.persist.preThemeMode);
   const themeMode = useSelector((state) => state.themeMode);
   const socketChange = useSelector((state) => state.socket);
   const list = ["학습", "여가", "생활", "경제", "여행", "예술"];
@@ -84,7 +83,7 @@ export default function App() {
       });
 
       socketClient.on("alarms", (data) => {
-        // console.log("난 1이야", data);
+        // console.log("받았음", data);
         dispatch(alarmListAction(data));
       });
 
@@ -190,21 +189,26 @@ const Container = styled.div`
   min-height: 100vh;
   padding-top: 4rem;
   background-color: ${({ theme }) => theme.color.back};
+
+  @media ${({ theme }) => theme.device.tablet} {
+    padding-top: 0rem;
+    padding-bottom: 7rem;
+  }
 `;
 
-const Theme = styled.img`
+  const Theme = styled.img`
   position: relative;
   height: 100vh;
 `;
 
-const DarkBox = styled.div`
+  const DarkBox = styled.div`
   position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
-const ModeChanger = styled.div`
+  const ModeChanger = styled.div`
   position: fixed;
   top: 0rem;
   right: 100vw;
@@ -224,10 +228,12 @@ const ModeChanger = styled.div`
   }
 `;
 
-const LightChanger = styled(ModeChanger)`
+  const LightChanger = styled(ModeChanger)`
   animation-duration: 2s;
+  z-index: 99999999;
 `;
 
-const DarkChanger = styled(ModeChanger)`
-  animation-duration: 2.2s;
-`;
+  const DarkChanger = styled(ModeChanger)`
+    animation-duration: 2.2s;
+    z-index: 99999999;
+  `;

@@ -12,31 +12,36 @@ export default function MainEvent({
 
   return (
     <Container>
-      <CardBox type="event" />
       {/* {eventInfo.length
         ? eventInfo.map((el, idx) => (
-            // <EventContainer
-            //   key={idx}
-            //   onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
-            // >
-            //   <Thumbnail
-            //     src={el.thumbnail || default_thumbnail}
-            //     alt="thumbnail"
-            //   />
-            //   <SummaryContainer>
-            //     <Summary>{el.summary}</Summary>
-            //   </SummaryContainer>
-            // </EventContainer>
-            <CardBox type="event" />
+            <EventContainer
+              key={idx}
+              onClick={() => navigate(`/notice/이벤트/${el.notice_id}`)}
+            >
+              <Thumbnail
+                src={el.thumbnail || default_thumbnail}
+                alt="thumbnail"
+              />
+              <SummaryContainer>
+                <Summary>{el.summary}</Summary>
+              </SummaryContainer>
+            </EventContainer>
           ))
         : null} */}
+      <CardBox type="event" />
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  width: 80vw;
+  justify-content: flex-start;
   font-family: ${({ theme }) => theme.fontFamily.jua};
+
+  @media ${({ theme }) => theme.device.mobileL} {
+    justify-content: center;
+  }
 `;
 
 const EventContainer = styled.article`

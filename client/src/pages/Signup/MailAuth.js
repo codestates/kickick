@@ -22,7 +22,7 @@ export default function MailAuth() {
           setIsSuccess(true);
         }
       })
-      .catch(() => navigate("/error", { replace:true }));
+      // .catch(() => navigate("/error", { replace:true }));
   },[])
 
   console.log("params: ", params.username)

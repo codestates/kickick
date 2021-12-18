@@ -23,7 +23,7 @@ export default function MainRecommend({
     }
   };
 
-  // console.log("kick", Object.keys(kickListInfo));
+  console.log("kick", kickListInfo);
   return (
     <Container>
       {/* <BtnContainer>
@@ -54,7 +54,7 @@ export default function MainRecommend({
               </ContentPage> */}
               <ContentPage name="time">
                 {kickListInfo.data_by_time.map((el, idx) => (
-                  <KickBtn key={idx} onClick={() => navigate(`/detailkick`)}>
+                  <KickBtn key={idx} onClick={() => navigate(`/detailkick/${el.kick.id}`)}>
                     {el.post_name}
                   </KickBtn>
                 ))}
