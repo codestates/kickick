@@ -9,15 +9,17 @@ import lifeplanet from "../../../assets/images/category/lifeplanet.png";
 import economyplanet from "../../../assets/images/category/economyplanet.png";
 import travelplanet from "../../../assets/images/category/travelplanet.png";
 import artplanet from "../../../assets/images/category/artplanet.png";
+import noticeplanet from "../../../assets/images/icon/introductionicon.png";
+import eventplanet from "../../../assets/images/icon/contenticon.png";
 import studyland from "../../../assets/images/category/studyland.png";
 import leisureland from "../../../assets/images/category/leisureland.png";
 import lifeland from "../../../assets/images/category/lifeland.png";
 import economyland from "../../../assets/images/category/economyland.png";
 import travelland from "../../../assets/images/category/travelland.png";
 import artland from "../../../assets/images/category/artland.png";
+import noticeland from "../../../assets/images/category/noticeland.png";
+import eventland from "../../../assets/images/category/eventland.png";
 
-import sun from "../../../assets/images/sun.png";
-import moon from "../../../assets/images/moon.png";
 import cloud from "../../../assets/images/colorCloud.png";
 import star from "../../../assets/images/stars.png";
 
@@ -28,12 +30,11 @@ const list = [
   { label: "economy", src: [economyland, economyplanet], category: "경제" },
   { label: "travel", src: [travelland, travelplanet], category: "여행" },
   { label: "art", src: [artland, artplanet], category: "예술" },
-  { label: "notice", src: [, sun], category: "소식" },
-  { label: "event", src: [, moon], category: "이벤트" },
+  { label: "notice", src: [noticeland, noticeplanet], category: "소식" },
+  { label: "event", src: [eventland, eventplanet], category: "이벤트" },
 ];
 
 export default function BoardTop({ themeCode }) {
-  console.log(themeCode);
   const { category } = useParams();
   const { pathname } = useLocation();
   const [select, setSelect] = useState(0);
@@ -63,8 +64,9 @@ export default function BoardTop({ themeCode }) {
                   src={themeCode === "light" ? el.src[0] : el.src[1]}
                   alt=""
                 />
+
                 <span>{el.label}</span>
-                <h3>{page === "kickboard" && "KICK"}</h3>
+                {page === "kickboard" && <h3>KICK</h3>}
               </ListContainer>
             );
           })}
@@ -102,11 +104,14 @@ const Container = styled.div`
   }
 
   h3 {
+    margin-left: 1rem;
+    margin-top: 0.2rem;
     color: ${({ theme }) => theme.color.font};
     font-family: "Luckiest Guy", cursive;
     font-size: 2rem;
-    transform: rotate(45deg);
-    margin: -1rem;
+    padding: 0.8rem 0.8rem 0 0.8rem;
+    border-radius: 0.5rem;
+    background: ${({ theme }) => theme.color.boardTopKick};
   }
 `;
 

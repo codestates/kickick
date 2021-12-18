@@ -215,6 +215,16 @@ const KickConfirmUser = styled.div`
   .datetime {
     margin-left: auto;
   }
+
+  ::-webkit-scrollbar {
+    width: 0.3rem;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #0c0c42;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+  }
 `;
 
 const KickConfirmIntroduction = styled.div`

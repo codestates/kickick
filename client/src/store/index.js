@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
-import logger from "redux-logger";
 
 import {
   kickboardReducer,
@@ -52,7 +51,6 @@ export const store = configureStore({
 
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({ serializableCheck: false }),
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export default store;

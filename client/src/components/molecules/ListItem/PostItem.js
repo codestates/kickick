@@ -54,7 +54,7 @@ export function Freepost({ data }) {
           ? "-"
           : data.tags
               .filter((el) => el !== category)
-              .map((tag) => <span> # {tag}</span>)}
+              .map((tag, idx) => <span key={idx}> # {tag}</span>)}
       </div>
       <div>
         <Link to={`/detailboard/${data.post_id}`}>{data.post_name}</Link>
@@ -80,13 +80,6 @@ export function MyPageMyPost({ data }) {
   }
   return (
     <Container>
-      {/* <div>
-        {data.tags.length === 1
-          ? "-"
-          : data.tags
-              .filter((el, idx) => idx !== 0)
-              .map((tag) => <span> # {tag}</span>)}
-      </div> */}
       <div>{data.category.split("_")[1]}</div>
       <div>
         <Link to={link}>{data.post_name}</Link>
@@ -98,11 +91,17 @@ export function MyPageMyPost({ data }) {
 }
 
 export function MyPageMyComment({ data }) {
+  let link;
+  if (data.post.kick) {
+    link = `/detailkick/${data.post.kick.kick_id}`;
+  } else {
+    link = `/detailboard/${data.post.post_id}`;
+  }
   return (
     <Container>
       <div>{data.post.post_name}</div>
       <div>
-        <Link to={`/detailboard/${data.post_id}`}>{data.content}</Link>
+        <Link to={link}>{data.content}</Link>
       </div>
       <div>{data.created_at}</div>
       <div>{data.view_count}</div>

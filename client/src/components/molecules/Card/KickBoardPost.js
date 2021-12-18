@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { Thumbnail, Profile, IconText, Profile2 } from "../../../components";
+import { Thumbnail, IconText, Profile2 } from "../../../components";
 
 import { modalOnAction } from "../../../store/actions/kickboard";
 
@@ -46,11 +46,11 @@ export default function KickBoardPost({ data }) {
           <div className="commentCount">{data.comments.length} 개의 댓글</div>
         </PostUser>
       </PostDescription>
-      <Interest>
+      {/* <Interest>
         <img src={Astronaut} alt="astronaut" />
         <div className="seperator"></div>
         <img src={Alien} alt="alien" />
-      </Interest>
+      </Interest> */}
     </Container>
   );
 }
@@ -107,7 +107,7 @@ const PostSummary = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     word-wrap: break-word;
   }

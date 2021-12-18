@@ -21,7 +21,7 @@ import {
   getCategoryAction,
   getPostNameAction,
   getContentAction,
-  getKickContentAction,
+  getMainContentAction,
   resetPostAddAction,
 } from "../../store/actions/postadd";
 
@@ -58,7 +58,7 @@ export default function EditKickBoard({ themeCode }) {
   };
 
   const handleContent = () => {
-    dispatch(getKickContentAction(content));
+    dispatch(getMainContentAction(content));
   };
 
   const handleClick = () => {

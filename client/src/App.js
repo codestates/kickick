@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 
@@ -20,11 +25,21 @@ import MyEditBoard from "./pages/Write/MyEditBoard";
 import EditKickBoard from "./pages/Write/EditKickBoard";
 import EditNotice from "./pages/Write/EditNotice";
 import Write from "./pages/Write";
-import MyPage from "./pages/MyPage";
 import Error from "./pages/Error/Page404";
 import KakaoAuth from "./pages/Login/KakaoAuth";
 import NaverAuth from "./pages/Login/NaverAuth";
 import GoogleAuth from "./pages/Login/GoogleAuth";
+import MyPage from "./pages/MyPage";
+import {
+  Home,
+  Profile,
+  Attendance,
+  Favorites,
+  MyPost,
+  MyComment,
+  PurchasedKick,
+  KickmoneyLog,
+} from "./pages/MyPage";
 
 import { light, dark } from "./commons/styles/theme";
 import { nowImLogin } from "./apis/auth";
@@ -161,7 +176,17 @@ export default function App() {
               path="editkick/:category"
               element={<EditKickBoard themeCode={themeMode[1]} />}
             />
-            <Route path="mypage/:category" element={<MyPage />} />
+            <Route path="mypage" element={<Navigate to="/mypage/home" />} />
+            <Route path="mypage" element={<MyPage />}>
+              <Route path="home" element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="attendance" element={<Attendance />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="mypost" element={<MyPost />} />
+              <Route path="mycomment" element={<MyComment />} />
+              <Route path="kick" element={<PurchasedKick />} />
+              <Route path="log" element={<KickmoneyLog />} />
+            </Route>
             <Route
               path="notice/:category"
               element={<Notice themeCode={themeMode[1]} />}
@@ -199,19 +224,19 @@ const Container = styled.div`
   }
 `;
 
-  const Theme = styled.img`
+const Theme = styled.img`
   position: relative;
   height: 100vh;
 `;
 
-  const DarkBox = styled.div`
+const DarkBox = styled.div`
   position: relative;
   width: 110vw;
   height: 100vh;
   background-color: black;
 `;
 
-  const ModeChanger = styled.div`
+const ModeChanger = styled.div`
   position: fixed;
   top: 0rem;
   right: 100vw;
@@ -231,12 +256,12 @@ const Container = styled.div`
   }
 `;
 
-  const LightChanger = styled(ModeChanger)`
+const LightChanger = styled(ModeChanger)`
   animation-duration: 2s;
   z-index: 99999999;
 `;
 
-  const DarkChanger = styled(ModeChanger)`
-    animation-duration: 2.2s;
-    z-index: 99999999;
-  `;
+const DarkChanger = styled(ModeChanger)`
+  animation-duration: 2.2s;
+  z-index: 99999999;
+`;

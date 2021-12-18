@@ -42,7 +42,9 @@ export default function Vote({ likes, is_liked, postId, username }) {
 
     createLikes(postId, item)
       .then(() => dispatch(targetNameAction(username)))
-      .then(() => dispatch(targetNameAction("")))
+      .then(() => {
+        setTimeout(() => dispatch(targetNameAction("")), 300);
+      })
       .catch((err) => console.log(err.response));
   };
   return (
@@ -67,7 +69,7 @@ export default function Vote({ likes, is_liked, postId, username }) {
       >
         {alien}
       </span>
-      <span>VS</span>
+      <span className="vs">VS</span>
       <span
         className="vote astronaut"
         onClick={() => {
@@ -146,10 +148,16 @@ const Container = styled.div`
   .ballon_astronaut {
     right: -100%;
     top: -200%;
+    cursor: default;
   }
 
   .ballon_alien {
     left: -100%;
     top: -200%;
+    cursor: default;
+  }
+
+  .vs {
+    color: ${({ theme }) => theme.color.font};
   }
 `;
