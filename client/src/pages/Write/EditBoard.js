@@ -12,7 +12,9 @@ import {
   TagInput,
   IconBox,
   Profile,
+  Spinner,
 } from "../../components";
+
 import Page404 from "../Error/Page404";
 import {
   getCategoryAction,
@@ -28,6 +30,8 @@ export default function EditBoard({ themeCode, list }) {
   const [content, setContent] = useState("");
   const [tagArr, setTagArr] = useState([]);
   const [title, setTitle] = useState("");
+  const [disabed, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -38,20 +42,27 @@ export default function EditBoard({ themeCode, list }) {
   };
 
   const handleClick = () => {
+    setDisabled(true);
+    setLoading(true);
     createPost(postAdd.category, title, content)
       .then((data) => {
         createTag(data.data.data.post_id, [category, ...tagArr])
           .then(() => navigate(`/board/${category}`))
           .catch((err) => console.log(err.response));
       })
+      .then(() => setLoading(false))
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
     dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
+    setLoading(false);
   }, [category, dispatch]);
+
+  if (loading) return <Spinner />;
   if (!list.find((el) => el === category)) return <Page404 />;
+
   return (
     <Container>
       <WriteBox>
@@ -65,7 +76,12 @@ export default function EditBoard({ themeCode, list }) {
         />
         <BtnContainer>
           <IconBox label="arrow" handleClick={handleMovePage} />
-          <Common label="등 록" type="bigger" handleClick={handleClick} />
+          <Common
+            label="등 록"
+            type="bigger"
+            handleClick={handleClick}
+            disabled={disabed}
+          />
         </BtnContainer>
       </WriteBox>
 

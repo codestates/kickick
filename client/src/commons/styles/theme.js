@@ -44,7 +44,8 @@ const common = {
   device: {
     mobileS: `only screen and (max-width: 320px)`,
     mobileM: `only screen and (max-width: 375px)`,
-    mobileL: `only screen and (max-width: 520px)`,
+    mobileL: `only screen and (max-width: 425px)`,
+    mobileXL: `only screen and (max-width: 520px)`,
     tablet: `only screen and (max-width: 768px)`,
     notebookS: `only screen and (max-width: 1024px)`,
     notebookL: `only screen and (max-width: 1440px)`,
@@ -73,6 +74,7 @@ export const light = {
     gradient: "linear-gradient(to bottom, #fff 25%, #eee 100%)",
     shadow: "#888888",
     select: "rgba(0, 0, 0, 0.08)",
+    options: "#dddddd",
     modalBack: "white",
     modalSubBack: "#faffff",
     confirmBtn: "skyblue",
@@ -98,7 +100,10 @@ export const light = {
     footerFont: "#0c0c42",
     tagAlarm: "red",
     searchBack: "#eeeeee",
-    noticeBack: "#eeeeee",
+    noticeBack: "#fafafa",
+    noticeNav: "skyblue",
+    boardTopKick: "#eee",
+    page404: "#5070b6",
   },
 };
 
@@ -123,6 +128,7 @@ export const dark = {
     basicBtn: "gray",
     hoverBasicBtn: "#333638",
     select: "#444444",
+    options: "#aaaaaa",
     modalBack: "#444444",
     modalSubBack: "#757575",
     confirmBtn: "#222222",
@@ -147,6 +153,9 @@ export const dark = {
     footerFont: "black",
     tagAlarm: "yellow",
     searchBack: "#111111",
-    noticeBack: "#aaaaaa",
+    noticeBack: "#222222",
+    noticeNav: "yellow",
+    boardTopKick: "#444",
+    page404: "#F3aa4C",
   },
 };

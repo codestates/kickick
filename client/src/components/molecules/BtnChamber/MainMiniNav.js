@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import Saturn from "../../../assets/images/planet/art.png"
-import moon from "../../../assets/images/planet/economy.png";
-import earth from "../../../assets/images/planet/leisure.png";
-import Mars from "../../../assets/images/planet/life.png";
-import Uranus from "../../../assets/images/planet/studyplanet.png";
-import sun from "../../../assets/images/planet/trip.png";
+import Saturn from "../../../assets/images/category/artplanet.png";
+import moon from "../../../assets/images/category/economyplanet.png";
+import earth from "../../../assets/images/category/leisureplanet.png";
+import Mars from "../../../assets/images/category/lifeplanet.png";
+import Uranus from "../../../assets/images/category/studyplanet.png";
+import sun from "../../../assets/images/category/travelplanet.png";
 import redGirl from "../../../assets/images/people/7.png";
 import whiteGuy from "../../../assets/images/people/6.png";
 import redhatGirl from "../../../assets/images/people/5.png";
@@ -118,7 +118,7 @@ const BtnFrame = styled.button`
 
 const BtnName = styled.p`
   font-size: 1.2vw;
-  color:${({theme}) => theme.color.font};
+  color: ${({ theme }) => theme.color.font};
   pointer-events: none;
 `;
 
@@ -165,8 +165,8 @@ const StarContainer = styled.div`
 
 const Star = styled.img`
   position: relative;
-  top:${({ top }) => top};
-  left:${({left})=> left};
+  top: ${({ top }) => top};
+  left: ${({ left }) => left};
   width: 2vw;
   height: 2vw;
 `;
