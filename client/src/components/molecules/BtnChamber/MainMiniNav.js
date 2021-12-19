@@ -159,6 +159,8 @@ const StarContainer = styled.div`
   left: 0;
   width: 80vw;
   height: 10vw;
+
+  pointer-events: none;
 `;
 
 const Star = styled.img`

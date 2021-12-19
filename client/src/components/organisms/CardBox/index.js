@@ -61,5 +61,6 @@ export default function CardBox({ type }) {
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  width:100%;
   color: ${({ theme }) => theme.color.font};
 `;
