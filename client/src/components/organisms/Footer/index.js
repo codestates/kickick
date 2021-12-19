@@ -87,7 +87,10 @@ export default function Footer() {
       >
         <Frame>
           <Untouchable>
-            <Logo onClick={() => navigate(`/`)}>KICK</Logo>
+            <Logo onClick={() => {
+              setIsOpen("");
+              navigate(`/`);
+            }}>KICK</Logo>
             <IntroduceTitle>소개</IntroduceTitle>
             <IntroduceContent>
               괴벽인가,혁신인가 당신의 개성을 드러내세요!

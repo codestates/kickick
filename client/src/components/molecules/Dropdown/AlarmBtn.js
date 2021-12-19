@@ -68,15 +68,8 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
   const handleFetch = useCallback(
     (entry) => {
       if (entry[0].isIntersecting) {
-        console.log("알람 요청");
-        console.log(
-          "요청 여부",
-          alarmList.count,
-          socketChange.alarmPage.limit,
-          alarmList.count >= socketChange.alarmPage.limit
-        );
 
-        if (alarmList.count >= socketChange.alarmPage.limit) {
+        if (alarmList.all_count >= socketChange.alarmPage.limit) {
           dispatch(
             alarmPageAction(
               socketChange.alarmPage.page_num,
@@ -106,6 +99,7 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
     return () => observer.disconnect(fetchelement);
   }, [handleFetch, alarmList]);
 
+  console.log(alarmList);
   return (
     <Container>
       <AlarmContainer
@@ -131,7 +125,7 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
         top="2.3rem"
         onMouseLeave={() => setAlarmOpen(false)}
       >
-        {alarmList.count ? (
+        {alarmList.all_count ? (
           alarmList.data.map((el) => (
             <DropdownList onClick={() => moveRefer(el)} key={el.alarm_id}>
               <DropdownContext>{el.content}</DropdownContext>
