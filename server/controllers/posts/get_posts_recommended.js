@@ -126,7 +126,7 @@ module.exports = async (req, res) => {
                 },
                 {
                   model: kicks,
-                  attributes: ["id", "thumbnail"],
+                  attributes: [["id", "kick_id"], "thumbnail"],
                   include: [
                     {
                       model: users_kicks,
@@ -270,7 +270,7 @@ module.exports = async (req, res) => {
         },
         {
           model: kicks,
-          attributes: ["id", "thumbnail"],
+          attributes: [["id", "kick_id"], "thumbnail"],
           include: [
             {
               model: users_kicks,
@@ -372,7 +372,7 @@ module.exports = async (req, res) => {
         },
         {
           model: kicks,
-          attributes: ["id", "thumbnail"],
+          attributes: [["id", "kick_id"], "thumbnail"],
           include: [
             {
               model: users_kicks,
