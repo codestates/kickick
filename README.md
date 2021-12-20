@@ -45,7 +45,7 @@
 <details>
      <summary>킥게시판</summary>
      <ul>
-     <details><summary>킥 게시판 인피니트 스크롤</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404694582771722/0647710c3d1eefa6.gif" /></details>   
+     <details><summary>킥 게시판 인피니트 스크롤</summary> <img src="https://media.discordapp.net/attachments/902186957478690831/922404694582771722/0647710c3d1eefa6.gif?width=676&height=660" /></details>   
 <details><summary>킥 게시판 리스트</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404889580171264/199f797f1ea1e434.gif" /></details>
 <details><summary>킥 게시판 확인 모달 성공</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404890565812234/8831464a131eedcc.gif" /></details>
 <details><summary>킥 게시판 확인 모달 실패</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404890846838845/5a512c66eb5ae639.gif" /></details>
