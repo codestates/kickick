@@ -10,6 +10,7 @@
 # 시연 영상
 <details>
      <summary>메인페이지</summary>
+     
      <div markdown="1"></div>
 </details>  
 <details>
@@ -17,14 +18,15 @@
      <div markdown="1"></div>
 </details> 
 <details>
-     <summary>자유게시판</summary>
-     
-     <div markdown="1"></div>
-     <details>
-     <summary>페이지네이션 & 최신 인기 정렬</summary>
-     <div markdown="1"></div>
-</details> 
-</details> 
+<summary>자유게시판</summary>
+<div markdown="1">
+
+1. <details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
+2. <details><summary>검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>
+</div>
+3. <details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
+</div>
+</details>
 <details>
      <summary>킥게시판</summary>
      <div markdown="1"></div>
