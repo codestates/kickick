@@ -15,6 +15,7 @@
                <summary>다크모드</summary> 
                <img src="https://cdn.discordapp.com/attachments/882119373748322409/922408267823599658/ezgif.com-gif-maker_5.gif" />
           </details> 
+          <details><summary>실시간 알림</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922425900702789663/2.gif" /></details>
      </ul>
 </details>  
 
@@ -39,7 +40,8 @@
 
 <ul>
 <details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
-<details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>   
+<details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>  
+     <details><summary>퍼지 검색</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922425918071373824/cf1d17fb07d76591.gif" /></details>
 <details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
 <details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
 <details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
