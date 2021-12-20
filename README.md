@@ -67,8 +67,8 @@
 |역할|이름|깃헙|구현사항|
 |--|--|-|-|
 |팀장 & FRONT|한태규|[snowone4426](https://github.com/snowone4426)||
-|FULL-STACK|석창환|[Seok-CH](https://github.com/Seok-CH)||
-|FRONT-END|황민환|[gozld5153](https://github.com/gozld5153)|AWS |
+|FULL-STACK|석창환|[Seok-CH](https://github.com/Seok-CH)|AWS 배포, 킥게시판, 마이페이지, 공지게시판 디자인 및 로직 생성|
+|FRONT-END|황민환|[gozld5153](https://github.com/gozld5153)||
 |BACK-END|김선빈|[he2mo](https://github.com/he2mo)|Docker, REST API, Fuzzy 검색, 추천 시스템|
 
 # 위키
