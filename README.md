@@ -1,6 +1,8 @@
 # 서비스 소개 
 
-<img src="https://cdn.discordapp.com/attachments/911193271609491487/921280363886686210/kickick-001.jpg" />    
+<img src="https://cdn.discordapp.com/attachments/911193271609491487/921280363886686210/kickick-001.jpg" />      
+
+[**Kickick 바로가기**](https://www.kickick.net)
 
 # 기술 스택      
 <img src="https://user-images.githubusercontent.com/81503846/146720721-977b90b3-979a-469a-a82b-c214127f7717.png" />     
@@ -40,4 +42,4 @@
 |FRONT_END|황민환|[gozld5153](https://github.com/gozld5153)|
 |BACK_END|김선빈|[he2mo](https://github.com/he2mo)|
 
-# 배포주소 및 위키
+# 위키
