@@ -25,7 +25,6 @@
 <details><summary>내가 단 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
 <details><summary>내가 산 킥</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697132904478/-_.gif" /></details>
 <details><summary>킥머니 로그</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697439105034/-_.gif" /></details>
-     
      </div>
 </details> 
 <details>
