@@ -113,6 +113,7 @@ const Container = styled.div`
     padding: 0.8rem 0.8rem 0 0.8rem;
     border-radius: 0.5rem;
     background: ${({ theme }) => theme.color.boardTopKick};
+    letter-spacing: 0.1rem;
   }
 `;
 
