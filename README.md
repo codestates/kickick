@@ -11,12 +11,14 @@
 <details>
      <summary>메인페이지</summary>
      
-     <div markdown="1"></div>
+     <ul></ul>
 </details>  
+
 <details>
      <summary>마이페이지</summary>
-     <div markdown="1">
-   <details><summary>홈</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695295807508/-.gif" /></details>
+     
+     <ul>   
+<details><summary>홈</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695295807508/-.gif" /></details>
 <details><summary>회원정보수정</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695589392404/-.gif" /></details>   
 <details><summary>출석</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695966883871/-.gif" /></details>
 <details><summary>좋아요 누르기</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696570880060/-.gif" /></details>
@@ -24,22 +26,32 @@
 <details><summary>내가 쓴 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
 <details><summary>내가 단 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
 <details><summary>내가 산 킥</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697132904478/-_.gif" /></details>
-<details><summary>킥머니 로그</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697439105034/-_.gif" /></details>
-     </div>
-</details> 
+<details><summary>킥머니 로그</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697439105034/-_.gif" /></details>    
+     </ul>
+</details>
+
 <details>
 <summary>자유게시판</summary>
-<div markdown="1">
-1. <details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
-2. <details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>   
-3. <details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
-4. <details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
-5. <details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
-</div>
+
+<ul>
+<details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
+<details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>   
+<details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
+<details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
+<details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
+</ul>
+     
 </details>
 <details>
      <summary>킥게시판</summary>
-     <div markdown="1"></div>
+     <ul>
+     <details><summary>킥 게시판 인피니트 스크롤</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404694582771722/0647710c3d1eefa6.gif" /></details>   
+<details><summary>킥 게시판 리스트</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404889580171264/199f797f1ea1e434.gif" /></details>
+<details><summary>킥 게시판 확인 모달 성공</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404890565812234/8831464a131eedcc.gif" /></details>
+<details><summary>킥 게시판 확인 모달 실패</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404890846838845/5a512c66eb5ae639.gif" /></details>
+          <details><summary>킥 게시글 상세 정보</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404891190784000/b306e3965133a1e3.gif" /></details>
+           <details><summary>킥 게시글 글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404889911496775/5a2c5e76900784b4.gif" /></details>
+     </ul>
 </details> 
 <details>
      <summary>실시간 알람</summary>
