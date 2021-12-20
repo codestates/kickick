@@ -10,7 +10,10 @@ import {
   todayLoginAction,
   isPointAction,
 } from "../../../store/actions/login";
-import { FaCheckSquare } from "react-icons/fa";
+
+import googleAuth from "../../../assets/images/authlogo/googleAuth.png"
+import kakaoAuth from "../../../assets/images/authlogo/kakaoAuth.png"
+import naverAuth from "../../../assets/images/authlogo/naverAuth.png"
 
 export default function LoginInputChamber({
   width = 30,
@@ -86,20 +89,6 @@ export default function LoginInputChamber({
           key={idx}
         />
       ))}
-      <AuthLogoContainer height={height}>
-        <a href={kakaoURL}>
-          <FaCheckSquare />
-          <span>카카오 전형</span>
-        </a>
-        <a href={naverURL}>
-          <FaCheckSquare />
-          <span>네이버 전형</span>
-        </a>
-        <a href={googleURL}>
-          <FaCheckSquare />
-          <span>구글 전형</span>
-        </a>
-      </AuthLogoContainer>
       <SubmitBtn
         width={width}
         height={height}
@@ -108,6 +97,17 @@ export default function LoginInputChamber({
       >
         로그인
       </SubmitBtn>
+      <AuthLogoContainer height={height}>
+        <a href={kakaoURL}>
+          <AuthLogo src={kakaoAuth} alt="kakao" />
+        </a>
+        <a href={naverURL}>
+          <AuthLogo src={naverAuth} alt="naver" />
+        </a>
+        <a href={googleURL}>
+          <AuthLogo src={googleAuth} alt="google" />
+        </a>
+      </AuthLogoContainer>
     </Container>
   );
 }
@@ -158,23 +158,13 @@ const SubmitBtn = styled.button`
 
 const AuthLogoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 1rem;
   margin-top: 0.3rem;
   width: 100%;
+`;
 
-  > a {
-    font-size: 1.5rem;
-    font-family: ${({ theme }) => theme.fontFamily.blackHanSans};
-
-    span {
-      position: relative;
-      top: -0.15rem;
-    }
-  }
-
-  @media ${({ theme }) => theme.device.tablet} {
-    > a {
-      font-size: 1.2rem;
-      }
-  }
+const AuthLogo = styled.img`
+  width: 6rem;
+  height: 3rem;
 `;
