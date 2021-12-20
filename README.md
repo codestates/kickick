@@ -22,9 +22,10 @@
 <div markdown="1">
 
 1. <details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
-2. <details><summary>검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>
-</div>
+2. <details><summary>검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>     
 3. <details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
+4. <details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
+5. <details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
 </div>
 </details>
 <details>
