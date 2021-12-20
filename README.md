@@ -15,9 +15,9 @@
 </details>  
 
 <details>
-     <summary>마이페이지</summary>
-     
-     <ul>   
+<summary>마이페이지</summary>
+
+<ul>   
 <details><summary>홈</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695295807508/-.gif" /></details>
 <details><summary>회원정보수정</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695589392404/-.gif" /></details>   
 <details><summary>출석</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695966883871/-.gif" /></details>
@@ -27,7 +27,7 @@
 <details><summary>내가 단 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
 <details><summary>내가 산 킥</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697132904478/-_.gif" /></details>
 <details><summary>킥머니 로그</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697439105034/-_.gif" /></details>    
-     </ul>
+</ul>
 </details>
 
 <details>
