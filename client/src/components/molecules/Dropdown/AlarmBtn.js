@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { postAlarm } from "../../../apis/alarm"
-import { dateConverter } from "../../../commons/utils/dateConverter"
+import { postAlarm } from "../../../apis/alarm";
+import { dateConverter } from "../../../commons/utils/dateConverter";
 import { alarmPageAction } from "../../../store/actions/socket";
 
 import { FaBell } from "react-icons/fa";
@@ -32,7 +32,7 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
           : obj.reference.table === "notices" && obj.type === "notices"
           ? "notice/소식"
           : "notice/이벤트";
-      
+
       if (obj.reference.table === "posts") {
         // 댓글 알람
         postAlarm(obj.alarm_id, 1)
@@ -50,7 +50,6 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
         navigate(`/${middleLink}/${obj.reference.id}`);
         setAlarmOpen(false);
       }
-        
     } else {
       // 포인트 획득 알람
       postAlarm(obj.alarm_id, 1)
@@ -68,7 +67,6 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
   const handleFetch = useCallback(
     (entry) => {
       if (entry[0].isIntersecting) {
-
         if (alarmList.all_count >= socketChange.alarmPage.limit) {
           dispatch(
             alarmPageAction(
@@ -99,7 +97,6 @@ export default function AlarmBtn({ fontSize = "xl", socketClient }) {
     return () => observer.disconnect(fetchelement);
   }, [handleFetch, alarmList]);
 
-  console.log(alarmList);
   return (
     <Container>
       <AlarmContainer
@@ -158,7 +155,7 @@ const AlarmContainer = styled.button`
 
 const AlarmCounter = styled.div`
   position: absolute;
-  display: ${({ alarmLength }) => alarmLength === 0 ? "none" : "default"};
+  display: ${({ alarmLength }) => (alarmLength === 0 ? "none" : "default")};
   padding-top: ${({ theme, fontSize }) =>
     `${theme.fontSizes[fontSize].split("rem")[0] / 20}rem`};
   color: white;
@@ -246,8 +243,8 @@ const DropdownList = styled.li`
 
 const DropdownContext = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.small};
-  white-space:nowrap;
-  pointer-events:none;
+  white-space: nowrap;
+  pointer-events: none;
 `;
 
 const DropdownCreated = styled(DropdownContext)`
