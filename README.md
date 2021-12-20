@@ -5,7 +5,7 @@
 [**Kickick 바로가기**](https://kickick.net/)
 
 # 기술 스택      
-<img src="https://cdn.discordapp.com/attachments/902186957478690831/922375238086443088/9a53c65863a07eff.png" />     
+<img src="https://user-images.githubusercontent.com/81503846/146734837-feaf05b6-3355-4c4b-9a3f-9fe897a6c35f.png" />     
 
 # 시연 영상
 <details>
