@@ -3,7 +3,7 @@
 <img src="https://cdn.discordapp.com/attachments/911193271609491487/921280363886686210/kickick-001.jpg" />    
 
 # 기술 스택      
-     
+<img src="https://user-images.githubusercontent.com/81503846/146720721-977b90b3-979a-469a-a82b-c214127f7717.png" />     
 
 # 시연 영상
 <details>
