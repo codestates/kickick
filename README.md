@@ -77,10 +77,6 @@
                <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404128288833566/ezgif.com-gif-maker_3.gif" />
           </details> 
           <details>
-               <summary>메일인증</summary> 
-               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404184836431923/ezgif.com-gif-maker_4.gif" />
-          </details>
-          <details>
                <summary>메일인증 / 출석체크</summary> 
                <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404184836431923/ezgif.com-gif-maker_4.gif" />
           </details>
