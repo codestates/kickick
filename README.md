@@ -38,7 +38,24 @@
 </details>
 <details>
      <summary>로그인&회원가입</summary>
-     <div markdown="1"></div>
+     <div markdown="1">
+          <details>
+               <summary> 회원가입</summary> 
+               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404025373175808/ezgif.com-gif-maker.gif" />
+          </details>
+          <details>
+               <summary> 소셜 로그인</summary> 
+               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404058046824459/ezgif.com-gif-maker_1.gif" />
+          </details>
+          <details>
+               <summary> 로그인</summary> 
+               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404128288833566/ezgif.com-gif-maker_3.gif" />
+          </details>
+          <details>
+               <summary> 메일인증</summary> 
+               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404184836431923/ezgif.com-gif-maker_4.gif" />
+          </details>
+     </div>
 </details>
 
 
