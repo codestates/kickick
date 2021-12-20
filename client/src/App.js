@@ -11,6 +11,7 @@ import { io } from "socket.io-client";
 
 import { Nav, Footer, PageUp, CommonModal } from "./components";
 import Main from "./pages/Main";
+import Intro from "./pages/Intro"
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MailAuth from "./pages/Signup/MailAuth";
@@ -144,6 +145,7 @@ export default function App() {
               <Route path="google" element={<GoogleAuth />} />
               <Route path="modal/:modal" element={<CommonModal />} />
             </Route>
+            <Route path="/intro" element={<Intro />} />
             <Route path="login" element={<Login />} />
             {/* <Route path="signup" element={<SignupSelect />} /> */}
             <Route path="signup" element={<Signup />} />
@@ -198,8 +200,14 @@ export default function App() {
             </Route>
             <Route path="notice/:category/edit" element={<EditNotice />} />
             <Route path="write" element={<Write />}>
-              <Route path="board" element={<EditBoard />} />
-              <Route path="kickboard" element={<EditKickBoard />} />
+              <Route
+                path="board"
+                element={<EditBoard themeCode={themeMode[1]} list={list} />}
+              />
+              <Route
+                path="kickboard"
+                element={<EditKickBoard themeCode={themeMode[1]} />}
+              />
               <Route path="notice" element={<EditNotice />} />
             </Route>
             <Route path="*" element={<Error />} />
@@ -224,10 +232,11 @@ const Container = styled.div`
   }
 `;
 
-const Theme = styled.img`
-  position: relative;
-  height: 100vh;
-`;
+  const Theme = styled.img`
+    position: relative;
+    height: 100vh;
+    margin: 0 -1rem;
+  `;
 
 const DarkBox = styled.div`
   position: relative;

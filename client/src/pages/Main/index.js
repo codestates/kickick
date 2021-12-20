@@ -8,6 +8,7 @@ import {
   MainNotice,
   MainRecommend,
   MainEvent,
+  Spinner,
 } from "../../components";
 import { getNoticesInfo, getNoticesList } from "../../apis/notices"
 import { recommendedPost } from "../../apis/posts";
@@ -20,11 +21,12 @@ export default function Main() {
   const [kickListInfo, setKickList] = useState({});
   const [noticeInfo, setNoticeInfo] = useState({})
   const [eventInfo, setEventInfo] = useState([])
-  const [kickListLoding, setKickListLoding] = useState(false);
-  const [noticeLoding, setNoticeLoding] = useState(false);
-  const [eventLoding, setEventLoding] = useState(false);
+  const [kickListloading, setKickListloading] = useState(false);
+  const [noticeloading, setNoticeloading] = useState(false);
+  const [eventloading, setEventloading] = useState(false);
 
-  const isLoding = noticeLoding && eventLoding && kickListLoding;
+  const loading = noticeloading && eventloading && kickListloading;
+  console.log(noticeloading, eventloading, kickListloading);
 
   useEffect(() => {
     // 첫방문인지 체크하고 첫 방문이면 이동
@@ -40,12 +42,12 @@ export default function Main() {
     // 킥 추천 불러오기
     recommendedPost()
       .then((res) => setKickList(res.data.data))
-      .then(() => setKickListLoding(true));
+      .then(() => setKickListloading(true));
     // 가장 최신 공지 하나 불러오기
     getNoticesList({ type: "notices", limit: 1, page_num: 1 }).then((res) => {
       getNoticesInfo(res.data.data[0].notice_id)
         .then((res) => setNoticeInfo(res.data.data))
-        .then(() => setNoticeLoding(true));
+        .then(() => setNoticeloading(true));
     });
     // 이벤트 리스트 불러오기
     getNoticesList({ type: "events", limit: 4, page_num:1 })
@@ -53,10 +55,13 @@ export default function Main() {
         setEventInfo([...res.data.data]);
         dispatch(getListAction(res.data));
       })
-      .then(() => setEventLoding(true));
+      .then(() => setEventloading(true));
   }, []);
   
-  // console.log("isLoding", isLoding);
+  // console.log("isloading", isloading);
+
+  if (!loading) return <Spinner />;
+
   return (
     <Container>
       <MiniTitle>KICKICK</MiniTitle>

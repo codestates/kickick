@@ -13,6 +13,18 @@ export default function Modal({ handleModal, handleModalFunc, type }) {
       "정말 회원탈퇴 하시겠습니까?",
       "현재 가지고 있는 모든 포인트와 회원정보가 없어집니다",
     ],
+    email: [
+      "이메일 인증이 필요합니다!",
+      "회원가입시 작성한 이메일을 확인하신 후 인증해주세요.",
+    ],
+    emptyTitle: [
+      "제목을 입력해 주세요!",
+      "글을 등록하기 위해서는 제목을 입력해야 합니다.",
+    ],
+    emptyContent: [
+      "내용을 입력해 주세요!",
+      "글을 등록하기 위해서는 내용을 입력해야 합니다.",
+    ],
   };
   return (
     <Container onClick={handleModal}>
@@ -25,16 +37,22 @@ export default function Modal({ handleModal, handleModalFunc, type }) {
         <p>{sentence[type][1]}</p>
 
         <ButtonContainer type={type}>
-          {type === "resign" ? (
+          {type === "resign" && (
             <>
               <button onClick={handleModalFunc}>Yes</button>
               <button onClick={handleModal}>No</button>
             </>
-          ) : (
+          )}
+          {(type === "login" || type === "del") && (
             <>
               <button onClick={handleModal}>No</button>
               <button onClick={handleModalFunc}>Yes</button>
             </>
+          )}
+          {(type === "email" ||
+            type === "emptyTitle" ||
+            type === "emptyContent") && (
+            <button onClick={handleModal}>확인</button>
           )}
         </ButtonContainer>
       </Alarm>
@@ -99,7 +117,7 @@ const Alarm = styled.div`
         color: red;
       `}
     ${({ type }) =>
-      type === "login" &&
+      (type === "login" || type === "email") &&
       css`
         color: ${({ theme }) => theme.color.loginDesc};
       `}

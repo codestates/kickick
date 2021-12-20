@@ -143,7 +143,7 @@ export default function TotalSearch({ type }) {
         <Modal
           handleModal={handleModalOff}
           handleModalFunc={handleModalFunc}
-          type="login"
+          type={isLogin.type === "email auth required" ? "email" : "login"}
         />
       ) : null}
     </>
@@ -172,7 +172,7 @@ const SearchContainer = styled.div`
     margin: 1rem 0;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.color.searchBack};
+    background-color: #eeeeee;
     border-radius: 20px;
     > div:nth-of-type(2) {
       width: 40%;

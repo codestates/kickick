@@ -13,6 +13,7 @@ import {
   IconBox,
   Profile,
   Spinner,
+  Modal,
 } from "../../components";
 
 import Page404 from "../Error/Page404";
@@ -32,6 +33,8 @@ export default function EditBoard({ themeCode, list }) {
   const [title, setTitle] = useState("");
   const [disabed, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [type, setType] = useState("");
 
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -42,25 +45,39 @@ export default function EditBoard({ themeCode, list }) {
   };
 
   const handleClick = () => {
-    setDisabled(true);
-    setLoading(true);
-    createPost(postAdd.category, title, content)
-      .then((data) => {
-        createTag(data.data.data.post_id, [category, ...tagArr])
-          .then(() => navigate(`/board/${category}`))
-          .catch((err) => console.log(err.response));
-      })
-      .then(() => setLoading(false))
-      .catch((err) => console.log(err.response));
+    if (!title) {
+      setType("emptyTitle");
+      setModal(true);
+    } else if (!content) {
+      setType("emptyContent");
+      setModal(true);
+    } else {
+      setDisabled(true);
+      setLoading(true);
+      createPost(postAdd.category, title, content)
+        .then((data) => {
+          createTag(data.data.data.post_id, [category, ...tagArr])
+            .then(() => navigate(`/board/${category}`))
+            .catch((err) => console.log(err.response));
+        })
+        .then(() => setLoading(false))
+        .catch((err) => console.log(err.response));
+    }
   };
 
   useEffect(() => {
     dispatch(resetPostAddAction());
     dispatch(getCategoryAction(category));
+    setLoading(false);
   }, [category, dispatch]);
+
+  const handleModalOff = () => {
+    setModal(false);
+  };
 
   if (loading) return <Spinner />;
   if (!list.find((el) => el === category)) return <Page404 />;
+
   return (
     <Container>
       <WriteBox>
@@ -81,6 +98,7 @@ export default function EditBoard({ themeCode, list }) {
             disabled={disabed}
           />
         </BtnContainer>
+        {modal ? <Modal handleModal={handleModalOff} type={type} /> : null}
       </WriteBox>
 
       <ViewBox>

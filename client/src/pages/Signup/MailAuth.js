@@ -17,12 +17,11 @@ export default function MailAuth() {
   useEffect(() => { 
     mailCheck(params.username)
       .then((res) => {
-        console.log(res)
         if (res.data.message === "ok") {
           setIsSuccess(true);
         }
       })
-      // .catch(() => navigate("/error", { replace:true }));
+      .catch(() => navigate("/error", { replace:true }));
   },[])
 
   console.log("params: ", params.username)

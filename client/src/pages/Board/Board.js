@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TotalSearch, BoardTop, PostList } from "../../components";
-import BoardSkeleton from "./BoardSkeleton";
+import { TotalSearch, BoardTop, PostList, Spinner } from "../../components";
+
 import Page404 from "../Error/Page404";
 import { getPostsList } from "../../apis/posts";
 
@@ -66,7 +66,7 @@ export default function Board({ themeCode, list }) {
   ]);
 
   if (!list.find((el) => el === category)) return <Page404 />;
-  if (loading) return <BoardSkeleton />;
+  if (loading) return <Spinner />;
   return (
     <BigContainer>
       <BoardTop themeCode={themeCode} />
@@ -80,7 +80,9 @@ export default function Board({ themeCode, list }) {
   );
 }
 
-const BigContainer = styled.div``;
+const BigContainer = styled.div`
+  min-height: 79vh;
+`;
 const Container = styled.div`
   display: flex;
   margin: 0 auto;

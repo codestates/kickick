@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { DetailBoardTop, PostComment, IconContainer } from "../../components";
+import {
+  DetailBoardTop,
+  PostComment,
+  IconContainer,
+  Spinner,
+} from "../../components";
 import Page404 from "../Error/Page404";
 import { getPostsInfo } from "../../apis/posts";
 
@@ -30,7 +35,7 @@ export default function DetailBoard({ type, themeCode }) {
   }, [dispatch, post_id, type]);
 
   if (err) return <Page404 />;
-  if (loading) return <Temporary />;
+  if (loading) return <Spinner />;
 
   return (
     <Container>
@@ -63,8 +68,4 @@ const RightContainer = styled.div`
   @media ${({ theme }) => theme.device.tablet} {
     width: 100%;
   }
-`;
-
-const Temporary = styled.div`
-  height: 100vh;
 `;
