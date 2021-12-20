@@ -19,6 +19,10 @@
 <details>
      <summary>자유게시판</summary>
      <div markdown="1"></div>
+     <details>
+     <summary>페이지네이션 & 최신 인기 정렬</summary>
+     <div markdown="1"></div>
+</details> 
 </details> 
 <details>
      <summary>킥게시판</summary>
