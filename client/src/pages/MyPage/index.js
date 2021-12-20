@@ -70,7 +70,7 @@ export default function MyPage() {
     dispatch(resetPaginationAction());
   }, [dispatch]);
 
-  if (!isLogin) {
+  if (!isLogin || isLogin.type === "guest") {
     navigate("/error");
     return <div></div>;
   }
