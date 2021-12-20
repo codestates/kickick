@@ -15,18 +15,28 @@
 </details>  
 <details>
      <summary>마이페이지</summary>
-     <div markdown="1"></div>
+     <div markdown="1">
+   <details><summary>홈</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695295807508/-.gif" /></details>
+<details><summary>회원정보수정</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695589392404/-.gif" /></details>   
+<details><summary>출석</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404695966883871/-.gif" /></details>
+<details><summary>좋아요 누르기</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696570880060/-.gif" /></details>
+<details><summary>좋아요 삭제</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696264691732/-.gif" /></details>
+<details><summary>내가 쓴 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
+<details><summary>내가 단 글</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404696830910505/-_.gif" /></details>
+<details><summary>내가 산 킥</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697132904478/-_.gif" /></details>
+<details><summary>킥머니 로그</summary> <img src="https://cdn.discordapp.com/attachments/902186957478690831/922404697439105034/-_.gif" /></details>
+     
+     </div>
 </details> 
 <details>
 <summary>자유게시판</summary>
-
-<ul>
-<details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
-<details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>     
-<details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
-<details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
-<details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
-</ul>
+<div markdown="1">
+1. <details><summary>페이지네이션 & 최신 인기 정렬</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400056122945586/f056ec6644198911.gif" /></details>
+2. <details><summary>퍼지검색</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055233753098/ca8e37dd58fa247e.gif" /></details>   
+3. <details><summary>글쓰기</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055439265842/dcdc8fbdac1a4e54.gif" /></details>
+4. <details><summary>댓글 & 좋아요</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055653179412/05ad89a93ad92340.gif" /></details>
+5. <details><summary>게시글 수정</summary> <img src="https://cdn.discordapp.com/attachments/750939495775469683/922400055896440882/737103741b6896cd.gif" /></details>
+</div>
 </details>
 <details>
      <summary>킥게시판</summary>
@@ -38,24 +48,7 @@
 </details>
 <details>
      <summary>로그인&회원가입</summary>
-     <div markdown="1">
-          <details>
-               <summary> 회원가입</summary> 
-               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404025373175808/ezgif.com-gif-maker.gif" />
-          </details>
-          <details>
-               <summary> 소셜 로그인</summary> 
-               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404058046824459/ezgif.com-gif-maker_1.gif" />
-          </details>
-          <details>
-               <summary> 로그인</summary> 
-               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404128288833566/ezgif.com-gif-maker_3.gif" />
-          </details>
-          <details>
-               <summary> 메일인증</summary> 
-               <img src="https://cdn.discordapp.com/attachments/882119373748322409/922404184836431923/ezgif.com-gif-maker_4.gif" />
-          </details>
-     </div>
+     <div markdown="1"></div>
 </details>
 
 
